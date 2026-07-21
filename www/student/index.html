@@ -1,0 +1,67 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>我的班級檔案 · 工信學堂 IITS</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans TC',-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif;color:#10161d;background:linear-gradient(160deg,#eafaf3,#eef4ff);min-height:100vh}
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid #dcefe4;padding:12px 18px;display:flex;align-items:center;gap:10px}
+.top b{font-size:16px}.btn{margin-left:auto;border:1px solid #cfe6da;background:#fff;color:#2f8f6b;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer}.btn:hover{background:#effaf4}
+.wrap{max-width:none;margin:0;padding:18px clamp(16px,2.5vw,40px)}
+.hero{background:linear-gradient(135deg,#fff,#f2fbf6);border:1px solid #d9efe3;border-radius:20px;padding:18px 20px;margin-bottom:16px}
+.hero h1{margin:0 0 3px;font-size:21px}.hero p{margin:0;color:#5a7d6e;font-size:13px}
+.card{background:#fff;border:1px solid #e4eef0;border-radius:16px;margin-bottom:16px}
+.card h3{margin:0;padding:13px 16px;font-size:15px;border-bottom:1px solid #eef4f1;display:flex;align-items:center;gap:8px}
+.card.ai h3{background:#f1e9fb;color:#5a2ea0}.card.ai .row a{border-color:#dcc9f4;color:#7c4dc4}.card.ai .row a:hover{background:#f5eefc}.card.sw h3{background:#eef4ff}.card .cnt{margin-left:auto;font-size:12px;color:#9aa9a2;font-weight:400}
+.list{display:grid;gap:10px;grid-template-columns:1fr;padding:12px;align-items:start}@media(min-width:760px){.list{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}}
+.row{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid #eef4f1;border-radius:12px;background:#fff}
+.row .ic{font-size:20px}.row .nm{flex:1;min-width:0;font-size:13px;line-height:1.4;word-break:break-all;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row .badge{display:inline-block;background:#eef4ff;color:#3d5699;font-size:10.5px;font-weight:700;border-radius:6px;padding:1px 7px;margin-right:6px;vertical-align:middle}
+.row .sz{font-size:11px;color:#9aa9a2;white-space:nowrap}
+.row a{border:1px solid #cfe6da;color:#2f8f6b;border-radius:999px;padding:6px 13px;font-size:12.5px;text-decoration:none;white-space:nowrap}.row a:hover{background:#effaf4}
+.card.sw .row a{border-color:#cfe0f5;color:#3d5699}.card.sw .row a:hover{background:#eaf1ff}
+.empty{padding:24px 16px;color:#9aa9a2;font-size:13px;text-align:center;grid-column:1/-1}
+.swnote{padding:0 16px 14px;font-size:12px;color:#8a93a3;line-height:1.6}
+.chero{display:flex;align-items:center;gap:16px}.cpill{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:76px;height:66px;padding:0 16px;border-radius:18px;background:#3d5699;color:#fff;font-size:36px;font-weight:900;letter-spacing:1px;box-shadow:0 10px 22px -8px rgba(0,0,0,.4);font-family:"Space Grotesk",system-ui,sans-serif}.ctxt h1{margin:0 0 3px}.ctxt p{margin:0}@media(max-width:520px){.cpill{min-width:60px;height:54px;font-size:28px}.hero h1{font-size:18px}}
+</style></head><body>
+<div class="top"><b>🎒 我的班級檔案</b><span style="font-size:12px;color:#8aa79a">工信學堂 · IITS</span><button class="btn" onclick="logout()">登出</button></div>
+<div class="wrap">
+  <div class="hero"><div class="chero"><span class="cpill" id="cpill">··</span><div class="ctxt"><h1 id="cname">載入中…</h1><p>下載課堂軟件與你班級的學習檔案（搭建藍圖等）。</p></div></div></div>
+  <div class="card ai"><h3>🤖 AI 延伸課程 <span class="cnt" id="cnt-ai"></span></h3>
+    <div class="list" id="list-ai"><div class="empty">載入中…</div></div></div>
+  <div class="card sw"><h3>💾 軟件下載 · UCMake Desktop <span class="cnt" id="cnt-sw"></span></h3>
+    <div class="list" id="list-sw"><div class="empty">載入中…</div></div>
+    <div class="swnote">💡 不確定 Mac 型號？左上角  → 「關於本機」看晶片：Apple M 系列選「Apple Silicon」，Intel 選「Intel」。</div></div>
+  <div class="card"><h3>📄 班級檔案 <span class="cnt" id="cnt-st"></span></h3>
+    <div class="list" id="list-st"><div class="empty">載入中…</div></div></div>
+</div>
+<script>
+const CN={L1:"一級 · 動力工程＋創意製造",L2:"二級 · 程序交互＋傳感控制",L3:"三級 · 智能控制＋智能創造",L4:"四級 · 創造大師＋程序應用"};
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function api(p,o){return fetch('/iits/student/api/'+p,Object.assign({credentials:'same-origin'},o||{}));}
+function logout(){api('logout',{method:'POST'}).finally(()=>location.href='/iits/student/login.html');}
+function fmt(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':b>=1024?(b/1024).toFixed(0)+' KB':b+' B';}
+function osInfo(n){n=n.toLowerCase();
+  if(n.indexOf('win')>=0||n.endsWith('.exe'))return['💻','Windows'];
+  if(n.indexOf('arm64')>=0)return['🍎','Mac · Apple Silicon'];
+  if(n.indexOf('x64')>=0&&n.indexOf('mac')>=0)return['🍎','Mac · Intel'];
+  if(n.endsWith('.dmg')||n.endsWith('.pkg'))return['🍎','Mac'];
+  if(n.endsWith('.pdf'))return['📕',''];if(/\.(pptx?|key)$/.test(n))return['📊',''];if(/\.(docx?)$/.test(n))return['📄',''];
+  return['📎',''];}
+async function render(u,sec,listId,cntId,withBadge){
+  const el=document.getElementById(listId),cnt=document.getElementById(cntId);
+  let j;try{j=await (await api('fm/list?class='+u+'&section='+sec)).json();}catch(e){el.innerHTML='<div class="empty">載入失敗</div>';return;}
+  const files=j.files||[];cnt.textContent=files.length+' 個檔案';
+  if(!files.length){el.innerHTML='<div class="empty">'+(sec==='software'?'老師尚未提供軟件。':'老師尚未上傳檔案。')+'</div>';return;}
+  el.innerHTML=files.map(f=>{const url='/iits/student/files/'+u+'/'+sec+'/'+encodeURIComponent(f.name);const oi=osInfo(f.name);
+    const badge=withBadge&&oi[1]?`<span class="badge">${oi[1]}</span>`:'';
+    return `<div class="row"><span class="ic">${oi[0]}</span><span class="nm">${badge}${esc(f.name)}</span>
+      <span class="sz">${fmt(f.size)}</span><a href="${url}" target="_blank" rel="noopener">${sec==='software'?'下載':'開啟'}</a></div>`;}).join('');
+}
+(async()=>{let me;try{me=await (await api('me')).json();}catch(e){location.href='/iits/student/login.html';return;}
+  if(!me||!me.u){location.href='/iits/student/login.html';return;}
+  document.getElementById('cname').textContent=CN[me.u]||me.u;
+  var PC={L1:'#3d5699',L2:'#2f8f6b',L3:'#d9772e',L4:'#7c4dc4'};var pl=document.getElementById('cpill');pl.textContent=me.u;pl.style.background=PC[me.u]||'#3d5699';
+  render(me.u,'ai','list-ai','cnt-ai',false);
+  render(me.u,'software','list-sw','cnt-sw',true);
+  render(me.u,'student','list-st','cnt-st',false);})();
+</script></body></html>

@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>班級檔案管理 · 工信學堂 IITS</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans TC',-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif;color:#10161d;background:#f4f6fb}
+.top{position:sticky;top:0;z-index:20;background:rgba(247,248,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid #e5e8f0;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.top b{font-size:16px}.top .sp{margin-left:auto;display:flex;gap:8px}
+.btn{border:1px solid #d7dced;background:#fff;color:#3d5699;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{background:#eef1f8}.btn.pri{background:#3d5699;color:#fff;border-color:#3d5699}.btn.pri:hover{background:#33497f}
+.wrap{max-width:none;margin:0;padding:18px clamp(16px,2.5vw,40px)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{flex:1;min-width:150px;text-align:left;border:1px solid #d7dced;background:#fff;border-radius:14px;padding:12px 14px;cursor:pointer;transition:.12s}
+.tab:hover{border-color:#3d5699}.tab.on{background:#3d5699;color:#fff;border-color:#3d5699;box-shadow:0 8px 20px -10px rgba(61,86,153,.6)}
+.tab .c{font-weight:800;font-size:16px}.tab .n{font-size:11.5px;opacity:.8;margin-top:2px}
+.sections{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:900px){.sections{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}}
+.sec{background:#fff;border:1px solid #e5e8f0;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.sec>h3{margin:0;padding:13px 16px;font-size:15px;border-bottom:1px solid #eef0f6;display:flex;align-items:center;gap:8px}
+.sec.ai{border-color:#dcc9f4}.sec.ai>h3{background:#f1e9fb;color:#5a2ea0}.sec.ai .btn.pri{background:#7c4dc4;border-color:#7c4dc4}.sec.sw>h3{background:#eef4ff}.sec.tea>h3{background:#fff7ec}.sec.stu>h3{background:#eafaf3}
+.sec .note{font-weight:400;font-size:11.5px;opacity:.75}
+.sec .cnt{font-size:12px;color:#8a93a3;margin-left:auto;font-weight:400}
+.up{padding:10px 16px;border-bottom:1px solid #f1f3f8;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.up input[type=file]{font-size:12px;max-width:56%}
+.list{max-height:46vh;overflow:auto}
+.row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #f4f5fa}
+.row:last-child{border-bottom:0}.row .nm{flex:1;font-size:13px;word-break:break-all;line-height:1.4}
+.row .sz{font-size:11px;color:#9aa2b1;white-space:nowrap}
+.row a.dl{font-size:12px;color:#3d5699;white-space:nowrap;text-decoration:none}
+.row button.x{border:0;background:none;font-size:15px;cursor:pointer;padding:2px 5px}
+.empty{padding:22px 16px;color:#9aa2b1;font-size:13px;text-align:center}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#10161d;color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+#toast.on{opacity:.95}
+</style></head><body>
+<div class="top"><b>📁 班級檔案管理</b><span style="font-size:12px;color:#8a93a3">File Manager</span>
+  <span class="sp"><a class="btn" href="../">← 主頁</a><button class="btn" onclick="logout()">登出</button></span></div>
+<div class="wrap"><div class="tabs" id="tabs"></div><div class="sections" id="secs"></div></div>
+<div id="toast"></div>
+<script>
+const CLASSES=[["L1","一級 · 動力工程＋創意製造"],["L2","二級 · 程序交互＋傳感控制"],["L3","三級 · 智能控制＋智能創造"],["L4","四級 · 創造大師＋程序應用"]];
+const SECS=[{k:'ai',ic:'🤖',lb:'AI 延伸課程',nt:'師生皆可下載',c:'ai'},{k:'software',ic:'💾',lb:'軟件下載',nt:'學生可下載',c:'sw'},{k:'teacher',ic:'📕',lb:'教師專區',nt:'僅教師可見',c:'tea'},{k:'student',ic:'🎒',lb:'學生專區',nt:'學生可見',c:'stu'}];
+let cur="L1";
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function api(p,o){return fetch('/teacher/api/'+p,Object.assign({credentials:'same-origin'},o||{}));}
+function logout(){api('logout',{method:'POST'}).finally(()=>location.href='/teacher/login.html');}
+let T;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(T);T=setTimeout(()=>t.classList.remove('on'),2600);}
+function fmt(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':b>=1024?(b/1024).toFixed(0)+' KB':b+' B';}
+function tabs(){document.getElementById('tabs').innerHTML=CLASSES.map(([c,n])=>`<div class="tab ${c===cur?'on':''}" onclick="pick('${c}')"><div class="c">${c}</div><div class="n">${esc(n)}</div></div>`).join('');}
+function shell(){document.getElementById('secs').innerHTML=SECS.map(s=>
+  `<div class="sec ${s.c}"><h3>${s.ic} ${s.lb} <span class="note">(${s.nt})</span><span class="cnt" id="cnt-${s.k}"></span></h3>
+   <div class="up"><input type="file" id="up-${s.k}" multiple><button class="btn pri" onclick="doUpload('${s.k}')">⤒ 上傳</button></div>
+   <div class="list" id="list-${s.k}"></div></div>`).join('');}
+function pick(c){cur=c;tabs();SECS.forEach(s=>load(s.k));}
+async function load(sec){
+  const el=document.getElementById('list-'+sec),cnt=document.getElementById('cnt-'+sec);el.innerHTML='<div class="empty">載入中…</div>';
+  let j;try{j=await (await api('fm/list?class='+cur+'&section='+sec)).json();}catch(e){el.innerHTML='<div class="empty">載入失敗</div>';return;}
+  const files=j.files||[];cnt.textContent=files.length+' 個檔案';
+  if(!files.length){el.innerHTML='<div class="empty">尚無檔案</div>';return;}
+  el.innerHTML=files.map(f=>{const url='/teacher/files/'+cur+'/'+sec+'/'+encodeURIComponent(f.name);
+    return `<div class="row"><span class="nm">${esc(f.name)}</span><span class="sz">${fmt(f.size)}</span>
+      <a class="dl" href="${url}" target="_blank" rel="noopener">下載</a>
+      <button class="x" title="重新命名" style="color:#3d5699" onclick="ren('${sec}',this)" data-n="${esc(f.name)}">✎</button>
+      <button class="x" title="刪除" style="color:#c0392b" onclick="del('${sec}',this)" data-n="${esc(f.name)}">🗑</button></div>`;}).join('');
+}
+async function del(sec,btn){const name=btn.getAttribute('data-n');if(!confirm('確定刪除？\n'+name))return;
+  const r=await api('fm/delete?class='+cur+'&section='+sec+'&name='+encodeURIComponent(name),{method:'POST'});
+  if(r.ok){toast('已刪除');load(sec);}else toast('刪除失敗');}
+async function ren(sec,btn){const name=btn.getAttribute('data-n');var nn=prompt('重新命名：',name);
+  if(nn===null)return;nn=nn.trim();if(!nn||nn===name)return;
+  const r=await api('fm/rename?class='+cur+'&section='+sec+'&name='+encodeURIComponent(name)+'&newname='+encodeURIComponent(nn),{method:'POST'});
+  if(r.ok){toast('已重新命名');load(sec);}else{let j={};try{j=await r.json();}catch(e){}toast(j.error||'重新命名失敗');}}
+async function doUpload(sec){const inp=document.getElementById('up-'+sec);const files=[...inp.files];
+  if(!files.length){toast('請先選擇檔案');return;}
+  for(let i=0;i<files.length;i++){const f=files[i];toast(`上傳中 (${i+1}/${files.length}) ${f.name}`);
+    const r=await api('fm/upload?class='+cur+'&section='+sec+'&name='+encodeURIComponent(f.name),{method:'POST',body:f});
+    if(!r.ok){toast('上傳失敗: '+f.name);return;}}
+  inp.value='';toast('上傳完成');load(sec);}
+(async()=>{const r=await api('me');if(!r.ok){location.href='/teacher/login.html';return;}shell();pick('L1');})();
+</script></body></html>

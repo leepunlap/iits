@@ -1,0 +1,6098 @@
+{
+ "categories": [
+  {
+   "key": "early-discovery",
+   "title": "啟蒙探索 · Early Discovery",
+   "icon": "🔍",
+   "count": 145,
+   "items": [
+    {
+     "file": "1-无屏编程E系列产品画册.pdf",
+     "group": "",
+     "title": "1-无屏编程E系列产品画册",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "2.2 MB"
+    },
+    {
+     "file": "2026無屏編程啟蒙课程-器材价格2026-2-7.pdf",
+     "group": "",
+     "title": "2026無屏編程啟蒙课程-器材价格2026-2-7",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "213.4 KB"
+    },
+    {
+     "file": "Early Discovery 101_TC.pdf",
+     "group": "",
+     "title": "Early Discovery 101",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "77.3 MB"
+    },
+    {
+     "file": "Early Discovery 102_TC.pdf",
+     "group": "",
+     "title": "Early Discovery 102",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "31.6 MB"
+    },
+    {
+     "file": "Early Discovery 201_TC.pdf",
+     "group": "",
+     "title": "Early Discovery 201",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "37.0 MB"
+    },
+    {
+     "file": "Early Discovery 202_TC.pdf",
+     "group": "",
+     "title": "Early Discovery 202",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "50.0 MB"
+    },
+    {
+     "file": "ECL無屏編程 K1-K3課程- 課程大綱.xlsx",
+     "group": "",
+     "title": "ECL無屏編程 K1-K3課程- 課程大綱",
+     "type": "xlsx",
+     "lang": "CHT",
+     "size": "14.3 KB"
+    },
+    {
+     "file": "E課程場景授課建議點.docx",
+     "group": "",
+     "title": "E課程場景授課建議點",
+     "type": "docx",
+     "lang": "CHT",
+     "size": "32.0 KB"
+    },
+    {
+     "file": "E課程場景授課建議點.pdf",
+     "group": "",
+     "title": "E課程場景授課建議點",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "491.1 KB"
+    },
+    {
+     "file": "The Educational Value and Practice of Screenless Coding in Early Childhood.docx",
+     "group": "",
+     "title": "The Educational Value and Practice of Screenless Coding in Early Childhood",
+     "type": "docx",
+     "lang": "EN",
+     "size": "23.4 KB"
+    },
+    {
+     "file": "The Educational Value and Practice of Screenless Coding in Early Childhood.pdf",
+     "group": "",
+     "title": "The Educational Value and Practice of Screenless Coding in Early Childhood",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "174.9 KB"
+    },
+    {
+     "file": "工信学堂——无屏编程E系列课程介绍V2.0.pdf",
+     "group": "",
+     "title": "工信学堂——无屏编程E系列课程介绍V2.0",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.7 MB"
+    },
+    {
+     "file": "工信学堂——无屏编程E系列课程介绍V2.0.pptx",
+     "group": "",
+     "title": "工信学堂——无屏编程E系列课程介绍V2.0",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "307.1 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 01_你好机器人_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "01_你好机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.1 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 01_你好机器人_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "01_你好机器人_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 02_我的朋友_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "02_我的朋友_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 02_我的朋友_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "02_我的朋友_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.2 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 03_请你跟我这样做_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "03_请你跟我这样做_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 03_请你跟我这样做_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "03_请你跟我这样做_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.3 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 04_认识数字_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "04_认识数字_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "1.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 04_认识数字_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "04_认识数字_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.2 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 05_宝宝巴士_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "05_宝宝巴士_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 05_宝宝巴士_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "05_宝宝巴士_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 06_我的教室在哪里_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "06_我的教室在哪里_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 06_我的教室在哪里_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "06_我的教室在哪里_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.4 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 07_一闪一闪亮晶晶_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "07_一闪一闪亮晶晶_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 07_一闪一闪亮晶晶_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "07_一闪一闪亮晶晶_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.4 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 08_美味的午餐_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "08_美味的午餐_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.5 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 08_美味的午餐_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "08_美味的午餐_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 09_赛车_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "09_赛车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 09_赛车_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "09_赛车_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 10_警察任务_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "10_警察任务_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.2 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 10_警察任务_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "10_警察任务_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.9 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 11_消防小队_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "11_消防小队_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.5 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 11_消防小队_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "11_消防小队_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 12_神圣的救护车_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "12_神圣的救护车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 12_神圣的救护车_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "12_神圣的救护车_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.9 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 13_引导机器人_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "13_引导机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.3 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 13_引导机器人_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "13_引导机器人_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 14_请开饭吧_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "14_请开饭吧_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "8.9 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 14_请开饭吧_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "14_请开饭吧_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 15_生病了怎么办_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "15_生病了怎么办_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 15_生病了怎么办_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "15_生病了怎么办_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.1 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 16_大型超市_演示课件.pptx",
+     "group": "无屏编程E-101",
+     "title": "16_大型超市_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.1 MB"
+    },
+    {
+     "file": "无屏编程E-101 · 16_大型超市_课程教案.doc",
+     "group": "无屏编程E-101",
+     "title": "16_大型超市_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 01_我爱美食_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "01_我爱美食_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.0 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 01_我爱美食_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "01_我爱美食_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 02_稻田里的故事_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "02_稻田里的故事_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "8.4 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 02_稻田里的故事_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "02_稻田里的故事_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.9 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 03_松鼠的坚果_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "03_松鼠的坚果_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.8 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 03_松鼠的坚果_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "03_松鼠的坚果_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 04_酸甜苦辣_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "04_酸甜苦辣_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 04_酸甜苦辣_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "04_酸甜苦辣_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.2 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 05_水果连连看_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "05_水果连连看_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 05_水果连连看_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "05_水果连连看_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 06_精美的果篮_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "06_精美的果篮_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.2 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 06_精美的果篮_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "06_精美的果篮_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 07_水果奶昔_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "07_水果奶昔_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.2 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 07_水果奶昔_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "07_水果奶昔_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 08_糖果派对_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "08_糖果派对_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.4 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 08_糖果派对_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "08_糖果派对_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.7 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 09_勤劳的小园丁_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "09_勤劳的小园丁_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 09_勤劳的小园丁_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "09_勤劳的小园丁_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 10_送你一朵小红花_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "10_送你一朵小红花_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.5 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 10_送你一朵小红花_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "10_送你一朵小红花_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 11_篱笆篱笆_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "11_篱笆篱笆_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 11_篱笆篱笆_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "11_篱笆篱笆_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 12_大丰收_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "12_大丰收_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.1 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 12_大丰收_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "12_大丰收_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.6 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 13_小蝌蚪找妈妈_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "13_小蝌蚪找妈妈_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.9 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 13_小蝌蚪找妈妈_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "13_小蝌蚪找妈妈_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 14_勤劳的蜜蜂_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "14_勤劳的蜜蜂_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.6 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 14_勤劳的蜜蜂_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "14_勤劳的蜜蜂_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.0 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 15_丛林之王_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "15_丛林之王_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.0 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 15_丛林之王_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "15_丛林之王_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 16_小猴子吉吉_演示课件.pptx",
+     "group": "无屏编程E-102",
+     "title": "16_小猴子吉吉_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "无屏编程E-102 · 16_小猴子吉吉_课程教案.doc",
+     "group": "无屏编程E-102",
+     "title": "16_小猴子吉吉_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.1 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 01_宝库疑点_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "01_宝库疑点_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.2 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 01_宝库疑点_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "01_宝库疑点_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.1 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 02_掉落的羽毛_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "02_掉落的羽毛_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "9.4 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 02_掉落的羽毛_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "02_掉落的羽毛_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 03_是谁的脚印_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "03_是谁的脚印_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "9.4 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 03_是谁的脚印_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "03_是谁的脚印_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 04_抓捕偷盗者_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "04_抓捕偷盗者_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.1 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 04_抓捕偷盗者_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "04_抓捕偷盗者_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.9 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 05_雷区冒险_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "05_雷区冒险_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "13.2 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 05_雷区冒险_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "05_雷区冒险_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 06_扫雷达人_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "06_扫雷达人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.8 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 06_扫雷达人_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "06_扫雷达人_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.5 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 07_宝石、炸弹_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "07_宝石、炸弹_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "26.2 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 07_宝石、炸弹_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "07_宝石、炸弹_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 08_炸弹超人_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "08_炸弹超人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.0 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 08_炸弹超人_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "08_炸弹超人_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 09_前往矿洞_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "09_前往矿洞_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 09_前往矿洞_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "09_前往矿洞_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 10_深入矿洞_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "10_深入矿洞_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "9.9 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 10_深入矿洞_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "10_深入矿洞_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.2 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 11_开采宝石_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "11_开采宝石_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 11_开采宝石_课程教案.pdf",
+     "group": "无屏编程E-201",
+     "title": "11_开采宝石_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "5.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 11_开采宝石_课程教案.pptx",
+     "group": "无屏编程E-201",
+     "title": "11_开采宝石_课程教案",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.6 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 12_矿洞遇险_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "12_矿洞遇险_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "9.0 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 12_矿洞遇险_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "12_矿洞遇险_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.3 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 13_数字游戏1_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "13_数字游戏1_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.5 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 13_数字游戏1_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "13_数字游戏1_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 14_数字游戏2_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "14_数字游戏2_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.5 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 14_数字游戏2_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "14_数字游戏2_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 15_脑筋急转弯_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "15_脑筋急转弯_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.0 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 15_脑筋急转弯_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "15_脑筋急转弯_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 16_我的记忆最最棒_演示课件.pptx",
+     "group": "无屏编程E-201",
+     "title": "16_我的记忆最最棒_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.5 MB"
+    },
+    {
+     "file": "无屏编程E-201 · 16_我的记忆最最棒_课程教案.doc",
+     "group": "无屏编程E-201",
+     "title": "16_我的记忆最最棒_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 01_海滩之旅_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "01_海滩之旅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.4 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 01_海滩之旅_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "01_海滩之旅_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 02_一起去露营吧_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "02_一起去露营吧_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.7 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 02_一起去露营吧_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "02_一起去露营吧_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "5.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 03_企鹅我来啦_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "03_企鹅我来啦_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "11.1 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 03_企鹅我来啦_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "03_企鹅我来啦_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.4 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 04_神秘的热带雨林_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "04_神秘的热带雨林_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "13.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 04_神秘的热带雨林_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "04_神秘的热带雨林_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "6.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 05_嫦娥奔月_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "05_嫦娥奔月_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 05_嫦娥奔月_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "05_嫦娥奔月_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.0 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 06_端午节_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "06_端午节_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.7 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 06_端午节_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "06_端午节_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.5 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 07_看花灯_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "07_看花灯_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.4 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 07_看花灯_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "07_看花灯_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 08_喜迎新春_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "08_喜迎新春_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.4 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 08_喜迎新春_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "08_喜迎新春_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "4.6 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 09_太空旅行_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "09_太空旅行_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 09_太空旅行_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "09_太空旅行_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 10_火星探险_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "10_火星探险_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 10_火星探险_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "10_火星探险_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 11_太阳系_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "11_太阳系_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 11_太阳系_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "11_太阳系_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.5 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 12_外星人_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "12_外星人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.2 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 12_外星人_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "12_外星人_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 13_破解迷宫_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "13_破解迷宫_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.6 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 13_破解迷宫_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "13_破解迷宫_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "3.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 14_石头剪刀布_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "14_石头剪刀布_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.7 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 14_石头剪刀布_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "14_石头剪刀布_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 15_飞行棋_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "15_飞行棋_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.7 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 15_飞行棋_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "15_飞行棋_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 16_游戏设计师_演示课件.pptx",
+     "group": "无屏编程E-202",
+     "title": "16_游戏设计师_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "无屏编程E-202 · 16_游戏设计师_课程教案.doc",
+     "group": "无屏编程E-202",
+     "title": "16_游戏设计师_课程教案",
+     "type": "doc",
+     "lang": "CHS",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "无屏编程启蒙课程体系及产品介绍.pptx",
+     "group": "",
+     "title": "无屏编程启蒙课程体系及产品介绍",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "265.8 MB"
+    },
+    {
+     "file": "無屏編程在幼兒階段的教學價值與實踐.docx",
+     "group": "",
+     "title": "無屏編程在幼兒階段的教學價值與實踐",
+     "type": "docx",
+     "lang": "CHT",
+     "size": "29.9 KB"
+    },
+    {
+     "file": "無屏編程在幼兒階段的教學價值與實踐.pdf",
+     "group": "",
+     "title": "無屏編程在幼兒階段的教學價值與實踐",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "452.1 KB"
+    }
+   ]
+  },
+  {
+   "key": "innovation-practice",
+   "title": "創新實踐 · Innovation Practice",
+   "icon": "🛠️",
+   "count": 574,
+   "items": [
+    {
+     "file": "2-人工智能K系列产品手册.pdf",
+     "group": "",
+     "title": "2-人工智能K系列产品手册",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.1 MB"
+    },
+    {
+     "file": "Innovation Practice 101_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 101",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "91.6 MB"
+    },
+    {
+     "file": "Innovation Practice 102_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 102",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "12.3 MB"
+    },
+    {
+     "file": "Innovation Practice 102_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 102",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "22.0 MB"
+    },
+    {
+     "file": "Innovation Practice 201_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 201",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "13.8 MB"
+    },
+    {
+     "file": "Innovation Practice 201_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 201",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "23.3 MB"
+    },
+    {
+     "file": "Innovation Practice 202_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 202",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "17.4 MB"
+    },
+    {
+     "file": "Innovation Practice 202_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 202",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "23.3 MB"
+    },
+    {
+     "file": "Innovation Practice 301_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 301",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "19.0 MB"
+    },
+    {
+     "file": "Innovation Practice 301_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 301",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "26.0 MB"
+    },
+    {
+     "file": "Innovation Practice 302_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 302",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "16.1 MB"
+    },
+    {
+     "file": "Innovation Practice 302_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 302",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "26.1 MB"
+    },
+    {
+     "file": "Innovation Practice 401_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 401",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "19.1 MB"
+    },
+    {
+     "file": "Innovation Practice 401_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 401",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "26.3 MB"
+    },
+    {
+     "file": "Innovation Practice 402_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 402",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "18.1 MB"
+    },
+    {
+     "file": "Innovation Practice 402_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 402",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "27.9 MB"
+    },
+    {
+     "file": "Innovation Practice 501_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 501",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "9.6 MB"
+    },
+    {
+     "file": "Innovation Practice 501_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 501",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "25.0 MB"
+    },
+    {
+     "file": "Innovation Practice 502_EN.pdf",
+     "group": "",
+     "title": "Innovation Practice 502",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "19.6 MB"
+    },
+    {
+     "file": "Innovation Practice 502_IT.pdf",
+     "group": "",
+     "title": "Innovation Practice 502",
+     "type": "pdf",
+     "lang": "IT",
+     "size": "144.6 MB"
+    },
+    {
+     "file": "Innovation Practice 502_TC.pdf",
+     "group": "",
+     "title": "Innovation Practice 502",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "28.6 MB"
+    },
+    {
+     "file": "K101-百变造型 · 01_折叠椅_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "01_折叠椅_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "K101-百变造型 · 01_折叠椅_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "01_折叠椅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.6 MB"
+    },
+    {
+     "file": "K101-百变造型 · 01_折叠椅_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "01_折叠椅_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "384.3 KB"
+    },
+    {
+     "file": "K101-百变造型 · 02_滑板车_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "02_滑板车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.5 MB"
+    },
+    {
+     "file": "K101-百变造型 · 02_滑板车_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "02_滑板车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "K101-百变造型 · 02_滑板车_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "02_滑板车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "348.0 KB"
+    },
+    {
+     "file": "K101-百变造型 · 03_机械夹子_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "03_机械夹子_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "6.2 MB"
+    },
+    {
+     "file": "K101-百变造型 · 03_机械夹子_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "03_机械夹子_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "K101-百变造型 · 03_机械夹子_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "03_机械夹子_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "363.1 KB"
+    },
+    {
+     "file": "K101-百变造型 · 04_机械秤_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "04_机械秤_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.8 MB"
+    },
+    {
+     "file": "K101-百变造型 · 04_机械秤_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "04_机械秤_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.2 MB"
+    },
+    {
+     "file": "K101-百变造型 · 04_机械秤_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "04_机械秤_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "360.2 KB"
+    },
+    {
+     "file": "K101-百变造型 · 05_不倒翁_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "05_不倒翁_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.1 MB"
+    },
+    {
+     "file": "K101-百变造型 · 05_不倒翁_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "05_不倒翁_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.7 MB"
+    },
+    {
+     "file": "K101-百变造型 · 05_不倒翁_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "05_不倒翁_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "337.6 KB"
+    },
+    {
+     "file": "K101-百变造型 · 06_跷跷板_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "06_跷跷板_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.2 MB"
+    },
+    {
+     "file": "K101-百变造型 · 06_跷跷板_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "06_跷跷板_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.5 MB"
+    },
+    {
+     "file": "K101-百变造型 · 06_跷跷板_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "06_跷跷板_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "343.7 KB"
+    },
+    {
+     "file": "K101-百变造型 · 07_幸运大转盘_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "07_幸运大转盘_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.4 MB"
+    },
+    {
+     "file": "K101-百变造型 · 07_幸运大转盘_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "07_幸运大转盘_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "74.4 MB"
+    },
+    {
+     "file": "K101-百变造型 · 07_幸运大转盘_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "07_幸运大转盘_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "344.2 KB"
+    },
+    {
+     "file": "K101-百变造型 · 08_垃圾桶_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "08_垃圾桶_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.1 MB"
+    },
+    {
+     "file": "K101-百变造型 · 08_垃圾桶_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "08_垃圾桶_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "47.8 MB"
+    },
+    {
+     "file": "K101-百变造型 · 08_垃圾桶_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "08_垃圾桶_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "353.8 KB"
+    },
+    {
+     "file": "K101-百变造型 · 09_旋转灯笼_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "09_旋转灯笼_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.0 MB"
+    },
+    {
+     "file": "K101-百变造型 · 09_旋转灯笼_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "09_旋转灯笼_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.7 MB"
+    },
+    {
+     "file": "K101-百变造型 · 09_旋转灯笼_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "09_旋转灯笼_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "339.3 KB"
+    },
+    {
+     "file": "K101-百变造型 · 10_手转陀螺_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "10_手转陀螺_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "6.4 MB"
+    },
+    {
+     "file": "K101-百变造型 · 10_手转陀螺_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "10_手转陀螺_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.3 MB"
+    },
+    {
+     "file": "K101-百变造型 · 10_手转陀螺_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "10_手转陀螺_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "344.9 KB"
+    },
+    {
+     "file": "K101-百变造型 · 11_视觉机构_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "11_视觉机构_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.1 MB"
+    },
+    {
+     "file": "K101-百变造型 · 11_视觉机构_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "11_视觉机构_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "44.8 MB"
+    },
+    {
+     "file": "K101-百变造型 · 11_视觉机构_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "11_视觉机构_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "346.3 KB"
+    },
+    {
+     "file": "K101-百变造型 · 12_缝纫机_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "12_缝纫机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.8 MB"
+    },
+    {
+     "file": "K101-百变造型 · 12_缝纫机_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "12_缝纫机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "137.1 MB"
+    },
+    {
+     "file": "K101-百变造型 · 12_缝纫机_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "12_缝纫机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "329.3 KB"
+    },
+    {
+     "file": "K101-百变造型 · 13_钓鱼_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "13_钓鱼_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.8 MB"
+    },
+    {
+     "file": "K101-百变造型 · 13_钓鱼_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "13_钓鱼_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "49.0 MB"
+    },
+    {
+     "file": "K101-百变造型 · 13_钓鱼_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "13_钓鱼_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "344.3 KB"
+    },
+    {
+     "file": "K101-百变造型 · 14_吊车_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "14_吊车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "16.3 MB"
+    },
+    {
+     "file": "K101-百变造型 · 14_吊车_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "14_吊车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.6 MB"
+    },
+    {
+     "file": "K101-百变造型 · 14_吊车_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "14_吊车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "355.5 KB"
+    },
+    {
+     "file": "K101-百变造型 · 15_护城机械_搭建步骤.pdf",
+     "group": "K101-百变造型",
+     "title": "15_护城机械_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.3 MB"
+    },
+    {
+     "file": "K101-百变造型 · 15_护城机械_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "15_护城机械_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.2 MB"
+    },
+    {
+     "file": "K101-百变造型 · 15_护城机械_课程教案.pdf",
+     "group": "K101-百变造型",
+     "title": "15_护城机械_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "417.8 KB"
+    },
+    {
+     "file": "K101-百变造型 · 16_创意无限_演示课件.pptx",
+     "group": "K101-百变造型",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.6 MB"
+    },
+    {
+     "file": "K101-百变造型 · 16_创意无限_课程教案.docx",
+     "group": "K101-百变造型",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "17.1 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 01_折叠椅_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "01_折叠椅_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "4.1 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 01_折叠椅_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "01_折叠椅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.7 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 01_折叠椅_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "01_折叠椅_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "259.3 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 02_滑板车_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "02_滑板车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.1 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 02_滑板车_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "02_滑板车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.7 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 02_滑板车_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "02_滑板车_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "251.2 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 03_机械夹子_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "03_机械夹子_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "6.3 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 03_机械夹子_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "03_机械夹子_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "1.8 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 03_机械夹子_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "03_机械夹子_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "249.0 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 04_机械秤_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "04_机械秤_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 04_机械秤_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "04_机械秤_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.9 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 04_机械秤_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "04_机械秤_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "272.0 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 05_不倒翁_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "05_不倒翁_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.6 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 05_不倒翁_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "05_不倒翁_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 05_不倒翁_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "05_不倒翁_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "261.3 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 06_跷跷板_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "06_跷跷板_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 06_跷跷板_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "06_跷跷板_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 06_跷跷板_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "06_跷跷板_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "266.6 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 07_幸运大转盘_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "07_幸运大转盘_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 07_幸运大转盘_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "07_幸运大转盘_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "82.4 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 07_幸运大转盘_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "07_幸运大转盘_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "269.9 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 08_垃圾桶_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "08_垃圾桶_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.5 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 08_垃圾桶_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "08_垃圾桶_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "57.6 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 08_垃圾桶_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "08_垃圾桶_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "278.3 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 09_旋转灯笼_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "09_旋转灯笼_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.3 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 09_旋转灯笼_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "09_旋转灯笼_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "8.3 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 09_旋转灯笼_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "09_旋转灯笼_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "263.4 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 10_手转陀螺_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "10_手转陀螺_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.1 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 10_手转陀螺_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "10_手转陀螺_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.3 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 10_手转陀螺_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "10_手转陀螺_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "279.1 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 11_视觉机构_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "11_视觉机构_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 11_视觉机构_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "11_视觉机构_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "51.4 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 11_视觉机构_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "11_视觉机构_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "297.2 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 12_缝纫机_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "12_缝纫机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.8 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 12_缝纫机_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "12_缝纫机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "143.4 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 12_缝纫机_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "12_缝纫机_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "267.1 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 13_钓鱼_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "13_钓鱼_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.3 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 13_钓鱼_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "13_钓鱼_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "49.0 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 13_钓鱼_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "13_钓鱼_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "298.9 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 14_吊车_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "14_吊车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.6 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 14_吊车_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "14_吊车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "24.2 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 14_吊车_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "14_吊车_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "297.0 KB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 15_护城机械_搭建步骤.pdf",
+     "group": "K101-百变造型（独立版）",
+     "title": "15_护城机械_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.9 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 15_护城机械_演示课件.pptx",
+     "group": "K101-百变造型（独立版）",
+     "title": "15_护城机械_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "28.4 MB"
+    },
+    {
+     "file": "K101-百变造型（独立版） · 15_护城机械_课程教案.docx",
+     "group": "K101-百变造型（独立版）",
+     "title": "15_护城机械_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "311.2 KB"
+    },
+    {
+     "file": "K102-动力机械 · 01_弹力小车_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "01_弹力小车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.9 MB"
+    },
+    {
+     "file": "K102-动力机械 · 01_弹力小车_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "01_弹力小车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "42.8 MB"
+    },
+    {
+     "file": "K102-动力机械 · 01_弹力小车_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "01_弹力小车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "384.1 KB"
+    },
+    {
+     "file": "K102-动力机械 · 02_捕鼠夹_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "02_捕鼠夹_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.6 MB"
+    },
+    {
+     "file": "K102-动力机械 · 02_捕鼠夹_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "02_捕鼠夹_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "13.0 MB"
+    },
+    {
+     "file": "K102-动力机械 · 02_捕鼠夹_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "02_捕鼠夹_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "404.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 03_手压风扇_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "03_手压风扇_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.7 MB"
+    },
+    {
+     "file": "K102-动力机械 · 03_手压风扇_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "03_手压风扇_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "65.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 03_手压风扇_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "03_手压风扇_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "388.2 KB"
+    },
+    {
+     "file": "K102-动力机械 · 04_大摆锤_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "04_大摆锤_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.3 MB"
+    },
+    {
+     "file": "K102-动力机械 · 04_大摆锤_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "04_大摆锤_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.2 MB"
+    },
+    {
+     "file": "K102-动力机械 · 04_大摆锤_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "04_大摆锤_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "388.4 KB"
+    },
+    {
+     "file": "K102-动力机械 · 05_旋转飞椅_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "05_旋转飞椅_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.5 MB"
+    },
+    {
+     "file": "K102-动力机械 · 05_旋转飞椅_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "05_旋转飞椅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 05_旋转飞椅_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "05_旋转飞椅_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "383.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 06_摩天轮_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "06_摩天轮_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.2 MB"
+    },
+    {
+     "file": "K102-动力机械 · 06_摩天轮_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "06_摩天轮_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.5 MB"
+    },
+    {
+     "file": "K102-动力机械 · 06_摩天轮_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "06_摩天轮_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "399.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 07_秋千_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "07_秋千_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.3 MB"
+    },
+    {
+     "file": "K102-动力机械 · 07_秋千_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "07_秋千_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "29.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 07_秋千_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "07_秋千_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "381.4 KB"
+    },
+    {
+     "file": "K102-动力机械 · 08_移动篮板_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "08_移动篮板_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.0 MB"
+    },
+    {
+     "file": "K102-动力机械 · 08_移动篮板_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "08_移动篮板_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "62.9 MB"
+    },
+    {
+     "file": "K102-动力机械 · 08_移动篮板_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "08_移动篮板_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "375.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 09_稻草人_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "09_稻草人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.3 MB"
+    },
+    {
+     "file": "K102-动力机械 · 09_稻草人_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "09_稻草人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "89.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 09_稻草人_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "09_稻草人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "379.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 10_抽油机_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "10_抽油机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.8 MB"
+    },
+    {
+     "file": "K102-动力机械 · 10_抽油机_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "10_抽油机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "65.9 MB"
+    },
+    {
+     "file": "K102-动力机械 · 10_抽油机_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "10_抽油机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "368.8 KB"
+    },
+    {
+     "file": "K102-动力机械 · 11_跳舞小人_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "11_跳舞小人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.0 MB"
+    },
+    {
+     "file": "K102-动力机械 · 11_跳舞小人_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "11_跳舞小人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "61.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 11_跳舞小人_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "11_跳舞小人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "382.3 KB"
+    },
+    {
+     "file": "K102-动力机械 · 12_海盗船_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "12_海盗船_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.1 MB"
+    },
+    {
+     "file": "K102-动力机械 · 12_海盗船_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "12_海盗船_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "28.0 MB"
+    },
+    {
+     "file": "K102-动力机械 · 12_海盗船_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "12_海盗船_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "401.7 KB"
+    },
+    {
+     "file": "K102-动力机械 · 13_雨刮器_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "13_雨刮器_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.4 MB"
+    },
+    {
+     "file": "K102-动力机械 · 13_雨刮器_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "13_雨刮器_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "38.7 MB"
+    },
+    {
+     "file": "K102-动力机械 · 13_雨刮器_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "13_雨刮器_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "384.1 KB"
+    },
+    {
+     "file": "K102-动力机械 · 14_扫地车_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "14_扫地车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.0 MB"
+    },
+    {
+     "file": "K102-动力机械 · 14_扫地车_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "14_扫地车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.2 MB"
+    },
+    {
+     "file": "K102-动力机械 · 14_扫地车_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "14_扫地车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "394.7 KB"
+    },
+    {
+     "file": "K102-动力机械 · 15_投石车_搭建步骤.pdf",
+     "group": "K102-动力机械",
+     "title": "15_投石车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "16.3 MB"
+    },
+    {
+     "file": "K102-动力机械 · 15_投石车_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "15_投石车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.9 MB"
+    },
+    {
+     "file": "K102-动力机械 · 15_投石车_课程教案.pdf",
+     "group": "K102-动力机械",
+     "title": "15_投石车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "401.5 KB"
+    },
+    {
+     "file": "K102-动力机械 · 16_创意无限_演示课件.pptx",
+     "group": "K102-动力机械",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.5 MB"
+    },
+    {
+     "file": "K102-动力机械 · 16_创意无限_课程教案.docx",
+     "group": "K102-动力机械",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "17.1 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 01_弹力小车_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "01_弹力小车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 01_弹力小车_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "01_弹力小车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "62.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 01_弹力小车_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "01_弹力小车_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "298.8 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 02_捕鼠夹_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "02_捕鼠夹_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 02_捕鼠夹_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "02_捕鼠夹_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "13.0 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 02_捕鼠夹_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "02_捕鼠夹_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "307.7 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 03_手压风扇_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "03_手压风扇_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.3 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 03_手压风扇_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "03_手压风扇_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "71.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 03_手压风扇_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "03_手压风扇_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "317.8 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 04_大摆锤_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "04_大摆锤_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.7 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 04_大摆锤_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "04_大摆锤_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.3 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 04_大摆锤_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "04_大摆锤_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "325.9 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 05_旋转飞椅_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "05_旋转飞椅_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.8 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 05_旋转飞椅_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "05_旋转飞椅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "22.3 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 05_旋转飞椅_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "05_旋转飞椅_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "326.1 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 06_摩天轮_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "06_摩天轮_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 06_摩天轮_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "06_摩天轮_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.7 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 06_摩天轮_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "06_摩天轮_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "335.8 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 07_秋千_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "07_秋千_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.6 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 07_秋千_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "07_秋千_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "29.1 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 07_秋千_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "07_秋千_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "332.8 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 08_移动篮板_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "08_移动篮板_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 08_移动篮板_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "08_移动篮板_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "62.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 08_移动篮板_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "08_移动篮板_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "330.2 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 09_稻草人_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "09_稻草人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.7 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 09_稻草人_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "09_稻草人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "97.1 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 09_稻草人_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "09_稻草人_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "331.8 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 10_抽油机_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "10_抽油机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.6 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 10_抽油机_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "10_抽油机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "75.6 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 10_抽油机_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "10_抽油机_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "337.3 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 11_跳舞小人_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "11_跳舞小人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.0 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 11_跳舞小人_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "11_跳舞小人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "69.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 11_跳舞小人_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "11_跳舞小人_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "350.6 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 12_海盗船_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "12_海盗船_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 12_海盗船_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "12_海盗船_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "35.8 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 12_海盗船_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "12_海盗船_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "361.5 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 13_雨刮器_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "13_雨刮器_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.7 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 13_雨刮器_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "13_雨刮器_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "53.4 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 13_雨刮器_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "13_雨刮器_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "360.7 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 14_扫地车_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "14_扫地车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 14_扫地车_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "14_扫地车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "26.9 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 14_扫地车_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "14_扫地车_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "367.1 KB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 15_投石机_搭建步骤.pdf",
+     "group": "K102-动力机械（独立版）",
+     "title": "15_投石机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.2 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 15_投石机_演示课件.pptx",
+     "group": "K102-动力机械（独立版）",
+     "title": "15_投石机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "23.5 MB"
+    },
+    {
+     "file": "K102-动力机械（独立版） · 15_投石机_课程教案.docx",
+     "group": "K102-动力机械（独立版）",
+     "title": "15_投石机_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "370.7 KB"
+    },
+    {
+     "file": "K201-动力工程 · 01_青蛙_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "01_青蛙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.1 MB"
+    },
+    {
+     "file": "K201-动力工程 · 01_青蛙_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "01_青蛙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.5 MB"
+    },
+    {
+     "file": "K201-动力工程 · 01_青蛙_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "01_青蛙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "384.0 KB"
+    },
+    {
+     "file": "K201-动力工程 · 02_尺蠖_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "02_尺蠖_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.4 MB"
+    },
+    {
+     "file": "K201-动力工程 · 02_尺蠖_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "02_尺蠖_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "52.3 MB"
+    },
+    {
+     "file": "K201-动力工程 · 02_尺蠖_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "02_尺蠖_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "387.7 KB"
+    },
+    {
+     "file": "K201-动力工程 · 03_螃蟹_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "03_螃蟹_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.0 MB"
+    },
+    {
+     "file": "K201-动力工程 · 03_螃蟹_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "03_螃蟹_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "35.9 MB"
+    },
+    {
+     "file": "K201-动力工程 · 03_螃蟹_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "03_螃蟹_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "381.5 KB"
+    },
+    {
+     "file": "K201-动力工程 · 04_蜗牛_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "04_蜗牛_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "8.2 MB"
+    },
+    {
+     "file": "K201-动力工程 · 04_蜗牛_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "04_蜗牛_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "38.3 MB"
+    },
+    {
+     "file": "K201-动力工程 · 04_蜗牛_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "04_蜗牛_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "401.5 KB"
+    },
+    {
+     "file": "K201-动力工程 · 05_双足机器人_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "05_双足机器人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.2 MB"
+    },
+    {
+     "file": "K201-动力工程 · 05_双足机器人_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "05_双足机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "35.1 MB"
+    },
+    {
+     "file": "K201-动力工程 · 05_双足机器人_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "05_双足机器人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "396.6 KB"
+    },
+    {
+     "file": "K201-动力工程 · 06_六足机器人_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "06_六足机器人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.6 MB"
+    },
+    {
+     "file": "K201-动力工程 · 06_六足机器人_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "06_六足机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "41.8 MB"
+    },
+    {
+     "file": "K201-动力工程 · 06_六足机器人_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "06_六足机器人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "389.9 KB"
+    },
+    {
+     "file": "K201-动力工程 · 07_舞龙_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "07_舞龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.2 MB"
+    },
+    {
+     "file": "K201-动力工程 · 07_舞龙_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "07_舞龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.5 MB"
+    },
+    {
+     "file": "K201-动力工程 · 07_舞龙_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "07_舞龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "375.5 KB"
+    },
+    {
+     "file": "K201-动力工程 · 08_举重_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "08_举重_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.1 MB"
+    },
+    {
+     "file": "K201-动力工程 · 08_举重_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "08_举重_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.6 MB"
+    },
+    {
+     "file": "K201-动力工程 · 08_举重_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "08_举重_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "386.8 KB"
+    },
+    {
+     "file": "K201-动力工程 · 09_动感单车_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "09_动感单车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "17.6 MB"
+    },
+    {
+     "file": "K201-动力工程 · 09_动感单车_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "09_动感单车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "35.1 MB"
+    },
+    {
+     "file": "K201-动力工程 · 09_动感单车_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "09_动感单车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "393.5 KB"
+    },
+    {
+     "file": "K201-动力工程 · 10_引体向上_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "10_引体向上_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.4 MB"
+    },
+    {
+     "file": "K201-动力工程 · 10_引体向上_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "10_引体向上_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "36.7 MB"
+    },
+    {
+     "file": "K201-动力工程 · 10_引体向上_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "10_引体向上_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "376.2 KB"
+    },
+    {
+     "file": "K201-动力工程 · 11_走钢丝_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "11_走钢丝_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.8 MB"
+    },
+    {
+     "file": "K201-动力工程 · 11_走钢丝_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "11_走钢丝_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "41.7 MB"
+    },
+    {
+     "file": "K201-动力工程 · 11_走钢丝_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "11_走钢丝_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "380.8 KB"
+    },
+    {
+     "file": "K201-动力工程 · 12_划船_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "12_划船_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.2 MB"
+    },
+    {
+     "file": "K201-动力工程 · 12_划船_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "12_划船_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "48.2 MB"
+    },
+    {
+     "file": "K201-动力工程 · 12_划船_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "12_划船_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "383.8 KB"
+    },
+    {
+     "file": "K201-动力工程 · 13_跳绳_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "13_跳绳_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "12.9 MB"
+    },
+    {
+     "file": "K201-动力工程 · 13_跳绳_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "13_跳绳_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "66.9 MB"
+    },
+    {
+     "file": "K201-动力工程 · 13_跳绳_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "13_跳绳_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "386.5 KB"
+    },
+    {
+     "file": "K201-动力工程 · 14_游泳_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "14_游泳_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.0 MB"
+    },
+    {
+     "file": "K201-动力工程 · 14_游泳_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "14_游泳_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "36.4 MB"
+    },
+    {
+     "file": "K201-动力工程 · 14_游泳_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "14_游泳_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "380.9 KB"
+    },
+    {
+     "file": "K201-动力工程 · 15_平步机_搭建步骤.pdf",
+     "group": "K201-动力工程",
+     "title": "15_平步机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "18.4 MB"
+    },
+    {
+     "file": "K201-动力工程 · 15_平步机_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "15_平步机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "30.5 MB"
+    },
+    {
+     "file": "K201-动力工程 · 15_平步机_课程教案.pdf",
+     "group": "K201-动力工程",
+     "title": "15_平步机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "386.2 KB"
+    },
+    {
+     "file": "K201-动力工程 · 16_创意无限_演示课件.pptx",
+     "group": "K201-动力工程",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.6 MB"
+    },
+    {
+     "file": "K201-动力工程 · 16_创意无限_课程教案.docx",
+     "group": "K201-动力工程",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.8 KB"
+    },
+    {
+     "file": "K202-创意制造 · 01_三角龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "01_三角龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.1 MB"
+    },
+    {
+     "file": "K202-创意制造 · 01_三角龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "01_三角龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "18.7 MB"
+    },
+    {
+     "file": "K202-创意制造 · 01_三角龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "01_三角龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "390.8 KB"
+    },
+    {
+     "file": "K202-创意制造 · 02_翼龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "02_翼龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.6 MB"
+    },
+    {
+     "file": "K202-创意制造 · 02_翼龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "02_翼龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "23.4 MB"
+    },
+    {
+     "file": "K202-创意制造 · 02_翼龙_课程教案.docx",
+     "group": "K202-创意制造",
+     "title": "02_翼龙_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "82.6 KB"
+    },
+    {
+     "file": "K202-创意制造 · 03_腕龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "03_腕龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.1 MB"
+    },
+    {
+     "file": "K202-创意制造 · 03_腕龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "03_腕龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "23.2 MB"
+    },
+    {
+     "file": "K202-创意制造 · 03_腕龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "03_腕龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "342.3 KB"
+    },
+    {
+     "file": "K202-创意制造 · 04_蛇颈龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "04_蛇颈龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.8 MB"
+    },
+    {
+     "file": "K202-创意制造 · 04_蛇颈龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "04_蛇颈龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 04_蛇颈龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "04_蛇颈龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "383.2 KB"
+    },
+    {
+     "file": "K202-创意制造 · 05_剑龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "05_剑龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "16.5 MB"
+    },
+    {
+     "file": "K202-创意制造 · 05_剑龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "05_剑龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "42.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 05_剑龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "05_剑龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "402.7 KB"
+    },
+    {
+     "file": "K202-创意制造 · 06_副栉龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "06_副栉龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "17.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 06_副栉龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "06_副栉龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "25.4 MB"
+    },
+    {
+     "file": "K202-创意制造 · 06_副栉龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "06_副栉龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "403.1 KB"
+    },
+    {
+     "file": "K202-创意制造 · 07_霸王龙_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "07_霸王龙_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "28.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 07_霸王龙_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "07_霸王龙_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "23.9 MB"
+    },
+    {
+     "file": "K202-创意制造 · 07_霸王龙_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "07_霸王龙_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "388.6 KB"
+    },
+    {
+     "file": "K202-创意制造 · 08_弩_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "08_弩_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.9 MB"
+    },
+    {
+     "file": "K202-创意制造 · 08_弩_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "08_弩_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.8 MB"
+    },
+    {
+     "file": "K202-创意制造 · 08_弩_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "08_弩_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "348.3 KB"
+    },
+    {
+     "file": "K202-创意制造 · 09_连发手枪_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "09_连发手枪_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.6 MB"
+    },
+    {
+     "file": "K202-创意制造 · 09_连发手枪_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "09_连发手枪_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "61.3 MB"
+    },
+    {
+     "file": "K202-创意制造 · 09_连发手枪_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "09_连发手枪_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "395.6 KB"
+    },
+    {
+     "file": "K202-创意制造 · 10_加特林_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "10_加特林_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.8 MB"
+    },
+    {
+     "file": "K202-创意制造 · 10_加特林_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "10_加特林_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "134.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 10_加特林_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "10_加特林_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "408.6 KB"
+    },
+    {
+     "file": "K202-创意制造 · 11_迫击炮_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "11_迫击炮_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "20.3 MB"
+    },
+    {
+     "file": "K202-创意制造 · 11_迫击炮_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "11_迫击炮_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "65.9 MB"
+    },
+    {
+     "file": "K202-创意制造 · 11_迫击炮_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "11_迫击炮_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "403.0 KB"
+    },
+    {
+     "file": "K202-创意制造 · 12_防空导弹_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "12_防空导弹_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "16.0 MB"
+    },
+    {
+     "file": "K202-创意制造 · 12_防空导弹_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "12_防空导弹_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "24.7 MB"
+    },
+    {
+     "file": "K202-创意制造 · 12_防空导弹_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "12_防空导弹_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "408.6 KB"
+    },
+    {
+     "file": "K202-创意制造 · 13_雷达巡逻车_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "13_雷达巡逻车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "22.3 MB"
+    },
+    {
+     "file": "K202-创意制造 · 13_雷达巡逻车_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "13_雷达巡逻车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "40.6 MB"
+    },
+    {
+     "file": "K202-创意制造 · 13_雷达巡逻车_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "13_雷达巡逻车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "382.8 KB"
+    },
+    {
+     "file": "K202-创意制造 · 14_气垫船_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "14_气垫船_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "32.1 MB"
+    },
+    {
+     "file": "K202-创意制造 · 14_气垫船_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "14_气垫船_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "110.6 MB"
+    },
+    {
+     "file": "K202-创意制造 · 14_气垫船_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "14_气垫船_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "385.0 KB"
+    },
+    {
+     "file": "K202-创意制造 · 15_直升机_搭建步骤.pdf",
+     "group": "K202-创意制造",
+     "title": "15_直升机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "20.2 MB"
+    },
+    {
+     "file": "K202-创意制造 · 15_直升机_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "15_直升机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "46.6 MB"
+    },
+    {
+     "file": "K202-创意制造 · 15_直升机_课程教案.pdf",
+     "group": "K202-创意制造",
+     "title": "15_直升机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "385.1 KB"
+    },
+    {
+     "file": "K202-创意制造 · 16_创意无限_演示课件.pptx",
+     "group": "K202-创意制造",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.2 MB"
+    },
+    {
+     "file": "K202-创意制造 · 16_创意无限_课程教案.docx",
+     "group": "K202-创意制造",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.8 KB"
+    },
+    {
+     "file": "K301-程序交互 · 01_电动风扇_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "01_电动风扇_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "6.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 01_电动风扇_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "01_电动风扇_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "31.0 MB"
+    },
+    {
+     "file": "K301-程序交互 · 01_电动风扇_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "01_电动风扇_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "396.4 KB"
+    },
+    {
+     "file": "K301-程序交互 · 02_灯塔_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "02_灯塔_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.0 MB"
+    },
+    {
+     "file": "K301-程序交互 · 02_灯塔_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "02_灯塔_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "25.5 MB"
+    },
+    {
+     "file": "K301-程序交互 · 02_灯塔_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "02_灯塔_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "415.0 KB"
+    },
+    {
+     "file": "K301-程序交互 · 03_洗衣机_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "03_洗衣机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.2 MB"
+    },
+    {
+     "file": "K301-程序交互 · 03_洗衣机_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "03_洗衣机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "26.4 MB"
+    },
+    {
+     "file": "K301-程序交互 · 03_洗衣机_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "03_洗衣机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "402.1 KB"
+    },
+    {
+     "file": "K301-程序交互 · 04_台灯_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "04_台灯_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "15.0 MB"
+    },
+    {
+     "file": "K301-程序交互 · 04_台灯_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "04_台灯_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "66.5 MB"
+    },
+    {
+     "file": "K301-程序交互 · 04_台灯_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "04_台灯_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "394.3 KB"
+    },
+    {
+     "file": "K301-程序交互 · 05_电钻_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "05_电钻_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "9.3 MB"
+    },
+    {
+     "file": "K301-程序交互 · 05_电钻_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "05_电钻_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "41.8 MB"
+    },
+    {
+     "file": "K301-程序交互 · 05_电钻_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "05_电钻_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "401.3 KB"
+    },
+    {
+     "file": "K301-程序交互 · 06_迎宾机器人_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "06_迎宾机器人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.5 MB"
+    },
+    {
+     "file": "K301-程序交互 · 06_迎宾机器人_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "06_迎宾机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "29.9 MB"
+    },
+    {
+     "file": "K301-程序交互 · 06_迎宾机器人_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "06_迎宾机器人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "404.5 KB"
+    },
+    {
+     "file": "K301-程序交互 · 07_传送带_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "07_传送带_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "K301-程序交互 · 07_传送带_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "07_传送带_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "24.2 MB"
+    },
+    {
+     "file": "K301-程序交互 · 07_传送带_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "07_传送带_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "412.6 KB"
+    },
+    {
+     "file": "K301-程序交互 · 08_旋转门_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "08_旋转门_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.9 MB"
+    },
+    {
+     "file": "K301-程序交互 · 08_旋转门_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "08_旋转门_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "267.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 08_旋转门_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "08_旋转门_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "397.9 KB"
+    },
+    {
+     "file": "K301-程序交互 · 09_炒菜机器人_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "09_炒菜机器人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "35.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 09_炒菜机器人_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "09_炒菜机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "108.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 09_炒菜机器人_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "09_炒菜机器人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "405.1 KB"
+    },
+    {
+     "file": "K301-程序交互 · 10_切菜机器人_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "10_切菜机器人_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "10.9 MB"
+    },
+    {
+     "file": "K301-程序交互 · 10_切菜机器人_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "10_切菜机器人_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "41.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 10_切菜机器人_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "10_切菜机器人_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "402.3 KB"
+    },
+    {
+     "file": "K301-程序交互 · 11_密码门_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "11_密码门_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "21.4 MB"
+    },
+    {
+     "file": "K301-程序交互 · 11_密码门_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "11_密码门_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "26.8 MB"
+    },
+    {
+     "file": "K301-程序交互 · 11_密码门_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "11_密码门_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "396.7 KB"
+    },
+    {
+     "file": "K301-程序交互 · 12_摇摇车_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "12_摇摇车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K301-程序交互 · 12_摇摇车_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "12_摇摇车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "20.6 MB"
+    },
+    {
+     "file": "K301-程序交互 · 12_摇摇车_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "12_摇摇车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "392.9 KB"
+    },
+    {
+     "file": "K301-程序交互 · 13_机械爪_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "13_机械爪_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.2 MB"
+    },
+    {
+     "file": "K301-程序交互 · 13_机械爪_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "13_机械爪_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "22.2 MB"
+    },
+    {
+     "file": "K301-程序交互 · 13_机械爪_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "13_机械爪_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "398.0 KB"
+    },
+    {
+     "file": "K301-程序交互 · 14_塔吊_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "14_塔吊_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "18.2 MB"
+    },
+    {
+     "file": "K301-程序交互 · 14_塔吊_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "14_塔吊_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "36.0 MB"
+    },
+    {
+     "file": "K301-程序交互 · 14_塔吊_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "14_塔吊_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "405.4 KB"
+    },
+    {
+     "file": "K301-程序交互 · 15_智能垃圾桶_搭建步骤.pdf",
+     "group": "K301-程序交互",
+     "title": "15_智能垃圾桶_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "40.9 MB"
+    },
+    {
+     "file": "K301-程序交互 · 15_智能垃圾桶_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "15_智能垃圾桶_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "28.1 MB"
+    },
+    {
+     "file": "K301-程序交互 · 15_智能垃圾桶_课程教案.pdf",
+     "group": "K301-程序交互",
+     "title": "15_智能垃圾桶_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "396.9 KB"
+    },
+    {
+     "file": "K301-程序交互 · 16_创意无限_演示课件.pptx",
+     "group": "K301-程序交互",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.0 MB"
+    },
+    {
+     "file": "K301-程序交互 · 16_创意无限_课程教案.docx",
+     "group": "K301-程序交互",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.8 KB"
+    },
+    {
+     "file": "K302-传感控制 · 01_变速箱_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "01_变速箱_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "32.0 MB"
+    },
+    {
+     "file": "K302-传感控制 · 01_变速箱_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "01_变速箱_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "80.9 MB"
+    },
+    {
+     "file": "K302-传感控制 · 01_变速箱_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "01_变速箱_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "389.6 KB"
+    },
+    {
+     "file": "K302-传感控制 · 02_钻孔车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "02_钻孔车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "26.1 MB"
+    },
+    {
+     "file": "K302-传感控制 · 02_钻孔车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "02_钻孔车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.3 MB"
+    },
+    {
+     "file": "K302-传感控制 · 02_钻孔车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "02_钻孔车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "376.2 KB"
+    },
+    {
+     "file": "K302-传感控制 · 03_摩托车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "03_摩托车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "14.6 MB"
+    },
+    {
+     "file": "K302-传感控制 · 03_摩托车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "03_摩托车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.1 MB"
+    },
+    {
+     "file": "K302-传感控制 · 03_摩托车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "03_摩托车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "379.5 KB"
+    },
+    {
+     "file": "K302-传感控制 · 04_越野车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "04_越野车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "26.5 MB"
+    },
+    {
+     "file": "K302-传感控制 · 04_越野车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "04_越野车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "69.7 MB"
+    },
+    {
+     "file": "K302-传感控制 · 04_越野车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "04_越野车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "382.2 KB"
+    },
+    {
+     "file": "K302-传感控制 · 05_压路机_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "05_压路机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "43.3 MB"
+    },
+    {
+     "file": "K302-传感控制 · 05_压路机_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "05_压路机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "62.7 MB"
+    },
+    {
+     "file": "K302-传感控制 · 05_压路机_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "05_压路机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "366.2 KB"
+    },
+    {
+     "file": "K302-传感控制 · 06_叉车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "06_叉车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "38.6 MB"
+    },
+    {
+     "file": "K302-传感控制 · 06_叉车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "06_叉车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "106.6 MB"
+    },
+    {
+     "file": "K302-传感控制 · 06_叉车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "06_叉车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "367.0 KB"
+    },
+    {
+     "file": "K302-传感控制 · 07_交通灯_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "07_交通灯_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.1 MB"
+    },
+    {
+     "file": "K302-传感控制 · 07_交通灯_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "07_交通灯_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "87.3 MB"
+    },
+    {
+     "file": "K302-传感控制 · 07_交通灯_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "07_交通灯_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "392.3 KB"
+    },
+    {
+     "file": "K302-传感控制 · 08_救护车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "08_救护车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "30.0 MB"
+    },
+    {
+     "file": "K302-传感控制 · 08_救护车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "08_救护车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "157.6 MB"
+    },
+    {
+     "file": "K302-传感控制 · 08_救护车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "08_救护车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "386.8 KB"
+    },
+    {
+     "file": "K302-传感控制 · 09_道路清扫车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "09_道路清扫车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "34.9 MB"
+    },
+    {
+     "file": "K302-传感控制 · 09_道路清扫车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "09_道路清扫车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "87.5 MB"
+    },
+    {
+     "file": "K302-传感控制 · 09_道路清扫车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "09_道路清扫车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "380.2 KB"
+    },
+    {
+     "file": "K302-传感控制 · 10_智能闹钟_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "10_智能闹钟_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "23.0 MB"
+    },
+    {
+     "file": "K302-传感控制 · 10_智能闹钟_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "10_智能闹钟_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "13.8 MB"
+    },
+    {
+     "file": "K302-传感控制 · 10_智能闹钟_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "10_智能闹钟_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "368.3 KB"
+    },
+    {
+     "file": "K302-传感控制 · 11_旋转飞机_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "11_旋转飞机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "35.7 MB"
+    },
+    {
+     "file": "K302-传感控制 · 11_旋转飞机_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "11_旋转飞机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "254.9 MB"
+    },
+    {
+     "file": "K302-传感控制 · 11_旋转飞机_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "11_旋转飞机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "378.8 KB"
+    },
+    {
+     "file": "K302-传感控制 · 12_卡车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "12_卡车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "53.0 MB"
+    },
+    {
+     "file": "K302-传感控制 · 12_卡车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "12_卡车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "24.0 MB"
+    },
+    {
+     "file": "K302-传感控制 · 12_卡车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "12_卡车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "369.6 KB"
+    },
+    {
+     "file": "K302-传感控制 · 13_赛车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "13_赛车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "59.3 MB"
+    },
+    {
+     "file": "K302-传感控制 · 13_赛车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "13_赛车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "98.1 MB"
+    },
+    {
+     "file": "K302-传感控制 · 13_赛车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "13_赛车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "376.6 KB"
+    },
+    {
+     "file": "K302-传感控制 · 14_水泥搅拌车_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "14_水泥搅拌车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "55.4 MB"
+    },
+    {
+     "file": "K302-传感控制 · 14_水泥搅拌车_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "14_水泥搅拌车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.9 MB"
+    },
+    {
+     "file": "K302-传感控制 · 14_水泥搅拌车_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "14_水泥搅拌车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "364.5 KB"
+    },
+    {
+     "file": "K302-传感控制 · 15_智能巴士_搭建步骤.pdf",
+     "group": "K302-传感控制",
+     "title": "15_智能巴士_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "32.7 MB"
+    },
+    {
+     "file": "K302-传感控制 · 15_智能巴士_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "15_智能巴士_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.2 MB"
+    },
+    {
+     "file": "K302-传感控制 · 15_智能巴士_课程教案.pdf",
+     "group": "K302-传感控制",
+     "title": "15_智能巴士_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "379.0 KB"
+    },
+    {
+     "file": "K302-传感控制 · 16_创意无限_演示课件.pptx",
+     "group": "K302-传感控制",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.9 MB"
+    },
+    {
+     "file": "K302-传感控制 · 16_创意无限_课程教案.docx",
+     "group": "K302-传感控制",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.9 KB"
+    },
+    {
+     "file": "K401-智能控制 · 01_游乐园的旋转座椅_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "01_游乐园的旋转座椅_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "31.5 MB"
+    },
+    {
+     "file": "K401-智能控制 · 01_游乐园的旋转座椅_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "01_游乐园的旋转座椅_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "42.3 MB"
+    },
+    {
+     "file": "K401-智能控制 · 01_游乐园的旋转座椅_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "01_游乐园的旋转座椅_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "347.1 KB"
+    },
+    {
+     "file": "K401-智能控制 · 02_飞快的螺旋桨_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "02_飞快的螺旋桨_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "31.6 MB"
+    },
+    {
+     "file": "K401-智能控制 · 02_飞快的螺旋桨_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "02_飞快的螺旋桨_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.2 MB"
+    },
+    {
+     "file": "K401-智能控制 · 02_飞快的螺旋桨_课程教案.docx",
+     "group": "K401-智能控制",
+     "title": "02_飞快的螺旋桨_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "391.2 KB"
+    },
+    {
+     "file": "K401-智能控制 · 03_雨刮器_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "03_雨刮器_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "17.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 03_雨刮器_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "03_雨刮器_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.2 MB"
+    },
+    {
+     "file": "K401-智能控制 · 03_雨刮器_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "03_雨刮器_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "362.8 KB"
+    },
+    {
+     "file": "K401-智能控制 · 04_摇滚烤架_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "04_摇滚烤架_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "27.0 MB"
+    },
+    {
+     "file": "K401-智能控制 · 04_摇滚烤架_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "04_摇滚烤架_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.5 MB"
+    },
+    {
+     "file": "K401-智能控制 · 04_摇滚烤架_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "04_摇滚烤架_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "348.1 KB"
+    },
+    {
+     "file": "K401-智能控制 · 05_快乐的蠕虫_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "05_快乐的蠕虫_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 05_快乐的蠕虫_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "05_快乐的蠕虫_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.2 MB"
+    },
+    {
+     "file": "K401-智能控制 · 05_快乐的蠕虫_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "05_快乐的蠕虫_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "344.3 KB"
+    },
+    {
+     "file": "K401-智能控制 · 06_好玩的双足爬虫_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "06_好玩的双足爬虫_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "41.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 06_好玩的双足爬虫_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "06_好玩的双足爬虫_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.7 MB"
+    },
+    {
+     "file": "K401-智能控制 · 06_好玩的双足爬虫_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "06_好玩的双足爬虫_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "363.2 KB"
+    },
+    {
+     "file": "K401-智能控制 · 07_旋转门_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "07_旋转门_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "17.6 MB"
+    },
+    {
+     "file": "K401-智能控制 · 07_旋转门_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "07_旋转门_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.3 MB"
+    },
+    {
+     "file": "K401-智能控制 · 07_旋转门_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "07_旋转门_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "337.8 KB"
+    },
+    {
+     "file": "K401-智能控制 · 08_自动手摇扇_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "08_自动手摇扇_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "35.0 MB"
+    },
+    {
+     "file": "K401-智能控制 · 08_自动手摇扇_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "08_自动手摇扇_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "11.4 MB"
+    },
+    {
+     "file": "K401-智能控制 · 08_自动手摇扇_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "08_自动手摇扇_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "364.6 KB"
+    },
+    {
+     "file": "K401-智能控制 · 09_吊车_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "09_吊车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "32.0 MB"
+    },
+    {
+     "file": "K401-智能控制 · 09_吊车_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "09_吊车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "20.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 09_吊车_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "09_吊车_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "348.5 KB"
+    },
+    {
+     "file": "K401-智能控制 · 10_有趣的滑轮组_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "10_有趣的滑轮组_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "22.3 MB"
+    },
+    {
+     "file": "K401-智能控制 · 10_有趣的滑轮组_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "10_有趣的滑轮组_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 10_有趣的滑轮组_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "10_有趣的滑轮组_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "342.9 KB"
+    },
+    {
+     "file": "K401-智能控制 · 11_自动洗衣机_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "11_自动洗衣机_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "40.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 11_自动洗衣机_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "11_自动洗衣机_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "31.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 11_自动洗衣机_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "11_自动洗衣机_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "344.0 KB"
+    },
+    {
+     "file": "K401-智能控制 · 12_12第十二课—疯狂的陀螺_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "12_12第十二课—疯狂的陀螺_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "31.2 MB"
+    },
+    {
+     "file": "K401-智能控制 · 12_12第十二课—疯狂的陀螺_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "12_12第十二课—疯狂的陀螺_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "27.9 MB"
+    },
+    {
+     "file": "K401-智能控制 · 12_12第十二课—疯狂的陀螺_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "12_12第十二课—疯狂的陀螺_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "333.9 KB"
+    },
+    {
+     "file": "K401-智能控制 · 13_仿生含羞草_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "13_仿生含羞草_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "28.1 MB"
+    },
+    {
+     "file": "K401-智能控制 · 13_仿生含羞草_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "13_仿生含羞草_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.1 MB"
+    },
+    {
+     "file": "K401-智能控制 · 13_仿生含羞草_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "13_仿生含羞草_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "368.6 KB"
+    },
+    {
+     "file": "K401-智能控制 · 14_电池收纳（上）_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "14_电池收纳（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "52.3 MB"
+    },
+    {
+     "file": "K401-智能控制 · 14_电池收纳（上）_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "14_电池收纳（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "18.9 MB"
+    },
+    {
+     "file": "K401-智能控制 · 14_电池收纳（上）_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "14_电池收纳（上）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "335.3 KB"
+    },
+    {
+     "file": "K401-智能控制 · 15_电池收纳（下）_搭建步骤.pdf",
+     "group": "K401-智能控制",
+     "title": "15_电池收纳（下）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "52.3 MB"
+    },
+    {
+     "file": "K401-智能控制 · 15_电池收纳（下）_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "15_电池收纳（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "30.8 MB"
+    },
+    {
+     "file": "K401-智能控制 · 15_电池收纳（下）_课程教案.pdf",
+     "group": "K401-智能控制",
+     "title": "15_电池收纳（下）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "375.1 KB"
+    },
+    {
+     "file": "K401-智能控制 · 16_创意无限_演示课件.pptx",
+     "group": "K401-智能控制",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "18.1 MB"
+    },
+    {
+     "file": "K401-智能控制 · 16_创意无限_课程教案.docx",
+     "group": "K401-智能控制",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.0 KB"
+    },
+    {
+     "file": "K402-智能创造 · 01_机器中的加法运算（上）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "01_机器中的加法运算（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "29.0 MB"
+    },
+    {
+     "file": "K402-智能创造 · 01_机器中的加法运算（上）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "01_机器中的加法运算（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.0 MB"
+    },
+    {
+     "file": "K402-智能创造 · 01_机器中的加法运算（上）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "01_机器中的加法运算（上）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "338.5 KB"
+    },
+    {
+     "file": "K402-智能创造 · 02_机器中的加法运算（下）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "02_机器中的加法运算（下）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "29.0 MB"
+    },
+    {
+     "file": "K402-智能创造 · 02_机器中的加法运算（下）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "02_机器中的加法运算（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.8 MB"
+    },
+    {
+     "file": "K402-智能创造 · 02_机器中的加法运算（下）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "02_机器中的加法运算（下）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "346.1 KB"
+    },
+    {
+     "file": "K402-智能创造 · 03_三挡可调节风扇_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "03_三挡可调节风扇_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "13.1 MB"
+    },
+    {
+     "file": "K402-智能创造 · 03_三挡可调节风扇_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "03_三挡可调节风扇_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "19.2 MB"
+    },
+    {
+     "file": "K402-智能创造 · 03_三挡可调节风扇_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "03_三挡可调节风扇_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "358.4 KB"
+    },
+    {
+     "file": "K402-智能创造 · 04_超级投球器_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "04_超级投球器_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "31.1 MB"
+    },
+    {
+     "file": "K402-智能创造 · 04_超级投球器_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "04_超级投球器_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "26.7 MB"
+    },
+    {
+     "file": "K402-智能创造 · 04_超级投球器_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "04_超级投球器_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "382.0 KB"
+    },
+    {
+     "file": "K402-智能创造 · 05_停车杆_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "05_停车杆_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "20.8 MB"
+    },
+    {
+     "file": "K402-智能创造 · 05_停车杆_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "05_停车杆_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "16.1 MB"
+    },
+    {
+     "file": "K402-智能创造 · 05_停车杆_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "05_停车杆_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "367.3 KB"
+    },
+    {
+     "file": "K402-智能创造 · 06_会转圈的雷达_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "06_会转圈的雷达_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "29.2 MB"
+    },
+    {
+     "file": "K402-智能创造 · 06_会转圈的雷达_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "06_会转圈的雷达_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "21.6 MB"
+    },
+    {
+     "file": "K402-智能创造 · 06_会转圈的雷达_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "06_会转圈的雷达_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "380.6 KB"
+    },
+    {
+     "file": "K402-智能创造 · 07_自制抢答器_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "07_自制抢答器_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.4 MB"
+    },
+    {
+     "file": "K402-智能创造 · 07_自制抢答器_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "07_自制抢答器_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "18.5 MB"
+    },
+    {
+     "file": "K402-智能创造 · 07_自制抢答器_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "07_自制抢答器_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "371.1 KB"
+    },
+    {
+     "file": "K402-智能创造 · 08_我的音乐播放器（上）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "08_我的音乐播放器（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "38.6 MB"
+    },
+    {
+     "file": "K402-智能创造 · 08_我的音乐播放器（上）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "08_我的音乐播放器（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "25.9 MB"
+    },
+    {
+     "file": "K402-智能创造 · 08_我的音乐播放器（上）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "08_我的音乐播放器（上）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "352.4 KB"
+    },
+    {
+     "file": "K402-智能创造 · 09_我的音乐播放器（下）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "09_我的音乐播放器（下）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "38.6 MB"
+    },
+    {
+     "file": "K402-智能创造 · 09_我的音乐播放器（下）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "09_我的音乐播放器（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "12.9 MB"
+    },
+    {
+     "file": "K402-智能创造 · 09_我的音乐播放器（下）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "09_我的音乐播放器（下）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "392.8 KB"
+    },
+    {
+     "file": "K402-智能创造 · 10_会自动关闭的大门（上）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "10_会自动关闭的大门（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "34.1 MB"
+    },
+    {
+     "file": "K402-智能创造 · 10_会自动关闭的大门（上）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "10_会自动关闭的大门（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "83.2 MB"
+    },
+    {
+     "file": "K402-智能创造 · 10_会自动关闭的大门（上）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "10_会自动关闭的大门（上）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "352.0 KB"
+    },
+    {
+     "file": "K402-智能创造 · 11_会自动关闭的大门（下）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "11_会自动关闭的大门（下）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "34.1 MB"
+    },
+    {
+     "file": "K402-智能创造 · 11_会自动关闭的大门（下）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "11_会自动关闭的大门（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "14.3 MB"
+    },
+    {
+     "file": "K402-智能创造 · 11_会自动关闭的大门（下）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "11_会自动关闭的大门（下）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "399.8 KB"
+    },
+    {
+     "file": "K402-智能创造 · 12_超声波控制的雷达_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "12_超声波控制的雷达_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "30.6 MB"
+    },
+    {
+     "file": "K402-智能创造 · 12_超声波控制的雷达_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "12_超声波控制的雷达_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "17.9 MB"
+    },
+    {
+     "file": "K402-智能创造 · 12_超声波控制的雷达_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "12_超声波控制的雷达_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "394.7 KB"
+    },
+    {
+     "file": "K402-智能创造 · 13_能自动开闭的窗帘_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "13_能自动开闭的窗帘_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "27.0 MB"
+    },
+    {
+     "file": "K402-智能创造 · 13_能自动开闭的窗帘_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "13_能自动开闭的窗帘_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.8 MB"
+    },
+    {
+     "file": "K402-智能创造 · 13_能自动开闭的窗帘_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "13_能自动开闭的窗帘_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "364.9 KB"
+    },
+    {
+     "file": "K402-智能创造 · 14_智能的安检机（上）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "14_智能的安检机（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.4 MB"
+    },
+    {
+     "file": "K402-智能创造 · 14_智能的安检机（上）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "14_智能的安检机（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "24.9 MB"
+    },
+    {
+     "file": "K402-智能创造 · 14_智能的安检机（上）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "14_智能的安检机（上）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "354.9 KB"
+    },
+    {
+     "file": "K402-智能创造 · 15_智能的安检机（下）_搭建步骤.pdf",
+     "group": "K402-智能创造",
+     "title": "15_智能的安检机（下）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "19.4 MB"
+    },
+    {
+     "file": "K402-智能创造 · 15_智能的安检机（下）_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "15_智能的安检机（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "10.6 MB"
+    },
+    {
+     "file": "K402-智能创造 · 15_智能的安检机（下）_课程教案.pdf",
+     "group": "K402-智能创造",
+     "title": "15_智能的安检机（下）_课程教案",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "375.7 KB"
+    },
+    {
+     "file": "K402-智能创造 · 16_创意无限_演示课件.pptx",
+     "group": "K402-智能创造",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.7 MB"
+    },
+    {
+     "file": "K402-智能创造 · 16_创意无限_课程教案.docx",
+     "group": "K402-智能创造",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "15.9 KB"
+    },
+    {
+     "file": "K501-创造大师 · 01_是谁吃了我的苹果_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "01_是谁吃了我的苹果_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "K501-创造大师 · 01_是谁吃了我的苹果_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "01_是谁吃了我的苹果_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "961.5 KB"
+    },
+    {
+     "file": "K501-创造大师 · 02_穿越迷宫_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "02_穿越迷宫_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.0 MB"
+    },
+    {
+     "file": "K501-创造大师 · 02_穿越迷宫_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "02_穿越迷宫_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "K501-创造大师 · 03_烟花绽放_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "03_烟花绽放_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 03_烟花绽放_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "03_烟花绽放_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K501-创造大师 · 04_位置与坐标_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "04_位置与坐标_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.4 MB"
+    },
+    {
+     "file": "K501-创造大师 · 04_位置与坐标_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "04_位置与坐标_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.9 MB"
+    },
+    {
+     "file": "K501-创造大师 · 05_疯狂赛车_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "05_疯狂赛车_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "7.7 MB"
+    },
+    {
+     "file": "K501-创造大师 · 05_疯狂赛车_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "05_疯狂赛车_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.6 MB"
+    },
+    {
+     "file": "K501-创造大师 · 05_疯狂赛车_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "05_疯狂赛车_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.3 MB"
+    },
+    {
+     "file": "K501-创造大师 · 06_打地鼠_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "06_打地鼠_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.1 MB"
+    },
+    {
+     "file": "K501-创造大师 · 06_打地鼠_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "06_打地鼠_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 06_打地鼠_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "06_打地鼠_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "3.3 MB"
+    },
+    {
+     "file": "K501-创造大师 · 07_美丽的图形_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "07_美丽的图形_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 07_美丽的图形_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "07_美丽的图形_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 08_小羊跑跑_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "08_小羊跑跑_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "4.4 MB"
+    },
+    {
+     "file": "K501-创造大师 · 08_小羊跑跑_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "08_小羊跑跑_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "K501-创造大师 · 08_小羊跑跑_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "08_小羊跑跑_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K501-创造大师 · 09_镜像挑战_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "09_镜像挑战_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "3.4 MB"
+    },
+    {
+     "file": "K501-创造大师 · 09_镜像挑战_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "09_镜像挑战_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.8 MB"
+    },
+    {
+     "file": "K501-创造大师 · 09_镜像挑战_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "09_镜像挑战_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "4.7 MB"
+    },
+    {
+     "file": "K501-创造大师 · 10_数字猜大小_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "10_数字猜大小_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "K501-创造大师 · 10_数字猜大小_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "10_数字猜大小_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.1 MB"
+    },
+    {
+     "file": "K501-创造大师 · 11_射击气球_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "11_射击气球_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.1 MB"
+    },
+    {
+     "file": "K501-创造大师 · 11_射击气球_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "11_射击气球_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.8 MB"
+    },
+    {
+     "file": "K501-创造大师 · 11_射击气球_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "11_射击气球_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.4 MB"
+    },
+    {
+     "file": "K501-创造大师 · 12_舞动音符_搭建步骤.pdf",
+     "group": "K501-创造大师",
+     "title": "12_舞动音符_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.1 MB"
+    },
+    {
+     "file": "K501-创造大师 · 12_舞动音符_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "12_舞动音符_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.9 MB"
+    },
+    {
+     "file": "K501-创造大师 · 12_舞动音符_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "12_舞动音符_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "4.3 MB"
+    },
+    {
+     "file": "K501-创造大师 · 13_鸡兔同笼_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "13_鸡兔同笼_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 13_鸡兔同笼_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "13_鸡兔同笼_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "K501-创造大师 · 14_飞机大战（上）_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "14_飞机大战（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.2 MB"
+    },
+    {
+     "file": "K501-创造大师 · 14_飞机大战（上）_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "14_飞机大战（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "4.3 MB"
+    },
+    {
+     "file": "K501-创造大师 · 15_飞机大战（下）_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "15_飞机大战（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.6 MB"
+    },
+    {
+     "file": "K501-创造大师 · 15_飞机大战（下）_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "15_飞机大战（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "4.3 MB"
+    },
+    {
+     "file": "K501-创造大师 · 16_创意无限_演示课件.pptx",
+     "group": "K501-创造大师",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.5 MB"
+    },
+    {
+     "file": "K501-创造大师 · 16_创意无限_课程教案.docx",
+     "group": "K501-创造大师",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "20.1 KB"
+    },
+    {
+     "file": "K502-程序应用 · 01_守卫大作战（上）_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "01_守卫大作战（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "30.0 MB"
+    },
+    {
+     "file": "K502-程序应用 · 01_守卫大作战（上）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "01_守卫大作战（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.5 MB"
+    },
+    {
+     "file": "K502-程序应用 · 01_守卫大作战（上）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "01_守卫大作战（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "K502-程序应用 · 02_守卫大作战（下）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "02_守卫大作战（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "2.8 MB"
+    },
+    {
+     "file": "K502-程序应用 · 02_守卫大作战（下）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "02_守卫大作战（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "921.0 KB"
+    },
+    {
+     "file": "K502-程序应用 · 03_植树问题_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "03_植树问题_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "K502-程序应用 · 03_植树问题_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "03_植树问题_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "3.1 MB"
+    },
+    {
+     "file": "K502-程序应用 · 04_击鼓小达人（上）_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "04_击鼓小达人（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "28.9 MB"
+    },
+    {
+     "file": "K502-程序应用 · 04_击鼓小达人（上）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "04_击鼓小达人（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.1 MB"
+    },
+    {
+     "file": "K502-程序应用 · 04_击鼓小达人（上）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "04_击鼓小达人（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K502-程序应用 · 05_击鼓小达人（下）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "05_击鼓小达人（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "30.9 MB"
+    },
+    {
+     "file": "K502-程序应用 · 05_击鼓小达人（下）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "05_击鼓小达人（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 06_质数与合数_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "06_质数与合数_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.1 MB"
+    },
+    {
+     "file": "K502-程序应用 · 06_质数与合数_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "06_质数与合数_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.3 MB"
+    },
+    {
+     "file": "K502-程序应用 · 07_贪吃蛇（上）_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "07_贪吃蛇（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "30.1 MB"
+    },
+    {
+     "file": "K502-程序应用 · 07_贪吃蛇（上）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "07_贪吃蛇（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.2 MB"
+    },
+    {
+     "file": "K502-程序应用 · 07_贪吃蛇（上）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "07_贪吃蛇（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K502-程序应用 · 08_贪吃蛇（下）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "08_贪吃蛇（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 08_贪吃蛇（下）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "08_贪吃蛇（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.1 MB"
+    },
+    {
+     "file": "K502-程序应用 · 09_绳子算法_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "09_绳子算法_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "4.0 MB"
+    },
+    {
+     "file": "K502-程序应用 · 09_绳子算法_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "09_绳子算法_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "K502-程序应用 · 10_航海寻宝（上）_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "10_航海寻宝（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "24.2 MB"
+    },
+    {
+     "file": "K502-程序应用 · 10_航海寻宝（上）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "10_航海寻宝（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.9 MB"
+    },
+    {
+     "file": "K502-程序应用 · 10_航海寻宝（上）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "10_航海寻宝（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "989.3 KB"
+    },
+    {
+     "file": "K502-程序应用 · 11_航海寻宝（下）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "11_航海寻宝（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.2 MB"
+    },
+    {
+     "file": "K502-程序应用 · 11_航海寻宝（下）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "11_航海寻宝（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 12_兔子数列_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "12_兔子数列_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "5.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 12_兔子数列_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "12_兔子数列_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.0 MB"
+    },
+    {
+     "file": "K502-程序应用 · 13_收集水源（上）_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "13_收集水源（上）_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "21.2 MB"
+    },
+    {
+     "file": "K502-程序应用 · 13_收集水源（上）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "13_收集水源（上）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "6.3 MB"
+    },
+    {
+     "file": "K502-程序应用 · 13_收集水源（上）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "13_收集水源（上）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.5 MB"
+    },
+    {
+     "file": "K502-程序应用 · 14_收集水源（下）_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "14_收集水源（下）_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.0 MB"
+    },
+    {
+     "file": "K502-程序应用 · 14_收集水源（下）_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "14_收集水源（下）_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "1.7 MB"
+    },
+    {
+     "file": "K502-程序应用 · 15_智能感应家居_搭建步骤.pdf",
+     "group": "K502-程序应用",
+     "title": "15_智能感应家居_搭建步骤",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "86.3 MB"
+    },
+    {
+     "file": "K502-程序应用 · 15_智能感应家居_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "15_智能感应家居_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "7.2 MB"
+    },
+    {
+     "file": "K502-程序应用 · 15_智能感应家居_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "15_智能感应家居_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "2.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 16_创意无限_演示课件.pptx",
+     "group": "K502-程序应用",
+     "title": "16_创意无限_演示课件",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "3.6 MB"
+    },
+    {
+     "file": "K502-程序应用 · 16_创意无限_课程教案.docx",
+     "group": "K502-程序应用",
+     "title": "16_创意无限_课程教案",
+     "type": "docx",
+     "lang": "CHS",
+     "size": "16.7 KB"
+    },
+    {
+     "file": "K系列逐課授課建議_奇思工房教學法.pdf",
+     "group": "",
+     "title": "K系列逐課授課建議_奇思工房教學法",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "468.9 KB"
+    },
+    {
+     "file": "K系列逐課授課指引.pdf",
+     "group": "",
+     "title": "K系列逐課授課指引",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "360.6 KB"
+    },
+    {
+     "file": "K課程場景授課建議點..docx",
+     "group": "",
+     "title": "K課程場景授課建議點.",
+     "type": "docx",
+     "lang": "CHT",
+     "size": "36.0 KB"
+    },
+    {
+     "file": "K課程場景授課建議點..pdf",
+     "group": "",
+     "title": "K課程場景授課建議點.",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "1.6 MB"
+    },
+    {
+     "file": "Programming Interaction_IT.pdf",
+     "group": "",
+     "title": "Programming Interaction",
+     "type": "pdf",
+     "lang": "IT",
+     "size": "26.0 MB"
+    },
+    {
+     "file": "Programming Interaction_TC.pdf",
+     "group": "",
+     "title": "Programming Interaction",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "28.9 MB"
+    },
+    {
+     "file": "人工智能K系列师资培训.pptx",
+     "group": "",
+     "title": "人工智能K系列师资培训",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "257.6 MB"
+    },
+    {
+     "file": "K201-K202 動力工程+創意製造_TC.pptx",
+     "group": "繁體演示課件（合併）",
+     "title": "K201–K202 動力工程・創意製造",
+     "type": "pptx",
+     "lang": "CHT",
+     "size": "497 MB"
+    },
+    {
+     "file": "K301-K302 程序交互+傳感控制_TC.pptx",
+     "group": "繁體演示課件（合併）",
+     "title": "K301–K302 程序交互・傳感控制",
+     "type": "pptx",
+     "lang": "CHT",
+     "size": "509 MB"
+    },
+    {
+     "file": "K401-K402 智能控制+智能創造_TC.pptx",
+     "group": "繁體演示課件（合併）",
+     "title": "K401–K402 智能控制・智能創造",
+     "type": "pptx",
+     "lang": "CHT",
+     "size": "291 MB"
+    },
+    {
+     "file": "K501-K502 創造大師+程序應用_TC.pptx",
+     "group": "繁體演示課件（合併）",
+     "title": "K501–K502 創造大師・程序應用",
+     "type": "pptx",
+     "lang": "CHT",
+     "size": "67.4 MB"
+    }
+   ]
+  },
+  {
+   "key": "test-blueprints",
+   "title": "測評藍圖 · Test Blueprints",
+   "icon": "📋",
+   "count": 3,
+   "items": [
+    {
+     "file": "ECL無屏編程 K1-K3課程- 課程大綱.xlsx",
+     "group": "",
+     "title": "ECL無屏編程 K1-K3課程- 課程大綱",
+     "type": "xlsx",
+     "lang": "CHT",
+     "size": "14.3 KB"
+    },
+    {
+     "file": "YAI 測評藍圖（啟蒙–8級）_TC.pdf",
+     "group": "",
+     "title": "YAI 測評藍圖（啟蒙–8級）",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "552.6 KB"
+    },
+    {
+     "file": "YAI青少年人工智能技术评测体系大纲（启蒙-8级）-V22.05.pdf",
+     "group": "",
+     "title": "YAI青少年人工智能技术评测体系大纲（启蒙-8级）-V22.05",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "6.8 MB"
+    }
+   ]
+  },
+  {
+   "key": "marketing",
+   "title": "推廣資料 · Marketing",
+   "icon": "📣",
+   "count": 33,
+   "items": [
+    {
+     "file": "4-AI互动魔方产品手册阅览.pdf",
+     "group": "",
+     "title": "4-AI互动魔方产品手册阅览",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "112.8 MB"
+    },
+    {
+     "file": "6-工信科技人才培养工程画册.pdf",
+     "group": "",
+     "title": "6-工信科技人才培养工程画册",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "24.7 MB"
+    },
+    {
+     "file": "1005_带倒..新）.pdf",
+     "group": "",
+     "title": "1005_带倒..新）",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "16.5 MB"
+    },
+    {
+     "file": "1006、超级..接件.PDF",
+     "group": "",
+     "title": "1006、超级..接件",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "48.9 MB"
+    },
+    {
+     "file": "2026小學1-6年級推薦K1-K5  2026-2-7.pdf",
+     "group": "",
+     "title": "2026小學1-6年級推薦K1-K5  2026-2-7",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "386.2 KB"
+    },
+    {
+     "file": "2026第二屆 “AI無界”大灣區青少年人工智能創新大赛4.pdf",
+     "group": "",
+     "title": "2026第二屆 “AI無界”大灣區青少年人工智能創新大赛4",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "226.4 KB"
+    },
+    {
+     "file": "4137_点阵..1).pdf",
+     "group": "",
+     "title": "4137_点阵..1)",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "23.3 MB"
+    },
+    {
+     "file": "AI互动魔方产品手册阅览0924.pdf",
+     "group": "",
+     "title": "AI互动魔方产品手册阅览0924",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "132.1 MB"
+    },
+    {
+     "file": "AI互动魔方产品操作手册V1.0(1).pdf",
+     "group": "",
+     "title": "AI互动魔方产品操作手册V1.0(1)",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "3.0 MB"
+    },
+    {
+     "file": "AI互动魔方产品操作手册V1.2.pptx",
+     "group": "",
+     "title": "AI互动魔方产品操作手册V1.2",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "15.9 MB"
+    },
+    {
+     "file": "ai互动魔方画册202604.pdf",
+     "group": "",
+     "title": "ai互动魔方画册202604",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "2.7 MB"
+    },
+    {
+     "file": "e_series_curriculum_chart.png",
+     "group": "",
+     "title": "e_series_curriculum_chart",
+     "type": "png",
+     "lang": "EN",
+     "size": "169.3 KB"
+    },
+    {
+     "file": "HK培训机构课程路径内容2026-1-29.pdf",
+     "group": "",
+     "title": "HK培训机构课程路径内容2026-1-29",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "121.6 KB"
+    },
+    {
+     "file": "LWL_Grant_IITS_Application_Guide_EN.pdf",
+     "group": "",
+     "title": "LWL_Grant_IITS_Application_Guide",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "139.4 KB"
+    },
+    {
+     "file": "LWL_Grant_IITS_Application_Guide_TC.pdf",
+     "group": "",
+     "title": "LWL_Grant_IITS_Application_Guide",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "569.6 KB"
+    },
+    {
+     "file": "WhatsApp Image 2026-07-06 at 18.13.38.jpeg",
+     "group": "",
+     "title": "WhatsApp Image 2026-07-06 at 18.13.38",
+     "type": "jpeg",
+     "lang": "EN",
+     "size": "287.6 KB"
+    },
+    {
+     "file": "YAI-无废城市套装明细.pdf",
+     "group": "",
+     "title": "YAI-无废城市套装明细",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "1.4 MB"
+    },
+    {
+     "file": "YAI人工智能高級套裝-5及6年级推荐.pdf",
+     "group": "",
+     "title": "YAI人工智能高級套裝-5及6年级推荐",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "268.7 KB"
+    },
+    {
+     "file": "人工智能技术画册.pdf",
+     "group": "",
+     "title": "人工智能技术画册",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "11.1 MB"
+    },
+    {
+     "file": "关于举办“2026年横琴粤澳深度合作区人工智能大赛暨第八届粤港澳青少年机器人大赛”的通知.pdf",
+     "group": "",
+     "title": "关于举办“2026年横琴粤澳深度合作区人工智能大赛暨第八届粤港澳青少年机器人大赛”的通知",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "918.0 KB"
+    },
+    {
+     "file": "四折页中文繁体.pdf",
+     "group": "",
+     "title": "四折页中文繁体",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "175.3 MB"
+    },
+    {
+     "file": "四折页英文.pdf",
+     "group": "",
+     "title": "四折页英文",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "175.2 MB"
+    },
+    {
+     "file": "好苹果-工信学堂师资培训2026-2-7.pdf",
+     "group": "",
+     "title": "好苹果-工信学堂师资培训2026-2-7",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "148.7 KB"
+    },
+    {
+     "file": "小苹果师资培训证书2026-3-19.pdf",
+     "group": "",
+     "title": "小苹果师资培训证书2026-3-19",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "394.8 KB"
+    },
+    {
+     "file": "工信学堂英文.pdf",
+     "group": "",
+     "title": "工信学堂英文",
+     "type": "pdf",
+     "lang": "EN",
+     "size": "3.3 MB"
+    },
+    {
+     "file": "工信學堂完整升學培養路徑  IITS Training Path.pdf",
+     "group": "",
+     "title": "工信學堂完整升學培養路徑  IITS Training Path",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "364.1 KB"
+    },
+    {
+     "file": "工信學堂導師培訓.pptx",
+     "group": "",
+     "title": "工信學堂導師培訓",
+     "type": "pptx",
+     "lang": "CHT",
+     "size": "34.4 MB"
+    },
+    {
+     "file": "工信學堂導師培訓PPT.pdf",
+     "group": "",
+     "title": "工信學堂導師培訓PPT",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "3.5 MB"
+    },
+    {
+     "file": "工信學堂課程體系獨有優勢，區別市面普通科技課.pdf",
+     "group": "",
+     "title": "工信學堂課程體系獨有優勢，區別市面普通科技課",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "497.8 KB"
+    },
+    {
+     "file": "暑期王锦辉学校-小初科創實踐系列.pdf",
+     "group": "",
+     "title": "暑期王锦辉学校-小初科創實踐系列",
+     "type": "pdf",
+     "lang": "CHT",
+     "size": "424.3 KB"
+    },
+    {
+     "file": "未来工信科技人才培养计划20260320 .pptx",
+     "group": "",
+     "title": "未来工信科技人才培养计划20260320 ",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "309.6 MB"
+    },
+    {
+     "file": "项目简介-1220.pdf",
+     "group": "",
+     "title": "项目简介-1220",
+     "type": "pdf",
+     "lang": "CHS",
+     "size": "22.4 MB"
+    },
+    {
+     "file": "项目简介-1220.pptx",
+     "group": "",
+     "title": "项目简介-1220",
+     "type": "pptx",
+     "lang": "CHS",
+     "size": "136.0 MB"
+    }
+   ]
+  },
+  {
+   "key": "software",
+   "title": "軟件下載 · Software",
+   "icon": "💾",
+   "count": 2,
+   "items": [
+    {
+     "file": "UCMake-Desktop_v4.2.8_win_x64.exe",
+     "group": "",
+     "title": "UCMake Desktop v4.2.8 — Windows (x64)",
+     "type": "exe",
+     "size": "361.2 MB"
+    },
+    {
+     "file": "UCMake-Desktop_v4.2.8_mac_arm64.dmg",
+     "group": "",
+     "title": "UCMake Desktop v4.2.8 — macOS (Apple Silicon)",
+     "type": "dmg",
+     "size": "391.9 MB"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>學生登入 · 工信學堂 IITS</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    font-family:'Noto Sans TC',-apple-system,BlinkMacSystemFont,"PingFang HK","Microsoft JhengHei",sans-serif;
+    color:#10161d;background:#f7f6f2;background-image:radial-gradient(1200px 600px at 50% -10%,#eef1f8,transparent);padding:20px}
+  .card{width:100%;max-width:390px;background:#fff;border:1px solid #e7e9ee;border-radius:18px;
+    box-shadow:0 24px 60px -30px rgba(16,22,29,.35);padding:38px 32px 30px}
+  .brand{font-size:.78em;letter-spacing:.16em;color:#2f8f6b;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  h1{font-size:1.5em;margin:0 0 4px}
+  .sub{color:#69707a;font-size:.9em;margin-bottom:26px}
+  label{display:block;font-size:.82em;color:#4a5158;margin:0 0 6px;font-weight:500}
+  .field{margin-bottom:16px}
+  input[type=text],input[type=password]{width:100%;height:48px;border:1px solid #d8dce3;border-radius:11px;
+    padding:0 14px;font-size:1em;font-family:inherit;background:#fbfcfd;transition:border-color .15s,box-shadow .15s}
+  input:focus{outline:none;border-color:#2f8f6b;box-shadow:0 0 0 3px rgba(47,143,107,.15);background:#fff}
+  .row{display:flex;align-items:center;gap:9px;margin:4px 0 22px}
+  .row input{width:20px;height:20px;accent-color:#2f8f6b;cursor:pointer}
+  .row label{margin:0;font-size:.9em;color:#4a5158;cursor:pointer;font-weight:400}
+  button{width:100%;height:50px;border:0;border-radius:11px;background:#2f8f6b;color:#fff;font-size:1.02em;
+    font-weight:600;font-family:inherit;cursor:pointer;transition:background .15s}
+  button:hover{background:#26795b} button:disabled{opacity:.6;cursor:default}
+  .err{color:#c0392b;font-size:.86em;min-height:20px;margin:2px 0 4px;text-align:center}
+  .foot{text-align:center;color:#a4abb4;font-size:.76em;margin-top:20px}
+</style></head>
+<body>
+<form class="card" id="f" autocomplete="on">
+  <div class="brand">工信學堂 IITS</div>
+  <h1>學生專區登入</h1>
+  <div class="sub">歡迎回來！輸入帳號密碼開始學習。</div>
+  <div class="field"><label for="u">帳號</label>
+    <input type="text" id="u" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
+  <div class="field"><label for="p">密碼</label>
+    <input type="password" id="p" name="password" autocomplete="current-password" required></div>
+  <div class="row"><input type="checkbox" id="rm" checked><label for="rm">記住我（30 天免再登入）</label></div>
+  <div class="err" id="err"></div>
+  <button type="submit" id="btn">登入</button>
+  <div class="foot">工信學堂（香港）· 學生專區</div>
+</form>
+<script>
+  var next = new URLSearchParams(location.search).get('next') || '/student/';
+  if(!next.startsWith('/student/')) next='/student/';   // only allow same-area redirects
+  var f=document.getElementById('f'), U=document.getElementById('u'), P=document.getElementById('p'),
+      RM=document.getElementById('rm'), ERR=document.getElementById('err'), BTN=document.getElementById('btn');
+  // prefill remembered username
+  var su=localStorage.getItem('iits_student_user'); if(su){U.value=su; P.focus();} else {U.focus();}
+  // if already logged in, skip straight in
+  fetch('/iits/student/api/verify',{credentials:'same-origin'}).then(function(r){if(r.ok)location.replace(next);}).catch(function(){});
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); ERR.textContent=''; BTN.disabled=true; BTN.textContent='登入中…';
+    fetch('/iits/student/api/login',{method:'POST',credentials:'same-origin',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({u:U.value.trim(),p:P.value,remember:RM.checked})})
+    .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+    .then(function(res){
+      if(res.ok && res.j.ok){
+        if(RM.checked) localStorage.setItem('iits_student_user',U.value.trim());
+        else localStorage.removeItem('iits_student_user');
+        location.replace(next);
+      } else { ERR.textContent='帳號或密碼錯誤，請重試。'; BTN.disabled=false; BTN.textContent='登入'; P.value=''; P.focus(); }
+    })
+    .catch(function(){ ERR.textContent='連線錯誤，請稍後再試。'; BTN.disabled=false; BTN.textContent='登入'; });
+  });
+</script>
+</body></html>

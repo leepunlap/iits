@@ -27,6 +27,7 @@ cs = csb.ToString();
 
 builder.Services.AddDbContext<AppDb>(o => o.UseSqlite(cs));
 builder.Services.AddScoped<ContentImporter>();
+builder.Services.AddScoped<SiteMenu>();
 
 builder.WebHost.UseUrls(builder.Configuration["Listen"] ?? "http://127.0.0.1:5099");
 

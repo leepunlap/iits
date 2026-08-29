@@ -1,65 +1,41 @@
-@page "/news/{lang?}"
+@page "/news/"
+@using IitsNews.Data
 @model IitsNews.Pages.News.IndexModel
 
-@if (Model.ShowDrafts)
-{
-    <div class="notice">
-        <strong>草稿可見模式 · Draft preview mode.</strong>
-        <p class="muted">
-            Unpublished articles are listed below so the migrated content can be reviewed.
-            This is a staging-only setting — <code>ShowDrafts</code> must be false in production.
-        </p>
-    </div>
-}
+<div class="crumb"><a href="/">首頁</a> · 最新消息</div>
+<div class="eyebrow">NEWS</div>
+<h1 style="font-size:clamp(30px,4.6vw,46px);margin-top:10px">最新消息</h1>
+<p class="lede">全部已發布內容，共 @Model.Items.Count 篇。</p>
 
-<p class="langs">
+<p class="langs" style="margin-top:22px;display:flex;gap:9px">
     @foreach (var l in IitsNews.Data.Lang.All)
     {
-        <a href="/news/@l" aria-current="@(l == Model.CurrentLang ? "true" : "false")">@IitsNews.Data.Lang.Label(l)</a>
+        <a class="tag" style="padding:7px 15px;font-size:13px;@(l == Model.CurrentLang ? "border-color:var(--brand);color:var(--brand)" : "")"
+           href="/news/?lang=@l">@IitsNews.Data.Lang.Label(l)</a>
     }
 </p>
 
 @if (Model.Items.Count == 0)
 {
-    <div class="notice">
-        <strong>沒有文章。</strong>
-        <p class="muted">Imported articles land as drafts. Publish them from the admin pages, or enable draft preview on staging.</p>
-    </div>
+    <div class="empty">尚無已發布的內容。</div>
 }
 else
 {
-    <p class="muted">@Model.Items.Count 篇</p>
-    <table>
-        <thead>
-            <tr><th>日期</th><th>標題</th><th>欄目</th><th>狀態</th></tr>
-        </thead>
-        <tbody>
+    <div class="grid">
         @foreach (var a in Model.Items)
         {
-            var t = a.For(Model.CurrentLang);
-            <tr>
-                <td class="muted">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "—")</td>
-                <td>
-                    <a href="/news/item/@a.Id?lang=@Model.CurrentLang">@(t?.Title ?? "—")</a>
-                    @if (a.Pinned) { <span class="pill">置頂</span> }
-                    @if (t is not null && t.Lang != Model.CurrentLang)
-                    {
-                        <span class="pill">@IitsNews.Data.Lang.Label(t.Lang)</span>
-                    }
-                </td>
-                <td class="muted">@a.Section</td>
-                <td>
-                    @if (a.Status == "published")
-                    {
-                        <span class="pill">已發布</span>
-                    }
-                    else
-                    {
-                        <span class="pill">草稿</span>
-                    }
-                </td>
-            </tr>
+            var t = a.For(Model.CurrentLang); var img = t.FirstImage();
+            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
+                @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
+                <span class="body">
+                    <h3>@(string.IsNullOrWhiteSpace(t?.Title) ? "（無標題）" : t!.Title)</h3>
+                    <span style="font-size:14px;color:var(--muted)">@t.Excerpt()</span>
+                    <span class="meta">
+                        <span>@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
+                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@a.Section</span> }
+                    </span>
+                </span>
+            </a>
         }
-        </tbody>
-    </table>
+    </div>
 }

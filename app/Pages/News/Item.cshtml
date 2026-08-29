@@ -1,52 +1,68 @@
 @page "/news/item/{id:int}"
+@using IitsNews.Data
 @model IitsNews.Pages.News.ItemModel
 
 @if (Model.Item is null || Model.Text is null)
 {
-    <p>找不到內容。</p>
+    <div class="empty">找不到內容。</div>
 }
 else
 {
-    @if (Model.Item.Status != "published")
-    {
-        <div class="notice">
-            <strong>草稿 · Draft.</strong> 此文章尚未發布，僅在預覽模式可見。
+    <div class="crumb">
+        <a href="/">首頁</a> · <a href="/news/">最新消息</a>
+        @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> · </text>@Model.Item.Section }
+    </div>
+
+    <article style="max-width:78ch">
+        <h1 style="font-size:clamp(26px,3.8vw,40px);margin-bottom:16px">@Model.Text.Title</h1>
+        <div class="meta" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--soft);
+                                 display:flex;gap:14px;flex-wrap:wrap;padding-bottom:22px;
+                                 border-bottom:1px solid var(--line)">
+            <span>@(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
+            @if (!string.IsNullOrEmpty(Model.Item.Section)) { <span>@Model.Item.Section</span> }
+            <span>@IitsNews.Data.Lang.Label(Model.Text.Lang)</span>
         </div>
-    }
-    <p class="langs">
-        @foreach (var l in IitsNews.Data.Lang.All)
+
+        <div style="display:flex;gap:9px;flex-wrap:wrap;margin:20px 0 6px">
+            @foreach (var l in IitsNews.Data.Lang.All)
+            {
+                var has = Model.Item.Translations.Any(x => x.Lang == l);
+                if (has)
+                {
+                    <a class="tag" style="padding:6px 14px;@(l == Model.Text.Lang ? "border-color:var(--brand);color:var(--brand)" : "")"
+                       href="/news/item/@Model.Item.Id?lang=@l">@IitsNews.Data.Lang.Label(l)</a>
+                }
+                else { <span class="tag" style="padding:6px 14px;opacity:.45">@IitsNews.Data.Lang.Label(l) —</span> }
+            }
+        </div>
+
+        @if (Model.Text.Lang != Model.CurrentLang)
         {
-            var has = Model.Item.Translations.Any(x => x.Lang == l);
-            if (has)
-            {
-                <a href="/news/item/@Model.Item.Id?lang=@l"
-                   aria-current="@(l == Model.Text.Lang ? "true" : "false")">@IitsNews.Data.Lang.Label(l)</a>
-            }
-            else
-            {
-                <span class="pill">@IitsNews.Data.Lang.Label(l) —</span>
-            }
+            <div style="margin:18px 0;padding:13px 17px;border-radius:13px;background:rgba(61,86,153,.07);
+                        font-size:14px;color:var(--muted)">
+                此文章尚無 @IitsNews.Data.Lang.Label(Model.CurrentLang) 版本，以下為 @IitsNews.Data.Lang.Label(Model.Text.Lang) 內容。
+            </div>
         }
-    </p>
+        @if (Model.Text.Provenance == "machine")
+        {
+            <div style="margin:18px 0;padding:13px 17px;border-radius:13px;background:#fff6e5;
+                        border:1px solid #f0dcb4;font-size:14px;color:#7a5b17">
+                機器翻譯，未經審閱。 Machine translation, not yet reviewed.
+            </div>
+        }
 
-    <h1>@Model.Text.Title</h1>
-    <p class="muted">
-        @(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")
-        @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> · @Model.Item.Section</text> }
-    </p>
+        <div class="prose">@Html.Raw(Model.Text.BodyHtml)</div>
+    </article>
 
-    @if (Model.Text.Lang != Model.CurrentLang)
-    {
-        <div class="notice">
-            此文章尚無 @IitsNews.Data.Lang.Label(Model.CurrentLang) 版本，以下為 @IitsNews.Data.Lang.Label(Model.Text.Lang) 內容。
-        </div>
-    }
-    @if (Model.Text.Provenance == "machine")
-    {
-        <div class="notice">機器翻譯，未經審閱。 Machine translation, not yet reviewed.</div>
-    }
-
-    @* Body is the original CMS HTML. It is trusted because it can only be written by an
-       authenticated admin; it is not user-supplied input. *@
-    <article>@Html.Raw(Model.Text.BodyHtml)</article>
+    <style>
+      .prose{margin-top:26px;font-size:16.5px;line-height:1.85;color:#1d2630;overflow-wrap:anywhere}
+      .prose img{max-width:100%!important;height:auto!important;border-radius:14px;display:block;margin:20px auto}
+      .prose p{margin:0 0 1.05em}
+      .prose section{max-width:100%!important}
+      .prose table{width:100%!important;border-collapse:collapse;display:block;overflow-x:auto}
+      .prose td,.prose th{border:1px solid var(--line);padding:8px 10px}
+      .prose a{color:var(--brand);text-decoration:underline}
+      .prose h1,.prose h2,.prose h3{margin:1.5em 0 .5em}
+      .prose iframe,.prose video{max-width:100%}
+    </style>
 }

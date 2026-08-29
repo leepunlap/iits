@@ -10,18 +10,18 @@
 {
     var ht = hero.For(Model.CurrentLang);
     var himg = ht.FirstImage();
-    <div class="eyebrow">工信部青少年信息技術培訓項目 · 國際窗口</div>
-    <h1 style="font-size:clamp(34px,5.6vw,58px);margin:14px 0 0;max-width:20ch">工信學堂（香港）</h1>
-    <p class="lede">由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。目前收錄 @Model.TotalPublished 篇內容。</p>
+    <div class="eyebrow">@Ui.T(Model.CurrentLang,"eyebrow")</div>
+    <h1 style="font-size:clamp(34px,5.6vw,58px);margin:14px 0 0;max-width:20ch">@Ui.T(Model.CurrentLang,"siteName")</h1>
+    <p class="lede">@Ui.T(Model.CurrentLang,"tagline") @Ui.T(Model.CurrentLang,"holding") @Model.TotalPublished @Ui.T(Model.CurrentLang,"items").</p>
 
-    <a class="card" href="/news/item/@hero.Id"
+    <a class="card" href="/news/item/@hero.Id?lang=@Model.CurrentLang"
        style="margin-top:40px;display:grid;grid-template-columns:@(himg is null ? "1fr" : "1.25fr 1fr");align-items:stretch">
         <span class="body" style="padding:34px 36px;gap:14px;justify-content:center">
-            <span class="eyebrow">最新</span>
+            <span class="eyebrow">@Ui.T(Model.CurrentLang,"newest")</span>
             <h2 style="font-size:clamp(22px,2.8vw,32px);font-weight:700;line-height:1.35">@ht?.Title</h2>
             <span style="color:var(--muted);font-size:15px">@ht.Excerpt(150)</span>
             <span class="meta"><span>@(hero.PublishedAt?.ToString("yyyy-MM-dd"))</span>
-                @if (!string.IsNullOrEmpty(hero.Section)) { <span>@hero.Section</span> }</span>
+                @if (!string.IsNullOrEmpty(hero.Section)) { <span>@Ui.Section(Model.CurrentLang, hero.Section)</span> }</span>
         </span>
         @if (himg is not null)
         {
@@ -31,26 +31,26 @@
 }
 else
 {
-    <h1>工信學堂（香港）</h1>
-    <div class="empty">尚無已發布的內容。</div>
+    <h1>@Ui.T(Model.CurrentLang,"siteName")</h1>
+    <div class="empty">@Ui.T(Model.CurrentLang,"nothingPublished")</div>
 }
 
 @if (rest.Count > 0)
 {
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:64px">
-        <h2 style="font-size:24px">最新消息</h2>
-        <a href="/news/" style="font-size:14px;color:var(--brand)">全部 →</a>
+        <h2 style="font-size:24px">@Ui.T(Model.CurrentLang,"latest")</h2>
+        <a href="/news/?lang=@Model.CurrentLang" style="font-size:14px;color:var(--brand)">@Ui.T(Model.CurrentLang,"all") →</a>
     </div>
     <div class="grid" style="margin-top:22px">
         @foreach (var a in rest)
         {
             var t = a.For(Model.CurrentLang); var img = t.FirstImage();
-            <a class="card" href="/news/item/@a.Id">
+            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
                 @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
                 <span class="body">
                     <h3>@t?.Title</h3>
                     <span class="meta"><span>@(a.PublishedAt?.ToString("yyyy-MM-dd"))</span>
-                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@a.Section</span> }</span>
+                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@Ui.Section(Model.CurrentLang, a.Section)</span> }</span>
                 </span>
             </a>
         }
@@ -60,14 +60,14 @@ else
 @foreach (var b in Model.Blocks)
 {
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:64px">
-        <h2 style="font-size:24px">@b.Section.Name</h2>
-        <a href="/s/@b.Section.LegacyId" style="font-size:14px;color:var(--brand)">查看全部 @b.Section.ArticleCount 篇 →</a>
+        <h2 style="font-size:24px">@Ui.Section(Model.CurrentLang, b.Section.Name)</h2>
+        <a href="/s/@b.Section.LegacyId?lang=@Model.CurrentLang" style="font-size:14px;color:var(--brand)">@Ui.T(Model.CurrentLang,"viewAll") @b.Section.ArticleCount →</a>
     </div>
     <div class="grid" style="margin-top:22px">
         @foreach (var a in b.Items)
         {
             var t = a.For(Model.CurrentLang); var img = t.FirstImage();
-            <a class="card" href="/news/item/@a.Id">
+            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
                 @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
                 <span class="body">
                     <h3>@t?.Title</h3>

@@ -2,10 +2,10 @@
 @using IitsNews.Data
 @model IitsNews.Pages.News.IndexModel
 
-<div class="crumb"><a href="/">首頁</a> · 最新消息</div>
+<div class="crumb"><a href="/?lang=@Model.CurrentLang">@Ui.T(Model.CurrentLang,"home")</a> · @Ui.T(Model.CurrentLang,"latest")</div>
 <div class="eyebrow">NEWS</div>
-<h1 style="font-size:clamp(30px,4.6vw,46px);margin-top:10px">最新消息</h1>
-<p class="lede">全部已發布內容，共 @Model.Items.Count 篇。</p>
+<h1 style="font-size:clamp(30px,4.6vw,46px);margin-top:10px">@Ui.T(Model.CurrentLang,"latest")</h1>
+<p class="lede">@Ui.T(Model.CurrentLang,"allNews") · @Model.Items.Count</p>
 
 <p class="langs" style="margin-top:22px;display:flex;gap:9px">
     @foreach (var l in IitsNews.Data.Lang.All)
@@ -17,7 +17,7 @@
 
 @if (Model.Items.Count == 0)
 {
-    <div class="empty">尚無已發布的內容。</div>
+    <div class="empty">@Ui.T(Model.CurrentLang,"nothingPublished")</div>
 }
 else
 {
@@ -28,11 +28,11 @@ else
             <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
                 @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
                 <span class="body">
-                    <h3>@(string.IsNullOrWhiteSpace(t?.Title) ? "（無標題）" : t!.Title)</h3>
+                    <h3>@(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(Model.CurrentLang,"untitled") : t!.Title)</h3>
                     <span style="font-size:14px;color:var(--muted)">@t.Excerpt()</span>
                     <span class="meta">
                         <span>@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
-                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@a.Section</span> }
+                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@Ui.Section(Model.CurrentLang, a.Section)</span> }
                     </span>
                 </span>
             </a>

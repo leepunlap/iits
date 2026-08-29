@@ -3,6 +3,17 @@
 @{
     var menu = await Menu.GetAsync();
     var lang = ViewData["Lang"] as string ?? "zh-Hant";
+    // The selector must preserve WHERE the reader is, not send them home. Rebuild the current
+    // path with lang= swapped, so switching language on an article keeps you on that article.
+    var path = Context.Request.Path.HasValue ? Context.Request.Path.Value! : "/";
+    string LangHref(string l)
+    {
+        var q = Context.Request.Query
+            .Where(kv => kv.Key != "lang")
+            .Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value!)}")
+            .Append($"lang={l}");
+        return path + "?" + string.Join("&", q);
+    }
     var isAdmin = ViewData["IsAdmin"] as bool? ?? false;
 }
 <!DOCTYPE html>
@@ -51,11 +62,18 @@
   .drop a:hover{background:rgba(61,86,153,.07);color:var(--ink)}
   .drop .n{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--soft)}
   .cta{margin-left:8px;display:inline-flex;align-items:center;padding:10px 20px;background:var(--navy);
-       color:#fff;border-radius:999px;font-size:13.5px;transition:background .15s}
+       color:#fff;border-radius:999px;font-size:13.5px;transition:background .15s;white-space:nowrap}
   .cta:hover{background:var(--brand)}
   .cta2{display:inline-flex;align-items:center;padding:9px 18px;border:1px solid rgba(16,22,29,.18);
-        border-radius:999px;font-size:13.5px;transition:border-color .15s}
+        border-radius:999px;font-size:13.5px;transition:border-color .15s;white-space:nowrap}
   .cta2:hover{border-color:var(--ink)}
+  .langsel{display:inline-flex;align-items:center;border:1px solid rgba(16,22,29,.16);
+           border-radius:999px;overflow:hidden;margin-left:6px}
+  .langsel a{padding:7px 12px;font-size:12.5px;font-family:'IBM Plex Mono',monospace;
+             letter-spacing:.04em;color:var(--muted);transition:background .15s,color .15s}
+  .langsel a+a{border-left:1px solid rgba(16,22,29,.12)}
+  .langsel a:hover{background:rgba(16,22,29,.05);color:var(--ink)}
+  .langsel a.on{background:var(--brand);color:#fff}
   .navtoggle{display:none;background:none;border:0;cursor:pointer;padding:9px;width:44px;height:44px;
              flex-direction:column;justify-content:center;gap:5px}
   .navtoggle span{display:block;height:2px;width:22px;background:var(--ink);border-radius:2px;transition:.25s}
@@ -66,7 +84,7 @@
   .navpanel a{display:block;padding:11px 14px;border-radius:12px;font-size:15px}
   .navpanel a:hover{background:rgba(16,22,29,.05)}
   .navpanel .sub{padding-left:28px;font-size:14px;color:var(--muted)}
-  @@media(max-width:1040px){
+  @@media(max-width:1180px){
     .navlinks{display:none}
     .navtoggle{display:flex}
     .navpanel.open{display:block}
@@ -109,28 +127,35 @@
 
 <nav class="top">
   <div class="navrow">
-    <a href="/" aria-label="工信學堂 IITS">
+    <a href="/?lang=@lang" aria-label="工信學堂 IITS">
       <img src="/assets/iits-logo.webp" alt="工信學堂（香港）· IITS" style="height:38px;width:auto;display:block">
     </a>
     <div class="navlinks">
       @foreach (var m in menu)
       {
         <div class="item">
-          <a href="/s/@m.LegacyId">@m.Name</a>
+          <a href="/s/@m.LegacyId?lang=@lang">@Ui.Section(lang, m.Name)</a>
           @if (m.Children.Count > 0)
           {
             <div class="drop">
               @foreach (var c in m.Children)
               {
-                <a href="/s/@c.LegacyId"><span>@c.Name</span><span class="n">@c.ArticleCount</span></a>
+                <a href="/s/@c.LegacyId?lang=@lang"><span>@Ui.Section(lang, c.Name)</span><span class="n">@c.ArticleCount</span></a>
               }
             </div>
           }
         </div>
       }
-      <div class="item"><a href="/news/">最新消息</a></div>
-      <a class="cta2" href="https://iits.giftedintl.com/student/">學生專區</a>
-      <a class="cta" href="https://iits.giftedintl.com/teacher/">教師專區</a>
+      <div class="item"><a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a></div>
+      <div class="langsel">
+        @foreach (var l in IitsNews.Data.Lang.All)
+        {
+          <a href="@LangHref(l)" class="@(l == lang ? "on" : "")"
+             hreflang="@l" aria-current="@(l == lang ? "true" : "false")">@IitsNews.Data.Lang.Short(l)</a>
+        }
+      </div>
+      <a class="cta2" href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
+      <a class="cta" href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
     </div>
     <button class="navtoggle" id="navToggle" aria-label="選單" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -139,12 +164,18 @@
   <div class="navpanel" id="navPanel">
     @foreach (var m in menu)
     {
-      <a href="/s/@m.LegacyId">@m.Name</a>
-      foreach (var c in m.Children) { <a class="sub" href="/s/@c.LegacyId">@c.Name</a> }
+      <a href="/s/@m.LegacyId?lang=@lang">@Ui.Section(lang, m.Name)</a>
+      foreach (var c in m.Children) { <a class="sub" href="/s/@c.LegacyId?lang=@lang">@Ui.Section(lang, c.Name)</a> }
     }
-    <a href="/news/">最新消息</a>
-    <a href="https://iits.giftedintl.com/student/">學生專區</a>
-    <a href="https://iits.giftedintl.com/teacher/">教師專區</a>
+    <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
+    <div class="langsel" style="margin:10px 0 4px">
+      @foreach (var l in IitsNews.Data.Lang.All)
+      {
+        <a href="@LangHref(l)" class="@(l == lang ? "on" : "")">@IitsNews.Data.Lang.Short(l)</a>
+      }
+    </div>
+    <a href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
+    <a href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
   </div>
 </nav>
 
@@ -155,7 +186,7 @@
 <footer class="site">
   <div class="cols">
     <div>
-      <h4>工信學堂（香港）</h4>
+      <h4>@Ui.T(lang,"siteName")</h4>
       <div style="font-size:13.5px;line-height:1.8;color:#8f9bb0">
         Industry and Information Technology Class<br>
         工信部青少年信息技術培訓項目國際窗口
@@ -164,22 +195,22 @@
     @foreach (var m in menu.Take(3))
     {
       <div>
-        <h4>@m.Name</h4>
-        @foreach (var c in m.Children.Take(6)) { <a href="/s/@c.LegacyId">@c.Name</a> }
+        <h4>@Ui.Section(lang, m.Name)</h4>
+        @foreach (var c in m.Children.Take(6)) { <a href="/s/@c.LegacyId?lang=@lang">@Ui.Section(lang, c.Name)</a> }
       </div>
     }
     <div>
-      <h4>專區</h4>
-      <a href="/news/">最新消息</a>
-      <a href="https://iits.giftedintl.com/">主網站</a>
-      <a href="https://iits.giftedintl.com/student/">學生專區</a>
-      <a href="https://iits.giftedintl.com/teacher/">教師專區</a>
-      @if (isAdmin) { <a href="/admin/">內容管理</a> }
+      <h4>@Ui.T(lang,"sections")</h4>
+      <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
+      <a href="https://iits.giftedintl.com/">@Ui.T(lang,"mainSite")</a>
+      <a href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
+      <a href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
+      @if (isAdmin) { <a href="/admin/">@Ui.T(lang,"admin")</a> }
     </div>
   </div>
   <div class="base">
-    <span>© @DateTime.Now.Year 工信學堂（香港）· IITS</span>
-    <span class="stagetag">STAGING · 合併預覽</span>
+    <span>© @DateTime.Now.Year @Ui.T(lang,"siteName") · IITS</span>
+    <span class="stagetag">@Ui.T(lang,"staging")</span>
   </div>
 </footer>
 

@@ -12,6 +12,15 @@ public static class Lang
 
     public static readonly string[] All = { Hant, Hans, En };
 
+    /// <summary>Compact label for the nav selector — the reader's own name for each script.</summary>
+    public static string Short(string code) => code switch
+    {
+        Hant => "繁",
+        Hans => "简",
+        En   => "EN",
+        _    => code
+    };
+
     public static string Label(string code) => code switch
     {
         Hant => "繁體",

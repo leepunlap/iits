@@ -3,28 +3,28 @@
 @model IitsNews.Pages.SectionModel
 
 <div class="crumb">
-    <a href="/">首頁</a>
+    <a href="/?lang=@Model.CurrentLang">@Ui.T(Model.CurrentLang,"home")</a>
     @if (Model.Parent is not null) { <text> · </text><a href="/s/@Model.Parent.LegacyId">@Model.Parent.Name</a> }
-    <text> · </text>@Model.Current!.Name
+    <text> · </text>@Ui.Section(Model.CurrentLang, Model.Current!.Name)
 </div>
 
 <div class="eyebrow">@(string.IsNullOrWhiteSpace(Model.Current.Type) ? "SECTION" : Model.Current.Type)</div>
-<h1 style="font-size:clamp(30px,4.6vw,46px);margin-top:10px">@Model.Current.Name</h1>
-<p class="lede">共 @Model.Items.Count 篇內容@(Model.Children.Count > 0 ? $" · {Model.Children.Count} 個子分類" : "")</p>
+<h1 style="font-size:clamp(30px,4.6vw,46px);margin-top:10px">@Ui.Section(Model.CurrentLang, Model.Current.Name)</h1>
+<p class="lede">@Model.Items.Count @Ui.T(Model.CurrentLang,"items")@(Model.Children.Count > 0 ? $" · {Model.Children.Count} {Ui.T(Model.CurrentLang,"subcats")}" : "")</p>
 
 @if (Model.Children.Count > 0)
 {
     <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:24px">
         @foreach (var c in Model.Children)
         {
-            <a class="tag" style="padding:7px 15px;font-size:13px" href="/s/@c.LegacyId">@c.Name</a>
+            <a class="tag" style="padding:7px 15px;font-size:13px" href="/s/@c.LegacyId?lang=@Model.CurrentLang">@Ui.Section(Model.CurrentLang, c.Name)</a>
         }
     </div>
 }
 
 @if (Model.Items.Count == 0)
 {
-    <div class="empty">這個分類目前沒有已發布的內容。</div>
+    <div class="empty">@Ui.T(Model.CurrentLang,"noContent")</div>
 }
 else
 {
@@ -33,14 +33,14 @@ else
         {
             var t = a.For(Model.CurrentLang);
             var img = t.FirstImage();
-            <a class="card" href="/news/item/@a.Id">
+            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
                 @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
                 <span class="body">
-                    <h3>@(string.IsNullOrWhiteSpace(t?.Title) ? "（無標題）" : t!.Title)</h3>
+                    <h3>@(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(Model.CurrentLang,"untitled") : t!.Title)</h3>
                     <span style="font-size:14px;color:var(--muted)">@t.Excerpt()</span>
                     <span class="meta">
                         <span>@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
-                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@a.Section</span> }
+                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@Ui.Section(Model.CurrentLang, a.Section)</span> }
                     </span>
                 </span>
             </a>

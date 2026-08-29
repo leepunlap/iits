@@ -4,13 +4,13 @@
 
 @if (Model.Item is null || Model.Text is null)
 {
-    <div class="empty">找不到內容。</div>
+    <div class="empty">@Ui.T(Model.CurrentLang,"notFound")</div>
 }
 else
 {
     <div class="crumb">
-        <a href="/">首頁</a> · <a href="/news/">最新消息</a>
-        @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> · </text>@Model.Item.Section }
+        <a href="/?lang=@Model.CurrentLang">@Ui.T(Model.CurrentLang,"home")</a> · <a href="/news/?lang=@Model.CurrentLang">@Ui.T(Model.CurrentLang,"latest")</a>
+        @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> · </text>@Ui.Section(Model.CurrentLang, Model.Item.Section) }
     </div>
 
     <article style="max-width:78ch">
@@ -19,7 +19,7 @@ else
                                  display:flex;gap:14px;flex-wrap:wrap;padding-bottom:22px;
                                  border-bottom:1px solid var(--line)">
             <span>@(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
-            @if (!string.IsNullOrEmpty(Model.Item.Section)) { <span>@Model.Item.Section</span> }
+            @if (!string.IsNullOrEmpty(Model.Item.Section)) { <span>@Ui.Section(Model.CurrentLang, Model.Item.Section)</span> }
             <span>@IitsNews.Data.Lang.Label(Model.Text.Lang)</span>
         </div>
 

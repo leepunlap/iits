@@ -1,0 +1,80 @@
+{
+  "_doc": "Machine-readable companion to TRANSLATION.md. Applied AFTER OpenCC s2hk. See that file for the reasoning behind every entry.",
+  "protected": [
+    "工業和信息化部教育與考試中心",
+    "工業和信息化部",
+    "工信部",
+    "香港青少年信息技術培養工程（香港分站）",
+    "青少年信息技術培養工程",
+    "中國工信出版傳媒集團北京信通傳媒有限責任公司",
+    "中國電子教育學會",
+    "香港浸會大學附屬學校王錦輝中小學",
+    "香港浸會大學附屬學校",
+    "工信學堂",
+    "信息技術培養工程",
+    "信息化",
+    "AI 無界",
+    "AI無界",
+    "YAI 等級認證",
+    "初中組",
+    "小學組"
+  ],
+  "hk_terms": {
+    "信息": "資訊",
+    "視頻": "影片",
+    "音頻": "音訊",
+    "質量": "質素",
+    "打印": "列印",
+    "幼兒園": "幼稚園",
+    "激活": "啟用",
+    "默認": "預設",
+    "屏幕": "螢幕",
+    "內存": "記憶體",
+    "硬盤": "硬碟",
+    "服務器": "伺服器",
+    "程序員": "程式員",
+    "計算機": "電腦",
+    "網民": "網民",
+    "視頻號": "影片號"
+  },
+  "_no_change": {
+    "_doc": "Recorded as CHECKED and correct, so nobody 'fixes' them later. Taiwan forms in particular are WRONG for a Hong Kong audience.",
+    "軟件": "HK uses 軟件, not 軟體 (Taiwan)",
+    "網絡": "HK uses 網絡, not 網路 (Taiwan)",
+    "項目": "HK uses 項目, not 專案 (Taiwan)",
+    "智能": "HK uses 智能 (人工智能), not 智慧 (Taiwan)",
+    "數據": "HK uses 數據 in a technical register",
+    "初中": "kept — appears in the official division name 初中組"
+  },
+  "en_names": {
+    "工信學堂": "Industry and Information Technology Class",
+    "工信學堂（香港）": "IITS Hong Kong",
+    "香港青少年信息技術培養工程（香港分站）": "Youth IT Training Project (Hong Kong Branch)",
+    "工業和信息化部": "Ministry of Industry and Information Technology (MIIT)",
+    "工業和信息化部教育與考試中心": "MIIT Education and Examination Center",
+    "中國電子教育學會": "China Electronics Education Association",
+    "香港浸會大學附屬學校王錦輝中小學": "HKBU Affiliated School Wong Kam Fai Secondary & Primary School",
+    "「AI 無界」": "AI Without Borders",
+    "第二屆「AI 無界」大灣區青少年人工智能創新大賽": "2nd Greater Bay Area Youth AI Innovation Competition",
+    "YAI 等級認證": "YAI Graded Certification",
+    "小初科創實踐系列": "Innovation Practice Series",
+    "初中組": "Junior Division",
+    "小學組": "Primary Division",
+    "研學": "study tour",
+    "師資培訓": "teacher training",
+    "落地案例": "case studies"
+  },
+  "en_forbidden": {
+    "Academy": "工信學堂 is a 'Class', never an 'Academy'",
+    "AI Unbounded": "the competition is 'AI Without Borders'",
+    "Training Camp": "use 'Boot Camp'",
+    "Secondary Division": "the boot camp's 初中組 is 'Junior Division'"
+  },
+  "repair_bad_s2t": {
+    "_doc": "Errors a NAIVE s2t makes on proper nouns. Found in the ORIGINAL ycltesthk Traditional content — the old site had been run through a plain converter before we ever saw it. Applied as a repair pass over zh-Hant, machine and human alike, because they are simply wrong.",
+    "穀歌": "谷歌",
+    "阿裏雲": "阿里雲",
+    "阿裏巴巴": "阿里巴巴",
+    "阿裏": "阿里"
+  }
+}

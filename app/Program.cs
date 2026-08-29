@@ -4,18 +4,30 @@ using IitsNews.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// The unit is Type=notify, which requires the app to signal readiness via sd_notify.
-// Without this it would start, never notify, and systemd would time it out as failed.
-// Also routes logging to journald with proper priority levels. No-op off systemd.
+// systemd integration for the Linux/staging host. Harmless under IIS on Windows —
+// the unit is Type=notify, so without this systemd waits for a readiness signal that
+// never arrives and marks the service failed.
 builder.Host.UseSystemd();
 
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<AppDb>(o =>
-    o.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+
+// SQLite. Resolve a relative Data Source against ContentRootPath so the working
+// directory cannot decide which database file gets opened, and create the directory
+// if it is missing — otherwise the first run fails with an unhelpful "unable to open
+// database file".
+var cs = builder.Configuration.GetConnectionString("Default");
+if (string.IsNullOrWhiteSpace(cs))
+    cs = "Data Source=data/iits.db";
+
+var csb = new Microsoft.Data.Sqlite.SqliteConnectionStringBuilder(cs);
+if (!Path.IsPathRooted(csb.DataSource))
+    csb.DataSource = Path.Combine(builder.Environment.ContentRootPath, csb.DataSource);
+Directory.CreateDirectory(Path.GetDirectoryName(csb.DataSource)!);
+cs = csb.ToString();
+
+builder.Services.AddDbContext<AppDb>(o => o.UseSqlite(cs));
 builder.Services.AddScoped<ContentImporter>();
 
-// Bind to loopback only. The app trusts nginx to have authenticated /admin/ via
-// auth_request; that trust is only safe because nothing else can reach this port.
 builder.WebHost.UseUrls(builder.Configuration["Listen"] ?? "http://127.0.0.1:5099");
 
 var app = builder.Build();
@@ -26,6 +38,7 @@ if (args.Contains("--migrate") || args.Contains("--import"))
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDb>();
 
+    Console.WriteLine($"Database: {csb.DataSource}");
     Console.WriteLine("Applying schema...");
     await db.Database.EnsureCreatedAsync();
 

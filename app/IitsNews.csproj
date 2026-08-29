@@ -9,11 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- PostgreSQL 18.6 is already active on the NUC alongside musicapp2 / musicapp_yinglee,
-         so this rides on a service that is already load-bearing and backed up.
-         If restore fails, check the exact EF Core 10 patch versions available and pin them. -->
+    <!-- SQLite, not a database server.
+         The production target is Windows Server 2019 / IIS, where standing up a database
+         service for 25 MB of articles would repeat the mistake being retired. A single file
+         behaves identically on Linux (staging, NUC) and Windows (production, IIS), so one
+         build serves both. EF Core keeps the provider swappable if that ever changes. -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="10.0.11" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+
+    <!-- SECURITY: EF Core Sqlite 10.0.0 pulls SQLitePCLRaw 2.1.11 transitively, which bundles
+         a vulnerable SQLite native library (GHSA-2m69-gcr7-jv3q, HIGH, affects <= 2.1.11).
+         Pinning the bundle explicitly overrides the transitive version. 2.1.13 is the last
+         2.1.x, so it is a drop-in; the 3.x line is a larger jump than this needs.
+         Remove this pin once EF Core ships a version that resolves >= 2.1.12 on its own. -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13" />
   </ItemGroup>
 
 </Project>

@@ -50,6 +50,41 @@ If `checker.py` cannot return a username yet, drop the `auth_request_set` / `pro
 pair. The app falls back to the literal `"admin"` and everything works — the only loss is
 the author byline.
 
+## Two hosts, one build
+
+Production is **Windows Server 2019 / IIS**. Staging is **Ubuntu on the NUC**. The same
+`dotnet publish` output runs on both — that is why ASP.NET Core was chosen over Node, and
+it is the reason moving the site back to the Windows box needs no rewrite.
+
+```bash
+dotnet publish -c Release -r linux-x64   # staging  → systemd + nginx
+dotnet publish -c Release -r win-x64     # production → IIS
+```
+
+**Storage is SQLite, not a database server.** One file, no service, no port, no credential,
+identical behaviour on both platforms. Standing up PostgreSQL on a 29.5 GB Windows box with
+4 GB RAM to hold 25 MB of articles would repeat the mistake being retired. EF Core keeps the
+provider swappable if the scale ever changes.
+
+### Windows / IIS prerequisites
+
+Neither is present on ycltesthk.com today:
+
+1. **.NET 10 Hosting Bundle** — installs the runtime *and* `AspNetCoreModuleV2`. IIS cannot
+   run this without it. Run `iisreset` afterwards or the module is not picked up.
+2. **Free disk.** The box has ~2 GB free. Retiring SQL Server 2008 R2 first releases ~6 GB —
+   do that before installing anything, not after.
+
+Then: publish to a folder, point an IIS application at it, use `deploy/web.config`, and give
+the **app pool identity write access to the `data` folder**. SQLite creates `-wal` and `-shm`
+files beside the database; a read-only folder fails at the first write, not at startup.
+
+`web.config` also blocks `data/`, `migration/` and `*.db` from being served. The database sits
+under the content root, so without those rules it would be downloadable — the same shape of bug
+as the `/classfiles/` exposure.
+
+Also outstanding for production: the box has **no TLS certificate and no port 443 binding**.
+
 ## Build and run
 
 ```bash

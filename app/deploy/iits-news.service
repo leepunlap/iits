@@ -1,7 +1,6 @@
 [Unit]
-Description=IITS news + admin service
-After=network.target postgresql.service
-Wants=postgresql.service
+Description=IITS news + admin service (staging)
+After=network.target
 
 [Service]
 Type=notify
@@ -13,6 +12,13 @@ User=www-data
 Group=www-data
 Environment=DOTNET_ENVIRONMENT=Production
 Environment=ASPNETCORE_ENVIRONMENT=Production
+
+# No EnvironmentFile needed any more — SQLite has no credential. The database is a file,
+# so what matters instead is that www-data can WRITE to its directory: SQLite creates
+# -wal and -shm files alongside it.
+# ReadWritePaths is required because ProtectSystem=full mounts /usr, /boot and /etc
+# read-only; /opt stays writable, but declare it so the intent is explicit.
+ReadWritePaths=/opt/iits-news/data
 
 # The app trusts the X-Auth-User header from nginx. That is only safe while nothing
 # but nginx can reach it, so keep it on loopback and keep these confinements on.

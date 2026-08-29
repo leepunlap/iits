@@ -1,0 +1,64 @@
+@page "/admin/edit/{id:int}"
+@model IitsNews.Pages.Admin.EditModel
+
+<h1>@(Model.Item.Id == 0 ? "新增文章" : $"編輯 #{Model.Item.Id}")</h1>
+
+@if (Model.Saved == "1")
+{
+    <div class="notice">已儲存。 Saved.</div>
+}
+
+@if (Model.Item.Id != 0)
+{
+    <p class="langs">
+        語言版本：
+        @foreach (var l in IitsNews.Data.Lang.All)
+        {
+            var has = Model.Item.Translations.Any(x => x.Lang == l);
+            <a href="/admin/edit/@Model.Item.Id?lang=@l"
+               aria-current="@(l == Model.EditLang ? "true" : "false")">@IitsNews.Data.Lang.Label(l)@(has ? "" : " +")</a>
+        }
+    </p>
+    <p class="muted">
+        原 CMS 編號 @(Model.Item.LegacyId?.ToString() ?? "—") ·
+        欄目 @Model.Item.Section ·
+        類型 @Model.Item.Kind ·
+        狀態 @(Model.Item.Status == "published" ? "已發布" : "草稿")
+    </p>
+}
+
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Item.Id" />
+    <input type="hidden" name="lang" value="@Model.EditLang" />
+
+    <div class="field">
+        <label for="title">標題 (@IitsNews.Data.Lang.Label(Model.EditLang))</label>
+        <input type="text" id="title" name="title" value="@(Model.Text?.Title ?? "")" required />
+    </div>
+
+    <div class="field">
+        <label for="publishedAt">日期 yyyy-MM-dd</label>
+        <input type="text" id="publishedAt" name="publishedAt"
+               value="@(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")" />
+    </div>
+
+    <div class="field">
+        <label for="keywords">關鍵字</label>
+        <input type="text" id="keywords" name="keywords" value="@(Model.Text?.Keywords ?? "")" />
+    </div>
+
+    <div class="field">
+        <label for="bodyHtml">內文 HTML</label>
+        <textarea id="bodyHtml" name="bodyHtml">@(Model.Text?.BodyHtml ?? "")</textarea>
+    </div>
+
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+        <button type="submit" name="action" value="save">儲存草稿</button>
+        <button type="submit" name="action" value="publish">儲存並發布</button>
+        @if (Model.Item.Status == "published")
+        {
+            <button type="submit" name="action" value="unpublish">取消發布</button>
+        }
+        <a href="/admin/" style="align-self:center; margin-left:.5rem;">返回</a>
+    </div>
+</form>

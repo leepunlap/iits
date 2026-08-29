@@ -1,0 +1,62 @@
+@*
+    Deliberately plain. The real design lives in the hand-written IITS pages
+    (_ds/broadsheet/styles.css and _ds_bundle.js) and should be adopted here once
+    the service is working. Keeping it minimal now so the markup is easy to replace.
+*@
+<!DOCTYPE html>
+<html lang="@(ViewData["Lang"] as string ?? "zh-Hant")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>@ViewData["Title"] · IITS</title>
+    <style>
+        :root { --ink:#16202a; --muted:#5d6b78; --line:#dfe4ea; --bg:#fff; --accent:#0f6e6b; }
+        @@media (prefers-color-scheme: dark) {
+            :root { --ink:#e6ebf0; --muted:#9aa8b5; --line:#26313b; --bg:#101820; --accent:#4fd1c5; }
+        }
+        * { box-sizing: border-box; }
+        body { margin:0; background:var(--bg); color:var(--ink); line-height:1.65;
+               font-family: system-ui, -apple-system, "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+        .wrap { max-width: 62rem; margin:0 auto; padding: 1.5rem 1.25rem 5rem; }
+        header.bar { border-bottom:1px solid var(--line); }
+        .bar-inner { max-width:62rem; margin:0 auto; padding:1rem 1.25rem;
+                     display:flex; gap:1rem; align-items:baseline; flex-wrap:wrap; }
+        .bar a { color:var(--accent); text-decoration:none; font-weight:500; }
+        .bar .spacer { flex:1; }
+        .langs a { margin-left:.6rem; font-size:.9rem; }
+        .langs a[aria-current="true"] { text-decoration:underline; font-weight:600; }
+        table { border-collapse:collapse; width:100%; }
+        th, td { text-align:left; padding:.5rem .6rem; border-bottom:1px solid var(--line); vertical-align:top; }
+        th { font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+        .pill { font-size:.72rem; padding:.1rem .45rem; border:1px solid var(--line);
+                border-radius:1rem; color:var(--muted); white-space:nowrap; }
+        .muted { color:var(--muted); }
+        input[type=text], textarea, select {
+            width:100%; padding:.5rem; border:1px solid var(--line); border-radius:4px;
+            background:var(--bg); color:var(--ink); font:inherit; }
+        textarea { min-height:22rem; font-family: ui-monospace, monospace; font-size:.85rem; }
+        button { padding:.5rem 1rem; border:1px solid var(--accent); background:var(--accent);
+                 color:#fff; border-radius:4px; font:inherit; cursor:pointer; }
+        .field { margin-bottom:1rem; }
+        label { display:block; font-size:.8rem; color:var(--muted); margin-bottom:.25rem; }
+        .notice { border:1px solid var(--line); border-left:3px solid var(--accent);
+                  padding:.75rem 1rem; margin-bottom:1.25rem; }
+    </style>
+</head>
+<body>
+    <header class="bar">
+        <div class="bar-inner">
+            <a href="/news/">IITS 新聞</a>
+            <span class="spacer"></span>
+            @if (ViewData["IsAdmin"] as bool? == true)
+            {
+                <a href="/admin/">管理</a>
+            }
+        </div>
+    </header>
+    <div class="wrap">
+        @RenderBody()
+    </div>
+</body>
+</html>

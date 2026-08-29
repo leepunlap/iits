@@ -1,0 +1,46 @@
+@page "/news/item/{id:int}"
+@model IitsNews.Pages.News.ItemModel
+
+@if (Model.Item is null || Model.Text is null)
+{
+    <p>找不到內容。</p>
+}
+else
+{
+    <p class="langs">
+        @foreach (var l in IitsNews.Data.Lang.All)
+        {
+            var has = Model.Item.Translations.Any(x => x.Lang == l);
+            if (has)
+            {
+                <a href="/news/item/@Model.Item.Id?lang=@l"
+                   aria-current="@(l == Model.Text.Lang ? "true" : "false")">@IitsNews.Data.Lang.Label(l)</a>
+            }
+            else
+            {
+                <span class="pill">@IitsNews.Data.Lang.Label(l) —</span>
+            }
+        }
+    </p>
+
+    <h1>@Model.Text.Title</h1>
+    <p class="muted">
+        @(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")
+        @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> · @Model.Item.Section</text> }
+    </p>
+
+    @if (Model.Text.Lang != Model.CurrentLang)
+    {
+        <div class="notice">
+            此文章尚無 @IitsNews.Data.Lang.Label(Model.CurrentLang) 版本，以下為 @IitsNews.Data.Lang.Label(Model.Text.Lang) 內容。
+        </div>
+    }
+    @if (Model.Text.Provenance == "machine")
+    {
+        <div class="notice">機器翻譯，未經審閱。 Machine translation, not yet reviewed.</div>
+    }
+
+    @* Body is the original CMS HTML. It is trusted because it can only be written by an
+       authenticated admin; it is not user-supplied input. *@
+    <article>@Html.Raw(Model.Text.BodyHtml)</article>
+}

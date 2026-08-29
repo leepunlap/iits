@@ -1,0 +1,28 @@
+[Unit]
+Description=IITS news + admin service
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=notify
+WorkingDirectory=/opt/iits-news
+ExecStart=/usr/bin/dotnet /opt/iits-news/IitsNews.dll
+Restart=on-failure
+RestartSec=5
+User=www-data
+Group=www-data
+Environment=DOTNET_ENVIRONMENT=Production
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+# The app trusts the X-Auth-User header from nginx. That is only safe while nothing
+# but nginx can reach it, so keep it on loopback and keep these confinements on.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

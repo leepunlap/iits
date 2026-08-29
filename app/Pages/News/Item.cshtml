@@ -7,6 +7,12 @@
 }
 else
 {
+    @if (Model.Item.Status != "published")
+    {
+        <div class="notice">
+            <strong>草稿 · Draft.</strong> 此文章尚未發布，僅在預覽模式可見。
+        </div>
+    }
     <p class="langs">
         @foreach (var l in IitsNews.Data.Lang.All)
         {

@@ -7,10 +7,18 @@ namespace IitsNews.Pages.News;
 public class IndexModel : PageModel
 {
     private readonly AppDb _db;
-    public IndexModel(AppDb db) => _db = db;
+    private readonly IConfiguration _cfg;
+    public IndexModel(AppDb db, IConfiguration cfg) { _db = db; _cfg = cfg; }
 
     public string CurrentLang { get; private set; } = Data.Lang.Hant;
     public List<Article> Items { get; private set; } = new();
+
+    /// <summary>
+    /// Staging-only: list drafts alongside published items so content can be reviewed
+    /// before the admin realm exists. Off unless explicitly enabled, and it must stay off
+    /// in production — see the warning banner in the view.
+    /// </summary>
+    public bool ShowDrafts => _cfg.GetValue<bool>("ShowDrafts");
 
     public async Task OnGetAsync(string? lang)
     {
@@ -18,14 +26,13 @@ public class IndexModel : PageModel
         ViewData["Lang"] = CurrentLang;
         ViewData["Title"] = "新聞";
 
-        // Only published, titled articles are listed. Imported page-body blocks and
-        // empty shells exist as records but are not news items.
-        Items = await _db.Articles
-            .Include(a => a.Translations)
-            .Where(a => a.Status == "published" && a.Kind == "article")
+        var q = _db.Articles.Include(a => a.Translations).Where(a => a.Kind == "article");
+        if (!ShowDrafts) q = q.Where(a => a.Status == "published");
+
+        Items = await q
             .OrderByDescending(a => a.Pinned)
             .ThenByDescending(a => a.PublishedAt)
-            .Take(100)
+            .Take(300)
             .ToListAsync();
     }
 }

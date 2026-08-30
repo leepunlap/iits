@@ -62,8 +62,11 @@
           </div>
         </div>
         <div style="padding:24px 22px">
+          @{ var tn = Ui.TrackName(L, t.Code); }
           <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;margin:0 0 16px;
-                     color:var(--ink2);line-height:1.6">@Ui.Section(L, t.Name)</h3>
+                     color:var(--ink2);line-height:1.55">
+            @tn.A<br>@tn.B
+          </h3>
           @if (t.SectionId is not null)
           {
             <a href="/s/@t.SectionId?lang=@L" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>

@@ -184,6 +184,44 @@ public static class Ui
         ["香港研學"] = ("香港研學", "香港研学"),
     };
 
+    /// <summary>Assessment track names split into two lines at the natural break: the
+    /// qualifier stays on line one, the test's own name drops to line two. Held as an
+    /// explicit pair rather than letting the box wrap, because CSS breaks wherever the
+    /// column happens to end and would split 水平測試 or "Technology Test" mid-phrase.</summary>
+    private static readonly Dictionary<string, Dictionary<string, (string A, string B)>> TrackLines = new()
+    {
+        ["zh-Hant"] = new()
+        {
+            ["YAI"] = ("青少年人工智能", "技術水平測試"),
+            ["YCL"] = ("青少年人工智能", "編程水平測試"),
+            ["ECL"] = ("青少年無屏",     "編程水平測試"),
+            ["SCL"] = ("青少年科技",     "素養水平測試"),
+            ["YUL"] = ("青少年無人機",   "技術水平測試"),
+        },
+        ["zh-Hans"] = new()
+        {
+            ["YAI"] = ("青少年人工智能", "技术水平测试"),
+            ["YCL"] = ("青少年人工智能", "编程水平测试"),
+            ["ECL"] = ("青少年无屏",     "编程水平测试"),
+            ["SCL"] = ("青少年科技",     "素养水平测试"),
+            ["YUL"] = ("青少年无人机",   "技术水平测试"),
+        },
+        ["en"] = new()
+        {
+            ["YAI"] = ("AI",          "Technology Test"),
+            ["YCL"] = ("AI",          "Programming Test"),
+            ["ECL"] = ("Screen-free", "Programming Test"),
+            ["SCL"] = ("Technology",  "Literacy Test"),
+            ["YUL"] = ("Drone",       "Technology Test"),
+        },
+    };
+
+    public static (string A, string B) TrackName(string lang, string code)
+    {
+        var l = TrackLines.ContainsKey(lang) ? lang : "zh-Hant";
+        return TrackLines[l].TryGetValue(code, out var v) ? v : (code, "");
+    }
+
     public static string T(string lang, string key) =>
         S.TryGetValue(lang, out var d) && d.TryGetValue(key, out var v) ? v
         : S["zh-Hant"].TryGetValue(key, out var f) ? f : key;

@@ -124,7 +124,7 @@
      a price worth paying to tumble five logos. ------------------------------------------ */
   .cube-stage{position:relative;width:124px;height:124px;perspective:640px;
               display:flex;align-items:center;justify-content:center;isolation:isolate;
-              cursor:grab;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+              cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}
   .cube-stage:active{cursor:grabbing}
   .cube-stage::before{content:'';position:absolute;width:66px;height:66px;border-radius:50%;
     z-index:0;left:50%;top:50%;margin:-33px 0 0 -33px;pointer-events:none;
@@ -173,11 +173,15 @@
      at 20px and pushed through a matrix comes out soft. Drawing it at 40px and scaling to
      0.5 doubles the raster resolution and it stays sharp. */
   .cube .lbl b{font-family:'Anton','Arial Narrow',Impact,sans-serif;font-weight:400;
-               font-size:40px;letter-spacing:.055em;color:#2E6DF0;line-height:1;
+               font-size:30px;letter-spacing:.05em;color:#2E6DF0;line-height:1;
                white-space:nowrap;-webkit-font-smoothing:antialiased;
-               text-shadow:2px 2px 0 #2A63DE, 4px 4px 0 #2559CE, 6px 6px 0 #1F4FBC,
-                           8px 8px 0 #1A45A9, 8px 10px 12px rgba(16,36,90,.32),
-                           0 0 14px rgba(255,255,255,.9)}
+               /* Extrusion in light GREY, not blue. A dark blue stack sat too close to the
+                  glyph colour and closed up the counters — the letters read as a smudge.
+                  Grey separates the face from the depth instead of competing with it.
+                  Drawn at 2x with the font, so these offsets are 2x too. */
+               text-shadow:1px 1px 0 #C9CFDA, 2px 2px 0 #BFC6D3, 3px 3px 0 #B6BECD,
+                           4px 5px 7px rgba(90,100,120,.28),
+                           0 0 10px rgba(255,255,255,.9)}
 
   @@media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
 

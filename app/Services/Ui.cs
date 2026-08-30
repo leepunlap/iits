@@ -18,6 +18,7 @@ public static class Ui
     {
         ["zh-Hant"] = new()
         {
+            ["experts"]="專家團隊", ["expertsLede"]="來自清華、北大、復旦、浙大、哈工大等院校的學術顧問。",
             ["orgLine"]="工業和信息化部教育與考試中心 · 青少年信息技術培養工程香港分站", ["sitemap"]="網站導覽", ["assessments"]="銜接測評", ["programmes"]="業務體系", ["news"]="新聞資訊", ["assessLede"]="五大測評軌道與工信部證書體系銜接，香港考生可就近報考。", ["enter"]="點擊進入 →", ["more"]="更多 →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="青少年信息技術培養工程<br />香港分站", ["heroLede"]="課程體系、師資培訓、賽事、研學與銜接測評，一體貫通內地與香港。", ["ftWeb"]="官方網站：www.ycltesthk.com", ["ftTel"]="業務合作：+852 2524 8248", ["ftMail"]="投訴郵箱：youth.itt@gmail.com", ["ftHours"]="服務時間：工作日 上午9:00~11:30，下午14:00~17:30", ["ftAddr"]="香港科學園科技大道西2號2W大樓3樓24室",
             ["latest"]="最新消息", ["all"]="全部", ["home"]="首頁", ["viewAll"]="查看全部",
             ["student"]="學生專區", ["teacher"]="教師專區", ["mainSite"]="主網站",
@@ -32,6 +33,7 @@ public static class Ui
         },
         ["zh-Hans"] = new()
         {
+            ["experts"]="专家团队", ["expertsLede"]="来自清华、北大、复旦、浙大、哈工大等院校的学术顾问。",
             ["orgLine"]="工业和信息化部教育与考试中心 · 青少年信息技术培养工程香港分站", ["sitemap"]="网站导览", ["assessments"]="衔接测评", ["programmes"]="业务体系", ["news"]="新闻资讯", ["assessLede"]="五大测评轨道与工信部证书体系衔接，香港考生可就近报考。", ["enter"]="点击进入 →", ["more"]="更多 →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="青少年信息技术培养工程<br />香港分站", ["heroLede"]="课程体系、师资培训、赛事、研学与衔接测评，一体贯通内地与香港。", ["ftWeb"]="官方网站：www.ycltesthk.com", ["ftTel"]="业务合作：+852 2524 8248", ["ftMail"]="投诉邮箱：youth.itt@gmail.com", ["ftHours"]="服务时间：工作日 上午9:00~11:30，下午14:00~17:30", ["ftAddr"]="香港科学园科技大道西2号2W大楼3楼24室",
             ["latest"]="最新消息", ["all"]="全部", ["home"]="首页", ["viewAll"]="查看全部",
             ["student"]="学生专区", ["teacher"]="教师专区", ["mainSite"]="主网站",
@@ -46,6 +48,7 @@ public static class Ui
         },
         ["en"] = new()
         {
+            ["experts"]="Experts", ["expertsLede"]="Academic advisers from Tsinghua, Peking, Fudan, Zhejiang, Harbin Institute of Technology and other universities.",
             ["orgLine"]="MIIT Education & Examination Center · Youth IT Training Project, Hong Kong Branch", ["sitemap"]="Site map", ["assessments"]="Assessments", ["programmes"]="Programmes", ["news"]="News", ["assessLede"]="Five assessment tracks aligned to the MIIT certification framework, sittable in Hong Kong.", ["enter"]="Enter →", ["more"]="More →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="Youth IT Training Project<br />Hong Kong Branch", ["heroLede"]="Curriculum, teacher training, competitions, study tours and assessment — one pathway across the Mainland and Hong Kong.", ["ftWeb"]="Website: www.ycltesthk.com", ["ftTel"]="Enquiries: +852 2524 8248", ["ftMail"]="Email: youth.itt@gmail.com", ["ftHours"]="Hours: Weekdays 09:00–11:30, 14:00–17:30", ["ftAddr"]="Room 24, 3/F, Building 2W, 2 Science Park West Avenue, Hong Kong Science Park",
             ["latest"]="Latest", ["all"]="All", ["home"]="Home", ["viewAll"]="View all",
             ["student"]="Student Area", ["teacher"]="Teacher Area", ["mainSite"]="Main site",

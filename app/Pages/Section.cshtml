@@ -40,8 +40,19 @@
       {
         var t = a.For(L); var img = t.FirstImage();
         <a class="cell" href="/news/item/@a.Id?lang=@L" style="display:flex;flex-direction:column;color:inherit">
-          <span class="@(img is null ? "hatch" : "")" style="height:180px;border-bottom:1px solid var(--line);display:block;
-                @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")"></span>
+          <span class="@(img is null ? "hatch" : "")" style="height:180px;border-bottom:1px solid var(--line);display:block;position:relative;
+                @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")">
+            @if (t.HasVideo())
+            {
+              <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <span style="width:46px;height:46px;border-radius:50%;background:rgba(18,23,29,.62);
+                             display:flex;align-items:center;justify-content:center">
+                  <span style="border-left:13px solid #fff;border-top:8px solid transparent;
+                               border-bottom:8px solid transparent;margin-left:4px"></span>
+                </span>
+              </span>
+            }
+          </span>
           <span style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1">
             <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")@(string.IsNullOrEmpty(a.Section) ? "" : "  ·  " + Ui.Section(L, a.Section))</span>
             <h3 style="font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.6;color:var(--ink2)">

@@ -168,12 +168,14 @@
       {
         <a href="/s/@m.LegacyId?lang=@lang" class="@(path == $"/s/{m.LegacyId}" ? "on" : "")">@Ui.Section(lang, m.Name)</a>
       }
+      <a href="/experts?lang=@lang" class="@(path == "/experts" ? "on" : "")">@Ui.T(lang,"experts")</a>
       <a href="/news/?lang=@lang" class="@(path.StartsWith("/news") ? "on" : "")">@Ui.T(lang,"latest")</a>
     </nav>
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="navpanel" id="navPanel">
       <a href="/?lang=@lang">@Ui.T(lang,"home")</a>
       @foreach (var m in menu) { <a href="/s/@m.LegacyId?lang=@lang">@Ui.Section(lang, m.Name)</a> }
+      <a href="/experts?lang=@lang">@Ui.T(lang,"experts")</a>
       <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
     </div>
   </div>
@@ -206,7 +208,8 @@
     <div>
       <div class="ftitle">@Ui.T(lang,"sitemap")</div>
       <div class="stack">
-        <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
+        <a href="/experts?lang=@lang">@Ui.T(lang,"experts")</a>
+      <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
         <a href="https://iits.giftedintl.com/">@Ui.T(lang,"mainSite")</a>
         <a href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
         <a href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>

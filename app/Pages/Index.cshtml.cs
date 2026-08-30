@@ -35,7 +35,7 @@ public class IndexModel : PageModel
         ViewData["Lang"] = CurrentLang;
 
         var latest = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-            .Where(a => a.Status == "published")
+            .Where(a => a.Status == "published" && a.Kind != "expert")
             .OrderByDescending(a => a.PublishedAt).ThenByDescending(a => a.Id)
             .Take(9).ToListAsync();
 

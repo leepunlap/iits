@@ -44,13 +44,23 @@ else
         @IitsNews.Data.Lang.Label(L) — @IitsNews.Data.Lang.Label(Model.Text.Lang)
       </div>
     }
-    @if (Model.Text.Provenance == "machine")
+    @* A machine-translation notice only means something when there is prose to translate.
+       A video embed with no text is identical in every language, so the banner is suppressed. *@
+    @if (Model.Text.Provenance == "machine" && Model.Text.Excerpt(40).Length > 12)
     {
       <div style="margin:18px 0;padding:14px 18px;background:#FFF8E8;border-left:2px solid #D9A441;
                   font-size:14px;color:#7A5B17">機器翻譯，未經審閱 · Machine translation, not yet reviewed.</div>
     }
 
     <div class="prose">@Html.Raw(Model.Text.BodyHtml)</div>
+    <script>
+      // Promote data-poster onto a CSS custom property; the value comes from our own DB,
+      // and is written via style.setProperty rather than interpolated into markup.
+      document.querySelectorAll('.video[data-poster]').forEach(function(v){
+        var u = v.getAttribute('data-poster');
+        if (u && /^\/media\//.test(u)) v.style.setProperty('--poster', "url('" + u + "')");
+      });
+    </script>
   </section>
 
   <style>
@@ -63,5 +73,13 @@ else
     .prose a{color:var(--brand);text-decoration:underline}
     .prose h1,.prose h2,.prose h3{font-family:var(--serif);margin:1.6em 0 .55em;color:var(--ink2)}
     .prose iframe,.prose video{max-width:100%}
+    /* The old CMS hardcoded 340x220 on its embeds. Force a responsive 16:9 frame that fills
+       the article column instead — the fixed size was the whole problem. */
+    .prose .video{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;
+                  background:#000 center/cover no-repeat;border:1px solid var(--line);overflow:hidden}
+    /* the mirrored cover sits behind the player, so a slow or blocked third-party embed
+       shows the video's own still rather than a black rectangle */
+    .prose .video[data-poster]{background-image:var(--poster)}
+    .prose .video iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
   </style>
 }

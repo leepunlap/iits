@@ -27,7 +27,7 @@ public class IndexModel : PageModel
         ViewData["Title"] = "新聞";
 
         var q = _db.Articles.Include(a => a.Translations).Where(a => a.Kind == "article");
-        if (!ShowDrafts) q = q.Where(a => a.Status == "published");
+        if (!ShowDrafts) q = q.Where(a => a.Status == "published" && a.Kind != "expert");
 
         Items = await q
             .OrderByDescending(a => a.Pinned)

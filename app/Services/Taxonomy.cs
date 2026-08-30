@@ -36,8 +36,15 @@ public static class Taxonomy
             new("news",   "最新消息", "最新消息", "Latest"),
             new("policy", "政策法規", "政策法规", "Policy"),
         }),
-        new("experts", "專家團隊", "专家团队", "Experts", new SubDef[] { }),
-        new("about",   "關於我們", "关于我们", "About",   new SubDef[] { }),
+        // Experts sits UNDER About rather than beside it. Twelve advisers are evidence about
+        // who the organisation is, which is what About is for — as a top-level peer of
+        // Assessments and Programmes it claimed more of the nav than a roster warrants.
+        new("about", "關於我們", "关于我们", "About", new SubDef[]
+        {
+            new("overview",  "簡介",     "简介",     "Overview"),
+            new("experts",   "專家團隊", "专家团队", "Experts"),
+            new("partners",  "合作夥伴", "合作伙伴", "Partners"),
+        }),
     };
 
     public static CatDef? Cat(string? key) => All.FirstOrDefault(c => c.Key == key);

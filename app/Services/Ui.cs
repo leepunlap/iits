@@ -19,6 +19,7 @@ public static class Ui
     {
         ["zh-Hant"] = new()
         {
+            ["aboutUs"]="關於我們",
             ["programmes"]="網站內容",
             ["partners"]="合作夥伴",
             ["experts"]="專家團隊", ["expertsLede"]="來自清華、北大、復旦、浙大、哈工大等院校的學術顧問。",
@@ -36,6 +37,7 @@ public static class Ui
         },
         ["zh-Hans"] = new()
         {
+            ["aboutUs"]="关于我们",
             ["programmes"]="网站内容",
             ["partners"]="合作伙伴",
             ["experts"]="专家团队", ["expertsLede"]="来自清华、北大、复旦、浙大、哈工大等院校的学术顾问。",
@@ -53,6 +55,7 @@ public static class Ui
         },
         ["en"] = new()
         {
+            ["aboutUs"]="About",
             ["programmes"]="Sections",
             ["partners"]="Partners",
             ["experts"]="Experts", ["expertsLede"]="Academic advisers from Tsinghua, Peking, Fudan, Zhejiang, Harbin Institute of Technology and other universities.",

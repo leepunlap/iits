@@ -12,7 +12,6 @@ public class IndexModel : PageModel
 
     public Article? Lead { get; private set; }
     public List<Article> NewsList { get; private set; } = new();
-    public List<MenuItem> Pillars { get; private set; } = new();
     public List<(string Code, string Name, int? SectionId)> Tracks { get; private set; } = new();
     public List<Article> Partners { get; private set; } = new();
     public Dictionary<string,int> CatCounts { get; private set; } = new();
@@ -43,8 +42,6 @@ public class IndexModel : PageModel
 
         Lead = latest.FirstOrDefault(a => a.For(CurrentLang).FirstImage() != null) ?? latest.FirstOrDefault();
         NewsList = latest.Where(a => a.Id != Lead?.Id).Take(7).ToList();
-
-        Pillars = (await _menu.GetAsync()).ToList();
 
         CatCounts = await _db.Articles.AsNoTracking()
             .Where(a => a.Status == "published" && a.Cat != "" && a.Kind != "partner")

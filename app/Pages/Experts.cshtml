@@ -1,10 +1,10 @@
-@page "/experts"
+@page "/c/about/experts"
 @using IitsNews.Data
 @model IitsNews.Pages.ExpertsModel
 @{ var L = Model.CurrentLang; }
 
 <section class="sec">
-  <div class="crumb"><a href="/?lang=@L">@Ui.T(L,"home")</a> / @Ui.T(L,"experts")</div>
+  <div class="crumb"><a href="/?lang=@L">@Ui.T(L,"home")</a> / <a href="/c/about?lang=@L">@Ui.T(L,"aboutUs")</a> / @Ui.T(L,"experts")</div>
   <div class="sechead">
     <div>
       <div class="eyebrow">EXPERTS</div>

@@ -107,36 +107,6 @@
     </div>
   </div>
 </section>
-
-<section id="pillars" class="sec">
-  <div class="eyebrow">SECTIONS</div>
-  <h2 class="h2" style="margin-bottom:48px">@Ui.T(L,"programmes")</h2>
-  @* Built from the taxonomy, not the old CMS section tree. Each card is a category and its
-     strands, so this block and the nav can never disagree about what the site contains. *@
-  <div class="grid cols-b">
-    @{ var n = 0; }
-    @foreach (var cd in IitsNews.Services.Taxonomy.All)
-    {
-      n++;
-      var counts = Model.CatCounts.TryGetValue(cd.Key, out var cc) ? cc : 0;
-      <div class="cell" style="padding:32px 30px">
-        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:20px">
-          <h3 style="font-family:var(--serif);font-size:21px;font-weight:700;margin:0;color:var(--ink2)">
-            <a href="/c/@cd.Key?lang=@L" style="color:inherit">@IitsNews.Services.Taxonomy.Name(cd, L)</a>
-          </h3>
-          <span class="meta">@counts</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
-          @foreach (var sd in cd.Subs)
-          {
-            <a href="/c/@cd.Key/@sd.Key?lang=@L" style="color:var(--muted)">@IitsNews.Services.Taxonomy.Name(sd, L)</a>
-          }
-        </div>
-      </div>
-    }
-  </div>
-</section>
-
 <script src="/assets/js/cube.js@(Ui.V("/assets/js/cube.js"))" defer></script>
 
 @if (Model.Partners.Count > 0)

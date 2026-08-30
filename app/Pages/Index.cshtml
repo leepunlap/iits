@@ -44,9 +44,14 @@
     @foreach (var t in Model.Tracks)
     {
       <div class="cell">
-        <div class="hatch" style="height:120px;border-bottom:1px solid var(--line);display:flex;
-                    align-items:center;justify-content:center;font-family:var(--mono);font-size:26px;
-                    font-weight:500;color:var(--brand);letter-spacing:.08em">@t.Code</div>
+        @* The real badge art, recovered from the old site and cropped free of its baked-in
+           Simplified caption — the caption is rendered as text below so it follows the
+           reader's language instead of being frozen into the image. *@
+        <div class="hatch" style="height:132px;border-bottom:1px solid var(--line);display:flex;
+                    align-items:center;justify-content:center">
+          <img src="/assets/tracks/@(t.Code.ToLowerInvariant()).png" alt="@t.Code"
+               style="height:66px;width:auto;display:block" loading="lazy">
+        </div>
         <div style="padding:24px 22px">
           <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;margin:0 0 16px;
                      color:var(--ink2);line-height:1.6">@Ui.Section(L, t.Name)</h3>

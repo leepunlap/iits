@@ -19,6 +19,7 @@ public class AppDb : DbContext
         {
             e.HasIndex(x => x.LegacyId).IsUnique().HasFilter("\"LegacyId\" IS NOT NULL");
             e.HasIndex(x => x.Status);
+            e.HasIndex(x => new { x.Cat, x.Sub });
             e.HasIndex(x => x.PublishedAt);
             e.HasMany(x => x.Translations)
              .WithOne(t => t.Article!)

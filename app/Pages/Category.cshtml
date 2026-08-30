@@ -1,0 +1,53 @@
+@page "/c/{cat}"
+@using IitsNews.Data
+@using IitsNews.Services
+@model IitsNews.Pages.CategoryModel
+@{ var L = Model.CurrentLang; }
+
+<section class="sec">
+  <div class="crumb"><a href="/?lang=@L">@Ui.T(L,"home")</a> / @Taxonomy.Name(Model.Cat, L)</div>
+  <div class="eyebrow">@Model.Cat.Key.ToUpperInvariant()</div>
+  <h2 class="h2" style="margin-bottom:10px">@Taxonomy.Name(Model.Cat, L)</h2>
+
+  @if (Model.Blocks.Count == 0)
+  {
+    <div class="empty">@Ui.T(L,"nothingPublished")</div>
+  }
+
+  @foreach (var b in Model.Blocks)
+  {
+    <div class="sechead" style="margin:56px 0 26px">
+      <h3 style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--ink2)">
+        @(b.Sub is null ? Taxonomy.Name(Model.Cat, L) : Taxonomy.Name(b.Sub, L))
+      </h3>
+      @if (b.Sub is not null && b.Total > b.Items.Count)
+      {
+        <a class="more" href="/c/@Model.Cat.Key/@b.Sub.Key?lang=@L">@Ui.T(L,"viewAll") @b.Total →</a>
+      }
+    </div>
+    <div class="grid cols-b">
+      @foreach (var a in b.Items)
+      {
+        var t = a.For(L); var img = t.FirstImage();
+        <a class="cell" href="/news/item/@a.Id?lang=@L" style="display:flex;flex-direction:column;color:inherit">
+          <span class="@(img is null ? "hatch" : "")" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")">
+            @if (t.HasVideo())
+            {
+              <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <span style="width:44px;height:44px;border-radius:50%;background:rgba(18,23,29,.62);display:flex;align-items:center;justify-content:center">
+                  <span style="border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span>
+                </span></span>
+            }
+          </span>
+          <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+            <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
+            <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+              @(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</h3>
+            <span style="font-size:13.5px;color:var(--muted2);line-height:1.75">@t.Excerpt(70)</span>
+          </span>
+        </a>
+      }
+    </div>
+  }
+</section>

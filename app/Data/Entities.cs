@@ -51,6 +51,12 @@ public class Article
     /// <summary>Section name as it appeared in the old nav, for reference during review.</summary>
     public string Section { get; set; } = "";
 
+    /// <summary>Simplified taxonomy replacing the old CMS's 50 sections. Five categories
+    /// (tests / courses / news / experts / about); Sub is the track or strand within one.
+    /// The original Section is kept untouched as provenance.</summary>
+    public string Cat { get; set; } = "";
+    public string Sub { get; set; } = "";
+
     /// <summary>article = titled news item; pageBody = untitled content block; empty = shell row.</summary>
     public string Kind { get; set; } = "article";
 

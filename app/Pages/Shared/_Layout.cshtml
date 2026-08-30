@@ -97,6 +97,22 @@
            gap:clamp(10px,1.5vw,22px);font-size:clamp(12px,1.05vw,14px);color:var(--muted3);font-weight:400}
   nav.main a{color:var(--muted3)} nav.main a:hover{color:var(--brand)}
   nav.main a.on{color:var(--ink2);padding-bottom:3px;border-bottom:2px solid var(--brand)}
+  /* Dropdowns. The design's nav was a flat row of links; with five categories carrying
+     subcategories the children have to fold away, or the header runs to two lines and stops
+     being navigation. Hover/focus-within reveals, so it works from the keyboard too. */
+  nav.main>.item{position:relative}
+  nav.main>.item>a{display:block;padding:8px 2px;white-space:nowrap}
+  nav.main .drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translate(-50%,-6px);
+                 min-width:190px;background:#fff;border:1px solid var(--line2);padding:6px;
+                 opacity:0;visibility:hidden;transition:.16s;z-index:60;
+                 box-shadow:0 22px 46px -26px rgba(16,22,29,.42)}
+  nav.main>.item:hover .drop,
+  nav.main>.item:focus-within .drop{opacity:1;visibility:visible;transform:translate(-50%,0)}
+  nav.main .drop a{display:block;padding:9px 14px;font-size:13.5px;color:var(--muted2);
+                   white-space:nowrap;border-bottom:0}
+  nav.main .drop a:hover{background:rgba(70,89,156,.07);color:var(--ink)}
+  /* a hover bridge, so the pointer can cross the gap without the menu closing */
+  nav.main>.item::after{content:'';position:absolute;left:0;right:0;top:100%;height:12px}
 
   .btn{background:var(--brand);color:#fff;font-size:14.5px;font-weight:500;padding:14px 28px;
        letter-spacing:.03em;white-space:nowrap;display:inline-block}
@@ -148,7 +164,7 @@
   .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
           background:linear-gradient(135deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.05) 42%,
                      rgba(150,182,250,.15) 66%,rgba(255,255,255,.26) 100%);
-          border:3px solid rgba(58,106,214,.72);
+          border:1.5px solid rgba(70,118,224,.62);
           box-shadow:inset 0 1px 0 rgba(255,255,255,.8),
                      inset 0 -8px 14px -12px rgba(46,109,240,.4)}
   @@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
@@ -259,20 +275,33 @@
       <img src="/assets/iits-logo.png@(Ui.V("/assets/iits-logo.png"))" alt="@Ui.T(lang,"siteName")">
     </a>
     <nav class="main">
+      @* Five categories, not the old CMS's fifty sections. Assessments and Programmes carry
+         a dropdown; News, Experts and About are single destinations. *@
       <a href="/?lang=@lang" class="@(path == "/" ? "on" : "")">@Ui.T(lang,"home")</a>
-      @foreach (var m in menu)
+      @foreach (var cd in IitsNews.Services.Taxonomy.All)
       {
-        <a href="/s/@m.LegacyId?lang=@lang" class="@(path == $"/s/{m.LegacyId}" ? "on" : "")">@Ui.Section(lang, m.Name)</a>
+        <div class="item">
+          <a href="/c/@cd.Key?lang=@lang" class="@(path.StartsWith($"/c/{cd.Key}") || (cd.Key=="experts" && path=="/experts") ? "on" : "")">@IitsNews.Services.Taxonomy.Name(cd, lang)</a>
+          @if (cd.Subs.Length > 0)
+          {
+            <div class="drop">
+              @foreach (var sd in cd.Subs)
+              {
+                <a href="/c/@cd.Key/@sd.Key?lang=@lang">@IitsNews.Services.Taxonomy.Name(sd, lang)</a>
+              }
+            </div>
+          }
+        </div>
       }
-      <a href="/experts?lang=@lang" class="@(path == "/experts" ? "on" : "")">@Ui.T(lang,"experts")</a>
-      <a href="/news/?lang=@lang" class="@(path.StartsWith("/news") ? "on" : "")">@Ui.T(lang,"latest")</a>
     </nav>
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <div class="navpanel" id="navPanel">
       <a href="/?lang=@lang">@Ui.T(lang,"home")</a>
-      @foreach (var m in menu) { <a href="/s/@m.LegacyId?lang=@lang">@Ui.Section(lang, m.Name)</a> }
-      <a href="/experts?lang=@lang">@Ui.T(lang,"experts")</a>
-      <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
+      @foreach (var cd in IitsNews.Services.Taxonomy.All)
+      {
+        <a href="/c/@cd.Key?lang=@lang">@IitsNews.Services.Taxonomy.Name(cd, lang)</a>
+        foreach (var sd in cd.Subs) { <a class="sub" href="/c/@cd.Key/@sd.Key?lang=@lang">@IitsNews.Services.Taxonomy.Name(sd, lang)</a> }
+      }
     </div>
   </div>
 </header>
@@ -292,26 +321,16 @@
         <span style="color:var(--faint2)">Room 24, 3/F, Building 2W, 2 Science Park West Avenue, Hong Kong Science Park</span>
       </div>
     </div>
-    @foreach (var m in menu.Take(2))
+    @foreach (var cd in IitsNews.Services.Taxonomy.All.Where(x => x.Subs.Length > 0))
     {
       <div>
-        <div class="ftitle">@Ui.Section(lang, m.Name)</div>
+        <div class="ftitle">@IitsNews.Services.Taxonomy.Name(cd, lang)</div>
         <div class="stack">
-          @foreach (var c in m.Children.Take(6)) { <a href="/s/@c.LegacyId?lang=@lang">@Ui.Section(lang, c.Name)</a> }
+          @foreach (var sd in cd.Subs) { <a href="/c/@cd.Key/@sd.Key?lang=@lang">@IitsNews.Services.Taxonomy.Name(sd, lang)</a> }
         </div>
       </div>
     }
-    <div>
-      <div class="ftitle">@Ui.T(lang,"sitemap")</div>
-      <div class="stack">
-        <a href="/experts?lang=@lang">@Ui.T(lang,"experts")</a>
-      <a href="/news/?lang=@lang">@Ui.T(lang,"latest")</a>
-        <a href="https://iits.giftedintl.com/">@Ui.T(lang,"mainSite")</a>
-        <a href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
-        <a href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
-        @if (isAdmin) { <a href="/admin/">@Ui.T(lang,"admin")</a> }
-      </div>
-    </div>
+
   </div>
   <div class="base">
     <span>© @DateTime.Now.Year @Ui.T(lang,"siteName")</span>

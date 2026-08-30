@@ -14,6 +14,8 @@ public class IndexModel : PageModel
     public List<Article> NewsList { get; private set; } = new();
     public List<MenuItem> Pillars { get; private set; } = new();
     public List<(string Code, string Name, int? SectionId)> Tracks { get; private set; } = new();
+    public List<Article> Partners { get; private set; } = new();
+    public Dictionary<string,int> CatCounts { get; private set; } = new();
     public string CurrentLang { get; private set; } = Data.Lang.Hant;
 
     // The five assessment tracks the design puts across the top. Section ids are resolved
@@ -35,7 +37,7 @@ public class IndexModel : PageModel
         ViewData["Lang"] = CurrentLang;
 
         var latest = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-            .Where(a => a.Status == "published" && a.Kind != "expert")
+            .Where(a => a.Status == "published" && a.Kind != "expert" && a.Kind != "partner")
             .OrderByDescending(a => a.PublishedAt).ThenByDescending(a => a.Id)
             .Take(9).ToListAsync();
 
@@ -43,6 +45,15 @@ public class IndexModel : PageModel
         NewsList = latest.Where(a => a.Id != Lead?.Id).Take(7).ToList();
 
         Pillars = (await _menu.GetAsync()).ToList();
+
+        CatCounts = await _db.Articles.AsNoTracking()
+            .Where(a => a.Status == "published" && a.Cat != "" && a.Kind != "partner")
+            .GroupBy(a => a.Cat).Select(g => new { g.Key, N = g.Count() })
+            .ToDictionaryAsync(x => x.Key, x => x.N);
+
+        Partners = await _db.Articles.AsNoTracking().Include(a => a.Translations)
+            .Where(a => a.Kind == "partner" && a.Status == "published")
+            .OrderBy(a => a.Id).ToListAsync();
 
         var sections = await _db.Sections.AsNoTracking().ToListAsync();
         foreach (var (code, zh) in TrackDefs)

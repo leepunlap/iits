@@ -46,13 +46,12 @@
       <div class="cell">
         @* An actual cube — the old badge was that same cube drawn flat in isometric
            projection. Every face carries the code, so it reads at any angle of the turn. *@
-        @* Each track's own illustration from its exam page, cropped away from the baked-in
-           Simplified caption and heavily faded — it identifies the track without competing
-           with the cube or dragging 简体 text onto a trilingual page. *@
+        @* Plain card behind the cube. The track illustrations went in here and came back
+           out: even greyscaled and washed to 40%, an isometric scene behind a tumbling glass
+           cube gives the eye two things to read in one small square. The cube IS the
+           identifier; it does not need a backdrop to explain it. *@
         <div style="height:150px;border-bottom:1px solid var(--line);display:flex;
-                    align-items:center;justify-content:center;position:relative;
-                    background:linear-gradient(rgba(255,255,255,.40),rgba(255,255,255,.52)),
-                               url('/assets/tracks/art/@(t.Code.ToLowerInvariant()).jpg@(Ui.V("/assets/tracks/art/" + t.Code.ToLowerInvariant() + ".jpg"))') center/cover no-repeat">
+                    align-items:center;justify-content:center;background:var(--card)">
           <div class="cube-stage" role="img" aria-label="@t.Code" tabindex="0">
             <div class="cube">
               <i class="f"></i><i class="b"></i><i class="r"></i>
@@ -67,10 +66,7 @@
                      color:var(--ink2);line-height:1.55">
             @tn.A<br>@tn.B
           </h3>
-          @if (t.SectionId is not null)
-          {
-            <a href="/s/@t.SectionId?lang=@L" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>
-          }
+          <a href="/c/tests/@t.Code?lang=@L" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>
         </div>
       </div>
     }
@@ -113,24 +109,27 @@
 </section>
 
 <section id="pillars" class="sec">
-  <div class="eyebrow">PROGRAMMES</div>
+  <div class="eyebrow">SECTIONS</div>
   <h2 class="h2" style="margin-bottom:48px">@Ui.T(L,"programmes")</h2>
+  @* Built from the taxonomy, not the old CMS section tree. Each card is a category and its
+     strands, so this block and the nav can never disagree about what the site contains. *@
   <div class="grid cols-b">
     @{ var n = 0; }
-    @foreach (var m in Model.Pillars)
+    @foreach (var cd in IitsNews.Services.Taxonomy.All)
     {
       n++;
+      var counts = Model.CatCounts.TryGetValue(cd.Key, out var cc) ? cc : 0;
       <div class="cell" style="padding:32px 30px">
         <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:20px">
           <h3 style="font-family:var(--serif);font-size:21px;font-weight:700;margin:0;color:var(--ink2)">
-            <a href="/s/@m.LegacyId?lang=@L" style="color:inherit">@Ui.Section(L, m.Name)</a>
+            <a href="/c/@cd.Key?lang=@L" style="color:inherit">@IitsNews.Services.Taxonomy.Name(cd, L)</a>
           </h3>
-          <span class="meta">@n.ToString("00")</span>
+          <span class="meta">@counts</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
-          @foreach (var c in m.Children.Take(6))
+          @foreach (var sd in cd.Subs)
           {
-            <a href="/s/@c.LegacyId?lang=@L" style="color:var(--muted)">@Ui.Section(L, c.Name)</a>
+            <a href="/c/@cd.Key/@sd.Key?lang=@L" style="color:var(--muted)">@IitsNews.Services.Taxonomy.Name(sd, L)</a>
           }
         </div>
       </div>
@@ -139,3 +138,34 @@
 </section>
 
 <script src="/assets/js/cube.js@(Ui.V("/assets/js/cube.js"))" defer></script>
+
+@if (Model.Partners.Count > 0)
+{
+  <section style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="sec" style="padding-top:clamp(38px,5vw,64px);padding-bottom:clamp(38px,5vw,64px)">
+      <div class="eyebrow" style="text-align:center">PARTNERS</div>
+      <h2 class="h2" style="text-align:center;font-size:clamp(21px,2.4vw,28px);margin-bottom:36px">@Ui.T(L,"partners")</h2>
+      @* A logo wall, not article cards. A partner is a name and a mark — giving each one a
+         headline, a date and an excerpt made eight logos look like eight news stories. *@
+      <div style="display:grid;gap:1px;background:var(--line2);border:1px solid var(--line2);
+                  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+        @foreach (var p in Model.Partners)
+        {
+          var pt = p.For(L); var logo = pt.FirstImage();
+          <span class="cell" style="display:flex;align-items:center;justify-content:center;
+                padding:26px 20px;min-height:104px" title="@pt?.Title">
+            @if (logo is not null)
+            {
+              <img src="@logo" alt="@pt?.Title" loading="lazy"
+                   style="max-height:52px;max-width:100%;width:auto;object-fit:contain;
+                          filter:grayscale(1);opacity:.72;transition:filter .2s,opacity .2s"
+                   onmouseover="this.style.filter='none';this.style.opacity='1'"
+                   onmouseout="this.style.filter='grayscale(1)';this.style.opacity='.72'">
+            }
+            else { <span style="font-size:13.5px;color:var(--muted2)">@pt?.Title</span> }
+          </span>
+        }
+      </div>
+    </div>
+  </section>
+}

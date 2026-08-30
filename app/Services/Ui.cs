@@ -1,3 +1,4 @@
+using System.IO;
 namespace IitsNews.Services;
 
 /// <summary>
@@ -215,6 +216,24 @@ public static class Ui
             ["YUL"] = ("Drone",       "Technology Test"),
         },
     };
+
+    /// <summary>Cache-busting stamp for a static asset.
+    ///
+    /// /assets/ is served with max-age=604800, so replacing a file in place leaves everyone
+    /// who already visited holding the old one for a WEEK — which is exactly what happened
+    /// when the track artwork went greyscale and kept rendering in colour. Appending the
+    /// file's last-write time makes the URL change whenever the bytes do, so the long cache
+    /// stays (it is the right setting) but never serves something stale.</summary>
+    private static readonly Dictionary<string, string> _stamp = new();
+    public static string V(string webPath)
+    {
+        if (_stamp.TryGetValue(webPath, out var v)) return v;
+        var full = Path.Combine("/var/www/iits-staging", webPath.TrimStart('/'));
+        try { v = "?v=" + File.GetLastWriteTimeUtc(full).Ticks.ToString("x"); }
+        catch { v = ""; }
+        _stamp[webPath] = v;
+        return v;
+    }
 
     public static (string A, string B) TrackName(string lang, string code)
     {

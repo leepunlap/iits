@@ -52,7 +52,7 @@
         <div style="height:150px;border-bottom:1px solid var(--line);display:flex;
                     align-items:center;justify-content:center;position:relative;
                     background:linear-gradient(rgba(255,255,255,.40),rgba(255,255,255,.52)),
-                               url('/assets/tracks/art/@(t.Code.ToLowerInvariant()).jpg') center/cover no-repeat">
+                               url('/assets/tracks/art/@(t.Code.ToLowerInvariant()).jpg@(Ui.V("/assets/tracks/art/" + t.Code.ToLowerInvariant() + ".jpg"))') center/cover no-repeat">
           <div class="cube-stage" role="img" aria-label="@t.Code" tabindex="0">
             <div class="cube">
               <i class="f"></i><i class="b"></i><i class="r"></i>
@@ -138,4 +138,4 @@
   </div>
 </section>
 
-<script src="/assets/js/cube.js" defer></script>
+<script src="/assets/js/cube.js@(Ui.V("/assets/js/cube.js"))" defer></script>

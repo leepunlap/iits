@@ -256,7 +256,7 @@
 <header class="site">
   <div class="shell">
     <a href="/?lang=@lang" aria-label="@Ui.T(lang,"siteName")">
-      <img src="/assets/iits-logo.png" alt="@Ui.T(lang,"siteName")">
+      <img src="/assets/iits-logo.png@(Ui.V("/assets/iits-logo.png"))" alt="@Ui.T(lang,"siteName")">
     </a>
     <nav class="main">
       <a href="/?lang=@lang" class="@(path == "/" ? "on" : "")">@Ui.T(lang,"home")</a>
@@ -282,7 +282,7 @@
 <footer class="site">
   <div class="cols">
     <div>
-      <img src="/assets/iits-logo.png" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
+      <img src="/assets/iits-logo.png@(Ui.V("/assets/iits-logo.png"))" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
       <div class="addr">
         <span>@Ui.T(lang,"ftWeb")</span>
         <span>@Ui.T(lang,"ftTel")</span>

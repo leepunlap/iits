@@ -43,7 +43,7 @@
     --brand:#46599C; --brand-d:#2F3F78;
     --line:rgba(28,34,41,0.07); --line2:rgba(28,34,41,0.09); --line3:rgba(28,34,41,0.12);
     --brandline:rgba(70,89,156,0.18);
-    --hatch:repeating-linear-gradient(135deg,#E6E9F1 0 8px,#F3F5FA 8px 16px);
+    --hatch:linear-gradient(#F4F6FB,#EDF0F7);
     --serif:@serif; --sans:@sans; --mono:'IBM Plex Mono',monospace;
   }
   html{-webkit-text-size-adjust:100%}
@@ -61,7 +61,12 @@
   .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
   .lede{font-size:15px;line-height:1.9;color:var(--muted2);max-width:420px;margin:0;font-weight:300}
   .more{font-size:13.5px;letter-spacing:.05em;white-space:nowrap}
-  .hatch{background-image:var(--hatch)}
+  /* Flat placeholder for cards with no image. Was a diagonal hatch carried over from
+     the design artboard, where it marked 'image goes here'; on a real page that reads as a
+     broken texture, so it is now a quiet flat panel. */
+  .hatch{background-image:var(--hatch);position:relative}
+  .hatch::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;
+                transform:translate(-50%,-50%);border:1.5px solid rgba(28,34,41,.13);border-radius:3px}
 
   /* the design's signature: a hairline GRID, cells separated by 1px of the border colour */
   .grid{display:grid;gap:1px;background:var(--line2);border:1px solid var(--line2)}

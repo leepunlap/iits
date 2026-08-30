@@ -156,11 +156,12 @@
                 padding:26px 20px;min-height:104px" title="@pt?.Title">
             @if (logo is not null)
             {
+              @* Logos in their own colours. Greyscaling a partner's mark and only restoring
+                 it on hover means anyone scanning the page — or on a touch device, where
+                 there is no hover — sees the brands wrong. A partner wall exists to show
+                 whose marks these are. *@
               <img src="@logo" alt="@pt?.Title" loading="lazy"
-                   style="max-height:52px;max-width:100%;width:auto;object-fit:contain;
-                          filter:grayscale(1);opacity:.72;transition:filter .2s,opacity .2s"
-                   onmouseover="this.style.filter='none';this.style.opacity='1'"
-                   onmouseout="this.style.filter='grayscale(1)';this.style.opacity='.72'">
+                   style="max-height:56px;max-width:100%;width:auto;object-fit:contain">
             }
             else { <span style="font-size:13.5px;color:var(--muted2)">@pt?.Title</span> }
           </span>

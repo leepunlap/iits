@@ -49,11 +49,15 @@
         <div style="height:150px;border-bottom:1px solid var(--line);display:flex;
                     align-items:center;justify-content:center;background:var(--card)">
           <div class="cube-stage" role="img" aria-label="@t.Code">
-            <div class="cube" aria-hidden="true">
-              <i class="f"></i><i class="b"></i><i class="r"></i>
-              <i class="l"></i><i class="u"></i><i class="d"></i>
-            </div>
-            <span class="cube-label" aria-hidden="true">@t.Code</span>
+            <div class="spin-y" aria-hidden="true"><div class="spin-x"><div class="spin-z">
+              <div class="cube">
+                <i class="f"></i><i class="b"></i><i class="r"></i>
+                <i class="l"></i><i class="u"></i><i class="d"></i>
+              </div>
+            </div></div></div>
+            <span class="cube-label" aria-hidden="true">
+              <img src="/assets/tracks/ltr-@(t.Code.ToLowerInvariant()).png" alt="">
+            </span>
           </div>
         </div>
         <div style="padding:24px 22px">

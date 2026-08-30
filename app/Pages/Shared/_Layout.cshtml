@@ -90,9 +90,9 @@
 
   header.site{position:sticky;top:0;z-index:40;background:rgba(250,250,252,.94);
               backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  header.site .shell{padding-top:10px;padding-bottom:10px;min-height:76px;display:flex;flex-wrap:wrap;
+  header.site .shell{padding-top:12px;padding-bottom:12px;min-height:92px;display:flex;flex-wrap:wrap;
                      align-items:center;justify-content:space-between;gap:clamp(16px,2.2vw,36px)}
-  header.site img{height:30px;width:auto;display:block;flex-shrink:0}
+  header.site img{height:clamp(38px,3.6vw,52px);width:auto;display:block;flex-shrink:0}
   nav.main{display:flex;flex:1 1 340px;justify-content:flex-end;flex-wrap:wrap;align-items:center;
            gap:clamp(10px,1.5vw,22px);font-size:clamp(12px,1.05vw,14px);color:var(--muted3);font-weight:400}
   nav.main a{color:var(--muted3)} nav.main a:hover{color:var(--brand)}
@@ -105,74 +105,81 @@
         letter-spacing:.03em;white-space:nowrap;display:inline-block}
   .btn2:hover{border-color:var(--brand);color:var(--brand)}
 
-  /* ---- rotating assessment cube, liquid glass ------------------------------------
-     The badge was never a hexagon: that outline is a cube in isometric projection, and
-     the "roof" is its top face. So it is an actual cube, and it turns.
+  /* ---- tumbling assessment cube, liquid glass -------------------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection, and the
+     "roof" is its top face.
 
-     THE CODE DOES NOT TURN WITH IT. The label is a sibling of the rotating box, not a
-     child, so it inherits none of the transform.
+     MULTI-AXIS TUMBLE. Three nested layers, each spinning on ONE axis at a different
+     period — 23s / 17s / 31s. Those are coprime, so the combined orientation does not
+     repeat for their least common multiple (~3.4 hours). A single keyframe animating all
+     three axes together loops visibly every cycle and reads as animation; compounding
+     independent rotations reads as an object tumbling in free fall. Each axis stays LINEAR,
+     because constant angular velocity is what momentum actually looks like — easing each
+     axis would make it wobble as if something kept nudging it.
 
-     GLASS NEEDS SOMETHING TO REFRACT. backdrop-filter on a flat white card blurs nothing
-     and the effect collapses to a grey square, so a soft colour field sits behind the cube
-     for the faces to pick up and distort as they pass over it. That field is the whole
-     reason this reads as glass rather than as translucency.
+     THE CODE DOES NOT TUMBLE. The label is a sibling of the rotating stack, so it inherits
+     none of the transform.
 
-     CSS 3D rather than three.js on purpose: ~600 KB and five WebGL contexts is not a price
-     worth paying to spin five logos. Reach for it when there is real lighting or
-     interaction to justify it. --------------------------------------------------------- */
-  .cube-stage{position:relative;width:118px;height:118px;perspective:600px;
+     SQUARE CORNERS AND THE ORIGINAL LETTERFORMS. Both taken from the source art: the badge
+     has hard edges, and the letters are its own heavy condensed gothic, lifted from the
+     recovered bitmap rather than approximated with a web font.
+
+     GLASS NEEDS SOMETHING TO REFRACT: backdrop-filter over a flat card blurs nothing, so a
+     soft colour field sits behind the cube for the faces to distort as they pass over it.
+
+     CSS 3D rather than three.js: ~600 KB and five WebGL contexts is not a price worth
+     paying to tumble five logos. --------------------------------------------------------- */
+  .cube-stage{position:relative;width:120px;height:120px;perspective:620px;
               display:flex;align-items:center;justify-content:center;isolation:isolate}
-  /* The field the glass refracts. Kept SMALL and FAINT and sized to the cube: a large
-     bright blob spills past the edges and reads as a halo around a glowing ice cube, not
-     as something seen through glass. It should be barely visible on its own. */
-  .cube-stage::before{content:'';position:absolute;width:62px;height:62px;border-radius:50%;
-    z-index:0;left:50%;top:50%;margin:-31px 0 0 -31px;
+  .cube-stage::before{content:'';position:absolute;width:64px;height:64px;border-radius:50%;
+    z-index:0;left:50%;top:50%;margin:-32px 0 0 -32px;
     background:radial-gradient(circle at 34% 30%,rgba(126,164,246,.55) 0%,
-               rgba(178,203,255,.34) 45%,rgba(214,229,255,0) 74%);
-    filter:blur(6px);animation:cube-field 16s ease-in-out infinite}
+               rgba(178,203,255,.32) 45%,rgba(214,229,255,0) 74%);
+    filter:blur(6px);animation:cube-field 23s ease-in-out infinite}
   @@keyframes cube-field{
     0%,100%{transform:translate(-8%,-5%) scale(.94)}
     50%    {transform:translate(9%,6%)  scale(1.06)}
   }
 
-  .cube{position:relative;z-index:1;width:64px;height:64px;transform-style:preserve-3d;
-        animation:cube-spin 16s linear infinite;will-change:transform}
-  .cube-stage:hover .cube{animation-duration:4.5s}
+  /* one axis per layer, three coprime periods */
+  .spin-y,.spin-x,.spin-z{transform-style:preserve-3d;will-change:transform}
+  .spin-y{position:relative;z-index:1;animation:spin-y 23s linear infinite}
+  .spin-x{animation:spin-x 17s linear infinite}
+  .spin-z{animation:spin-z 31s linear infinite}
+  @@keyframes spin-y{from{transform:rotateY(0)}   to{transform:rotateY(360deg)}}
+  @@keyframes spin-x{from{transform:rotateX(0)}   to{transform:rotateX(360deg)}}
+  @@keyframes spin-z{from{transform:rotateZ(0)}   to{transform:rotateZ(360deg)}}
 
-  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:8px;
+  .cube{position:relative;width:62px;height:62px;transform-style:preserve-3d}
+  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
           background:linear-gradient(135deg,rgba(255,255,255,.44) 0%,rgba(255,255,255,.06) 42%,
                      rgba(150,182,250,.16) 66%,rgba(255,255,255,.28) 100%);
-          border:1px solid rgba(96,140,232,.42);
+          border:1.5px solid rgba(80,128,232,.55);
           box-shadow:inset 0 1px 0 rgba(255,255,255,.85),
-                     inset 0 -8px 14px -12px rgba(46,109,240,.42),
-                     0 4px 12px -9px rgba(29,58,120,.42)}
+                     inset 0 -8px 14px -12px rgba(46,109,240,.42)}
   @@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    /* no brightness lift — that is what turned it into a light source instead of a lens */
     .cube i{background:linear-gradient(135deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.04) 44%,
                        rgba(255,255,255,.22) 100%);
             -webkit-backdrop-filter:blur(4px) saturate(150%);
             backdrop-filter:blur(4px) saturate(150%)}
   }
-  .cube .f{transform:translateZ(32px)}
-  .cube .b{transform:rotateY(180deg) translateZ(32px)}
-  .cube .r{transform:rotateY(90deg)  translateZ(32px)}
-  .cube .l{transform:rotateY(-90deg) translateZ(32px)}
-  .cube .u{transform:rotateX(90deg)  translateZ(32px)}
-  .cube .d{transform:rotateX(-90deg) translateZ(32px)}
+  .cube .f{transform:translateZ(31px)}
+  .cube .b{transform:rotateY(180deg) translateZ(31px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(31px)}
+  .cube .l{transform:rotateY(-90deg) translateZ(31px)}
+  .cube .u{transform:rotateX(90deg)  translateZ(31px)}
+  .cube .d{transform:rotateX(-90deg) translateZ(31px)}
 
+  /* the original letterforms, never transformed */
   .cube-label{position:absolute;z-index:2;left:0;right:0;top:50%;transform:translateY(-50%);
-              text-align:center;pointer-events:none;
-              font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.08em;
-              color:#1E4691;text-shadow:0 1px 2px rgba(255,255,255,.95),0 0 8px rgba(255,255,255,.7)}
+              display:flex;justify-content:center;pointer-events:none}
+  .cube-label img{height:19px;width:auto;display:block;
+                  filter:drop-shadow(0 1px 2px rgba(255,255,255,.95))
+                         drop-shadow(0 0 7px rgba(255,255,255,.85))}
 
-  @@keyframes cube-spin{
-    from{transform:rotateX(-20deg) rotateY(0deg)}
-    to  {transform:rotateX(-20deg) rotateY(360deg)}
-  }
   @@media(prefers-reduced-motion:reduce){
-    .cube{animation:none;transform:rotateX(-20deg) rotateY(-34deg)}
-    .cube-stage::before{animation:none}
-    .cube-stage:hover .cube{animation:none}
+    .spin-y,.spin-x,.spin-z,.cube-stage::before{animation:none}
+    .spin-y{transform:rotateY(-34deg)} .spin-x{transform:rotateX(-18deg)}
   }
 
   .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
@@ -261,7 +268,7 @@
 <footer class="site">
   <div class="cols">
     <div>
-      <img src="/assets/iits-logo.png" alt="" style="height:34px;width:auto;display:block;margin-bottom:24px">
+      <img src="/assets/iits-logo.png" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
       <div class="addr">
         <span>@Ui.T(lang,"ftWeb")</span>
         <span>@Ui.T(lang,"ftTel")</span>

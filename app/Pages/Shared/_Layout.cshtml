@@ -10,8 +10,8 @@
     var serif = lang == "zh-Hans" ? "'Noto Serif SC',serif" : "'Noto Serif TC',serif";
     var sans  = lang == "zh-Hans" ? "'Noto Sans SC',system-ui,sans-serif" : "'Noto Sans TC',system-ui,sans-serif";
     var gf    = lang == "zh-Hans"
-        ? "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-        : "https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap";
+        ? "https://fonts.googleapis.com/css2?family=Anton&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        : "https://fonts.googleapis.com/css2?family=Anton&family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap";
     var path = Context.Request.Path.HasValue ? Context.Request.Path.Value! : "/";
     string LangHref(string l)
     {
@@ -147,8 +147,8 @@
                face blurs it — physically right, but at 4px the letters stopped being
                legible. 1.2px keeps the refraction reading as glass while the code stays
                sharp through it. */
-            -webkit-backdrop-filter:blur(1.2px) saturate(140%);
-            backdrop-filter:blur(1.2px) saturate(140%)}
+            -webkit-backdrop-filter:blur(0.6px) saturate(135%);
+            backdrop-filter:blur(0.6px) saturate(135%)}
   }
   .cube .f{transform:translateZ(31px)}
   .cube .b{transform:rotateY(180deg) translateZ(31px)}
@@ -160,8 +160,24 @@
   /* the plane at the centre of the cube, counter-rotated by JS */
   .cube .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
              pointer-events:none;will-change:transform}
-  .cube .lbl img{width:82%;height:auto;display:block;
-                 filter:drop-shadow(0 0 2px rgba(255,255,255,.95))}
+  /* LIVE TEXT, not a traced bitmap. The source art is 23px tall, so potrace outlines of it
+     came out lumpy at display size — there simply is not enough information in the original
+     to vectorise cleanly. Anton is a heavy condensed grotesque and the closest widely
+     available match to the face the badge used; as real text it is crisp at any size and
+     costs nothing to render.
+     The depth is stacked text-shadows stepping down-right, which reads as an extruded solid
+     rather than a flat sticker. Genuine extrusion would be invisible here: the label is
+     counter-rotated to face the viewer, so its sides never turn toward the camera. */
+  /* Rendered at 2x and scaled down by the transform. Anything inside a 3D-transformed
+     parent is rasterised ONCE at its layout size and then transformed, so 20px text drawn
+     at 20px and pushed through a matrix comes out soft. Drawing it at 40px and scaling to
+     0.5 doubles the raster resolution and it stays sharp. */
+  .cube .lbl b{font-family:'Anton','Arial Narrow',Impact,sans-serif;font-weight:400;
+               font-size:40px;letter-spacing:.055em;color:#2E6DF0;line-height:1;
+               white-space:nowrap;-webkit-font-smoothing:antialiased;
+               text-shadow:2px 2px 0 #2A63DE, 4px 4px 0 #2559CE, 6px 6px 0 #1F4FBC,
+                           8px 8px 0 #1A45A9, 8px 10px 12px rgba(16,36,90,.32),
+                           0 0 14px rgba(255,255,255,.9)}
 
   @@media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
 

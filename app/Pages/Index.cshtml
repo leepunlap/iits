@@ -46,13 +46,18 @@
       <div class="cell">
         @* An actual cube — the old badge was that same cube drawn flat in isometric
            projection. Every face carries the code, so it reads at any angle of the turn. *@
+        @* Each track's own illustration from its exam page, cropped away from the baked-in
+           Simplified caption and heavily faded — it identifies the track without competing
+           with the cube or dragging 简体 text onto a trilingual page. *@
         <div style="height:150px;border-bottom:1px solid var(--line);display:flex;
-                    align-items:center;justify-content:center;background:var(--card)">
+                    align-items:center;justify-content:center;position:relative;
+                    background:linear-gradient(rgba(255,255,255,.90),rgba(255,255,255,.94)),
+                               url('/assets/tracks/art/@(t.Code.ToLowerInvariant()).jpg') center/cover no-repeat">
           <div class="cube-stage" role="img" aria-label="@t.Code" tabindex="0">
             <div class="cube">
               <i class="f"></i><i class="b"></i><i class="r"></i>
               <i class="l"></i><i class="u"></i><i class="d"></i>
-              <span class="lbl"><img src="/assets/tracks/@(t.Code.ToLowerInvariant()).svg" alt=""></span>
+              <span class="lbl"><b>@t.Code</b></span>
             </div>
           </div>
         </div>

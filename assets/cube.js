@@ -79,7 +79,9 @@
     c.el.style.transform = qmat(c.q);
     // inverse rotation keeps the label facing the viewer; translateZ(0) keeps it at the
     // centre plane so the near faces sort in front of it
-    if (c.lbl) c.lbl.style.transform = qmat([c.q[0], -c.q[1], -c.q[2], -c.q[3]]) + ' translateZ(0px)';
+    // scale(.5) pairs with the 2x font-size in CSS: the glyphs rasterise at double
+    // resolution and are scaled down here, which is what keeps them sharp through the matrix
+    if (c.lbl) c.lbl.style.transform = qmat([c.q[0], -c.q[1], -c.q[2], -c.q[3]]) + ' translateZ(0px) scale(0.5)';
   }
 
   if (reduce) {

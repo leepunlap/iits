@@ -105,63 +105,50 @@
         letter-spacing:.03em;white-space:nowrap;display:inline-block}
   .btn2:hover{border-color:var(--brand);color:var(--brand)}
 
-  /* ---- tumbling assessment cube, liquid glass -------------------------------------
-     The badge was never a hexagon: that outline is a cube in isometric projection, and the
-     "roof" is its top face.
+  /* ---- tumbling assessment cube, liquid glass, JS physics -------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection.
 
-     MULTI-AXIS TUMBLE. Three nested layers, each spinning on ONE axis at a different
-     period — 23s / 17s / 31s. Those are coprime, so the combined orientation does not
-     repeat for their least common multiple (~3.4 hours). A single keyframe animating all
-     three axes together loops visibly every cycle and reads as animation; compounding
-     independent rotations reads as an object tumbling in free fall. Each axis stays LINEAR,
-     because constant angular velocity is what momentum actually looks like — easing each
-     axis would make it wobble as if something kept nudging it.
+     ORIENTATION IS SIMULATED, NOT KEYFRAMED. cube.js integrates a quaternion from an
+     angular-velocity vector each frame, so the motion has real state: it can be nudged,
+     it carries momentum, and it never repeats. Keyframes cannot express any of that.
 
-     THE CODE DOES NOT TUMBLE. The label is a sibling of the rotating stack, so it inherits
-     none of the transform.
+     THE LABEL LIVES AT THE CUBE'S CENTRE, at translateZ(0) INSIDE the preserve-3d
+     hierarchy, and is counter-rotated by the inverse quaternion so it always faces the
+     viewer. Being a real plane at z=0 rather than an overlay is what lets the near faces
+     pass IN FRONT of it — the letters are inside the glass, not painted on top.
 
-     SQUARE CORNERS AND THE ORIGINAL LETTERFORMS. Both taken from the source art: the badge
-     has hard edges, and the letters are its own heavy condensed gothic, lifted from the
-     recovered bitmap rather than approximated with a web font.
+     Letters are potrace vectors of the source art's own condensed gothic, so they stay
+     crisp at any size instead of being an upscaled 23px bitmap.
 
-     GLASS NEEDS SOMETHING TO REFRACT: backdrop-filter over a flat card blurs nothing, so a
-     soft colour field sits behind the cube for the faces to distort as they pass over it.
-
-     CSS 3D rather than three.js: ~600 KB and five WebGL contexts is not a price worth
-     paying to tumble five logos. --------------------------------------------------------- */
-  .cube-stage{position:relative;width:120px;height:120px;perspective:620px;
-              display:flex;align-items:center;justify-content:center;isolation:isolate}
-  .cube-stage::before{content:'';position:absolute;width:64px;height:64px;border-radius:50%;
-    z-index:0;left:50%;top:50%;margin:-32px 0 0 -32px;
+     CSS 3D + a small rAF loop rather than three.js: ~600 KB and five WebGL contexts is not
+     a price worth paying to tumble five logos. ------------------------------------------ */
+  .cube-stage{position:relative;width:124px;height:124px;perspective:640px;
+              display:flex;align-items:center;justify-content:center;isolation:isolate;
+              cursor:grab;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  .cube-stage:active{cursor:grabbing}
+  .cube-stage::before{content:'';position:absolute;width:66px;height:66px;border-radius:50%;
+    z-index:0;left:50%;top:50%;margin:-33px 0 0 -33px;pointer-events:none;
     background:radial-gradient(circle at 34% 30%,rgba(126,164,246,.55) 0%,
                rgba(178,203,255,.32) 45%,rgba(214,229,255,0) 74%);
-    filter:blur(6px);animation:cube-field 23s ease-in-out infinite}
-  @@keyframes cube-field{
-    0%,100%{transform:translate(-8%,-5%) scale(.94)}
-    50%    {transform:translate(9%,6%)  scale(1.06)}
-  }
+    filter:blur(6px)}
 
-  /* one axis per layer, three coprime periods */
-  .spin-y,.spin-x,.spin-z{transform-style:preserve-3d;will-change:transform}
-  .spin-y{position:relative;z-index:1;animation:spin-y 23s linear infinite}
-  .spin-x{animation:spin-x 17s linear infinite}
-  .spin-z{animation:spin-z 31s linear infinite}
-  @@keyframes spin-y{from{transform:rotateY(0)}   to{transform:rotateY(360deg)}}
-  @@keyframes spin-x{from{transform:rotateX(0)}   to{transform:rotateX(360deg)}}
-  @@keyframes spin-z{from{transform:rotateZ(0)}   to{transform:rotateZ(360deg)}}
-
-  .cube{position:relative;width:62px;height:62px;transform-style:preserve-3d}
+  .cube{position:relative;z-index:1;width:62px;height:62px;transform-style:preserve-3d;
+        will-change:transform}
   .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
-          background:linear-gradient(135deg,rgba(255,255,255,.44) 0%,rgba(255,255,255,.06) 42%,
-                     rgba(150,182,250,.16) 66%,rgba(255,255,255,.28) 100%);
+          background:linear-gradient(135deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.05) 42%,
+                     rgba(150,182,250,.15) 66%,rgba(255,255,255,.26) 100%);
           border:1.5px solid rgba(80,128,232,.55);
-          box-shadow:inset 0 1px 0 rgba(255,255,255,.85),
-                     inset 0 -8px 14px -12px rgba(46,109,240,.42)}
+          box-shadow:inset 0 1px 0 rgba(255,255,255,.8),
+                     inset 0 -8px 14px -12px rgba(46,109,240,.4)}
   @@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.04) 44%,
-                       rgba(255,255,255,.22) 100%);
-            -webkit-backdrop-filter:blur(4px) saturate(150%);
-            backdrop-filter:blur(4px) saturate(150%)}
+    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,.20) 100%);
+            /* Blur has to stay LOW. The label sits at the cube's centre, so every near
+               face blurs it — physically right, but at 4px the letters stopped being
+               legible. 1.2px keeps the refraction reading as glass while the code stays
+               sharp through it. */
+            -webkit-backdrop-filter:blur(1.2px) saturate(140%);
+            backdrop-filter:blur(1.2px) saturate(140%)}
   }
   .cube .f{transform:translateZ(31px)}
   .cube .b{transform:rotateY(180deg) translateZ(31px)}
@@ -170,17 +157,13 @@
   .cube .u{transform:rotateX(90deg)  translateZ(31px)}
   .cube .d{transform:rotateX(-90deg) translateZ(31px)}
 
-  /* the original letterforms, never transformed */
-  .cube-label{position:absolute;z-index:2;left:0;right:0;top:50%;transform:translateY(-50%);
-              display:flex;justify-content:center;pointer-events:none}
-  .cube-label img{height:19px;width:auto;display:block;
-                  filter:drop-shadow(0 1px 2px rgba(255,255,255,.95))
-                         drop-shadow(0 0 7px rgba(255,255,255,.85))}
+  /* the plane at the centre of the cube, counter-rotated by JS */
+  .cube .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+             pointer-events:none;will-change:transform}
+  .cube .lbl img{width:82%;height:auto;display:block;
+                 filter:drop-shadow(0 0 2px rgba(255,255,255,.95))}
 
-  @@media(prefers-reduced-motion:reduce){
-    .spin-y,.spin-x,.spin-z,.cube-stage::before{animation:none}
-    .spin-y{transform:rotateY(-34deg)} .spin-x{transform:rotateX(-18deg)}
-  }
+  @@media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
 
   .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
   .crumb{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--faint2);margin-bottom:18px}

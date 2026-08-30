@@ -54,17 +54,18 @@
       qmat([c.q[0], -c.q[1], -c.q[2], -c.q[3]]) + ' translateZ(0px) scale(0.5)';
   }
 
-  if (reduce) {
-    cubes.forEach(function (c) { c.q = qnorm([0.92,-0.18,-0.32,-0.05]); apply(c); });
-    return;
-  }
+  // Reduced motion slows the tumble to a crawl rather than freezing it. A small logo
+  // turning once every couple of minutes is not the kind of motion the preference exists to
+  // suppress, and a dead cube reads as broken. Interaction still works.
+  if (reduce) cubes.forEach(function (c) { for (var k=0;k<3;k++) c.w[k] *= 0.12; });
 
   // --- grab, turn, release ------------------------------------------------------------
   var SENS = 0.011;                          // radians of turn per pixel dragged
   cubes.forEach(function (c) {
     c.stage.addEventListener('pointerdown', function (ev) {
       c.stage.setPointerCapture && c.stage.setPointerCapture(ev.pointerId);
-      c.drag = { x: ev.clientX, y: ev.clientY, t: performance.now(), vx: 0, vy: 0, moved: 0 };
+      c.drag = { x: ev.clientX, y: ev.clientY, t: performance.now(), vx: 0, vy: 0, moved: 0,
+                 prev: c.w.slice(), last: performance.now() };
       c.w = [0,0,0];                          // held still while under the finger
       ev.preventDefault();
     });
@@ -77,7 +78,7 @@
       // follows the finger rather than its own local axes
       c.q = qnorm(qmul(qaxis(dy, dx, 0, Math.hypot(dx, dy) * SENS), c.q));
       d.vx = dx / dt; d.vy = dy / dt; d.moved += Math.hypot(dx, dy);
-      d.x = ev.clientX; d.y = ev.clientY; d.t = now;
+      d.x = ev.clientX; d.y = ev.clientY; d.t = now; d.last = now;
       apply(c);
     });
 
@@ -97,7 +98,13 @@
       for (var k = 0; k < 3; k++) c.w[k] = Math.max(-cap, Math.min(cap, c.w[k]));
     }
     c.stage.addEventListener('pointerup', release);
-    c.stage.addEventListener('pointercancel', function () { c.drag = null; });
+    function cancel() { if (c.drag) { c.w = c.drag.prev; c.drag = null; } }
+    c.stage.addEventListener('pointercancel', cancel);
+    c.stage.addEventListener('lostpointercapture', function () { if (c.drag) release({}); });
+    // a pointerup that lands anywhere else must still end the gesture; without this a mouse
+    // released outside the tile leaves the cube held at zero velocity for good
+    window.addEventListener('pointerup', function (ev) { if (c.drag) release(ev); });
+    window.addEventListener('pointercancel', cancel);
     c.stage.addEventListener('keydown', function (ev) {
       if (ev.key === 'Enter' || ev.key === ' ') {
         c.w = [R(-2,2), R(-2,2), R(-1.2,1.2)]; ev.preventDefault();
@@ -110,7 +117,19 @@
     var dt = last ? Math.min((t - last)/1000, 0.05) : 0.016;
     last = t;
     for (var i = 0; i < cubes.length; i++) {
-      var c = cubes[i]; if (c.drag) continue;             // hand-held: no integration
+      var c = cubes[i];
+      if (c.drag) {
+        // a gesture with no events for a while is a lost pointer, not a held one
+        if (t - c.drag.last > 1600) { c.w = c.drag.prev; c.drag = null; }
+        else continue;
+      }
+      // PERPETUAL MOTION IS THE INVARIANT. Whatever went wrong upstream — a dropped
+      // pointerup, a cancelled gesture, a flick that resolved to nothing — a cube that is
+      // not in someone's hand must be turning. Re-seed rather than trusting the callers.
+      if (Math.hypot(c.w[0], c.w[1], c.w[2]) < 0.02) {
+        var ax = R(-1,1), ay = R(-1,1), az = R(-1,1), m = Math.hypot(ax,ay,az) || 1, sp0 = R(0.34, 0.64);
+        c.w = [ax/m*sp0, ay/m*sp0, az/m*sp0];
+      }
       var w = c.w, sp = Math.hypot(w[0], w[1], w[2]);
       if (sp > 1e-6) {
         c.q = qnorm(qmul(qaxis(w[0], w[1], w[2], sp * dt), c.q));

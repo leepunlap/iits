@@ -105,6 +105,46 @@
         letter-spacing:.03em;white-space:nowrap;display:inline-block}
   .btn2:hover{border-color:var(--brand);color:var(--brand)}
 
+  /* ---- rotating assessment cube -------------------------------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection, and
+     the "roof" is its top face. So it is built as an actual cube.
+
+     Done with CSS 3D transforms rather than three.js, deliberately. three.js is ~600 KB
+     before any scene code, and five tiles would mean five WebGL contexts on a page whose
+     job is to list exam tracks — browsers cap those, and a lost context leaves a blank
+     square. CSS 3D is GPU-composited, ~40 lines, works with no JS at all, degrades to a
+     flat face on anything old, and is one media query away from honouring reduced motion.
+     If this ever needs real lighting, materials or interaction, that is the point to
+     reach for three.js — not before. ------------------------------------------------ */
+  .cube-stage{width:104px;height:104px;perspective:520px;display:flex;
+              align-items:center;justify-content:center}
+  .cube{position:relative;width:62px;height:62px;transform-style:preserve-3d;
+        animation:cube-spin 16s linear infinite;will-change:transform}
+  .cube-stage:hover .cube{animation-duration:4.5s}
+  /* Faces must be OPAQUE and backface-hidden. Semi-transparent faces let the far side of
+     the cube read through the near side, which shows the code mirrored — legible enough to
+     look like a rendering fault rather than a solid object. */
+  .cube span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+             font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:.06em;
+             color:#2E6DF0;background:#E9F0FF;border:2px solid #3D7BF7;
+             box-sizing:border-box;backface-visibility:hidden}
+  /* Only the four upright faces carry the code. On the top and bottom it would be seen
+     edge-on or upside down, so those are plain — and the shading gives the turn its depth. */
+  .cube .f{transform:translateZ(31px)}
+  .cube .b{transform:rotateY(180deg) translateZ(31px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(31px);background:#DCE7FF}
+  .cube .l{transform:rotateY(-90deg) translateZ(31px);background:#DCE7FF}
+  .cube .u{transform:rotateX(90deg)  translateZ(31px);background:#F5F9FF}
+  .cube .d{transform:rotateX(-90deg) translateZ(31px);background:#CBDBFB}
+  @@keyframes cube-spin{
+    from{transform:rotateX(-22deg) rotateY(0deg)}
+    to  {transform:rotateX(-22deg) rotateY(360deg)}
+  }
+  @@media(prefers-reduced-motion:reduce){
+    .cube{animation:none;transform:rotateX(-22deg) rotateY(-32deg)}
+    .cube-stage:hover .cube{animation:none}
+  }
+
   .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
   .crumb{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--faint2);margin-bottom:18px}
   .empty{padding:70px 0;text-align:center;color:var(--faint2)}

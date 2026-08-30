@@ -2,79 +2,121 @@
 @using IitsNews.Data
 @model IitsNews.Pages.IndexModel
 @{
-    var hero = Model.Latest.FirstOrDefault();
-    var rest = Model.Latest.Skip(1).ToList();
+    var L = Model.CurrentLang;
+    var leadT = Model.Lead?.For(L);
+    var leadImg = leadT.FirstImage();
 }
 
-@if (hero is not null)
-{
-    var ht = hero.For(Model.CurrentLang);
-    var himg = ht.FirstImage();
-    <div class="eyebrow">@Ui.T(Model.CurrentLang,"eyebrow")</div>
-    <h1 style="font-size:clamp(34px,5.6vw,58px);margin:14px 0 0;max-width:20ch">@Ui.T(Model.CurrentLang,"siteName")</h1>
-    <p class="lede">@Ui.T(Model.CurrentLang,"tagline") @Ui.T(Model.CurrentLang,"holding") @Model.TotalPublished @Ui.T(Model.CurrentLang,"items").</p>
+<section style="border-bottom:1px solid var(--line)">
+  <div class="shell">
+    <div style="position:relative;height:clamp(340px,42vw,520px);border-left:1px solid var(--line);
+                border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;
+                padding:clamp(22px,3.4vw,44px);
+                @(leadImg is null ? "background-image:var(--hatch)" : $"background:linear-gradient(to top,rgba(18,23,29,.78) 0%,rgba(18,23,29,.35) 45%,rgba(18,23,29,.12) 100%),url('{leadImg}') center/cover no-repeat")">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+        <span style="width:34px;height:1px;background:@(leadImg is null ? "var(--brand)" : "#fff")"></span>
+        <span style="font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:@(leadImg is null ? "var(--brand)" : "#fff")">@Ui.T(L,"heroKicker")</span>
+      </div>
+      <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,56px);line-height:1.2;
+                 margin:0 0 20px;color:@(leadImg is null ? "var(--ink)" : "#fff");text-wrap:pretty">@Html.Raw(Ui.T(L,"heroTitle"))</h1>
+      <p style="font-size:16.5px;line-height:1.85;max-width:600px;margin:0 0 32px;font-weight:300;text-wrap:pretty;
+                color:@(leadImg is null ? "var(--muted)" : "rgba(255,255,255,.88)")">@Ui.T(L,"heroLede")</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <a class="btn" href="#tests">@Ui.T(L,"assessments") →</a>
+          <a class="btn2" href="/news/?lang=@L"
+             style="@(leadImg is null ? "" : "border-color:rgba(255,255,255,.5);color:#fff")">@Ui.T(L,"latest")</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <a class="card" href="/news/item/@hero.Id?lang=@Model.CurrentLang"
-       style="margin-top:40px;display:grid;grid-template-columns:@(himg is null ? "1fr" : "1.25fr 1fr");align-items:stretch">
-        <span class="body" style="padding:34px 36px;gap:14px;justify-content:center">
-            <span class="eyebrow">@Ui.T(Model.CurrentLang,"newest")</span>
-            <h2 style="font-size:clamp(22px,2.8vw,32px);font-weight:700;line-height:1.35">@ht?.Title</h2>
-            <span style="color:var(--muted);font-size:15px">@ht.Excerpt(150)</span>
-            <span class="meta"><span>@(hero.PublishedAt?.ToString("yyyy-MM-dd"))</span>
-                @if (!string.IsNullOrEmpty(hero.Section)) { <span>@Ui.Section(Model.CurrentLang, hero.Section)</span> }</span>
-        </span>
-        @if (himg is not null)
+<section id="tests" class="sec">
+  <div class="sechead">
+    <div>
+      <div class="eyebrow">ASSESSMENTS</div>
+      <h2 class="h2">@Ui.T(L,"assessments")</h2>
+    </div>
+    <p class="lede">@Ui.T(L,"assessLede")</p>
+  </div>
+  <div class="grid cols-a">
+    @foreach (var t in Model.Tracks)
+    {
+      <div class="cell">
+        <div class="hatch" style="height:120px;border-bottom:1px solid var(--line);display:flex;
+                    align-items:center;justify-content:center;font-family:var(--mono);font-size:26px;
+                    font-weight:500;color:var(--brand);letter-spacing:.08em">@t.Code</div>
+        <div style="padding:24px 22px">
+          <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;margin:0 0 16px;
+                     color:var(--ink2);line-height:1.6">@Ui.Section(L, t.Name)</h3>
+          @if (t.SectionId is not null)
+          {
+            <a href="/s/@t.SectionId?lang=@L" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section id="news" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="sec">
+    <div class="sechead" style="margin-bottom:48px">
+      <div>
+        <div class="eyebrow">NEWS</div>
+        <h2 class="h2">@Ui.T(L,"news")</h2>
+      </div>
+      <a class="more" href="/news/?lang=@L">@Ui.T(L,"more")</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px">
+      @if (Model.Lead is not null)
+      {
+        <a href="/news/item/@Model.Lead.Id?lang=@L" style="display:block;color:inherit">
+          <div style="height:clamp(260px,32vw,420px);border:1px solid var(--line);margin-bottom:22px;
+                      @(leadImg is null ? "background-image:var(--hatch)" : $"background:url('{leadImg}') center/cover no-repeat")"></div>
+          <div class="meta" style="margin-bottom:10px">@(Model.Lead.PublishedAt?.ToString("yyyy-MM-dd"))</div>
+          <h3 style="font-family:var(--serif);font-size:clamp(19px,2vw,23px);font-weight:700;
+                     line-height:1.55;color:var(--ink2)">@leadT?.Title</h3>
+        </a>
+      }
+      <div style="display:flex;flex-direction:column">
+        @foreach (var a in Model.NewsList)
         {
-            <span class="thumb" style="aspect-ratio:auto;min-height:260px;background-image:url('@himg')"></span>
+          var t = a.For(L);
+          <a href="/news/item/@a.Id?lang=@L" style="display:flex;gap:18px;padding:16px 0;
+             border-bottom:1px solid var(--line);color:inherit">
+            <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">@(a.PublishedAt?.ToString("yyyy-MM-dd"))</span>
+            <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">@t?.Title</span>
+          </a>
         }
-    </a>
-}
-else
-{
-    <h1>@Ui.T(Model.CurrentLang,"siteName")</h1>
-    <div class="empty">@Ui.T(Model.CurrentLang,"nothingPublished")</div>
-}
+      </div>
+    </div>
+  </div>
+</section>
 
-@if (rest.Count > 0)
-{
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:64px">
-        <h2 style="font-size:24px">@Ui.T(Model.CurrentLang,"latest")</h2>
-        <a href="/news/?lang=@Model.CurrentLang" style="font-size:14px;color:var(--brand)">@Ui.T(Model.CurrentLang,"all") →</a>
-    </div>
-    <div class="grid" style="margin-top:22px">
-        @foreach (var a in rest)
-        {
-            var t = a.For(Model.CurrentLang); var img = t.FirstImage();
-            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
-                @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
-                <span class="body">
-                    <h3>@t?.Title</h3>
-                    <span class="meta"><span>@(a.PublishedAt?.ToString("yyyy-MM-dd"))</span>
-                        @if (!string.IsNullOrEmpty(a.Section)) { <span>@Ui.Section(Model.CurrentLang, a.Section)</span> }</span>
-                </span>
-            </a>
-        }
-    </div>
-}
-
-@foreach (var b in Model.Blocks)
-{
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:64px">
-        <h2 style="font-size:24px">@Ui.Section(Model.CurrentLang, b.Section.Name)</h2>
-        <a href="/s/@b.Section.LegacyId?lang=@Model.CurrentLang" style="font-size:14px;color:var(--brand)">@Ui.T(Model.CurrentLang,"viewAll") @b.Section.ArticleCount →</a>
-    </div>
-    <div class="grid" style="margin-top:22px">
-        @foreach (var a in b.Items)
-        {
-            var t = a.For(Model.CurrentLang); var img = t.FirstImage();
-            <a class="card" href="/news/item/@a.Id?lang=@Model.CurrentLang">
-                @if (img is not null) { <span class="thumb" style="background-image:url('@img')"></span> }
-                <span class="body">
-                    <h3>@t?.Title</h3>
-                    <span style="font-size:14px;color:var(--muted)">@t.Excerpt()</span>
-                    <span class="meta"><span>@(a.PublishedAt?.ToString("yyyy-MM-dd"))</span></span>
-                </span>
-            </a>
-        }
-    </div>
-}
+<section id="pillars" class="sec">
+  <div class="eyebrow">PROGRAMMES</div>
+  <h2 class="h2" style="margin-bottom:48px">@Ui.T(L,"programmes")</h2>
+  <div class="grid cols-b">
+    @{ var n = 0; }
+    @foreach (var m in Model.Pillars)
+    {
+      n++;
+      <div class="cell" style="padding:32px 30px">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:20px">
+          <h3 style="font-family:var(--serif);font-size:21px;font-weight:700;margin:0;color:var(--ink2)">
+            <a href="/s/@m.LegacyId?lang=@L" style="color:inherit">@Ui.Section(L, m.Name)</a>
+          </h3>
+          <span class="meta">@n.ToString("00")</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14px">
+          @foreach (var c in m.Children.Take(6))
+          {
+            <a href="/s/@c.LegacyId?lang=@L" style="color:var(--muted)">@Ui.Section(L, c.Name)</a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

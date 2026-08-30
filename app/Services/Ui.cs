@@ -18,6 +18,7 @@ public static class Ui
     {
         ["zh-Hant"] = new()
         {
+            ["orgLine"]="工業和信息化部教育與考試中心 · 青少年信息技術培養工程香港分站", ["sitemap"]="網站導覽", ["assessments"]="銜接測評", ["programmes"]="業務體系", ["news"]="新聞資訊", ["assessLede"]="五大測評軌道與工信部證書體系銜接，香港考生可就近報考。", ["enter"]="點擊進入 →", ["more"]="更多 →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="青少年信息技術培養工程<br />香港分站", ["heroLede"]="課程體系、師資培訓、賽事、研學與銜接測評，一體貫通內地與香港。", ["ftWeb"]="官方網站：www.ycltesthk.com", ["ftTel"]="業務合作：+852 2524 8248", ["ftMail"]="投訴郵箱：youth.itt@gmail.com", ["ftHours"]="服務時間：工作日 上午9:00~11:30，下午14:00~17:30", ["ftAddr"]="香港科學園科技大道西2號2W大樓3樓24室",
             ["latest"]="最新消息", ["all"]="全部", ["home"]="首頁", ["viewAll"]="查看全部",
             ["student"]="學生專區", ["teacher"]="教師專區", ["mainSite"]="主網站",
             ["admin"]="內容管理", ["sections"]="專區", ["newest"]="最新",
@@ -31,6 +32,7 @@ public static class Ui
         },
         ["zh-Hans"] = new()
         {
+            ["orgLine"]="工业和信息化部教育与考试中心 · 青少年信息技术培养工程香港分站", ["sitemap"]="网站导览", ["assessments"]="衔接测评", ["programmes"]="业务体系", ["news"]="新闻资讯", ["assessLede"]="五大测评轨道与工信部证书体系衔接，香港考生可就近报考。", ["enter"]="点击进入 →", ["more"]="更多 →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="青少年信息技术培养工程<br />香港分站", ["heroLede"]="课程体系、师资培训、赛事、研学与衔接测评，一体贯通内地与香港。", ["ftWeb"]="官方网站：www.ycltesthk.com", ["ftTel"]="业务合作：+852 2524 8248", ["ftMail"]="投诉邮箱：youth.itt@gmail.com", ["ftHours"]="服务时间：工作日 上午9:00~11:30，下午14:00~17:30", ["ftAddr"]="香港科学园科技大道西2号2W大楼3楼24室",
             ["latest"]="最新消息", ["all"]="全部", ["home"]="首页", ["viewAll"]="查看全部",
             ["student"]="学生专区", ["teacher"]="教师专区", ["mainSite"]="主网站",
             ["admin"]="内容管理", ["sections"]="专区", ["newest"]="最新",
@@ -44,6 +46,7 @@ public static class Ui
         },
         ["en"] = new()
         {
+            ["orgLine"]="MIIT Education & Examination Center · Youth IT Training Project, Hong Kong Branch", ["sitemap"]="Site map", ["assessments"]="Assessments", ["programmes"]="Programmes", ["news"]="News", ["assessLede"]="Five assessment tracks aligned to the MIIT certification framework, sittable in Hong Kong.", ["enter"]="Enter →", ["more"]="More →", ["heroKicker"]="HONG KONG · SCIENCE PARK", ["heroTitle"]="Youth IT Training Project<br />Hong Kong Branch", ["heroLede"]="Curriculum, teacher training, competitions, study tours and assessment — one pathway across the Mainland and Hong Kong.", ["ftWeb"]="Website: www.ycltesthk.com", ["ftTel"]="Enquiries: +852 2524 8248", ["ftMail"]="Email: youth.itt@gmail.com", ["ftHours"]="Hours: Weekdays 09:00–11:30, 14:00–17:30", ["ftAddr"]="Room 24, 3/F, Building 2W, 2 Science Park West Avenue, Hong Kong Science Park",
             ["latest"]="Latest", ["all"]="All", ["home"]="Home", ["viewAll"]="View all",
             ["student"]="Student Area", ["teacher"]="Teacher Area", ["mainSite"]="Main site",
             ["admin"]="Content admin", ["sections"]="Areas", ["newest"]="Latest",
@@ -87,10 +90,108 @@ public static class Ui
         ["青少年无人机技术水平测试"]="YUL · Drone Technology Test",
     };
 
+    /// <summary>Section names arrive from the old CMS in ONE script — mostly Simplified —
+    /// so a Traditional reader was seeing 简体 navigation. Generated with the same s2hk
+    /// pipeline and protected-name rules as the article text (see i18n/TRANSLATION.md),
+    /// then frozen here: navigation should not depend on a converter at request time.</summary>
+    private static readonly Dictionary<string, (string Hant, string Hans)> SectionScript = new()
+    {
+        ["AI互動魔方"] = ("AI互動魔方", "AI互动魔方"),
+        ["AI科创中心"] = ("AI科創中心", "AI科创中心"),
+        ["YAI测评"] = ("YAI測評", "YAI测评"),
+        ["下载Scratch3"] = ("下載Scratch3", "下载Scratch3"),
+        ["专家团队"] = ("專家團隊", "专家团队"),
+        ["中國內地"] = ("中國內地", "中国内地"),
+        ["中國香港"] = ("中國香港", "中国香港"),
+        ["主办单位"] = ("主辦單位", "主办单位"),
+        ["二维码"] = ("二維碼", "二维码"),
+        ["人才培养基地"] = ("人才培養基地", "人才培养基地"),
+        ["关于器材"] = ("關於器材", "关于器材"),
+        ["关于考评"] = ("關於考評", "关于考评"),
+        ["关于证书"] = ("關於證書", "关于证书"),
+        ["北京研學"] = ("北京研學", "北京研学"),
+        ["友情链接"] = ("友情鏈接", "友情链接"),
+        ["右侧悬浮"] = ("右側懸浮", "右侧悬浮"),
+        ["合作单位"] = ("合作單位", "合作单位"),
+        ["圖片集"] = ("圖片集", "图片集"),
+        ["在线课程"] = ("在線課程", "在线课程"),
+        ["地方动态"] = ("地方動態", "地方动态"),
+        ["培训中心查询"] = ("培訓中心查詢", "培训中心查询"),
+        ["培训合作"] = ("培訓合作", "培训合作"),
+        ["培训报名"] = ("培訓報名", "培训报名"),
+        ["培训简介"] = ("培訓簡介", "培训简介"),
+        ["基本简介"] = ("基本簡介", "基本简介"),
+        ["大灣區研學"] = ("大灣區研學", "大湾区研学"),
+        ["媒體電視"] = ("媒體電視", "媒体电视"),
+        ["学习教材"] = ("學習教材", "学习教材"),
+        ["專家團隊"] = ("專家團隊", "专家团队"),
+        ["工信部證書"] = ("工信部證書", "工信部证书"),
+        ["师资培训"] = ("師資培訓", "师资培训"),
+        ["师资证书查询"] = ("師資證書查詢", "师资证书查询"),
+        ["師資培訓"] = ("師資培訓", "师资培训"),
+        ["底部信息"] = ("底部資訊", "底部信息"),
+        ["底部导航"] = ("底部導航", "底部导航"),
+        ["建設AI中心"] = ("建設AI中心", "建设AI中心"),
+        ["手机首页内容"] = ("手機首頁內容", "手机首页内容"),
+        ["报名入口"] = ("報名入口", "报名入口"),
+        ["授牌體系"] = ("授牌體系", "授牌体系"),
+        ["推荐器材"] = ("推薦器材", "推荐器材"),
+        ["收费标准"] = ("收費標準", "收费标准"),
+        ["政策法规"] = ("政策法規", "政策法规"),
+        ["教材图书"] = ("教材圖書", "教材图书"),
+        ["教材资料"] = ("教材資料", "教材资料"),
+        ["新聞中心"] = ("新聞中心", "新闻中心"),
+        ["新聞資訊"] = ("新聞資訊", "新闻资讯"),
+        ["新賽項"] = ("新賽項", "新赛项"),
+        ["模拟题库"] = ("模擬題庫", "模拟题库"),
+        ["注册"] = ("註冊", "注册"),
+        ["活动报名"] = ("活動報名", "活动报名"),
+        ["海外研學"] = ("海外研學", "海外研学"),
+        ["測評體系"] = ("測評體系", "测评体系"),
+        ["無屏編程"] = ("無屏編程", "无屏编程"),
+        ["登录"] = ("登錄", "登录"),
+        ["研學活動"] = ("研學活動", "研学活动"),
+        ["簡介"] = ("簡介", "简介"),
+        ["考生成绩查询"] = ("考生成績查詢", "考生成绩查询"),
+        ["考生证书查询"] = ("考生證書查詢", "考生证书查询"),
+        ["考评合作"] = ("考評合作", "考评合作"),
+        ["考评大纲"] = ("考評大綱", "考评大纲"),
+        ["考评指南"] = ("考評指南", "考评指南"),
+        ["考评服务中心"] = ("考評服務中心", "考评服务中心"),
+        ["考评简介"] = ("考評簡介", "考评简介"),
+        ["考评系统点击进入"] = ("考評系統點擊進入", "考评系统点击进入"),
+        ["考评计划"] = ("考評計劃", "考评计划"),
+        ["联系我们"] = ("聯繫我們", "联系我们"),
+        ["課程體系"] = ("課程體系", "课程体系"),
+        ["试题下载"] = ("試題下載", "试题下载"),
+        ["賽事體系"] = ("賽事體系", "赛事体系"),
+        ["轮播图下方"] = ("輪播圖下方", "轮播图下方"),
+        ["近期培训"] = ("近期培訓", "近期培训"),
+        ["銜接測評"] = ("銜接測評", "衔接测评"),
+        ["關於我们"] = ("關於我們", "关于我们"),
+        ["防伪查询"] = ("防偽查詢", "防伪查询"),
+        ["青少年人工智能技术水平测试"] = ("青少年人工智能技術水平測試", "青少年人工智能技术水平测试"),
+        ["青少年人工智能编程水平测试"] = ("青少年人工智能編程水平測試", "青少年人工智能编程水平测试"),
+        ["青少年无人机技术水平测试"] = ("青少年無人機技術水平測試", "青少年无人机技术水平测试"),
+        ["青少年无屏编程水平测试"] = ("青少年無屏編程水平測試", "青少年无屏编程水平测试"),
+        ["青少年科技素养水平测试"] = ("青少年科技素養水平測試", "青少年科技素养水平测试"),
+        ["项目开展单位"] = ("項目開展單位", "项目开展单位"),
+        ["首頁"] = ("首頁", "首页"),
+        ["首页内容"] = ("首頁內容", "首页内容"),
+        ["香港研學"] = ("香港研學", "香港研学"),
+    };
+
     public static string T(string lang, string key) =>
         S.TryGetValue(lang, out var d) && d.TryGetValue(key, out var v) ? v
         : S["zh-Hant"].TryGetValue(key, out var f) ? f : key;
 
-    public static string Section(string lang, string? name) =>
-        lang == "en" && name is not null && SectionEn.TryGetValue(name.Trim(), out var v) ? v : (name ?? "");
+    public static string Section(string lang, string? name)
+    {
+        if (name is null) return "";
+        var n = name.Trim();
+        if (lang == "en" && SectionEn.TryGetValue(n, out var en)) return en;
+        if (SectionScript.TryGetValue(n, out var sc))
+            return lang == "zh-Hans" ? sc.Hans : lang == "zh-Hant" ? sc.Hant : n;
+        return n;   // unknown name: shown as-is rather than silently mangled
+    }
 }

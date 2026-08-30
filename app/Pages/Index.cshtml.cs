@@ -10,34 +10,45 @@ public class IndexModel : PageModel
     private readonly AppDb _db; private readonly SiteMenu _menu;
     public IndexModel(AppDb db, SiteMenu menu) { _db = db; _menu = menu; }
 
-    public List<Article> Latest { get; private set; } = new();
-    public List<(MenuItem Section, List<Article> Items)> Blocks { get; private set; } = new();
-    public int TotalPublished { get; private set; }
+    public Article? Lead { get; private set; }
+    public List<Article> NewsList { get; private set; } = new();
+    public List<MenuItem> Pillars { get; private set; } = new();
+    public List<(string Code, string Name, int? SectionId)> Tracks { get; private set; } = new();
     public string CurrentLang { get; private set; } = Data.Lang.Hant;
+
+    // The five assessment tracks the design puts across the top. Section ids are resolved
+    // from the imported tree so each tile links somewhere real; a track with no section
+    // still renders, it just does not link.
+    private static readonly (string Code, string Zh)[] TrackDefs =
+    {
+        ("YAI", "青少年人工智能技术水平测试"),
+        ("YCL", "青少年人工智能编程水平测试"),
+        ("ECL", "青少年无屏编程水平测试"),
+        ("SCL", "青少年科技素养水平测试"),
+        ("YUL", "青少年无人机技术水平测试"),
+    };
 
     public async Task OnGetAsync(string? lang)
     {
         CurrentLang = Data.Lang.IsKnown(lang) ? lang! : Data.Lang.Hant;
-        ViewData["Title"] = "首頁";
+        ViewData["Title"] = Ui.T(CurrentLang, "home");
         ViewData["Lang"] = CurrentLang;
 
-        TotalPublished = await _db.Articles.CountAsync(a => a.Status == "published");
-
-        Latest = await _db.Articles.AsNoTracking().Include(a => a.Translations)
+        var latest = await _db.Articles.AsNoTracking().Include(a => a.Translations)
             .Where(a => a.Status == "published")
             .OrderByDescending(a => a.PublishedAt).ThenByDescending(a => a.Id)
-            .Take(7).ToListAsync();
+            .Take(9).ToListAsync();
 
-        var latestIds = Latest.Select(a => a.Id).ToHashSet();
+        Lead = latest.FirstOrDefault(a => a.For(CurrentLang).FirstImage() != null) ?? latest.FirstOrDefault();
+        NewsList = latest.Where(a => a.Id != Lead?.Id).Take(7).ToList();
 
-        foreach (var m in (await _menu.GetAsync()).Take(4))
+        Pillars = (await _menu.GetAsync()).ToList();
+
+        var sections = await _db.Sections.AsNoTracking().ToListAsync();
+        foreach (var (code, zh) in TrackDefs)
         {
-            var ids = await _menu.BranchIdsAsync(m.LegacyId);
-            var items = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-                .Where(a => a.Status == "published" && a.LegacySectionId != null
-                            && ids.Contains(a.LegacySectionId.Value) && !latestIds.Contains(a.Id))
-                .OrderByDescending(a => a.PublishedAt).Take(3).ToListAsync();
-            if (items.Count > 0) Blocks.Add((m, items));
+            var s = sections.FirstOrDefault(x => x.Name == zh);
+            Tracks.Add((code, s?.Name ?? zh, s?.LegacyId));
         }
     }
 }

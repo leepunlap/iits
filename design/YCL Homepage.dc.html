@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0B1118; }
+  a { color: #C9A227; text-decoration: none; }
+  a:hover { color: #E4C25C; }
+  @media (max-width: 1120px) { #side-rail { display: none !important; } }
+</style>
+</helmet>
+
+<div style="background:#0B1118;color:#E8E6E1;font-family:'Noto Sans SC',system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased">
+
+  <div style="background:#070C11;border-bottom:1px solid rgba(201,162,39,0.18)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,40px);height:38px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;font-size:12px;letter-spacing:0.06em;color:#7E8894">
+      <span style="font-family:'IBM Plex Mono',monospace">工业和信息化部教育与考试中心 · 中国电子教育学会</span>
+      <div style="display:flex;gap:20px;align-items:center">
+        <div style="display:flex;align-items:center;border:1px solid rgba(255,255,255,0.12);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">
+          <a href="#" style="padding:3px 9px;font-size:11.5px;background:#C9A227;color:#0B1118">简</a>
+          <a href="#" style="padding:3px 9px;font-size:11.5px;color:#8B939C;border-left:1px solid rgba(255,255,255,0.12)" style-hover="color:#C9A227">繁</a>
+          <a href="#" style="padding:3px 9px;font-size:11.5px;color:#8B939C;border-left:1px solid rgba(255,255,255,0.12)" style-hover="color:#C9A227">EN</a>
+        </div>
+        <span style="width:1px;height:14px;background:rgba(255,255,255,0.12)"></span>
+        <a href="#" style="color:#7E8894">登录</a>
+        <a href="#" style="color:#7E8894">注册</a>
+        <a href="#" style="color:#C9A227;letter-spacing:0.08em">测评系统点击进入 →</a>
+      </div>
+    </div>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(11,17,24,0.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.07)">
+    <div style="max-width:1280px;margin:0 auto;padding:10px clamp(16px,3vw,40px);min-height:76px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:clamp(16px,2.4vw,40px)">
+      <div style="display:flex;align-items:center;gap:14px;flex:0 1 auto;min-width:0;overflow:hidden">
+        <div style="width:38px;height:38px;border:1.5px solid #C9A227;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:#C9A227">YCL</div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:17px;letter-spacing:0.04em;color:#F2F0EB">青少年信息技术培养工程</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6E7887">YOUTH INFORMATION TECHNOLOGY PROGRAM</span>
+        </div>
+      </div>
+      <nav style="display:flex;flex:1 1 340px;justify-content:flex-end;flex-wrap:wrap;gap:clamp(11px,1.7vw,26px);font-size:clamp(12.5px,1.1vw,14.5px);color:#C3C7CC;font-weight:400">
+        <a href="#" style="color:#F2F0EB;white-space:nowrap;flex-shrink:0;padding-bottom:3px;border-bottom:2px solid #C9A227">网站首页</a>
+        <a href="#tracks" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">测评介绍</a>
+        <a href="#news" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">新闻中心</a>
+        <a href="#" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">测评报名</a>
+        <a href="#" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">成绩证书</a>
+        <a href="#" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">学习资源</a>
+        <a href="#experts" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">师资培训</a>
+        <a href="#about" style="color:#C3C7CC;white-space:nowrap;flex-shrink:0" style-hover="color:#C9A227">关于我们</a>
+      </nav>
+      <a href="#" style="flex-shrink:0;background:#C9A227;color:#0B1118;font-size:13.5px;font-weight:500;letter-spacing:0.04em;padding:11px 20px" style-hover="background:#E4C25C">我要报名</a>
+    </div>
+  </header>
+
+  <section style="position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.07)">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:64px;align-items:center;min-height:auto">
+      <div style="padding:clamp(48px,7vw,88px) 0">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+          <span style="width:34px;height:1px;background:#C9A227"></span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.2em;color:#C9A227">NATIONAL PROGRAM · EST. 2018</span>
+        </div>
+        <h1 style="font-family:'Noto Serif SC',serif;font-weight:900;font-size:clamp(34px,5.2vw,62px);line-height:1.18;letter-spacing:0.01em;margin:0 0 26px;color:#F7F5F0;text-wrap:pretty">从兴趣启蒙<br />到国家级认证</h1>
+        <p style="font-size:17px;line-height:1.9;color:#A8AEB6;max-width:520px;margin:0 0 40px;font-weight:300;text-wrap:pretty">青少年信息技术培养工程覆盖电子信息、人工智能、编程、科学素养与无人机五大测评轨道。证书由工业和信息化部教育与考试中心与中国电子教育学会共同颁发，官网双渠道可查。</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:56px">
+          <a href="#tracks" style="background:#C9A227;color:#0B1118;font-size:15px;font-weight:500;padding:15px 30px;letter-spacing:0.03em;white-space:nowrap" style-hover="background:#E4C25C">了解测评体系 →</a>
+          <a href="#" style="border:1px solid rgba(255,255,255,0.22);color:#E8E6E1;font-size:15px;font-weight:400;padding:15px 30px;letter-spacing:0.03em;white-space:nowrap" style-hover="border-color:#C9A227;color:#C9A227">测评计划</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(255,255,255,0.09)">
+          <div style="background:#0B1118;padding:20px 22px 20px 0">
+            <div style="font-family:'Noto Serif SC',serif;font-size:34px;font-weight:700;color:#C9A227;line-height:1">5</div>
+            <div style="font-size:12.5px;color:#8B939C;margin-top:8px;letter-spacing:0.05em">认证轨道</div>
+          </div>
+          <div style="background:#0B1118;padding:20px 22px">
+            <div style="font-family:'Noto Serif SC',serif;font-size:34px;font-weight:700;color:#C9A227;line-height:1">8</div>
+            <div style="font-size:12.5px;color:#8B939C;margin-top:8px;letter-spacing:0.05em">最高等级</div>
+          </div>
+          <div style="background:#0B1118;padding:20px 0 20px 22px">
+            <div style="font-family:'Noto Serif SC',serif;font-size:34px;font-weight:700;color:#C9A227;line-height:1">14</div>
+            <div style="font-size:12.5px;color:#8B939C;margin-top:8px;letter-spacing:0.05em">专家委员</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;height:clamp(280px,38vw,480px)">
+        <div style="grid-column:span 2;background-image:repeating-linear-gradient(135deg,#141C25 0 8px,#0F161E 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:flex-end;padding:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6E7887">测评现场照片 / hero-wide.jpg</span>
+        </div>
+        <div style="background-image:repeating-linear-gradient(135deg,#141C25 0 8px,#0F161E 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:flex-end;padding:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6E7887">动手实践</span>
+        </div>
+        <div style="background-image:repeating-linear-gradient(135deg,#141C25 0 8px,#0F161E 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:flex-end;padding:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6E7887">颁奖典礼</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks" style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,3vw,40px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:56px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.2em;color:#C9A227;margin-bottom:16px">CERTIFICATIONS</div>
+        <h2 style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,3.4vw,40px);line-height:1.3;margin:0;color:#F7F5F0">五大测评轨道</h2>
+      </div>
+      <p style="font-size:15px;line-height:1.9;color:#8B939C;max-width:400px;margin:0;font-weight:300">逐级进阶、逐级认可。题库由北京大学、中国科学院计算技术研究所等权威机构开发。</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.09)">
+      <div style="background:#0E151D;padding:34px 30px 30px" style-hover="background:#131C26">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:#C9A227;letter-spacing:0.04em">YAI</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874">01</span>
+        </div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin:0 0 6px;color:#F2F0EB;line-height:1.5">青少年人工智能技术水平测试</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6E7887;margin-bottom:22px">YOUTH AI TECHNOLOGY TEST</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#A8AEB6;font-weight:300">
+          <span>题库：北京大学</span>
+          <span>启蒙级 ＋ 1–10 级</span>
+          <span>理论 ＋ 实操，两场合格</span>
+          <span>适龄 6–16 岁</span>
+        </div>
+        <a href="#" style="display:inline-block;margin-top:26px;font-size:13.5px;letter-spacing:0.05em">点击进入 →</a>
+      </div>
+
+      <div style="background:#0E151D;padding:34px 30px 30px" style-hover="background:#131C26">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:#C9A227;letter-spacing:0.04em">YCL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874">02</span>
+        </div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin:0 0 6px;color:#F2F0EB;line-height:1.5">青少年编程水平测试</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6E7887;margin-bottom:22px">YOUTH CODING LEVEL TEST</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#A8AEB6;font-weight:300">
+          <span>题库：中国科学院计算技术研究所</span>
+          <span>1–8 级（1–3 图形化 Scratch，4–8 Python／C++）</span>
+          <span>60 分合格</span>
+          <span>适龄 8–16 岁</span>
+        </div>
+        <a href="#" style="display:inline-block;margin-top:26px;font-size:13.5px;letter-spacing:0.05em">点击进入 →</a>
+      </div>
+
+      <div style="background:#0E151D;padding:34px 30px 30px" style-hover="background:#131C26">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:#C9A227;letter-spacing:0.04em">ECL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874">03</span>
+        </div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin:0 0 6px;color:#F2F0EB;line-height:1.5">青少年电子信息技术等级考试</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6E7887;margin-bottom:22px">ELECTRONICS &amp; INFO TECH</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#A8AEB6;font-weight:300">
+          <span>无屏编程与逻辑思维</span>
+          <span>共 4 级</span>
+          <span>适龄 4–8 岁</span>
+        </div>
+        <a href="#" style="display:inline-block;margin-top:26px;font-size:13.5px;letter-spacing:0.05em">点击进入 →</a>
+      </div>
+
+      <div style="background:#0E151D;padding:34px 30px 30px" style-hover="background:#131C26">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:#C9A227;letter-spacing:0.04em">SCL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874">04</span>
+        </div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin:0 0 6px;color:#F2F0EB;line-height:1.5">青少年科技素养水平测试</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6E7887;margin-bottom:22px">SCIENCE LITERACY TEST</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#A8AEB6;font-weight:300">
+          <span>科学素养与工程设计</span>
+          <span>共 6 级</span>
+          <span>五级测评已启动分方向报名</span>
+        </div>
+        <a href="#" style="display:inline-block;margin-top:26px;font-size:13.5px;letter-spacing:0.05em">点击进入 →</a>
+      </div>
+
+      <div style="background:#0E151D;padding:34px 30px 30px" style-hover="background:#131C26">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:#C9A227;letter-spacing:0.04em">YUL</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874">05</span>
+        </div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:19px;font-weight:700;margin:0 0 6px;color:#F2F0EB;line-height:1.5">无人机水平测试</h3>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6E7887;margin-bottom:22px">UAV LEVEL TEST</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#A8AEB6;font-weight:300">
+          <span>无人机组装、操控与编程</span>
+          <span>共 5 级</span>
+        </div>
+        <a href="#" style="display:inline-block;margin-top:26px;font-size:13.5px;letter-spacing:0.05em">点击进入 →</a>
+      </div>
+
+      <div style="background:#12100A;padding:34px 30px 30px;display:flex;flex-direction:column;justify-content:space-between;border-left:2px solid #C9A227">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#C9A227;margin-bottom:18px">REGISTRATION</div>
+          <h3 style="font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;margin:0 0 14px;color:#F7F5F0;line-height:1.5">报名与查询</h3>
+          <p style="font-size:13.5px;line-height:1.85;color:#A8AEB6;margin:0;font-weight:300">测评计划、收费标准、成绩与证书查询，均可在官网直接办理。</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:26px;font-size:13.5px">
+          <a href="#">报名入口 →</a>
+          <a href="#">考生成绩查询 →</a>
+          <a href="#">考生证书查询 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);background:#070C11">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(16px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;align-items:center">
+      <p style="font-family:'Noto Serif SC',serif;font-size:clamp(19px,2.3vw,26px);line-height:1.75;color:#DAD6CC;margin:0;font-weight:500;text-wrap:pretty">当 AI 能回答试卷上的每一道题，<br />真正重要的，是那个仍然懂得提出下一个问题的孩子。</p>
+      <div style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#6E7887;line-height:2">EDUCATION<br />&amp; EXAMINATION<br />CENTER · MIIT</div>
+    </div>
+  </section>
+
+  <section id="news" style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,3vw,40px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:rgba(255,255,255,0.09)">
+
+      <div style="background:#0B1118;padding:0 34px 0 0">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(201,162,39,0.35);margin-bottom:26px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.18em;color:#C9A227;margin-bottom:10px">POLICY</div>
+            <h2 style="font-family:'Noto Serif SC',serif;font-size:23px;font-weight:700;margin:0;color:#F2F0EB">政策法规</h2>
+          </div>
+          <a href="#" style="font-size:12.5px;color:#7E8894" style-hover="color:#C9A227">更多 /</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2025-01-19</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">中共中央国务院印发《教育强国建设规划纲要（2024－2035年）》</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2025-01-14</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">教育部办公厅关于印发《中小学科学教育工作指南》的通知</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2024-11-20</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">教育部办公厅关于加强中小学人工智能教育的通知</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2024-11-01</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">教育部等十七部门联合印发《家校社协同育人“教联体”工作方案》</div>
+          </a>
+        </div>
+      </div>
+
+      <div style="background:#0B1118;padding:0 34px">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(201,162,39,0.35);margin-bottom:26px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.18em;color:#C9A227;margin-bottom:10px">NOTICES</div>
+            <h2 style="font-family:'Noto Serif SC',serif;font-size:23px;font-weight:700;margin:0;color:#F2F0EB">通知公告</h2>
+          </div>
+          <a href="#" style="font-size:12.5px;color:#7E8894" style-hover="color:#C9A227">更多 /</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2026-07-20</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">关于开展“2026未来科技英才探究营”活动的通知</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2026-06-23</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">关于组织2026年度YCL、YAI八级考评的通知</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2025-09-25</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">关于启动青少年科技素养水平测试五级测评及实施分方向报名模式的通知</div>
+          </a>
+          <a href="#" style="display:block;color:#C3C7CC" style-hover="color:#C9A227">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2025-04-28</div>
+            <div style="font-size:14.5px;line-height:1.7;font-weight:400;text-wrap:pretty">青少年职业启蒙与学业规划项目启动</div>
+          </a>
+        </div>
+      </div>
+
+      <div style="background:#0B1118;padding:0 0 0 34px">
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(201,162,39,0.35);margin-bottom:26px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.18em;color:#C9A227;margin-bottom:10px">NEWS</div>
+            <h2 style="font-family:'Noto Serif SC',serif;font-size:23px;font-weight:700;margin:0;color:#F2F0EB">新闻资讯</h2>
+          </div>
+          <a href="#" style="font-size:12.5px;color:#7E8894" style-hover="color:#C9A227">更多 /</a>
+        </div>
+        <a href="#" style="display:block;margin-bottom:22px;color:#C3C7CC" style-hover="color:#C9A227">
+          <div style="height:150px;background-image:repeating-linear-gradient(135deg,#141C25 0 8px,#0F161E 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:flex-end;padding:14px;margin-bottom:14px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6E7887">新闻头图 / news-lead.jpg</span>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;margin-bottom:7px">2026-05-06</div>
+          <div style="font-size:15px;line-height:1.7;font-weight:400;text-wrap:pretty">智教蓉城，育见未来 | 青少年信息技术培养工作站与工信学堂闪耀第87届教育装备展</div>
+        </a>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <a href="#" style="display:flex;gap:12px;color:#C3C7CC;font-size:14px;line-height:1.7;font-weight:400" style-hover="color:#C9A227">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;flex-shrink:0;padding-top:4px">03-16</span>
+            <span style="text-wrap:pretty">第二届青少年信息技术培养“专家面对面交流活动”成功举办</span>
+          </a>
+          <a href="#" style="display:flex;gap:12px;color:#C3C7CC;font-size:14px;line-height:1.7;font-weight:400" style-hover="color:#C9A227">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F6874;flex-shrink:0;padding-top:4px">02-28</span>
+            <span style="text-wrap:pretty">“智启未来”公益行动 | 乡村学子赴京研学，科技梦想照进现实</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" style="background:#070C11;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,3vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.2em;color:#C9A227;margin-bottom:16px">ABOUT</div>
+      <h2 style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,3.4vw,40px);margin:0 0 56px;color:#F7F5F0">工程简介</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#7E8894;margin-bottom:14px">NATIONAL BACKING</div>
+          <h3 style="font-family:'Noto Serif SC',serif;font-size:21px;font-weight:700;margin:0 0 16px;color:#F2F0EB">国家级体系</h3>
+          <p style="font-size:14.5px;line-height:1.95;color:#A8AEB6;margin:0;font-weight:300;text-wrap:pretty">全部认证由工业和信息化部教育与考试中心颁发，题库由北京大学、中国科学院计算技术研究所等权威机构开发，覆盖电子信息、人工智能、编程、科学素养与无人机五大轨道。</p>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#7E8894;margin-bottom:14px">TEACHER DEVELOPMENT</div>
+          <h3 style="font-family:'Noto Serif SC',serif;font-size:21px;font-weight:700;margin:0 0 16px;color:#F2F0EB">师资与资源</h3>
+          <p style="font-size:14.5px;line-height:1.95;color:#A8AEB6;margin:0;font-weight:300;text-wrap:pretty">提供导师培训、逐课授课指引与教学资源，设有培训简介、近期培训、培训报名与师资证书查询，帮助学校与老师稳妥落地课程。</p>
+        </div>
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#7E8894;margin-bottom:14px">SERVICE NETWORK</div>
+          <h3 style="font-family:'Noto Serif SC',serif;font-size:21px;font-weight:700;margin:0 0 16px;color:#F2F0EB">测评服务网络</h3>
+          <p style="font-size:14.5px;line-height:1.95;color:#A8AEB6;margin:0;font-weight:300;text-wrap:pretty">培训中心查询、人才培养基地与测评服务中心遍布各地，并提供器材要求、推荐器材与防伪查询等配套服务。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experts" style="max-width:1280px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,3vw,40px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;margin-bottom:48px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.2em;color:#C9A227;margin-bottom:16px">EXPERT COMMITTEE</div>
+        <h2 style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,3.4vw,40px);margin:0;color:#F7F5F0">专家团队</h2>
+      </div>
+      <a href="#" style="font-size:13.5px;letter-spacing:0.05em">查看全部 →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.09)">
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">蔡自兴</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">联合国专家、国际导航与运动控制科学院院士</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">顾建军</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">南京师范大学教育科学学院院长</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">李双寿</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">清华大学基础工业训练中心主任</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">李瑞峰</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">哈尔滨工业大学机器人研究所副所长</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">肖俊</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">中国科学院大学人工智能学院副院长，教授</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">王巍</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">北京航空航天大学机器人研究所，教授</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">翁恺</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">浙江大学计算机学院副教授</div>
+      </a>
+      <a href="#" style="background:#0E151D;padding:28px 26px;display:block;color:inherit" style-hover="background:#131C26">
+        <div style="font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:#F2F0EB;margin-bottom:10px">赵卫东</div>
+        <div style="font-size:13px;line-height:1.75;color:#8B939C;font-weight:300">复旦大学计算机科学技术学院副教授</div>
+      </a>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,0.07);background:#070C11">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,3vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.18em;color:#7E8894;margin-bottom:28px">项目开展单位 · ORGANIZERS</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:48px">
+        <div style="height:76px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E7887">logo 01</div>
+        <div style="height:76px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E7887">logo 02</div>
+        <div style="height:76px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E7887">logo 03</div>
+        <div style="height:76px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E7887">logo 04</div>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.18em;color:#7E8894;margin-bottom:28px">合作单位 · PARTNERS</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+        <div style="height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 8px,#0E141B 8px 16px);border:1px solid rgba(255,255,255,0.07)"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#050A0E;border-top:1px solid rgba(201,162,39,0.18)">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,3vw,40px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:48px">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+          <div style="width:34px;height:34px;border:1.5px solid #C9A227;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9A227">YCL</div>
+          <span style="font-family:'Noto Serif SC',serif;font-weight:700;font-size:16px;color:#E8E6E1">青少年信息技术培养工程</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.8;color:#8B939C;font-weight:300">
+          <span>官方网站：http://www.ycltest.com</span>
+          <span>测评咨询：4008822253</span>
+          <span>业务合作：16619787378，13554202922</span>
+          <span>投诉邮箱：ycltest@bjxintong.com.cn</span>
+          <span>服务时间：工作日 上午9:00~11:30，下午14:00~17:30</span>
+          <span>北京市丰台区成寿寺路11号邮电出版大厦</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#C9A227;margin-bottom:20px">关于测评</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">测评报名</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">成绩查询</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">证书查询</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#C9A227;margin-bottom:20px">教材资料</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">教材图书</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">模拟试卷</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">试题下载</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.16em;color:#C9A227;margin-bottom:20px">师资与器材</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">近期培训</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">培训报名</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">器材要求</a>
+          <a href="#" style="color:#A8AEB6" style-hover="color:#C9A227">防伪查询</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(24px,4vw,40px);margin-top:32px;border-top:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;gap:32px">
+      <div style="display:flex;gap:24px;font-size:12px;color:#5F6874;font-family:'IBM Plex Mono',monospace;letter-spacing:0.04em">
+        <span>© 2026 YCLTEST</span>
+        <a href="#" style="color:#5F6874">备案：京ICP备09082226号-44</a>
+        <a href="#" style="color:#5F6874">京公网安备11010602201719号</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px">
+        <div style="width:64px;height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 6px,#0E141B 6px 12px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#6E7887;text-align:center">手机版<br />QR</div>
+        <div style="width:64px;height:64px;background-image:repeating-linear-gradient(135deg,#131A22 0 6px,#0E141B 6px 12px);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#6E7887;text-align:center">服务号<br />QR</div>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ showRail }}" hint-placeholder-val="{{ true }}">
+    <div id="side-rail" style="position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:30;max-height:calc(100vh - 200px);display:flex;flex-direction:column;background:#0E151D;border:1px solid rgba(201,162,39,0.28);border-right:none">
+      <a href="#" style="padding:14px 12px;font-size:12px;color:#C3C7CC;writing-mode:vertical-rl;letter-spacing:0.1em;border-bottom:1px solid rgba(255,255,255,0.08)" style-hover="color:#C9A227;background:#131C26">用户登录</a>
+      <a href="#" style="padding:14px 12px;font-size:12px;color:#C3C7CC;writing-mode:vertical-rl;letter-spacing:0.1em;border-bottom:1px solid rgba(255,255,255,0.08)" style-hover="color:#C9A227;background:#131C26">我要报名</a>
+      <a href="#" style="padding:14px 12px;font-size:12px;color:#C3C7CC;writing-mode:vertical-rl;letter-spacing:0.1em;border-bottom:1px solid rgba(255,255,255,0.08)" style-hover="color:#C9A227;background:#131C26">测评系统</a>
+      <a href="#" style="padding:14px 12px;font-size:12px;color:#C3C7CC;writing-mode:vertical-rl;letter-spacing:0.1em;border-bottom:1px solid rgba(255,255,255,0.08)" style-hover="color:#C9A227;background:#131C26">在线模拟</a>
+      <a href="#" style="padding:14px 12px;font-size:12px;color:#C3C7CC;writing-mode:vertical-rl;letter-spacing:0.1em" style-hover="color:#C9A227;background:#131C26">在线客服</a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showRail&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;布局&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { showRail: this.props.showRail ?? true };
+  }
+}
+</script>
+</body>
+</html>

@@ -105,43 +105,73 @@
         letter-spacing:.03em;white-space:nowrap;display:inline-block}
   .btn2:hover{border-color:var(--brand);color:var(--brand)}
 
-  /* ---- rotating assessment cube -------------------------------------------------
+  /* ---- rotating assessment cube, liquid glass ------------------------------------
      The badge was never a hexagon: that outline is a cube in isometric projection, and
-     the "roof" is its top face. So it is built as an actual cube.
+     the "roof" is its top face. So it is an actual cube, and it turns.
 
-     Done with CSS 3D transforms rather than three.js, deliberately. three.js is ~600 KB
-     before any scene code, and five tiles would mean five WebGL contexts on a page whose
-     job is to list exam tracks — browsers cap those, and a lost context leaves a blank
-     square. CSS 3D is GPU-composited, ~40 lines, works with no JS at all, degrades to a
-     flat face on anything old, and is one media query away from honouring reduced motion.
-     If this ever needs real lighting, materials or interaction, that is the point to
-     reach for three.js — not before. ------------------------------------------------ */
-  .cube-stage{width:104px;height:104px;perspective:520px;display:flex;
-              align-items:center;justify-content:center}
-  .cube{position:relative;width:62px;height:62px;transform-style:preserve-3d;
+     THE CODE DOES NOT TURN WITH IT. The label is a sibling of the rotating box, not a
+     child, so it inherits none of the transform.
+
+     GLASS NEEDS SOMETHING TO REFRACT. backdrop-filter on a flat white card blurs nothing
+     and the effect collapses to a grey square, so a soft colour field sits behind the cube
+     for the faces to pick up and distort as they pass over it. That field is the whole
+     reason this reads as glass rather than as translucency.
+
+     CSS 3D rather than three.js on purpose: ~600 KB and five WebGL contexts is not a price
+     worth paying to spin five logos. Reach for it when there is real lighting or
+     interaction to justify it. --------------------------------------------------------- */
+  .cube-stage{position:relative;width:118px;height:118px;perspective:600px;
+              display:flex;align-items:center;justify-content:center;isolation:isolate}
+  /* The field the glass refracts. Kept SMALL and FAINT and sized to the cube: a large
+     bright blob spills past the edges and reads as a halo around a glowing ice cube, not
+     as something seen through glass. It should be barely visible on its own. */
+  .cube-stage::before{content:'';position:absolute;width:62px;height:62px;border-radius:50%;
+    z-index:0;left:50%;top:50%;margin:-31px 0 0 -31px;
+    background:radial-gradient(circle at 34% 30%,rgba(126,164,246,.55) 0%,
+               rgba(178,203,255,.34) 45%,rgba(214,229,255,0) 74%);
+    filter:blur(6px);animation:cube-field 16s ease-in-out infinite}
+  @@keyframes cube-field{
+    0%,100%{transform:translate(-8%,-5%) scale(.94)}
+    50%    {transform:translate(9%,6%)  scale(1.06)}
+  }
+
+  .cube{position:relative;z-index:1;width:64px;height:64px;transform-style:preserve-3d;
         animation:cube-spin 16s linear infinite;will-change:transform}
   .cube-stage:hover .cube{animation-duration:4.5s}
-  /* Faces must be OPAQUE and backface-hidden. Semi-transparent faces let the far side of
-     the cube read through the near side, which shows the code mirrored — legible enough to
-     look like a rendering fault rather than a solid object. */
-  .cube span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-             font-family:var(--mono);font-size:17px;font-weight:700;letter-spacing:.06em;
-             color:#2E6DF0;background:#E9F0FF;border:2px solid #3D7BF7;
-             box-sizing:border-box;backface-visibility:hidden}
-  /* Only the four upright faces carry the code. On the top and bottom it would be seen
-     edge-on or upside down, so those are plain — and the shading gives the turn its depth. */
-  .cube .f{transform:translateZ(31px)}
-  .cube .b{transform:rotateY(180deg) translateZ(31px)}
-  .cube .r{transform:rotateY(90deg)  translateZ(31px);background:#DCE7FF}
-  .cube .l{transform:rotateY(-90deg) translateZ(31px);background:#DCE7FF}
-  .cube .u{transform:rotateX(90deg)  translateZ(31px);background:#F5F9FF}
-  .cube .d{transform:rotateX(-90deg) translateZ(31px);background:#CBDBFB}
+
+  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:8px;
+          background:linear-gradient(135deg,rgba(255,255,255,.44) 0%,rgba(255,255,255,.06) 42%,
+                     rgba(150,182,250,.16) 66%,rgba(255,255,255,.28) 100%);
+          border:1px solid rgba(96,140,232,.42);
+          box-shadow:inset 0 1px 0 rgba(255,255,255,.85),
+                     inset 0 -8px 14px -12px rgba(46,109,240,.42),
+                     0 4px 12px -9px rgba(29,58,120,.42)}
+  @@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    /* no brightness lift — that is what turned it into a light source instead of a lens */
+    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.04) 44%,
+                       rgba(255,255,255,.22) 100%);
+            -webkit-backdrop-filter:blur(4px) saturate(150%);
+            backdrop-filter:blur(4px) saturate(150%)}
+  }
+  .cube .f{transform:translateZ(32px)}
+  .cube .b{transform:rotateY(180deg) translateZ(32px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(32px)}
+  .cube .l{transform:rotateY(-90deg) translateZ(32px)}
+  .cube .u{transform:rotateX(90deg)  translateZ(32px)}
+  .cube .d{transform:rotateX(-90deg) translateZ(32px)}
+
+  .cube-label{position:absolute;z-index:2;left:0;right:0;top:50%;transform:translateY(-50%);
+              text-align:center;pointer-events:none;
+              font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.08em;
+              color:#1E4691;text-shadow:0 1px 2px rgba(255,255,255,.95),0 0 8px rgba(255,255,255,.7)}
+
   @@keyframes cube-spin{
-    from{transform:rotateX(-22deg) rotateY(0deg)}
-    to  {transform:rotateX(-22deg) rotateY(360deg)}
+    from{transform:rotateX(-20deg) rotateY(0deg)}
+    to  {transform:rotateX(-20deg) rotateY(360deg)}
   }
   @@media(prefers-reduced-motion:reduce){
-    .cube{animation:none;transform:rotateX(-22deg) rotateY(-32deg)}
+    .cube{animation:none;transform:rotateX(-20deg) rotateY(-34deg)}
+    .cube-stage::before{animation:none}
     .cube-stage:hover .cube{animation:none}
   }
 

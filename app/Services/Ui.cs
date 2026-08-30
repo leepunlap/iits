@@ -19,6 +19,7 @@ public static class Ui
     {
         ["zh-Hant"] = new()
         {
+            ["heroBadge"]="工信部青少年信息技術培訓項目 · 國際窗口", ["heroA"]="培育下一代", ["heroB"]="科技創新者", ["heroP"]="工信學堂（香港）IITS —— 由啟蒙探索到創新實踐，銜接國家級認證與 GBA 競賽平台，把工信部青少年信息技術培訓帶到香港與國際。", ["heroCta1"]="探索課程 →", ["heroCta2"]="聯絡我們", ["heroStat"]="MIIT 認證階梯",
             ["aboutUs"]="關於我們",
             ["programmes"]="網站內容",
             ["partners"]="合作夥伴",
@@ -37,6 +38,7 @@ public static class Ui
         },
         ["zh-Hans"] = new()
         {
+            ["heroBadge"]="工信部青少年信息技术培训项目 · 国际窗口", ["heroA"]="培育下一代", ["heroB"]="科技创新者", ["heroP"]="工信学堂（香港）IITS —— 由启蒙探索到创新实践，衔接国家级认证与 GBA 竞赛平台，把工信部青少年信息技术培训带到香港与国际。", ["heroCta1"]="探索课程 →", ["heroCta2"]="联络我们", ["heroStat"]="MIIT 认证阶梯",
             ["aboutUs"]="关于我们",
             ["programmes"]="网站内容",
             ["partners"]="合作伙伴",
@@ -55,6 +57,7 @@ public static class Ui
         },
         ["en"] = new()
         {
+            ["heroBadge"]="MIIT Youth IT Training Project · International Window", ["heroA"]="Educating the next", ["heroB"]="generation of innovators", ["heroP"]="IITS Hong Kong — from first discovery to applied innovation, linked to national certification and the Greater Bay Area competition circuit, bringing MIIT youth IT training to Hong Kong and beyond.", ["heroCta1"]="Explore programmes →", ["heroCta2"]="Contact us", ["heroStat"]="MIIT certification levels",
             ["aboutUs"]="About",
             ["programmes"]="Sections",
             ["partners"]="Partners",

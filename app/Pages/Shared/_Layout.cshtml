@@ -122,6 +122,17 @@
 
      CSS 3D + a small rAF loop rather than three.js: ~600 KB and five WebGL contexts is not
      a price worth paying to tumble five logos. ------------------------------------------ */
+  /* Twelve advisers on two rows of six. Fixed at 6 rather than auto-fill because the
+     roster is a known, fixed set — an auto grid reflows it to 5+5+2, which reads as a
+     ragged list instead of a panel. Steps down in even divisors so it never leaves an
+     orphan on the last row. */
+  .experts-grid{grid-template-columns:repeat(6,1fr)}
+  @@media(max-width:1240px){ .experts-grid{grid-template-columns:repeat(4,1fr)} }
+  @@media(max-width:820px) { .experts-grid{grid-template-columns:repeat(3,1fr)} }
+  @@media(max-width:560px) { .experts-grid{grid-template-columns:repeat(2,1fr)} }
+  .experts-grid h3{font-size:16px!important}
+  .experts-grid .cell span:last-child{padding:16px 16px 20px!important}
+
   .cube-stage{position:relative;width:124px;height:124px;perspective:640px;
               display:flex;align-items:center;justify-content:center;isolation:isolate;
               cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}

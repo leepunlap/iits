@@ -5,12 +5,22 @@ Source for the IITS web properties.
 | path | what | status |
 |---|---|---|
 | [`portals/`](portals/) | **teachers.ycltesthk.com** + **students.ycltesthk.com** — the live portals (pages, backends, nginx, tests) | **live** |
+| [`docs/`](docs/) | **how the system works** — architecture, backend reference, Lesson AI / Wonder Lab | **read this** |
 | `auth/` | `checker.py` + `manage_users.py` — the original login service for the combined portal | superseded by [`portals/backend/`](portals/backend/) |
 | `www/` | the original combined `/teacher/` + `/student/` pages on iits.giftedintl.com | **retired 2026-09-26** |
 
 `auth/` and `www/` are kept as historical reference. The combined portals they belong to
 were retired on 2026-09-26 and now 302 to the two sites under `portals/`. **Do not edit
-them** — see [`portals/README.md`](portals/README.md) for the current system.
+them.**
+
+## Documentation
+
+| doc | covers |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | Hosts, the three services, nginx routing, data stores, request flow. **Start here.** |
+| [docs/backend.md](docs/backend.md) | `checker.py` (login, sessions, file gate) and `reg.py` (registration, classes, roles) — every endpoint. |
+| [docs/lesson-ai.md](docs/lesson-ai.md) | The Lesson AI 學伴 and Wonder Lab: pedagogy, safety guards, analytics. |
+| [portals/README.md](portals/README.md) | Operational reference: accounts, the class model, permissions, sign-up flows, limits. |
 
 ## The live portals
 

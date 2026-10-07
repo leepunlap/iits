@@ -30,6 +30,35 @@ classes, join codes), `iits-lesson-ai` (:8811, the lesson AI 學伴 + Wonder Lab
 **Read [`portals/README.md`](portals/README.md) first** — it documents the accounts,
 the class model, teacher/admin/student permissions, and the sign-up flows in detail.
 
+### How the server and this repo relate
+
+`portals/` mirrors `~/ycltesthk-portals` on BernardNUC, which is the **live tree** — the
+machine that serves the sites. Because the live tree sits at the root of the app directory
+and the repo keeps it under `portals/`, they are joined by a git clone at `~/iits-repo`:
+
+```
+~/ycltesthk-portals   ← live tree (what deploy.sh reads)
+~/iits-repo           ← git clone of this repo; ~/iits-repo/portals == ~/ycltesthk-portals
+```
+
+Two scripts bridge them, both honouring the same exclude list as `.gitignore`:
+
+```sh
+~/iits-repo/sync-from-live.sh   # after editing on the server → repo, then review & commit
+~/iits-repo/sync-to-live.sh     # after git pull               → server
+```
+
+Typical round trip on the server:
+
+```sh
+cd ~/iits-repo
+git pull
+./sync-to-live.sh                 # repo → live tree
+# ... edit ~/ycltesthk-portals ...
+./sync-from-live.sh               # live tree → repo
+git add -A && git commit -m "..." && git push
+```
+
 ### Deploying
 
 ```sh

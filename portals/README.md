@@ -2,8 +2,9 @@
 
 > **Repo copy.** This directory is a mirror of `~/ycltesthk-portals` on **BernardNUC** (192.168.48.24),
 > the machine that actually serves both sites. The server is the source of truth for *deployment*; this
-> copy is for versioning and review. Edit here, then push and pull on the server — or edit on the server
-> and sync back deliberately. Sync'd **2026-10-08**.
+> copy is for versioning and review. A git clone at `~/iits-repo` on the server joins the two, and the
+> `sync-from-live.sh` / `sync-to-live.sh` scripts here move changes across — see the repo root README.
+> Sync'd **2026-10-08**.
 >
 > Not included (runtime data / secrets, kept on the server only): `__pycache__`, `.pytest_cache`,
 > `*.bak-*` iteration backups, `checker.py.orig`, `bp10_validate.json`, `mail/sent.log`,

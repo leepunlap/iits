@@ -19,6 +19,13 @@ done < <(cd "$LIVE" && find . -type f -not -path "./.git/*" | sed 's|^\./||' | w
   git -C "$HOME/iits-repo" ls-files --error-unmatch "portals/$f" >/dev/null 2>&1 || echo "$f"
 done)
 
+# repo-only files (tracked in git, deliberately absent from the live tree) must not be
+# copied out either — the sync scripts themselves, for instance
+while IFS= read -r f; do
+  rel="${f#portals/}"
+  [ -e "$LIVE/$rel" ] || EXCLUDES+=(--exclude="/$rel")
+done < <(git -C "$HOME/iits-repo" ls-files portals)
+
 rsync -a --delete \
   --exclude=".git/" --exclude=".gitignore" \
   --exclude="__pycache__/" --exclude=".pytest_cache/" \

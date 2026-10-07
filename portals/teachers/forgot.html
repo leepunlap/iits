@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>忘記密碼 · 工信學堂 IITS</title>
+<link rel="stylesheet" href="/assets/reg.css">
+</head>
+<body>
+<main class="card">
+  <div class="top-bar"><span class="brand">工信學堂 IITS</span><a class="hm" href="/login.html">← 返回登入</a></div>
+  <h1>忘記密碼</h1>
+  <section data-step="id">
+    <p class="sub">輸入你的用戶名或登記電郵，我們會把驗證碼寄到帳號的電郵。</p>
+    <form id="fi" autocomplete="on">
+      <label class="f">用戶名或電郵<input id="ident" required maxlength="200" autocapitalize="none" spellcheck="false" autocomplete="username"></label>
+      <div class="err" id="ierr"></div>
+      <button id="send">寄出驗證碼</button>
+    </form>
+    <p class="note" style="margin-top:16px">舊的共用教師帳號不能在此重設，請聯絡管理員（info@ycltesthk.com）。</p>
+  </section>
+  <section data-step="code" hidden>
+    <p class="sub">如帳號存在，驗證碼已寄到它的登記電郵（10 分鐘內有效）。找不到郵件？請看看垃圾郵件匣。</p>
+    <form id="cf" autocomplete="off">
+      <label class="f">驗證碼<input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required></label>
+      <div class="err" id="cerr"></div>
+      <button id="verify">確認</button>
+    </form>
+    <button type="button" class="ghost" id="resend">重新發送驗證碼</button>
+  </section>
+  <section data-step="pw" hidden>
+    <p class="sub">選擇帳號，然後設定新密碼。</p>
+    <p class="note" id="acctnote" hidden>此電郵下有多個帳號，請選擇要重設的一個。</p>
+    <form id="pf" autocomplete="off">
+      <div id="accounts"></div>
+      <label class="f">新密碼<input id="password" type="password" required minlength="8" autocomplete="new-password"><small>最少 8 個字元</small></label>
+      <label class="f">確認新密碼<input id="password2" type="password" required minlength="8" autocomplete="new-password"></label>
+      <div class="err" id="perr"></div>
+      <button id="save">儲存新密碼</button>
+    </form>
+  </section>
+  <section data-step="done" hidden>
+    <div class="ok"><svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <p class="sub" style="text-align:center">帳號 <b id="doneuser"></b> 的密碼已更新。</p>
+    <a href="/login.html"><button type="button">前往登入</button></a>
+  </section>
+  <div class="foot">工信學堂（香港）· 教師專區</div>
+</main>
+<script src="/assets/reg.js"></script>
+<script>R.forgot();</script>
+</body></html>

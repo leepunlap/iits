@@ -1,0 +1,22 @@
+[Unit]
+Description=IITS portals: self-registration + password recovery (teachers./students.ycltesthk.com)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Environment=PORT=8794
+ExecStart=/usr/bin/python3 /opt/iits-portal-reg/reg.py
+Restart=on-failure
+RestartSec=2
+# loopback only (nginx sets the realm header); config + SMTP password in /etc/iits-portal-reg (root:www-data 640)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/lib/iits-portal-reg
+
+[Install]
+WantedBy=multi-user.target

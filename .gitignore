@@ -1,3 +1,16 @@
 *.pyc
 __pycache__/
 node_modules/
+
+# --- portals/ runtime + local iteration artifacts (added 2026-10-08) ---
+.pytest_cache/
+*.bak-*
+*.orig
+.backup-lessons-*/
+
+# mail: send logs and per-send state are runtime data, not source.
+portals/mail/sent.log
+portals/mail/last_send_*.json
+
+# mail attachments are large binaries kept on the server, not in git.
+portals/mail/templates/*/*.pdf

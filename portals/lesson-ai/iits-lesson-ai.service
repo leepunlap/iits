@@ -1,0 +1,18 @@
+[Unit]
+Description=IITS lesson AI 學伴 (DeepSeek proxy for students.ycltesthk.com lesson pages)
+After=network-online.target
+
+[Service]
+Environment=LESSON_AI_PORT=8811
+User=www-data
+Group=www-data
+EnvironmentFile=/etc/iits-lesson-ai/deepseek.env
+ExecStart=/usr/bin/python3 /opt/iits-lesson-ai/lesson_ai.py
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/iits-lesson-ai
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

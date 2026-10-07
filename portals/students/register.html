@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>學生註冊 · 工信學堂 IITS</title>
+<link rel="stylesheet" href="/assets/reg.css">
+</head>
+<body>
+<main class="card">
+  <div class="top-bar"><span class="brand">工信學堂 IITS</span><a class="hm" href="/login.html">← 返回登入</a></div>
+  <h1>學生帳號註冊</h1>
+  <section data-step="form">
+    <p class="sub">請向老師索取「班級註冊碼」。電郵用於驗證及取回密碼，可用家長的電郵；同一個電郵可以註冊多位子女。</p>
+    <form id="f" autocomplete="on">
+      <label class="f">學生姓名<input id="name" required maxlength="60" autocomplete="name"></label>
+      <label class="f">電郵（家長電郵亦可）<input id="email" type="email" required maxlength="200" autocomplete="email" autocapitalize="none" spellcheck="false"></label>
+      <label class="f">用戶名（登入用）<input id="username" required pattern="[A-Za-z0-9][A-Za-z0-9._\-]{2,31}" autocapitalize="none" spellcheck="false" autocomplete="username"><small>3–32 個字元：英文字母、數字及 . _ -</small></label>
+      <label class="f">密碼<input id="password" type="password" required autocomplete="new-password"></label>
+      <label class="f">確認密碼<input id="password2" type="password" required autocomplete="new-password"></label>
+      <label class="f">班級註冊碼<input id="joincode" required maxlength="16" autocapitalize="characters" spellcheck="false" autocomplete="off" placeholder="例如 L2-ABC123"><small>由老師提供</small></label>
+      <div class="err" id="err"></div>
+      <button id="go">註冊</button>
+    </form>
+    <div class="links">已有帳號？<a href="/login.html">登入</a></div>
+  </section>
+  <section data-step="code" hidden>
+    <p class="sub">驗證碼已寄到 <b id="sentto"></b>，請輸入 6 位數字（10 分鐘內有效）。找不到郵件？請看看垃圾郵件匣。</p>
+    <form id="cf" autocomplete="off">
+      <label class="f">驗證碼<input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required></label>
+      <div class="err" id="cerr"></div>
+      <button id="verify">確認</button>
+    </form>
+    <button type="button" class="ghost" id="resend">重新發送驗證碼</button>
+  </section>
+  <section data-step="done" hidden>
+    <div class="ok"><svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <p class="sub" style="text-align:center">註冊成功！你現在可以用新帳號登入。</p>
+    <a href="/login.html"><button type="button">前往登入</button></a>
+  </section>
+  <div class="foot">工信學堂（香港）· 學生專區</div>
+</main>
+<script src="/assets/reg.js"></script>
+<script>R.register('student');</script>
+</body></html>

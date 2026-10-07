@@ -1,0 +1,760 @@
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>教師專區 · 工信學堂 IITS</title>
+<style>
+/* icons (2026-10-07) */
+.si{width:1.15em;height:1.15em;flex:none;display:inline-block;vertical-align:-0.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans TC',-apple-system,"PingFang HK","Microsoft JhengHei",sans-serif;color:#10161d;background:#f4f6fb}
+a{color:#3d5699}
+.top{position:sticky;top:0;z-index:20;background:rgba(247,248,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid #e5e8f0;padding:10px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.top b{font-size:16px}.who{font-size:13px;color:#4a5158}
+.badge{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;margin-left:6px;background:#fff3d6;color:#8a5a00;border:1px solid #f1d9a0}
+.top .sp{margin-left:auto;display:flex;gap:8px}
+.btn{border:1px solid #d7dced;background:#fff;color:#3d5699;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:#eef1f8}.btn.pri{background:#3d5699;color:#fff;border-color:#3d5699}.btn.pri:hover{background:#33497f}
+.btn.warn{color:#b3261e;border-color:#f0c9c5}.btn.warn:hover{background:#fdf0ef}.btn.sm{padding:5px 10px;font-size:12px}.btn:disabled{opacity:.5;cursor:default}
+.wrap{padding:12px clamp(16px,2.5vw,40px) 40px}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:14px}
+.nav a{padding:6px 14px;border-radius:999px;border:1px solid #d7dced;background:#fff;text-decoration:none;color:#3d5699;font-size:14px;font-weight:600}
+.nav a.on{background:#3d5699;color:#fff;border-color:#3d5699}
+h2{font-size:19px;margin:4px 0 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}h2 .n{font-size:13px;color:#8a93a3;font-weight:400}
+h2 .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.term{font-size:13px;color:#69707a;font-weight:700;margin:18px 0 8px;letter-spacing:.04em}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.cc{display:block;background:#fff;border:1px solid #e5e8f0;border-radius:16px;padding:14px 16px;text-decoration:none;color:inherit;transition:.12s}
+.cc:hover{border-color:#3d5699;box-shadow:0 10px 24px -14px rgba(61,86,153,.5)}
+.cc-top{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4a5158}
+.lv{display:inline-block;background:var(--c,#3d5699);color:#fff;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;vertical-align:middle}
+.arch{font-size:11px;color:#8a93a3;border:1px solid #d7dced;border-radius:6px;padding:1px 6px;font-weight:400}
+.cc-name{font-size:18px;font-weight:800;margin:6px 0 2px}
+.cc-sch{font-size:12.5px;color:#4a5158;min-height:1.2em}
+.cc-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:#69707a;margin-top:8px}
+.cc-tea{font-size:12.5px;margin-top:6px;color:#4a5158}.warn{color:#b3261e}
+.cc-next{margin-top:8px;font-size:12px;background:#eef4ff;color:#3d5699;border-radius:8px;padding:5px 9px;display:inline-block}
+.empty{padding:26px 16px;color:#69707a;font-size:13.5px;text-align:center;background:#fff;border:1px dashed #d7dced;border-radius:14px;line-height:1.7}
+.back{display:inline-block;margin-bottom:10px;font-size:13px;text-decoration:none}
+.ch{background:#fff;border:1px solid #e5e8f0;border-radius:18px;padding:16px 18px;margin-bottom:14px}
+.ch-date{font-size:13px;color:#69707a}.ch h1{margin:4px 0 6px;font-size:23px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ch-sub{font-size:13px;color:#4a5158;margin-top:3px}.ch-act{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.panel{background:#fff;border:1px solid #e5e8f0;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.panel h3{margin:0 0 10px;font-size:15px;display:flex;align-items:center;gap:8px}.panel h3 .cnt{margin-left:auto;font-weight:400;font-size:12px;color:#8a93a3}
+.sess{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.se{border:1px solid #e5e8f0;border-radius:12px;padding:8px 10px;font-size:12.5px;display:flex;flex-direction:column;gap:2px}
+.se b{font-size:12px;color:#69707a;font-weight:600}.se.past{opacity:.5}.se.next{border-color:#3d5699;background:#eef4ff}
+.jcrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.jcrow code{font-size:20px;font-weight:800;letter-spacing:.08em;color:#3d5699;background:#eef1f8;padding:5px 12px;border-radius:9px}
+.hint{font-size:12.5px;color:#69707a;margin:10px 0 0;line-height:1.6}
+.tw{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th{text-align:left;font-weight:600;color:#69707a;font-size:12px;padding:8px;border-bottom:1px solid #eef0f6;white-space:nowrap}
+table.t td{padding:9px 8px;border-bottom:1px solid #f4f5fa;vertical-align:top}
+table.t td.act{white-space:nowrap}table.t td.act .btn{margin:0 4px 4px 0}
+.chip{display:inline-block;font-size:11.5px;background:#eef1f8;color:#3d5699;border-radius:999px;padding:2px 8px;margin:0 4px 4px 0}
+.muted{color:#8a93a3}.small{font-size:12px}
+.pend{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-bottom:16px}
+.pc{background:#fffaf0;border:1px solid #f1d9a0;border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.6}
+.pc b{font-size:15px}.pc .row{display:flex;gap:8px;margin-top:8px}
+.lvpick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.lvpick a{border:1px solid #d7dced;background:#fff;border-radius:12px;padding:8px 12px;text-decoration:none;color:#10161d;font-size:13px}
+.lvpick a.on{border-color:#3d5699;box-shadow:0 0 0 2px rgba(61,86,153,.2)}
+.banner{margin-top:22px;padding:14px 18px;background:linear-gradient(135deg,#1a1a2e,#0f3460);border-radius:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.banner a{background:rgba(255,255,255,.15);color:#fff;padding:7px 14px;border-radius:99px;text-decoration:none;font-size:12px;font-weight:600;margin-left:8px}
+/* 班級: class list (left) | calendar of every lesson (right) */
+.cv{display:grid;gap:16px;grid-template-columns:minmax(0,1fr);align-items:start}
+@media(min-width:1000px){.cv{grid-template-columns:320px minmax(0,1fr)}.cv .clist{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow-y:auto}}
+.clist{background:#fff;border:1px solid #e5e8f0;border-radius:16px;padding:6px}
+.clist .term{margin:2px 4px 10px;padding:6px 10px;background:#eef2fa;color:#3d5699;border-radius:9px;font-size:12.5px;letter-spacing:.06em}
+.ylogo{height:30px;width:auto;display:block;margin-right:4px}
+@media(max-width:700px){.ylogo{display:none}}
+.clist h2{font-size:18px;margin:4px 4px 10px;padding:6px 6px 10px;border-bottom:2px solid #3d5699;color:#1f2d55}.clist h2 .n{background:#3d5699;color:#fff;border-radius:999px;padding:1px 9px;font-size:12px;font-weight:700}.clist h2 .btn{padding:4px 10px;font-size:12px}
+.ci{border-radius:12px;border-left:4px solid var(--c);margin:0 0 8px;background:#fbfcfe}
+.ci:hover,.ci.hl{background:#eef2fa}
+.ci-a{display:block;padding:9px 11px;text-decoration:none;color:inherit}
+.ci-x{display:inline-block;margin:-2px 11px 9px;font-size:11.5px;font-weight:700;text-decoration:none;color:#fff;
+  background:linear-gradient(135deg,#1a1a2e,#0f3460);border-radius:999px;padding:4px 11px}
+.mc{display:block;margin:12px 4px 4px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#1a1a2e,#0f3460);color:#fff;text-decoration:none}
+.mc b{display:block;font-size:13.5px}.mc span{display:block;font-size:11px;color:rgba(255,255,255,.6);margin:2px 0 8px}
+.mc i{font-style:normal;font-size:12px;font-weight:700;background:rgba(255,255,255,.15);border-radius:999px;padding:4px 11px}
+/* full-height screen layout for 班級 (wide screens): only the left list and the day cells scroll */
+@media(min-width:1000px){
+  body.fullh{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+  body.fullh .top{position:static;flex:none}
+  body.fullh .wrap{flex:1;min-height:0;padding-bottom:14px}
+  body.fullh #view,body.fullh .cv{height:100%}
+  body.fullh .cv{grid-template-rows:minmax(0,1fr)}
+  body.fullh .cv .clist{position:static;max-height:none;height:100%;overflow-y:auto}
+  body.fullh .cal{height:100%;display:flex;flex-direction:column;min-height:0}
+  body.fullh .calg{flex:1;min-height:0;grid-template-rows:auto;grid-auto-rows:minmax(0,1fr)}
+  body.fullh .cd{min-height:0;overflow-y:auto}
+}
+.ci-n{display:flex;align-items:center;gap:7px;font-weight:800;font-size:14.5px}
+.ci-s{font-size:11.5px;color:#69707a;margin-top:2px;line-height:1.45}
+.ci-m{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:#69707a;margin-top:3px}
+.cal{background:#fff;border:1px solid #e5e8f0;border-radius:16px;padding:12px 12px 10px}
+.calh{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.calh b{font-size:16px;margin:0 4px}.calh .n{font-size:12px;color:#8a93a3}.calh .sp{margin-left:auto;display:flex;gap:6px}
+.calh .btn{padding:5px 10px;font-size:12px}
+.calg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-top:1px solid #eef0f6;border-left:1px solid #eef0f6}
+.calg .wh{font-size:11.5px;color:#8a93a3;text-align:center;padding:5px 0;border-right:1px solid #eef0f6;border-bottom:1px solid #eef0f6;background:#fafbfd}
+.cd{min-height:96px;border-right:1px solid #eef0f6;border-bottom:1px solid #eef0f6;padding:4px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cd .dn{font-size:12px;color:#69707a;line-height:1.3}
+.cd.out{background:#fafbfd}.cd.out .dn{color:#c2c8d2}
+.cd.today .dn{display:inline-block;background:#3d5699;color:#fff;border-radius:999px;padding:0 7px;align-self:flex-start}
+.ev{display:block;background:color-mix(in srgb,var(--c) 14%,#fff);border-left:3px solid var(--c);color:#10161d;text-decoration:none;
+  border-radius:5px;padding:2px 6px;font-size:12px;line-height:1.4;transition:opacity .12s}
+.ev:hover{background:color-mix(in srgb,var(--c) 26%,#fff)}
+.ev .t,.ev .t1{color:#69707a}.ev .t1{display:none}.ev b{font-weight:700}
+.cal.focus .ev{opacity:.22}.cal.focus .ev.on{opacity:1;box-shadow:0 0 0 1.5px var(--c)}
+@media(max-width:1300px){.ev{font-size:11px;padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ev .t{display:none}.ev .t1{display:inline;font-size:10.5px}}
+body.fullh .cd{gap:2px}
+.callg{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:#69707a}
+.callg i{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--c);margin-right:4px;vertical-align:-1px}
+/* class page: everything on one screen */
+.cp{display:flex;flex-direction:column;gap:10px;min-height:0}
+.cph{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid #e5e8f0;border-left:5px solid var(--c);border-radius:14px;padding:9px 14px}
+.cph .back{margin:0;font-size:18px;text-decoration:none;color:#3d5699;padding:0 4px}
+.cpt{min-width:0;flex:1 1 380px}
+.cpt h1{margin:0;font-size:20px;display:flex;align-items:center;gap:8px}
+.cpi{font-size:12px;color:#4a5158;margin-top:2px;line-height:1.6}.cpi i{font-style:normal;color:#c2c8d2;margin:0 7px}
+.cpj{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cpj .lb{font-size:11.5px;color:#69707a}
+.cpj code{font-size:16px;font-weight:800;letter-spacing:.06em;color:#3d5699;background:#eef1f8;padding:3px 9px;border-radius:7px}
+.cpj .hlp{font-size:11.5px;color:#69707a}
+.cpa{display:flex;gap:6px}
+.cpw{font-size:12.5px;color:#b3261e;background:#fdf0ef;border-radius:10px;padding:6px 12px}
+.cps{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:6px}
+.cps .se{background:#fff;border:1px solid #e5e8f0;border-radius:10px;padding:5px 9px;font-size:12px;display:flex;flex-direction:column;gap:0;line-height:1.45}
+.cps .se b{font-size:11px;color:#8a93a3}.cps .se small{color:#69707a;font-size:11.5px}
+.cps .se.next{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,#fff)}.cps .se.next b{color:var(--c)}
+.cpb{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:1000px){.cpb{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+.box{background:#fff;border:1px solid #e5e8f0;border-radius:14px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.box>h3{margin:0;padding:9px 14px;font-size:14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #eef0f6}
+.box>h3 .cnt{margin-left:auto;font-weight:400;font-size:12px;color:#8a93a3}
+.scr{overflow:auto;min-height:0;flex:1}
+#roster.muted{padding:10px 14px}
+table.tt{font-size:12.5px}table.tt th{position:sticky;top:0;background:#fafbfd;padding:6px 8px;z-index:1}table.tt td{padding:5px 8px}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+table.tt td{vertical-align:middle}
+.mats{display:flex;flex-direction:column;min-height:0;flex:1}
+.mtabs{display:flex;gap:4px;padding:8px 10px 0;flex-wrap:wrap;border-bottom:1px solid #eef0f6}
+.mtab{border:1px solid #e5e8f0;border-bottom:0;background:#fafbfd;border-radius:9px 9px 0 0;padding:6px 10px;font:inherit;font-size:12.5px;cursor:pointer;color:#4a5158}
+.mtab .cnt{font-size:11px;color:#8a93a3;margin-left:2px}
+.mtab.on{background:#fff;color:#10161d;font-weight:700;position:relative;top:1px}
+.mtab.ai.on{color:#5a2ea0}.mtab.sw.on{color:#3d5699}.mtab.tea.on{color:#93661a}.mtab.stu.on{color:#2f8f6b}
+.mlist{display:none;overflow:auto;min-height:0;flex:1}.mlist.on{display:block}
+.mnote{font-size:11.5px;color:#8a93a3;padding:6px 14px 2px}
+.mlist .frow{display:flex;align-items:center;gap:10px;padding:5px 14px;border-bottom:1px solid #f4f5fa;text-decoration:none;color:inherit}
+.mlist .frow:hover{background:#f4f7fc}.mlist .frow .nm{flex:1;font-size:12.5px;word-break:break-all;line-height:1.4}
+.mlist .frow .fdl{color:#3d5699;font-size:13px}
+.box.lib{flex:1}
+@media(min-width:1000px){
+  body.fullh #view>.cp{height:100%}
+  body.fullh .cpb{flex:1;min-height:0;grid-template-rows:minmax(0,1fr)}
+  body.fullh #view:has(.lib){display:flex;flex-direction:column}
+}
+/* student-view preview */
+.pv{display:flex;flex-direction:column;gap:8px;height:calc(100vh - 90px)}
+.pvbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid #e5e8f0;border-left:5px solid #2f8f6b;border-radius:12px;padding:8px 12px}
+.pvbar .back{margin:0;font-size:18px;text-decoration:none}.pvbar b{font-size:15px}.pvl{font-size:13px;color:#4a5158}
+.pvn{font-size:11.5px;color:#8a93a3;margin-left:auto}
+.pvf{flex:1;min-height:0;border:1px solid #e5e8f0;border-radius:12px;overflow:hidden;background:#fff}
+.pvf iframe{width:100%;height:100%;border:0;display:block}
+@media(min-width:1000px){body.fullh #view>.pv{height:100%}}
+html.chatfull .pvf{position:fixed;inset:0;z-index:100;border:0;border-radius:0;height:100dvh}
+@media(max-width:700px){.pvn{margin-left:0}}
+/* file manager */
+.sections{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:900px){.sections{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}}
+.sec{background:#fff;border:1px solid #e5e8f0;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.sec>h3{margin:0;padding:13px 16px;font-size:15px;border-bottom:1px solid #eef0f6;display:flex;align-items:center;gap:8px}
+.sec.ai{border-color:#dcc9f4}.sec.ai>h3{background:#f1e9fb;color:#5a2ea0}.sec.ai .btn.pri{background:#7c4dc4;border-color:#7c4dc4}.sec.sw>h3{background:#eef4ff}.sec.tea>h3{background:#fff7ec}.sec.stu>h3{background:#eafaf3}
+.sec .note{font-weight:400;font-size:11.5px;opacity:.75}.sec .cnt{font-size:12px;color:#8a93a3;margin-left:auto;font-weight:400}
+.up{padding:10px 16px;border-bottom:1px solid #f1f3f8;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.up input[type=file]{font-size:12px;max-width:56%}
+.list{max-height:46vh;overflow:auto}
+.frow{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #f4f5fa}
+.frow:last-child{border-bottom:0}.frow .nm{flex:1;font-size:13px;word-break:break-all;line-height:1.4}
+.frow .sz{font-size:11px;color:#9aa2b1;white-space:nowrap}
+.frow a.dl{font-size:12px;color:#3d5699;white-space:nowrap;text-decoration:none}
+.frow button.x{border:0;background:none;font-size:15px;cursor:pointer;padding:2px 5px}
+.fempty{padding:22px 16px;color:#9aa2b1;font-size:13px;text-align:center}
+/* dialogs */
+dialog{border:0;border-radius:18px;padding:0;max-width:640px;width:calc(100% - 24px);box-shadow:0 30px 80px -30px rgba(16,22,29,.5)}
+dialog::backdrop{background:rgba(16,22,29,.35)}
+.dl{padding:18px 20px}.dl h3{margin:0 0 12px;font-size:17px}
+.fg{display:grid;gap:10px;grid-template-columns:1fr 1fr}.fg .full{grid-column:1/-1}
+.fg label{font-size:12px;color:#4a5158;display:flex;flex-direction:column;gap:4px}
+.fg input,.fg select,.fg textarea{font:inherit;font-size:14px;border:1px solid #d8dce3;border-radius:10px;padding:8px 10px;background:#fbfcfd;width:100%}
+.fg textarea{min-height:150px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+.gen{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;color:#4a5158;background:#f6f8fc;border-radius:10px;padding:8px}
+.gen input{width:auto;padding:5px 7px;font-size:13px;border:1px solid #d8dce3;border-radius:8px}
+.chk{display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));max-height:280px;overflow:auto;padding:2px}
+.chk label{display:flex;flex-direction:row;align-items:center;gap:8px;font-size:13px;color:#10161d}
+.chk input{width:auto;flex:none;margin:0;padding:0;accent-color:#3d5699}
+.dl .foot{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;align-items:center}.dl .foot .err{margin-right:auto;color:#b3261e;font-size:12.5px}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#10161d;color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+#toast.on{opacity:.95}
+@media(max-width:560px){.fg{grid-template-columns:1fr}.cc-name{font-size:17px}}
+/* Wonder Lab 課堂控制 (2026-10-07): the teacher starts / stops the wrap-up (整合鞏固), student by student */
+.wlv{display:flex;flex-direction:column;gap:10px}
+.wlh{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;background:#fff;border:1px solid #e5e8f0;border-left:5px solid #7c4dc4;border-radius:14px;padding:9px 14px}
+.wlh .back{margin:0;font-size:18px;text-decoration:none;color:#3d5699;padding:0 4px}
+.wlh h1{margin:0;font-size:19px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wlh select{font:inherit;font-size:13px;border:1px solid #d7dced;border-radius:9px;padding:6px 8px;background:#fff;color:#10161d;max-width:100%}
+.wlt{font-size:12.5px;color:#4a5158;margin-top:2px}.wlt b{color:#2f8f6b}
+.wlpick{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#4a5158}
+.wlr{margin-left:auto;font-size:11.5px;color:#8a93a3;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.wlr.busy .si{animation:wlspin 1s linear infinite}.wlr.off{color:#b3261e}
+@keyframes wlspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.wlr.busy .si{animation:none}}
+.wlbar{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;background:#fff;border:1px solid #e5e8f0;border-radius:14px;padding:9px 14px}
+.wlsw{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;cursor:pointer;user-select:none;position:relative}
+.wlsw input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.wlsw i{width:36px;height:20px;border-radius:999px;background:#d7dced;position:relative;transition:.15s;flex:none}
+.wlsw i:after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(16,22,29,.25);transition:.15s}
+.wlsw input:checked+i{background:#7c4dc4}.wlsw input:checked+i:after{left:18px}
+.wlsw input:focus-visible+i{outline:2px solid #3d5699;outline-offset:2px}.wlsw input:disabled+i{opacity:.5}
+.wlbar .sp{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.wlhint{font-size:12px;color:#69707a;line-height:1.6;margin:0}
+.stg{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap;background:#eef1f8;color:#4a5158}
+.stg.pending{background:#fff3d6;color:#8a5a00}.stg.step1,.stg.step2{background:#f1e9fb;color:#5a2ea0}.stg.done{background:#eafaf3;color:#2f8f6b}
+.stg.shared{background:#f4f5fa;color:#69707a;font-weight:600}
+.idl{display:inline-block;margin-top:3px;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;white-space:nowrap;background:#f4f5fa;color:#69707a;border:1px dashed #c9ced8}
+tr.idle td.nm b{color:#69707a}
+.pg{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;cursor:help}
+.pg u{display:inline-block;width:54px;height:6px;border-radius:999px;background:#eef0f6;overflow:hidden;text-decoration:none}
+.pg u b{display:block;height:100%;background:#7c4dc4}
+td.ex{min-width:150px;max-width:300px;font-size:12px;color:#4a5158;line-height:1.5}
+tr.shr td{background:#fafbfd;color:#69707a}
+.wlerr{font-size:12.5px;color:#b3261e;background:#fdf0ef;border-radius:10px;padding:6px 12px}
+tr.shr td.nm b{white-space:nowrap}
+td.ex .exb{display:block;width:100%;margin:0;padding:0;border:0;background:none;font:inherit;color:inherit;text-align:left;line-height:inherit;cursor:default}
+/* iPad held upright and narrower (768-834 px): the start / stop buttons stack and stay at the right edge (sticky), the
+   explanation is 3 lines at most (tap it for the whole text), so a teacher never has to swipe the table sideways */
+@media(max-width:900px){
+  .wlv table.tt th,.wlv table.tt td{padding-left:6px;padding-right:6px}
+  .wlv .pg u{width:34px}
+  .wlv td.ex{min-width:100px;max-width:160px}
+  .wlv td.ex .exb{cursor:pointer}
+  .wlv td.ex .exq{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+  .wlv td.ex .exb.open .exq{display:block;-webkit-line-clamp:unset;overflow:visible}
+  .wlv td.act{position:sticky;right:0;background:#fff;box-shadow:-8px 0 8px -8px rgba(16,22,29,.22)}
+  .wlv th.act{position:sticky;right:0;z-index:2}
+  .wlv td.act .btn{display:flex;width:100%;justify-content:center;margin:0 0 4px}
+  .wlv td.act .btn:last-child{margin-bottom:0}
+}
+</style></head><body>
+<div class="top"><img class="ylogo" src="/assets/logo-youth.png" alt="青少年信息技術培養工程（香港分站）"><b><svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 21v-3a2 2 0 0 0-4 0v3"/> <path d="M18 4.933V21"/> <path d="m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6"/> <path d="m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11"/> <path d="M6 4.933V21"/> <circle cx="12" cy="9" r="2"/></svg> 教師專區</b><span class="who" id="who"></span><nav class="nav" id="nav"></nav>
+  <span class="sp"><a class="btn" href="https://ycltesthk.com/">← 主頁</a><button class="btn" onclick="logout()">登出</button></span></div>
+<div class="wrap"><main id="view"><div class="empty">載入中…</div></main></div>
+<dialog id="dlg"><div class="dl" id="dlgb"></div></dialog>
+<div id="toast"></div>
+<script>
+const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "external-link": "<path d=\"M15 3h6v6\"/> <path d=\"M10 14 21 3\"/> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>", "chevron-right": "<path d=\"m9 18 6-6-6-6\"/>"};
+const I=n=>'<svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+IC[n]+'</svg>';  // single-colour Lucide icons (ISC), owner 2026-10-07: no emoji
+
+const LVC={L1:'#3d5699',L2:'#2f8f6b',L3:'#d9772e',L4:'#7c4dc4',yai:'#2ea052'};
+const SECS=[{k:'ai',ic:I('bot'),lb:'AI 延伸課程',nt:'師生皆可下載',c:'ai'},{k:'software',ic:I('download'),lb:'軟件下載',nt:'學生可下載',c:'sw'},{k:'teacher',ic:I('book'),lb:'教師專區',nt:'僅教師可見',c:'tea'},{k:'student',ic:I('backpack'),lb:'學生專區',nt:'學生可見',c:'stu'}];
+const WD='日一二三四五六';
+let ME=null,DATA=null,TEACHERS=null,CUR=null,SHOW_ARCH=false,CAL_LIST=[],CAL_M=null;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function api(p,o){return fetch('/api/'+p,Object.assign({credentials:'same-origin'},o||{}));}
+function logout(){api('logout',{method:'POST'}).finally(()=>location.href='/login.html');}
+let T;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(T);T=setTimeout(()=>t.classList.remove('on'),2800);}
+async function reg(path,body){
+  const o={credentials:'same-origin'};
+  if(body!==undefined){o.method='POST';o.headers={'Content-Type':'application/json'};o.body=JSON.stringify(body);}
+  let r,j={};
+  try{r=await fetch('/api/reg/'+path,o);try{j=await r.json();}catch(e){}}catch(e){return {ok:false,error:'連線錯誤，請稍後再試。'};}
+  if(r.status===401){location.href='/login.html';return {ok:false,error:''};}
+  if(!j.ok&&!j.error)j.error='操作失敗（'+r.status+'）';
+  return j;
+}
+/* dates: 'YYYY-MM-DD' strings, read as local calendar days */
+function dt(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function wd(s){return WD[dt(s).getDay()];}
+function md(s){const d=dt(s);return (d.getMonth()+1)+'月'+d.getDate()+'日';}
+function fd(s){return s+'（'+wd(s)+'）';}
+function tm(x){return x&&x.start?x.start+'–'+x.end:'';}
+function nextSession(s){const t=iso(new Date());return (s||[]).find(x=>x.date>=t)||null;}
+function lvTag(l){return `<span class="lv" style="--c:${LVC[l]||'#3d5699'}">${esc(l)}</span>`;}
+function tdate(ts){if(!ts)return '';const d=new Date(ts*1000);return iso(d);}
+
+async function loadClasses(force){
+  if(DATA&&!force)return DATA;
+  const j=await reg('classes');
+  if(!j.ok){$('view').innerHTML=`<div class="empty">${esc(j.error||'載入失敗')}</div>`;throw new Error('classes');}
+  DATA=j;return DATA;
+}
+async function loadTeachers(force){
+  if(TEACHERS&&!force)return TEACHERS;
+  const j=await reg('teachers');
+  if(!j.ok){toast(j.error);throw new Error('teachers');}
+  TEACHERS=j;return TEACHERS;
+}
+
+/* ---------------- navigation ---------------- */
+function nav(cur){
+  const items=[['classes',ME.admin?'班級':'我的班級']];
+  if(ME.admin)items.push(['teachers','教師']);
+  if(ME.admin||ME.legacy)items.push(['library','教材庫']);
+  $('nav').innerHTML=items.map(([k,t])=>`<a href="#${k}" class="${cur===k||((cur==='class'||cur==='wlab')&&k==='classes')?'on':''}">${t}</a>`).join('');
+}
+async function route(){
+  const h=decodeURIComponent(location.hash.slice(1));const i=h.indexOf('/');
+  let v=i<0?h:h.slice(0,i);const arg=i<0?'':h.slice(i+1);
+  if(!v)v=ME.legacy?'library':'classes';
+  nav(v);window.scrollTo(0,0);document.body.classList.remove('fullh');wlStop();
+  // everything that matters on a page is in the URL, so a refresh lands on the same page:
+  // #classes[/archived] · #class/<id>[/<材料分頁>] · #library/<級>[/<材料分頁>] · #preview/<級>/<班>/<課> · #wlab/<班>[/<課>]
+  const [a0,a1]=arg.split('/');
+  try{
+    if(v==='class'&&a0){await viewClass(a0);return openSec(a1);}
+    if(v==='wlab'&&a0)return await viewWlab(a0,a1);
+    if(v==='preview'&&arg)return await viewPreview(arg);
+    if(v==='teachers'&&ME.admin)return await viewTeachers();
+    if(v==='library'&&(ME.admin||ME.legacy)){viewLibrary(a0);return openSec(a1);}
+    SHOW_ARCH=(v==='classes'&&arg==='archived');
+    return await viewClasses();
+  }catch(e){}
+}
+function setUrl(h){if(location.hash!==h)history.replaceState(null,'',h);}
+function openSec(k){if(k&&SECS.some(x=>x.k===k)&&document.querySelector('.mtab'))mtab(k,true);}
+window.addEventListener('hashchange',route);
+
+/* ---------------- classes ---------------- */
+function card(c){
+  const s=c.sessions||[],nx=c.status==='active'?nextSession(s):null;
+  return `<a class="cc" href="#class/${encodeURIComponent(c.id)}">
+    <div class="cc-top"><span>${esc(fd(c.start_date))}</span>${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
+    <div class="cc-name">${esc(c.name)}</div>
+    <div class="cc-sch">${esc(c.schedule)}</div>
+    <div class="cc-meta"><span>${I('calendar-days')} ${s.length} 節${s.length?' · '+esc(md(s[0].date))+' – '+esc(md(s[s.length-1].date)):''}</span><span>${I('backpack')} ${c.students} 位學生</span></div>
+    <div class="cc-tea">${c.teachers.length?I('user-round')+' '+c.teachers.map(t=>esc(t.name)).join('、'):'<span class="warn">未分配老師</span>'}</div>
+    ${nx?`<div class="cc-next">下一課：${esc(md(nx.date))}（${wd(nx.date)}）${esc(tm(nx))}</div>`:''}</a>`;
+}
+async function viewClasses(){
+  const el=$('view');
+  if(ME.legacy){
+    el.innerHTML=`<div class="empty">此為共用帳號：可在「教材庫」使用所有級別的教材，但不能查看班級、學生名單及註冊碼。<br>
+      請各老師用個人電郵<a href="/register.html">註冊教師帳號</a>，由管理員分配班級。</div>`+banner();return;}
+  const d=await loadClasses();
+  const arch=d.classes.filter(c=>c.status==='archived'),act=d.classes.filter(c=>c.status!=='archived');
+  const list=SHOW_ARCH?arch:act;
+  const terms=[];const by={};
+  list.forEach(c=>{const k=c.term||'其他';if(!by[k]){by[k]=[];terms.push(k);}by[k].push(c);});
+  terms.sort((a,b)=>by[b][0].start_date.localeCompare(by[a][0].start_date));
+  let h=`<h2>${ME.admin?'全部班級':'我的班級'} <span class="n">${list.length} 班</span><span class="sp">
+    ${arch.length||SHOW_ARCH?`<button class="btn" data-a="arch">${SHOW_ARCH?'← 進行中的班級':'已封存（'+arch.length+'）'}</button>`:''}
+</span></h2>`;
+  if(!list.length){
+    h+=`<div class="empty">${SHOW_ARCH?'沒有已封存的班級。':ME.admin?'尚未有班級。':'你尚未獲分配班級。<br>管理員為你分配班級後，便會在這裡顯示。'}</div>`;
+    el.innerHTML=h+banner();return;
+  }
+  let items='';terms.forEach(k=>{items+=`<div class="term">${esc(k)}</div>${by[k].map(item).join('')}`;});
+  CAL_LIST=list;
+  if(!CAL_M){const t=iso(new Date()),all=list.flatMap(c=>(c.sessions||[]).map(x=>x.date)).sort();
+    const pick=all.find(d=>d>=t)||all[all.length-1]||t;CAL_M=pick.slice(0,7);}
+  el.innerHTML=`<div class="cv"><nav class="clist" id="clist" aria-label="班級">${h}${items}${mcCard()}</nav><section class="cal" id="cal"></section></div>`;
+  document.body.classList.add('fullh');
+  renderCal();
+  // hovering a class in the list picks out its lessons on the calendar
+  const cl=$('clist'),cal=$('cal');
+  cl.addEventListener('mouseover',e=>{const a=e.target.closest('.ci');if(!a)return;cal.classList.add('focus');
+    cal.querySelectorAll('.ev').forEach(x=>x.classList.toggle('on',x.dataset.cid===a.dataset.cid));});
+  cl.addEventListener('mouseleave',()=>cal.classList.remove('focus'));
+  cal.addEventListener('mouseover',e=>{const v=e.target.closest('.ev');cl.querySelectorAll('.ci').forEach(x=>x.classList.toggle('hl',!!v&&x.dataset.cid===v.dataset.cid));});
+  cal.addEventListener('mouseleave',()=>cl.querySelectorAll('.ci.hl').forEach(x=>x.classList.remove('hl')));
+}
+function item(c){
+  const s=c.sessions||[],nx=c.status==='active'?nextSession(s):null;
+  return `<div class="ci" style="--c:${LVC[c.level]||'#3d5699'}" data-cid="${esc(c.id)}"><a class="ci-a" href="#class/${encodeURIComponent(c.id)}">
+    <div class="ci-n">${esc(c.name)} ${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
+    <div class="ci-s">${esc(c.schedule)}</div>
+    <div class="ci-m"><span>${I('calendar-days')} ${s.length} 節${s.length?' · '+esc(md(s[0].date))+' – '+esc(md(s[s.length-1].date)):''}</span><span>${I('backpack')} ${c.students}</span>
+      ${c.teachers.length?'<span>'+I('user-round')+' '+c.teachers.map(t=>esc(t.name)).join('、')+'</span>':'<span class="warn">未分配老師</span>'}</div>
+    ${nx?`<div class="ci-m"><span>下一課：${esc(md(nx.date))}（${wd(nx.date)}）${esc(tm(nx))}</span></div>`:''}</a>
+    ${c.level==='yai'?'<a class="ci-x" href="https://iits.roadlogica.com/entry-to-podium.html" target="_blank" rel="noopener">'+I('trophy')+' Entry→Podium '+I('chevron-right')+'</a>':''}</div>`;
+}
+function mcCard(){return `<a class="mc" href="https://iits.roadlogica.com/masterclass.html" target="_blank" rel="noopener">
+  <b>${I('compass')} IITS 大師班 · 終章</b><span>Grand Finale Masterclass · Fog · Mirror · Ocean · Voyage · Return</span><i>進入 EN / 中文 ${I('chevron-right')}</i></a>`;}
+/* month calendar of every lesson of the classes listed above (week starts Monday) */
+function renderCal(){
+  const box=$('cal');if(!box)return;
+  const [y,m]=CAL_M.split('-').map(Number),first=new Date(y,m-1,1),today=iso(new Date());
+  const ev={};CAL_LIST.forEach(c=>(c.sessions||[]).forEach(x=>{(ev[x.date]=ev[x.date]||[]).push({c,x});}));
+  Object.values(ev).forEach(a=>a.sort((p,q)=>(p.x.start||'').localeCompare(q.x.start||'')));
+  const start=new Date(first);start.setDate(1-((first.getDay()+6)%7));
+  let cells='',cnt=0;
+  for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=iso(d),inm=d.getMonth()===m-1;
+    if(i>=35&&!inm)break;
+    const list=ev[k]||[];if(inm)cnt+=list.length;
+    cells+=`<div class="cd${inm?'':' out'}${k===today?' today':''}"><span class="dn">${d.getDate()}</span>${list.map(({c,x})=>
+      `<a class="ev" style="--c:${LVC[c.level]||'#3d5699'}" data-cid="${esc(c.id)}" href="#class/${encodeURIComponent(c.id)}" title="${esc(c.name+' · '+md(x.date)+'（'+wd(x.date)+'）'+tm(x))}">`+
+      `<span class="t">${esc(tm(x))}</span><span class="t1">${esc(x.start||'')}</span> <b>${esc(c.name)}</b>`+`</a>`).join('')}</div>`;}
+  const lv=[...new Set(CAL_LIST.map(c=>c.level))];
+  box.innerHTML=`<div class="calh"><button class="btn" data-a="calp" aria-label="上個月">‹</button><b>${y}年${m}月</b><button class="btn" data-a="caln" aria-label="下個月">›</button>
+    <span class="n">${cnt} 節</span><span class="sp"><button class="btn" data-a="calt">今天</button>
+</span></div>
+    <div class="calg">${[...'一二三四五六日'].map(w=>`<div class="wh">${w}</div>`).join('')}${cells}</div>
+    <div class="callg">${lv.map(l=>`<span><i style="--c:${LVC[l]||'#3d5699'}"></i>${esc(l)}</span>`).join('')}<span>按課堂可開啟該班；指向左邊的班別可只看該班</span></div>`;
+}
+function calShift(n){const [y,m]=CAL_M.split('-').map(Number);const d=new Date(y,m-1+n,1);CAL_M=iso(d).slice(0,7);renderCal();}
+function banner(){return `<div class="banner"><span style="font-size:20px">${I('compass')}</span>
+  <span style="color:#fff;font-weight:700;font-size:14px">IITS 大師班 · 終章 — Grand Finale Masterclass</span>
+  <span style="color:rgba(255,255,255,.55);font-size:12px">Fog · Mirror · Ocean · Voyage · Return</span>
+  <span style="margin-left:auto"><a href="https://iits.roadlogica.com/masterclass.html" target="_blank" rel="noopener">進入 EN / 中文 ${I('chevron-right')}</a><a href="https://iits.roadlogica.com/entry-to-podium.html" target="_blank" rel="noopener">Entry→Podium ${I('chevron-right')}</a></span></div>`;}
+
+async function viewClass(id){
+  const d=await loadClasses();const c=d.classes.find(x=>x.id===id);const el=$('view');
+  if(!c){el.innerHTML=`<a class="back" href="#classes">← 所有班級</a><div class="empty">找不到此班級，或你沒有此班級的權限。</div>`;return;}
+  const s=c.sessions||[],nx=c.status==='active'?nextSession(s):null,today=iso(new Date());
+  const regUrl=d.register_url,filesOk=ME.admin||(c.status==='active'&&ME.levels.includes(c.level));
+  const info=[c.schedule&&I('clock')+' '+esc(c.schedule),(c.venue||c.school)&&I('map-pin')+' '+esc([c.venue,c.school].filter(Boolean).join(' · ')),
+    I('user-round')+' '+(c.teachers.length?c.teachers.map(t=>esc(t.name)).join('、'):'<span class="warn">未分配老師</span>')].filter(Boolean).join('<i>·</i>');
+  el.innerHTML=`<div class="cp" style="--c:${LVC[c.level]||'#3d5699'}">
+  <header class="cph">
+    <a class="back" href="#classes" title="${ME.admin?'全部班級':'我的班級'}">←</a>
+    <div class="cpt"><h1>${esc(c.name)} ${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</h1>
+      <div class="cpi">${esc(fd(c.start_date))} 開課${c.term?' · '+esc(c.term):''}<i>·</i>${info}</div></div>
+    <div class="cpj"><span class="lb">學生註冊碼</span><code id="jcc">${esc(c.joincode)}</code>
+      <button class="btn sm" data-a="copy">複製</button>${c.status==='active'||ME.admin?`<button class="btn sm" data-a="rotate" data-v="${esc(c.id)}" title="重新產生後舊碼即時失效，已註冊的學生不受影響">重新產生</button>`:''}
+      <a class="hlp" href="${esc(regUrl)}" target="_blank" rel="noopener" title="學生（或家長）到此網址註冊，輸入註冊碼便加入此班；可只輸入「-」後面的六個字">${esc(regUrl.replace('https://',''))}</a></div>
+    ${['L1','L2','L3','L4'].includes(c.level)&&filesOk?`<a class="btn sm pri" href="#preview/${encodeURIComponent(c.level)}/${encodeURIComponent(c.id)}">學生視角預覽</a>`:''}
+    ${c.level==='L4'?`<a class="btn sm" href="#wlab/${encodeURIComponent(c.id)}">${I('flask-conical')} Wonder Lab 課堂控制</a>`:''}
+    ${ME.admin?`<div class="cpa"><button class="btn sm" data-a="edit" data-v="${esc(c.id)}">${I('pencil')} 編輯</button>
+      <button class="btn sm${c.status==='archived'?'':' warn'}" data-a="status" data-v="${esc(c.id)}" data-s="${c.status==='archived'?'active':'archived'}">${c.status==='archived'?'恢復':'封存'}</button></div>`:''}
+  </header>
+  ${c.status==='archived'?'<div class="cpw">此班已封存，註冊碼暫停使用。</div>':''}
+  <div class="cps">${s.length?s.map((x,i)=>`<div class="se${x.date<today?' past':''}${nx&&x.date===nx.date?' next':''}"><b>${i+1}${nx&&x.date===nx.date?' · 下一課':''}</b><span>${esc(md(x.date))}（${wd(x.date)}）</span><small>${esc(tm(x))}</small></div>`).join(''):'<div class="muted small">未有上課日期。</div>'}</div>
+  <div class="cpb">
+    <section class="box"><h3>${I('backpack')} 學生名單 <span class="cnt" id="rcnt"></span></h3><div id="roster" class="scr muted small">載入中…</div></section>
+    <section class="box"><h3>${I('folder')} 教材 ${lvTag(c.level)} <span class="cnt">${esc(c.level_name)} · 同級共用</span></h3>
+      ${filesOk?'<div class="mats" id="secs"></div>':'<div class="muted small" style="padding:10px">此班已封存，教材暫停開放。</div>'}</section>
+  </div></div>`;
+  document.body.classList.add('fullh');
+  loadRoster(c.id);
+  if(filesOk)fileManager(c.level,$('secs'));
+}
+/* the student lesson library exactly as students see it (videos, AI 學伴), opened with the teacher's own login:
+   /files/<L>/lessons is gated per level by the same file check, and AI 學伴 counts the teacher's own quota */
+async function viewPreview(arg){
+  const [lv,cid,les0]=arg.split('/');const el=$('view');
+  const les=/^\d{3}-bp\d{2}$/.test(les0||'')?les0:'';
+  const page='/files/'+lv+'/lessons/'+(les?les+'/':'')+'index.html';
+  const pageV=page+'?v='+Date.now().toString(36);   // fresh copy, never a page cached before the no-cache header
+  if(les){try{sessionStorage.setItem('iits-restore',page);}catch(e){}}
+  let back='#library/'+lv,label=lv+' 全部課堂';
+  if(cid){const d=await loadClasses();const c=d.classes.find(x=>x.id===decodeURIComponent(cid));
+    if(c){back='#class/'+encodeURIComponent(c.id);label=c.name+' · '+lv;}}
+  el.innerHTML=`<div class="pv"><div class="pvbar"><a class="back" href="${back}">←</a><b>學生視角預覽</b><span class="lvtag">${lvTag(lv)}</span><span class="pvl">${esc(label)}</span>
+    <span class="pvn">與學生看到的完全一樣；你在 AI 學伴的提問計入你自己的次數，不影響學生。</span>
+    <a class="btn sm" id="pvnew" href="${pageV}" target="_blank" rel="noopener">新視窗開啟 ${I('external-link')}</a></div>
+    <div class="pvf"><iframe id="pvframe" src="${pageV}" title="學生視角預覽" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>`;
+  document.body.classList.add('fullh');
+  // keep the URL on the lesson the teacher is looking at (prev/next, lesson picker inside the preview)
+  $('pvframe').addEventListener('load',function(){
+    let p='';try{p=this.contentWindow.location.pathname;}catch(e){return;}
+    const m=p.match(/^\/files\/([^/]+)\/lessons\/(?:(\d{3}-bp\d{2})\/)?(?:index\.html)?$/);
+    if(!m||m[1]!==lv)return;
+    setUrl('#preview/'+encodeURIComponent(lv)+'/'+(cid?encodeURIComponent(decodeURIComponent(cid)):'')+(m[2]?'/'+m[2]:''));
+    const nw=$('pvnew');if(nw)nw.href=p+'?v='+Date.now().toString(36);
+  });
+}
+async function loadRoster(id){
+  const j=await reg('classes/roster?id='+encodeURIComponent(id));const el=$('roster');if(!el)return;
+  if(!j.ok){el.textContent=j.error;return;}
+  $('rcnt').textContent=j.students.length+' 人';
+  if(!j.students.length){el.innerHTML='暫未有學生以註冊碼加入此班。';return;}
+  el.className='scr';
+  el.innerHTML=`<table class="t tt"><thead><tr><th>#</th><th>姓名</th><th>登入名稱</th><th>電郵</th><th>加入</th></tr></thead><tbody>${
+    j.students.map((s,i)=>`<tr><td class="muted">${i+1}</td><td>${esc(s.name)}</td><td class="mono">${esc(s.u)}</td><td>${esc(s.email)}</td><td class="muted">${esc(tdate(s.created).slice(5))}</td></tr>`).join('')}</tbody></table>`;
+}
+async function setStatus(id,st){
+  if(st==='archived'&&!confirm('封存此班？\n封存後：註冊碼暫停使用；老師（管理員除外）不能再開啟此班教材。學生帳號不受影響，隨時可以恢復。'))return;
+  const j=await reg('classes/status',{id,status:st});
+  if(j.ok){toast(st==='archived'?'已封存':'已恢復');await loadClasses(true);route();}else toast(j.error);
+}
+async function rotate(id){
+  if(!confirm('重新產生註冊碼？\n舊碼會即時失效（已註冊的學生不受影響）。'))return;
+  const j=await reg('classes/joincode',{id});
+  if(j.ok){const c=DATA.classes.find(x=>x.id===id);if(c)c.joincode=j.code;$('jcc').textContent=j.code;toast('新註冊碼：'+j.code);}else toast(j.error);
+}
+function copyCode(){const t=$('jcc').textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('已複製 '+t),()=>toast(t));}
+
+/* ---------------- class editor (admins) ---------------- */
+function parseLines(txt){
+  const out=[],bad=[],p=n=>String(n).padStart(2,'0');
+  txt.split('\n').map(s=>s.trim()).filter(Boolean).forEach(ln=>{
+    const m=ln.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(?:\s+(\d{1,2}):(\d{2})\s*[-–~至]\s*(\d{1,2}):(\d{2}))?$/);
+    if(!m){bad.push(ln);return;}
+    const date=m[1]+'-'+p(m[2])+'-'+p(m[3]);
+    out.push(m[4]?{date,start:p(m[4])+':'+m[5],end:p(m[6])+':'+m[7]}:{date,start:'',end:''});
+  });
+  return {out,bad};
+}
+async function editClass(id){
+  const d=await loadClasses();let t;try{t=await loadTeachers();}catch(e){return;}
+  const c=id?d.classes.find(x=>x.id===id):null;
+  const last=d.classes.length?d.classes[d.classes.length-1]:{};
+  const v=c||{name:'',level:'L1',term:last.term||'',school:last.school||'',venue:last.venue||'',schedule:'',sessions:[],teachers:[]};
+  const lines=(v.sessions||[]).map(s=>s.date+(s.start?' '+s.start+'-'+s.end:'')).join('\n');
+  const mine=new Set((v.teachers||[]).map(x=>x.u));
+  const people=t.teachers.filter(x=>!x.legacy&&!x.disabled);
+  $('dlgb').innerHTML=`<h3>${c?'編輯班級':'新增班級'}</h3>
+  <div class="fg">
+    <label>班名<input id="f-name" maxlength="40" value="${esc(v.name)}" placeholder="例如 A班 G1–G2"></label>
+    <label>教材級別<select id="f-level">${Object.entries(d.levels).map(([k,n])=>`<option value="${k}"${k===v.level?' selected':''}>${esc(k+' · '+n)}</option>`).join('')}</select></label>
+    <label>學期<input id="f-term" maxlength="120" value="${esc(v.term)}" placeholder="例如 2026/27 秋季"></label>
+    <label>學校<input id="f-school" maxlength="120" value="${esc(v.school)}"></label>
+    <label>地點<input id="f-venue" maxlength="120" value="${esc(v.venue)}"></label>
+    <label>上課時間（顯示用）<input id="f-schedule" maxlength="120" value="${esc(v.schedule)}" placeholder="例如 逢星期六 上午9:00–11:00"></label>
+    <div class="full gen">快速產生每週日期：首課 <input type="date" id="g-d"> 共 <input type="number" id="g-n" value="8" min="1" max="40" style="width:56px"> 節，
+      <input type="time" id="g-a" value="09:00"> – <input type="time" id="g-b" value="11:00"> <button type="button" class="btn sm" data-a="gen">產生</button></div>
+    <label class="full">上課日期及時間（每行一節；開課日期 = 第一節）<textarea id="f-sess" placeholder="2026-10-03 09:00-11:00">${esc(lines)}</textarea></label>
+    <div class="full"><div style="font-size:12px;color:#4a5158;margin-bottom:6px">任教老師</div><div class="chk">${people.length?people.map(x=>`<label><input type="checkbox" name="tea" value="${esc(x.u)}"${mine.has(x.u)?' checked':''}> ${esc(x.name)} <span class="muted small">${esc(x.u)}</span></label>`).join(''):'<span class="muted small">未有個人教師帳號。老師註冊並獲批核後便會出現在這裡。</span>'}</div></div>
+  </div>
+  <div class="foot"><span class="err" id="f-err"></span><button class="btn" data-a="close">取消</button><button class="btn pri" data-a="save" data-v="${esc(id||'')}">儲存</button></div>`;
+  $('dlg').showModal();
+}
+function genDates(){
+  const d0=$('g-d').value,n=Math.min(40,Math.max(1,+$('g-n').value||8)),a=$('g-a').value,b=$('g-b').value;
+  if(!d0){$('f-err').textContent='請先選擇首課日期。';return;}
+  const out=[];const d=dt(d0);
+  for(let i=0;i<n;i++){out.push(iso(d)+(a&&b?' '+a+'-'+b:''));d.setDate(d.getDate()+7);}
+  $('f-sess').value=out.join('\n');$('f-err').textContent='已產生 '+n+' 節，可逐行修改（例如假期改期、最後兩課時間）。';
+}
+async function saveClass(id,btn){
+  const {out,bad}=parseLines($('f-sess').value);
+  if(bad.length){$('f-err').textContent='看不懂這行：'+bad[0];return;}
+  if(!out.length){$('f-err').textContent='請輸入最少一節上課日期。';return;}
+  const body={id:id||'',name:$('f-name').value,level:$('f-level').value,term:$('f-term').value,school:$('f-school').value,
+    venue:$('f-venue').value,schedule:$('f-schedule').value,sessions:out,
+    teachers:[...document.querySelectorAll('input[name=tea]:checked')].map(x=>x.value)};
+  btn.disabled=true;const j=await reg('classes/save',body);btn.disabled=false;
+  if(!j.ok){$('f-err').textContent=j.error;return;}
+  $('dlg').close();toast(id?'已更新':'已建立班級');await loadClasses(true);TEACHERS=null;
+  if(location.hash==='#class/'+encodeURIComponent(j.id))route();else location.hash='#class/'+encodeURIComponent(j.id);
+}
+
+/* ---------------- teachers (admins) ---------------- */
+async function viewTeachers(){
+  const el=$('view');await loadClasses();const t=await loadTeachers(true);
+  const lab={};DATA.classes.forEach(c=>lab[c.id]=c);
+  let h='';
+  if(t.pending.length){
+    h+=`<h2>待批核 <span class="n">${t.pending.length} 份申請</span></h2><div class="pend">${t.pending.map(p=>`<div class="pc">
+      <b>${esc(p.name)}</b> <span class="muted">${esc(p.username)}</span><br>${esc(p.email)}<br>
+      ${p.school?I('school')+' '+esc(p.school)+'<br>':''}${p.phone?I('phone')+' '+esc(p.phone)+'<br>':''}<span class="muted small">申請於 ${esc(tdate(p.created))}</span>
+      <div class="row"><button class="btn pri sm" data-a="approve" data-v="${esc(p.id)}">批核</button><button class="btn warn sm" data-a="decline" data-v="${esc(p.id)}">拒絕</button></div></div>`).join('')}</div>`;
+  }
+  h+=`<h2>教師 <span class="n">${t.teachers.filter(x=>!x.legacy).length} 位</span></h2>
+  <p class="hint" style="margin:-4px 0 12px">老師用個人電郵在 <a href="/register.html" target="_blank" rel="noopener">註冊頁</a> 申請，管理員批核後，再在這裡分配班級。老師只看到獲分配的班級（教材、註冊碼、學生名單）；管理員看到全部，並可管理班級及教師。</p>
+  <div class="panel tw"><table class="t"><tr><th>姓名</th><th>電郵／學校</th><th>身分</th><th>任教班級</th><th></th></tr>${t.teachers.map(x=>{
+    const cls=x.legacy?'<span class="muted small">所有級別的教材（不含班級）</span>':(x.admin?'<span class="muted small">全部班級</span>'+(x.classes.length?'<br>':''):'')+(x.classes.map(i=>lab[i]?`<span class="chip">${esc(lab[i].label)}</span>`:'').join('')||(x.admin?'':'<span class="warn small">未分配</span>'));
+    const role=x.legacy?'<span class="muted">共用帳號（舊）</span>':x.admin?'<b>管理員</b>':'教師';
+    let act='';
+    if(!x.legacy){
+      act+=`<button class="btn sm" data-a="assign" data-v="${esc(x.u)}">分配班級</button>`;
+      if(!x.me){act+=x.admin?`<button class="btn sm" data-a="rmadmin" data-v="${esc(x.u)}">取消管理員</button>`:`<button class="btn sm" data-a="mkadmin" data-v="${esc(x.u)}">設為管理員</button>`;
+        act+=x.disabled?`<button class="btn sm" data-a="enable" data-v="${esc(x.u)}">啟用</button>`:`<button class="btn sm warn" data-a="disable" data-v="${esc(x.u)}">停用</button>`;}
+    }
+    return `<tr${x.disabled?' style="opacity:.55"':''}><td><b>${esc(x.name)}</b>${x.me?' <span class="badge">你</span>':''}${x.disabled?' <span class="arch">已停用</span>':''}<br><span class="muted small">${esc(x.u)}</span></td>
+      <td class="small">${esc(x.email)}${x.school?'<br><span class="muted">'+esc(x.school)+'</span>':''}</td><td class="small">${role}</td><td>${cls}</td><td class="act">${act}</td></tr>`;}).join('')}</table></div>`;
+  el.innerHTML=h;
+}
+async function assign(u){
+  const d=await loadClasses();const t=await loadTeachers();const x=t.teachers.find(y=>y.u===u);if(!x)return;
+  const cur=new Set(x.classes);
+  const rows=d.classes.slice().sort((a,b)=>(a.status>b.status)-(a.status<b.status)||a.start_date.localeCompare(b.start_date)||a.name.localeCompare(b.name));
+  $('dlgb').innerHTML=`<h3>分配班級 · ${esc(x.name)}</h3>
+    ${x.admin?'<p class="hint" style="margin:0 0 10px">管理員本身已可管理全部班級；在這裡勾選的是他親自任教的班級。</p>':''}
+    <div class="chk">${rows.length?rows.map(c=>`<label><input type="checkbox" name="cls" value="${esc(c.id)}"${cur.has(c.id)?' checked':''}> ${esc(c.label)}${c.status==='archived'?' <span class="arch">已封存</span>':''}</label>`).join(''):'<span class="muted small">尚未有班級。</span>'}</div>
+    <div class="foot"><span class="err" id="f-err"></span><button class="btn" data-a="close">取消</button><button class="btn pri" data-a="saveassign" data-v="${esc(u)}">儲存</button></div>`;
+  $('dlg').showModal();
+}
+async function saveAssign(u,btn){
+  btn.disabled=true;const j=await reg('teachers/update',{u,classes:[...document.querySelectorAll('input[name=cls]:checked')].map(x=>x.value)});btn.disabled=false;
+  if(!j.ok){$('f-err').textContent=j.error;return;}
+  $('dlg').close();toast('已更新任教班級');await loadClasses(true);route();
+}
+async function tUpdate(u,patch,msg,ask){
+  if(ask&&!confirm(ask))return;
+  const j=await reg('teachers/update',Object.assign({u},patch));
+  if(j.ok){toast(msg);route();}else toast(j.error);
+}
+async function decide(id,action){
+  if(action==='decline'&&!confirm('拒絕此申請？對方會收到電郵通知。'))return;
+  const j=await reg('teachers/approve',{id,action});
+  if(j.ok){toast(action==='approve'?'已批核 '+j.u+'：請為他分配班級':'已拒絕');route();}else{toast(j.error);route();}
+}
+
+/* ---------------- materials library (admins + the shared login) ---------------- */
+function viewLibrary(lv){
+  const levels=(DATA&&DATA.levels)||{L1:'一級 · 動力工程＋創意製造',L2:'二級 · 程序交互＋傳感控制',L3:'三級 · 智能控制＋智能創造',L4:'四級 · 創造大師＋程序應用',yai:'YAI · 無廢城市競賽'};
+  if(!levels[lv])lv='L1';
+  $('view').innerHTML=`<h2>教材庫 <span class="n">按級別，所有班級共用</span></h2>
+    <div class="lvpick">${Object.entries(levels).map(([k,n])=>`<a href="#library/${k}" class="${k===lv?'on':''}">${lvTag(k)} ${esc(n)}</a>`).join('')}</div>
+    ${['L1','L2','L3','L4'].includes(lv)?`<p style="margin:0 0 10px"><a class="btn sm pri" href="#preview/${lv}">學生視角預覽：${lv} 全部課堂</a></p>`:''}
+    <section class="box lib"><div class="mats" id="secs"></div></section>`;
+  document.body.classList.add('fullh');
+  fileManager(lv,$('secs'));
+}
+/* teaching materials: download only (files are produced and published by the build pipeline, not uploaded here) */
+function fileManager(level,el){
+  CUR=level;
+  el.innerHTML=`<div class="mtabs">${SECS.map((x,i)=>`<button type="button" class="mtab ${x.c}${i?'':' on'}" data-a="mtab" data-v="${x.k}">${x.ic} ${x.lb} <span class="cnt" id="cnt-${x.k}"></span></button>`).join('')}</div>
+    ${SECS.map((x,i)=>`<div class="mlist${i?'':' on'}" id="list-${x.k}" data-note="${esc(x.nt)}"></div>`).join('')}`;
+  SECS.forEach(x=>load(x.k));
+}
+function fmt(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':b>=1024?(b/1024).toFixed(0)+' KB':b+' B';}
+async function load(sec){
+  const el=$('list-'+sec),cnt=$('cnt-'+sec);if(!el)return;el.innerHTML='<div class="fempty">載入中…</div>';
+  let r,j;try{r=await api('fm/list?class='+CUR+'&section='+sec);j=await r.json();}catch(e){el.innerHTML='<div class="fempty">載入失敗</div>';return;}
+  if(!r.ok){el.innerHTML='<div class="fempty">你沒有此級別教材的權限。</div>';return;}
+  const files=j.files||[];cnt.textContent=files.length;
+  el.innerHTML=`<div class="mnote">${esc(el.dataset.note)}</div>`+(files.length?files.map(f=>{const url='/files/'+CUR+'/'+sec+'/'+encodeURIComponent(f.name);
+    return `<a class="frow" href="${url}" target="_blank" rel="noopener"><span class="nm">${esc(f.name)}</span><span class="sz">${fmt(f.size)}</span><span class="fdl">${I('download')}</span></a>`;}).join(''):'<div class="fempty">尚無檔案</div>');
+}
+function mtab(k,fromUrl){document.querySelectorAll('.mtab').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
+  document.querySelectorAll('.mlist').forEach(l=>l.classList.toggle('on',l.id==='list-'+k));
+  if(fromUrl)return;
+  const h=location.hash.slice(1).split('/');
+  if((h[0]==='class'||h[0]==='library')&&h[1])setUrl('#'+h[0]+'/'+h[1]+'/'+k);}
+
+/* ---------------- Wonder Lab 課堂控制 (L4 classes, owner 2026-10-07: "Let the teacher control from teacher portal, student by student")
+   #wlab/<班>[/<課>] · data: /api/ai/lab/teacher/<班>[/<課>] (iits-lesson-ai; no AI call). Refreshes every 10 s while open.
+   開始整合 = the student's Wonder Lab shows the AI's first wrap-up question within about 20 s, without the student typing. */
+const WLS={off:'自由探索',pending:'整合 · 等待學生',step1:'整合 · 第 1 步',step2:'整合 · 第 2 步',done:'已完成整合'};
+let WL={cid:'',les:'',t:null,d:null,busy:false,open:new Set()};
+async function wlApi(path,body){
+  const o={credentials:'same-origin'};
+  if(body!==undefined){o.method='POST';o.headers={'Content-Type':'application/json'};o.body=JSON.stringify(body);}
+  let r,j={};
+  try{r=await fetch('/api/ai/lab/teacher/'+path,o);try{j=await r.json();}catch(e){}}catch(e){return {ok:false,net:true,error:'連線中斷，稍後會自動再試。'};}
+  if(r.status===401){location.href='/login.html';return {ok:false,error:''};}
+  if(!j.ok)j.error=j.reason||(r.status===403?'你沒有此班級的權限。':r.status===404?'找不到這一課的 Wonder Lab。':'暫時未能讀取（'+r.status+'）');
+  j.status=r.status;return j;
+}
+function wlStop(){clearInterval(WL.t);WL.t=null;}
+function ago(ts,now){if(!ts)return '—';const s=Math.max(0,now-ts);
+  if(s<5)return '剛剛';
+  if(s<3600)return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')+' 前';
+  return s<86400?Math.floor(s/3600)+' 小時前':md(iso(new Date(ts*1000)));}
+async function viewWlab(cid,les){
+  wlStop();WL={cid,les:/^[a-z0-9]+-bp\d+$/.test(les||'')?les:'',t:null,d:null,busy:false,open:new Set()};
+  const el=$('view'),back=`<a class="back" href="#class/${encodeURIComponent(cid)}">← 返回班級</a>`;
+  el.innerHTML='<div class="empty">載入中…</div>';
+  if(!WL.les){
+    const j=await wlApi(encodeURIComponent(cid));
+    if(!j.ok){el.innerHTML=back+`<div class="empty">${esc(j.error)}</div>`;return;}
+    if(!j.lessons.length){el.innerHTML=back+'<div class="empty">此級別暫未有已開放的 Wonder Lab 課堂。</div>';return;}
+    WL.les=j.suggest||j.lessons[0].slug;setUrl('#wlab/'+encodeURIComponent(cid)+'/'+WL.les);
+  }
+  await wlLoad();
+  if(WL.cid===cid)WL.t=setInterval(()=>{if(!document.hidden)wlLoad(true);},10000);
+}
+async function wlLoad(quiet){
+  if(WL.busy)return;WL.busy=true;const cid=WL.cid,les=WL.les,ind=$('wlr');
+  if(ind)ind.classList.add('busy');
+  const j=await wlApi(encodeURIComponent(cid)+'/'+les);
+  WL.busy=false;
+  if(cid!==WL.cid||les!==WL.les||!location.hash.startsWith('#wlab/'))return;
+  if(!j.ok){
+    if(WL.d&&quiet&&($('wlr'))){const r=$('wlr');r.classList.remove('busy');r.classList.add('off');r.innerHTML=I('refresh-cw')+' '+esc(j.error);return;}
+    $('view').innerHTML=`<a class="back" href="#class/${encodeURIComponent(cid)}">← 返回班級</a><div class="empty">${esc(j.error)}</div>`;WL.d=null;return;
+  }
+  const first=!WL.d||!$('wltb');WL.d=j;wlRender(j,first);
+}
+function wlRender(d,first){
+  const c=d.class,now=d.now||Math.floor(Date.now()/1000),rows=d.rows||[],kids=rows.filter(r=>!r.shared),ok=c.status==='active';
+  const tl=d.cls?`<b>上課中</b> ${esc(d.cls.start)}–${esc(d.cls.end)} · 尚餘 ${Math.max(0,Math.round(d.cls.ends_in/60))} 分鐘`
+    :d.next?`下一課：${esc(md(d.next.date))}（${wd(d.next.date)}）${esc(d.next.start)}–${esc(d.next.end)}`:'現在不是上課時間';
+  if(first){
+    $('view').innerHTML=`<div class="wlv">
+  <header class="wlh"><a class="back" href="#class/${encodeURIComponent(c.id)}" title="返回班級">←</a>
+    <div><h1>${I('flask-conical')} Wonder Lab 課堂控制 ${lvTag(c.level)}</h1><div class="wlt" id="wltl"></div></div>
+    <label class="wlpick">課堂 <select id="wlles">${d.lessons.map(x=>`<option value="${esc(x.slug)}"${x.slug===d.lesson.slug?' selected':''}>${esc(x.slug+' '+x.title)}</option>`).join('')}</select></label>
+    <span class="wlr" id="wlr" title="每 10 秒自動更新，不會使用 AI"></span></header>
+  ${ok?'':'<div class="cpw">此班已封存，只可查看。</div>'}
+  <div class="wlbar"><label class="wlsw"><input type="checkbox" id="wlauto"${ok?'':' disabled'}><i></i>學生達標時自動開始整合</label>
+    <span class="wlhint">預設關閉：老師按「開始整合」才會開始。開啟後，學生的程式通過本課全部自動檢查時便會開始（每人每天一次）。</span>
+    ${ok?`<span class="sp"><button class="btn sm pri" data-a="wlall">${I('play')} 全班開始整合</button><button class="btn sm warn" data-a="wlnone">${I('square')} 全班停止</button></span>`:''}</div>
+  <p class="wlhint">按「開始整合」後，約 20 秒內該學生的 Wonder Lab 對話會出現 AI 學伴的整合提問，學生不用輸入。「停止整合」隨時讓學生回到自由探索。姓名及學生的解釋只有老師看到。</p>
+  <section class="box"><h3>${I('backpack')} 學生 <span class="cnt" id="wlcnt"></span></h3><div class="scr tw">
+    <table class="t tt"><thead><tr><th>姓名 · 登入名稱</th><th>最後活動</th><th>對話回合</th><th>執行次數</th><th>進度</th><th>卡住</th><th>階段</th><th>學生的解釋</th><th class="act"></th></tr></thead>
+    <tbody id="wltb"></tbody></table></div></section></div>`;
+  }
+  $('wltl').innerHTML=esc(c.name)+' · '+tl;
+  const au=$('wlauto');if(au&&document.activeElement!==au)au.checked=!!d.auto;
+  const r=$('wlr');r.className='wlr';r.innerHTML=I('refresh-cw')+' 每 10 秒更新 · '+esc(new Date(now*1000).toLocaleTimeString('en-GB',{hour12:false}));
+  const busy=kids.filter(x=>['pending','step1','step2'].includes(x.state)).length;
+  $('wlcnt').textContent=kids.length+' 人'+(busy?' · 整合中 '+busy+' 人':'')+' · 回合及執行次數只計今天';
+  $('wltb').innerHTML=rows.map(x=>wlRow(x,now,ok)).join('')||'<tr><td colspan="9" class="muted">此班暫未有學生帳戶。</td></tr>';
+}
+function wlRow(r,now,ok){
+  const yes=r.check_names.filter(x=>x.ok).map(x=>x.label),no=r.check_names.filter(x=>!x.ok).map(x=>x.label);
+  const tip=(yes.length?'已做到：'+yes.join('、'):'未有已做到的項目')+(no.length?'\n未做到：'+no.join('、'):'');
+  const pct=r.checks_total?Math.round(100*r.checks_passed/r.checks_total):0;
+  const pg=r.checks_total?`<span class="pg" title="${esc(tip)}"><u><b style="width:${pct}%"></b></u>${r.checks_passed}/${r.checks_total}</span>`:'—';
+  // 未有嘗試 = no Wonder Lab turn today on this lesson: 全班開始整合 leaves such a student out (service: skipped_idle)
+  const idle=!r.shared&&!r.turns;
+  const head=`<td class="nm">${r.shared?I('users')+' ':''}<b>${esc(r.name||r.u)}</b><br><span class="mono muted">${esc(r.u)}</span></td><td class="small">${ago(r.last_ts,now)}${idle?'<br><span class="idl" title="今天未在這一課用過 Wonder Lab：全班開始整合時不會開始">未有嘗試</span>':''}</td><td>${r.turns}</td><td>${r.runs}</td><td>${pg}</td>`;
+  if(r.shared)return `<tr class="shr">${head}<td>—</td><td colspan="3"><span class="stg shared">共用帳戶：無法逐個學生控制</span></td></tr>`;
+  const on=['pending','step1','step2'].includes(r.state);
+  return `<tr data-u="${esc(r.u)}"${idle?' class="idle"':''}>${head}<td>${r.stuck?`<span class="warn">${r.stuck} 次</span>`:'0'}</td><td><span class="stg ${esc(r.state)}">${WLS[r.state]||esc(r.state)}</span></td>
+    <td class="ex">${r.explain?`<button type="button" class="exb${WL.open.has(r.u)?' open':''}" data-a="wlex" data-v="${esc(r.u)}" aria-expanded="${WL.open.has(r.u)}" title="${esc(r.explain)}"><span class="exq">${esc(r.explain)}</span></button>`:'<span class="muted">—</span>'}</td>
+    <td class="act">${ok?`<button class="btn sm${on?'':' pri'}" data-a="wlgo" data-v="${esc(r.u)}"${r.state==='pending'?' disabled':''}>${I(r.state==='off'?'play':'rotate-ccw')} ${r.state==='off'?'開始整合':'再開始'}</button>`+
+      `<button class="btn sm warn" data-a="wlstop" data-v="${esc(r.u)}"${r.state==='off'?' disabled':''}>${I('square')} 停止整合</button>`:''}</td></tr>`;
+}
+async function wlAct(body,done,b){
+  if(b)b.disabled=true;
+  const j=await wlApi(encodeURIComponent(WL.cid)+'/'+WL.les,body);
+  if(b)b.disabled=false;
+  if(!j.ok){toast(j.error);return;}
+  toast(done(j));await wlLoad(true);
+}
+function wlName(u){const r=((WL.d&&WL.d.rows)||[]).find(x=>x.u===u);return r&&r.name?r.name:u;}
+function wlGo(u,b){wlAct({action:'start',users:[u]},()=>'已開始整合：'+wlName(u),b);}
+function wlHalt(u,b){wlAct({action:'stop',users:[u]},()=>'已停止整合：'+wlName(u),b);}
+function wlAll(on,b){
+  const kids=((WL.d&&WL.d.rows)||[]).filter(x=>!x.shared),n=kids.filter(x=>x.turns>0).length,idle=kids.length-n;
+  if(on&&!confirm('全班開始整合？\n'+n+' 位今天有嘗試的學生，Wonder Lab 會在約 20 秒內出現 AI 學伴的整合提問（學生不用輸入）。'+
+    (idle?'\n'+idle+' 人今天未有嘗試，不會開始。':'')+'\n正在整合的學生會重新開始。'))return;
+  if(!on&&!confirm('全班停止整合？\n所有學生回到自由探索。'))return;
+  wlAct({action:on?'start':'stop',users:'all'},j=>(on?'已開始整合：':'已停止整合：')+j.changed+' 人'+(on&&j.skipped_idle?'；'+j.skipped_idle+' 人今天未有嘗試，未開始整合':''),b);
+}
+document.addEventListener('change',e=>{
+  if(e.target.id==='wlauto'){const v=e.target.checked;wlAct({auto:v},()=>v?'已開啟：學生達標時自動開始整合':'已關閉自動整合');}
+  else if(e.target.id==='wlles'){WL.les=e.target.value;WL.d=null;setUrl('#wlab/'+encodeURIComponent(WL.cid)+'/'+WL.les);wlLoad();}
+});
+
+/* ---------------- one click handler for the data-a buttons ---------------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+  if(a==='new')editClass(null);else if(a==='edit')editClass(v);else if(a==='save')saveClass(v,b);else if(a==='gen')genDates();
+  else if(a==='close')$('dlg').close();else if(a==='status')setStatus(v,b.dataset.s);else if(a==='copy')copyCode();
+  else if(a==='mtab')mtab(v);
+  else if(a==='calp')calShift(-1);else if(a==='caln')calShift(1);else if(a==='calt'){CAL_M=iso(new Date()).slice(0,7);renderCal();}
+  else if(a==='rotate')rotate(v);else if(a==='arch'){SHOW_ARCH=!SHOW_ARCH;setUrl('#classes'+(SHOW_ARCH?'/archived':''));viewClasses();}
+  else if(a==='assign')assign(v);else if(a==='saveassign')saveAssign(v,b);
+  else if(a==='mkadmin')tUpdate(v,{admin:true},'已設為管理員','把 '+v+' 設為管理員？\n管理員可管理全部班級、教師及批核申請。');
+  else if(a==='rmadmin')tUpdate(v,{admin:false},'已取消管理員身分','取消 '+v+' 的管理員身分？');
+  else if(a==='disable')tUpdate(v,{disabled:true},'已停用','停用 '+v+'？對方將不能登入（可隨時啟用）。');
+  else if(a==='enable')tUpdate(v,{disabled:false},'已啟用');
+  else if(a==='approve')decide(v,'approve');else if(a==='decline')decide(v,'decline');
+  else if(a==='wlex'){if(WL.open.has(v))WL.open.delete(v);else WL.open.add(v);b.classList.toggle('open',WL.open.has(v));b.setAttribute('aria-expanded',WL.open.has(v));}
+  else if(a==='wlgo')wlGo(v,b);else if(a==='wlstop')wlHalt(v,b);else if(a==='wlall')wlAll(true,b);else if(a==='wlnone')wlAll(false,b);
+});
+
+(async()=>{
+  let r;try{r=await api('me');}catch(e){$('view').innerHTML='<div class="empty">連線錯誤，請稍後再試。</div>';return;}
+  if(!r.ok){location.href='/login.html';return;}
+  ME=await r.json();ME.levels=ME.levels||[];
+  $('who').innerHTML=esc(ME.name)+(ME.admin?'<span class="badge">管理員</span>':ME.legacy?'<span class="badge" style="background:#eef1f8;color:#4a5158;border-color:#d7dced">共用帳號</span>':'');
+  route();
+})();
+</script></body></html>

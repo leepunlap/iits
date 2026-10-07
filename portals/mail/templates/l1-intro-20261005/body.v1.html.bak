@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f6f5;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6f5;padding:24px 12px;">
+<tr><td align="center">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;font-family:'PingFang HK','Microsoft JhengHei','Noto Sans TC',Arial,sans-serif;color:#14213d;">
+  <tr><td style="background:#0a1b3f;padding:22px 28px;">
+    <div style="font-size:13px;color:#ffc53d;font-weight:bold;letter-spacing:1px;">工信學堂（香港）· AI奇思·工房</div>
+    <div style="font-size:21px;color:#ffffff;font-weight:bold;margin-top:6px;line-height:1.4;">多謝您對「AI奇思·工房」課程的興趣</div>
+  </td></tr>
+  <tr><td style="padding:26px 28px 8px;font-size:15px;line-height:1.85;">
+    <p style="margin:0 0 14px;">尊敬的{{student_zh}}家長：</p>
+    <p style="margin:0 0 14px;">您好！</p>
+    <p style="margin:0 0 14px;">多謝您對工信學堂「AI奇思·工房」小一至小二課程的興趣。隨信附上今學期的課程內容及相關資料，供您參考。</p>
+    <p style="margin:0 0 10px;">我們的老師期待與您及小朋友見面：</p>
+  </td></tr>
+  <tr><td style="padding:0 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fff8e6;border-left:4px solid #ffc53d;border-radius:8px;">
+      <tr><td style="padding:14px 18px;font-size:15px;line-height:1.8;">
+        <div><span style="color:#8a5a00;font-weight:bold;">日期　</span>2026年10月5日（星期一）</div>
+        <div><span style="color:#8a5a00;font-weight:bold;">時間　</span>下午3:30 – 5:30</div>
+        <div><span style="color:#8a5a00;font-weight:bold;">地點　</span>香港浸會大學附屬學校王錦輝中小學<br><span style="padding-left:3em;display:inline-block;">工信學堂AI教育科創中心（中學部一樓 107A 室，S107A）</span></div>
+        <div style="margin-top:6px;padding-top:8px;border-top:1px dashed #e4c98a;"><span style="color:#c8322a;font-weight:bold;">第一天　</span>請於上課時間前到<b>學校操場集合</b>，老師會帶同學到課室。</div>
+        <div style="margin-top:4px;"><span style="color:#c8322a;font-weight:bold;">請帶備　</span><b>手提電腦一部</b>（請預先充滿電，並帶備充電器）</div>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="padding:18px 28px 6px;font-size:15px;line-height:1.85;">
+    <p style="margin:0 0 14px;">📎 隨信附件：《「AI奇思·工房」小一至小二課程簡介》（PDF）</p>
+    <p style="margin:0 0 14px;">如您有任何疑問，歡迎隨時聯絡我們：<br>鄧老師 9141 1186　·　譚老師 9103 7125（WhatsApp／電話）</p>
+    <p style="margin:0;">順頌<br>安祺</p>
+    <p style="margin:18px 0 0;font-weight:bold;">香港浸會大學附屬學校王錦輝中小學<br>工信學堂AI教育科創中心團隊</p>
+  </td></tr>
+  <tr><td style="padding:22px 28px 0;"><div style="border-top:1px solid #e4e7ec;"></div></td></tr>
+  <tr><td style="padding:12px 28px 22px;font-size:12px;color:#5e697e;line-height:1.7;">
+    工信學堂（香港）· 青少年信息技術培養工程（香港分站）<br>
+    <a href="https://ycltesthk.com" style="color:#0e8f83;text-decoration:none;">ycltesthk.com</a>　·　info@ycltesthk.com
+  </td></tr>
+</table>
+</td></tr></table>
+</body></html>

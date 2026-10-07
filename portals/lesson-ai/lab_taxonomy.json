@@ -1,0 +1,24 @@
+{
+ "_note": "Wonder Lab（L4 積木編程）學生行為標籤分類（2026-10-07）。每一輪 Wonder Lab 對話後，背景由 AI 只根據學生自己的說話和操作標籤：封閉維度只可用列出的寫法；不以「未做到」「缺少」標籤；字眼正面或中性。存入 usage.db 的 tags 表（src='lab'），與 AI 學伴的標籤（src='chat'）一起分析；關鍵詞存為 dim='關鍵詞'。客觀行為訊號（執行次數、撤銷、先預測後執行、達標檢查等）另存 lab_events，不經 AI。",
+ "dims": [
+  {"dim": "編程行為", "closed": true,
+   "source": "Kapur (2008; 2016) Productive Failure：生成與探索（generation & exploration）→ 整合鞏固（consolidation）；預測—觀察—解釋（POE）；IITS Wonder Lab 對話設計",
+   "tags": ["先預測後執行", "執行後觀察", "說出看到的結果", "提出假設", "解釋原因", "精確描述指令", "逐步修改", "大幅改寫", "自行發現錯誤", "撤銷重來", "堅持再試", "嘗試新做法", "延伸挑戰", "求助"],
+   "defs": {"先預測後執行": "執行前用自己的話講出預期的結果（例如「我估佢會向上行」）", "執行後觀察": "執行後講出舞台上發生了甚麼", "說出看到的結果": "具體描述看到的現象（例如「佢穿咗牆」）", "提出假設": "對結果或原因的猜想（會／估／可能／係咪／因為）；指令或願望（「我想佢撞到牆就停」）不算", "解釋原因": "用「因為／所以／原因」講出為甚麼；提出的改法不算", "精確描述指令": "指令裏有具體的參數：數字、坐標、顏色，或明確的目標角色（例如「按向上鍵就移動3步」「碰到紅色就停」「移到長頸鹿」）；只有按鍵或動作而沒有參數（「撞到牆就停」「四個方向鍵控制史萊姆」「跟住個 mouse 行」）、「郁吓佢」「第二個」「一路走」不算", "逐步修改": "這一輪在原有程式上改了一處", "大幅改寫": "這一輪把整段程式重新寫過", "自行發現錯誤": "自己指出程式哪裏不對", "撤銷重來": "按了「上一步」", "堅持再試": "失敗後再試一次", "嘗試新做法": "這一輪真的改用一個和之前不同的做法；只說「想試」不算", "延伸挑戰": "達到目標後自己加新的要求", "求助": "說唔知、要提示或要答案"}},
+  {"dim": "計算思維概念", "closed": true,
+   "source": "Brennan & Resnick (2012) computational concepts（sequences, loops, events, parallelism, conditionals, operators, data）；本課積木類別；《中小學人工智能素養學習架構》(2026) 表一 B3「計算思維」及初中「通過編程解決問題，設計和應用算法」",
+   "tags": ["序列", "事件", "循環", "條件", "並行", "坐標", "方向", "變量", "列表", "克隆", "廣播", "隨機", "偵測", "運算"]},
+  {"dim": "計算思維實踐", "closed": true,
+   "source": "Brennan & Resnick (2012) computational practices：being incremental and iterative；testing and debugging；reusing and remixing；abstracting and modularizing",
+   "tags": ["逐步迭代", "測試與除錯", "重用與重組", "抽象與模組化"]},
+  {"dim": "計算思維觀點", "closed": true,
+   "source": "Brennan & Resnick (2012) computational perspectives：expressing；connecting；questioning",
+   "tags": ["表達", "連繫", "提問"]},
+  {"dim": "除錯策略", "closed": true,
+   "source": "Brennan & Resnick (2012) testing and debugging；IITS Wonder Lab 對話觀察",
+   "tags": ["試錯", "對照預期", "追蹤步驟", "縮小範圍", "改一處試一次"]},
+  {"dim": "關鍵詞", "closed": false,
+   "source": "學生在這一輪自己用的字詞（1–5 個），例如「撞牆」「傳送點」「向上鍵」；不含名字或個人資料",
+   "tags": []}
+ ]
+}

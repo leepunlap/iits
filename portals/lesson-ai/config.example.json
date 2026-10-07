@@ -1,0 +1,10 @@
+{
+  "open_from": "07:00",
+  "open_until": "21:00",
+  "per_lesson_hour": 10,
+  "per_lesson_day": 25,
+  "per_student_day": 60,
+  "global_day": 3000,
+  "max_question_chars": 200,
+  "history_turns": 6
+}

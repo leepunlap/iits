@@ -34,6 +34,8 @@
   .blk code { font-size:.82em }
   .blk .args { color:var(--muted); font-size:.78em; flex:1 }
   .badge { font-size:.68em; padding:1px 7px; border-radius:999px; white-space:nowrap }
+  .info { border:1px solid var(--line); background:#fff; border-radius:999px; cursor:pointer;
+          font-size:.75em; line-height:1; padding:2px 7px; color:var(--muted) }
   .b-cli { background:#e3f5ec; color:#1d6b4f } .b-onewire { background:#fff1d6; color:var(--warn) }
   .b-codegen { background:#fdeaea; color:var(--bad) } .b-local { background:#eef1f8; color:var(--muted) }
   .ver { background:#1d6b4f; color:#fff } .unver { background:#f1f1f3; color:var(--muted) }
@@ -91,7 +93,13 @@
     <div class="more"><button id="more">載入更多</button> <span id="mediaCount" class="note"></span></div>
   </section>
 </main>
+<section class="panel" id="detailPanel" style="margin:0 20px 40px">
+  <h2>積木詳情 — 指令、語意與產生的程式碼</h2>
+  <div id="detail"><p class="note">按積木右邊的 ⓘ 查看它的連線指令、數值語意（單位／範圍／編碼）與會產生的 Arduino 程式碼。</p></div>
+</section>
 <script type="module">
+  import { UCMake_PORT_FILTERS } from './firmata.js';
+  import { generateBlock } from './codegen.js';
   const $ = (id) => document.getElementById(id);
   const ASSETS = './assets/';
   const VERIFIED = new Set(['espMinSetDcMotor', 'espMinSetDcMotorStop', 'espSetFourDigitDisplay',
@@ -100,10 +108,71 @@
                  codegen: ['b-codegen', '僅限上傳模式'], local: ['b-local', '本機／計時器'],
                  unknown: ['b-local', '未定'] };
 
-  const [vis, spec] = await Promise.all([
+  const [vis, spec, sem, codegenTable] = await Promise.all([
     fetch('./visibility.json').then((r) => r.json()),
     fetch('./blocks.json').then((r) => r.json()),
+    fetch('./semantics.json').then((r) => r.json()),
+    fetch('./codegen.json').then((r) => r.json()),
   ]);
+
+  /** Value semantics for a block: exact entry first, then the first matching pattern. */
+  function semanticsFor(opcode) {
+    if (sem.opcodes && sem.opcodes[opcode]) return sem.opcodes[opcode];
+    for (const p of sem.patterns || []) {
+      try { if (new RegExp(p.match, 'i').test(opcode)) return p; } catch { /* bad pattern */ }
+    }
+    return null;
+  }
+
+  const esc = (t) => String(t).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+
+  /** Show everything known about one block, including the Arduino it would generate. */
+  function showDetail(opcode) {
+    const b = blocks.find((x) => x.opcode === opcode);
+    if (!b) return;
+    const semInfo = semanticsFor(opcode);
+    const fields = {}, values = {};
+    for (const a of b.args || []) {
+      if (a.menu) fields[a.name] = a.default || (a.values && a.values[0]) || '';
+      else values[a.name] = a.default || '0';
+    }
+    let generated;
+    try {
+      const r = generateBlock(codegenTable, { opcode, fields, values });
+      const lines = [...Object.values(r.includes || {}), ...Object.values(r.definitions || {})];
+      if (r.statement.trim()) lines.push(r.statement.trim());
+      generated = lines.join('\n') || '(no code)';
+    } catch (e) { generated = '（沒有程式碼產生器：' + e.message + '）'; }
+
+    const [mechCls, mechLabel] = MECH[b.mechanism] || MECH.unknown;
+    const argRows = (b.args || []).map((a) => {
+      const vals = a.values && a.values.length ? ` — 可選 ${a.values.slice(0, 8).join(', ')}${a.values.length > 8 ? '…' : ''}` : '';
+      return `<tr><td><code>${a.name}</code></td><td>${a.type}</td><td>${a.menu || '—'}${vals}</td><td>${a.default ?? '—'}</td></tr>`;
+    }).join('') || '<tr><td colspan="4" class="note">無參數</td></tr>';
+
+    $('detail').innerHTML = `
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+        <code style="font-size:1.05em">${b.opcode}</code>
+        <span class="badge b-local">${b.category}</span>
+        <span class="badge b-local">${b.type}</span>
+        <span class="badge ${mechCls}">${mechLabel}</span>
+        ${VERIFIED.has(b.opcode) ? '<span class="badge ver">硬體驗證</span>' : '<span class="badge unver">未經硬體驗證</span>'}
+      </div>
+      ${b.commands && b.commands.length ? `<p class="note">即時指令：</p><pre>${esc(b.commands.join('\n'))}</pre>` : ''}
+      ${semInfo ? `<p class="note">數值語意${semInfo.verified === 'hardware' ? '（已硬體驗證）' : semInfo.verified === 'inferred' ? '（推導所得，待硬體確認）' : '（未知）'}：</p>
+        <p><b>單位／範圍：</b>${esc(semInfo.units || '—')}</p>
+        <p><b>編碼：</b>${esc(semInfo.encoding || '—')}</p>
+        <p class="note">來源：${esc(semInfo.source || '—')}</p>
+        ${semInfo.note ? `<p class="note">註：${esc(semInfo.note)}</p>` : ''}
+        ${semInfo.warning ? `<p class="note" style="color:var(--bad)">⚠️ ${esc(semInfo.warning)}</p>` : ''}`
+      : '<p class="note">尚未推導此積木的數值語意。</p>'}
+      <p class="note">參數：</p>
+      <table style="width:100%;font-size:.8em;border-collapse:collapse">
+        <tr><th align="left">參數</th><th align="left">類型</th><th align="left">選單 / 可選值</th><th align="left">預設</th></tr>${argRows}
+      </table>
+      <p class="note">會產生的 Arduino 程式碼（上傳模式）：</p>
+      <pre>${esc(generated)}</pre>`;
+  }
   const GENERIC = new Set(['speechSynthesis', 'bluetoothController', 'speech', 'ucMakeAiSensor', '?']);
   const blocks = spec.blocks.filter((b) => !GENERIC.has(b.category));
   // Which blocks belong to which board: the esp* families are the ESP32 kits (UC-Mind100 and the
@@ -149,7 +218,8 @@
           return `<div class="blk" data-op="${b.opcode}" title="點擊加入程式"><code>${b.opcode}</code>
             <span class="args">${args || '—'}</span>
             ${VERIFIED.has(b.opcode) ? '<span class="badge ver">已驗證</span>' : '<span class="badge unver">未驗證</span>'}
-            <span class="badge ${cls}">${label}</span></div>`;
+            <span class="badge ${cls}">${label}</span>
+            <button class="info" data-info="${b.opcode}" title="詳情">ⓘ</button></div>`;
         }).join('')}
       </div>`).join('') || '<p class="note">此班級沒有顯示任何積木。</p>';
     $('count').textContent = `${shown.length} / ${blocks.length} 個積木可見（${$('board').value === 'uno' ? 'AVR' : 'ESP32'}）`;
@@ -235,6 +305,8 @@
     if (i != null && k) program[Number(i)][k][n] = e.target.value;
   });
   $('palette').addEventListener('click', (e) => {
+    const info = e.target.closest('.info');
+    if (info) { e.stopPropagation(); showDetail(info.dataset.info); return; }
     const row = e.target.closest('.blk');
     if (!row) return;
     const spec = blocks.find((b) => b.opcode === row.dataset.op);

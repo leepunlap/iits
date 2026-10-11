@@ -36,7 +36,7 @@ const boardKey = arg('board', 'esp32');
 const board = BOARDS[boardKey];
 if (!board) throw new Error(`unknown board ${boardKey} (have ${Object.keys(BOARDS).join(', ')})`);
 
-const table = loadCodegen(arg('codegen', new URL('./codegen.json', import.meta.url)));
+const table = await loadCodegen(arg('codegen', new URL('./codegen.json', import.meta.url)));
 const { code, definitions, includes } = generateSketch(table, program.blocks ?? program,
   { title: program.title ?? 'Wonder Lab' });
 

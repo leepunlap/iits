@@ -28,7 +28,7 @@ const BOARDS = {
   uno: { fqbn: 'arduino:avr:uno', bin: 'wlab.ino.hex', flashOffset: null },
 };
 
-const codegen = loadCodegen(new URL('./codegen.json', import.meta.url));
+const codegen = await loadCodegen(new URL('./codegen.json', import.meta.url));
 
 function compile(boardKey, program) {
   return new Promise((resolve) => {

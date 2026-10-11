@@ -9,7 +9,7 @@
  *   definitions_ · includes_ · setups_ · loops_ · valueToCode · ORDER_ATOMIC · ORDER_UNARY_POSTFIX
  */
 
-import { readFileSync } from 'node:fs';
+
 
 /** Build the Blockly.Arduino shim the extracted functions expect. */
 function makeArduino(block) {
@@ -38,7 +38,13 @@ function makeBlock(spec) {
   };
 }
 
-export function loadCodegen(path = new URL('./codegen.json', import.meta.url)) {
+/**
+ * Load the extracted code-generation table from disk (Node only — the browser fetches the JSON and
+ * passes the parsed object straight to generateBlock/generateSketch). `node:fs` is imported lazily
+ * so this module can also be imported by a web page.
+ */
+export async function loadCodegen(path = new URL('./codegen.json', import.meta.url)) {
+  const { readFileSync } = await import('node:fs');
   return JSON.parse(readFileSync(path, 'utf8'));
 }
 

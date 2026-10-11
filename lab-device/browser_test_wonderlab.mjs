@@ -62,7 +62,9 @@ try {
 
   check('palette rendered categories', (await cdp.eval('document.querySelectorAll("#palette .cat").length')) > 4);
   check('every block carries a mechanism badge', await cdp.eval(
-    'document.querySelectorAll("#palette .blk").length === document.querySelectorAll("#palette .blk .badge:last-child").length'));
+    'document.querySelectorAll("#palette .blk").length === '
+  + 'document.querySelectorAll("#palette .blk .badge.b-cli, #palette .blk .badge.b-onewire, '
+  + '#palette .blk .badge.b-codegen, #palette .blk .badge.b-local").length'));
   // the hardware-verified blocks are ESP32 ones, so look at them with that board selected
   await cdp.eval('(() => { const s = document.getElementById("level"); s.value = "L2"; s.dispatchEvent(new Event("change")); })()');
   await sleep(400);
@@ -93,7 +95,26 @@ try {
   check('sound library lists playable entries', (await cdp.eval('document.querySelectorAll("#media [data-play]").length')) > 5);
   check('no page errors', !/Error|undefined/.test(await cdp.eval('document.getElementById("count").textContent')));
 
+  // ---- block detail: wire command, value semantics and the Arduino it generates ----
+  await cdp.eval('(() => { const s = document.getElementById("level"); s.value = "L3"; s.dispatchEvent(new Event("change")); })()');
+  await sleep(400);
+  check('the AVR block is visible for the detail check', await cdp.eval('!!document.querySelector(\'#palette .blk[data-op="setDcMotor"]\')'));
+  await cdp.eval('document.querySelector(\'#palette .blk[data-op="setDcMotor"] .info\').click()');
+  await sleep(400);
+  const detail = await cdp.eval('document.getElementById("detail").textContent');
+  check('detail shows the value semantics (units / range)',
+    /speed/.test(detail) && /255/.test(detail), JSON.stringify(detail.slice(0, 70)));
+  check('detail shows the encoding and its source',
+    /2\.55/.test(detail) && /UC130DCMotor/.test(detail));
+  check('detail shows the generated Arduino code',
+    /UCDCMotor/.test(detail) && /\.run\(|runMin/.test(detail), JSON.stringify(detail.slice(-90)));
+  check('detail carries the mechanism badge', /僅限上傳模式|上傳/.test(detail));
+  check('clicking ⓘ did not also add the block to the program',
+    (await cdp.eval('document.querySelectorAll("#program .step").length')) === 0);
+
   // ---- build a program from the palette and run it through the build service ----
+  await cdp.eval('(() => { const s = document.getElementById("level"); s.value = "L2"; s.dispatchEvent(new Event("change")); })()');
+  await sleep(300);
   await cdp.eval('document.querySelector(\'#palette .blk[data-op="espMinSetDcMotor"]\').click()');
   await sleep(300);
   check('clicking a palette block adds a program step',

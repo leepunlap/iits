@@ -1,0 +1,42 @@
+{
+  "_doc": "Wonder Lab visibility. Everything is available; each level/class HIDES what it does not need. Additive: a class inherits its level and can hide more.",
+  "defaultLevel": "L3",
+  "levels": {
+    "L1": {
+      "label": "L1 探索",
+      "hideCategories": ["uc36EncoderMotor", "24GController", "espBig24GController", "eleMagnetOnOff",
+                         "BLEOnOff", "gyroSensor", "joystickSensor", "compassSensor", "gestureSensor",
+                         "irReceivedSensor", "PIRReceivedSensor", "TouchReceivedSensor", "moisTureSensor",
+                         "rainDropSensor", "humiditySensor", "soundSensor", "lightSensor", "colourSensor",
+                         "lineFollower", "300timer", "ESPtimer", "ESPMINtimer", "digital", "espdigital",
+                         "ESPdigital", "espBigLedButtonSensor", "espBigUltrasonicSensor", "espBigHumiditySensor"],
+      "hideMedia": ["sounds"]
+    },
+    "L2": {
+      "label": "L2 感測控制（UC-Mind100）",
+      "hideCategories": ["uc36EncoderMotor", "24GController", "espBig24GController", "gyroSensor",
+                         "joystickSensor", "compassSensor", "gestureSensor", "irReceivedSensor",
+                         "300timer", "ESPtimer", "ESPMINtimer", "digital", "espdigital", "ESPdigital",
+                         "espBigLedButtonSensor", "espBigUltrasonicSensor", "espBigHumiditySensor"],
+      "hideMedia": []
+    },
+    "L3": {
+      "label": "L3 智能控制（UC-Mind300）",
+      "hideCategories": ["uc36EncoderMotor", "24GController", "espBig24GController", "BLEOnOff",
+                         "ESPMINtimer", "espBigLedButtonSensor", "espBigUltrasonicSensor", "espBigHumiditySensor"],
+      "hideMedia": []
+    },
+    "L4": {
+      "label": "L4 進階",
+      "hideCategories": ["24GController", "espBig24GController", "espBigLedButtonSensor",
+                         "espBigUltrasonicSensor", "espBigHumiditySensor"],
+      "hideMedia": []
+    }
+  },
+  "classes": {
+    "301": { "inherit": "L2", "hideCategories": ["ucmakeServo", "eleMagnetOnOff"] },
+    "302": { "inherit": "L2" },
+    "401": { "inherit": "L3", "hideCategories": ["colourSensor"] },
+    "402": { "inherit": "L3" }
+  }
+}

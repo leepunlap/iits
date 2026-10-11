@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wonder Lab · 硬件 (UC-Mind) — L2/L3</title>
+<style>
+  :root { --line:#e7e9ee; --ink:#10161d; --muted:#69707a; --accent:#2f8f6b; }
+  * { box-sizing:border-box }
+  body { margin:0; padding:24px; font-family:'Noto Sans TC',-apple-system,"PingFang HK",sans-serif;
+         color:var(--ink); background:#f7f6f2 }
+  .card { max-width:720px; margin:0 auto; background:#fff; border:1px solid var(--line);
+          border-radius:16px; padding:24px; box-shadow:0 20px 50px -30px rgba(16,22,29,.3) }
+  h1 { font-size:1.2em; margin:0 0 4px } .sub { color:var(--muted); font-size:.9em; margin-bottom:18px }
+  button { font:inherit; padding:9px 16px; border-radius:9px; border:1px solid var(--line);
+           background:#fff; cursor:pointer } button.primary { background:var(--accent); color:#fff; border-color:var(--accent) }
+  button:disabled { opacity:.45; cursor:not-allowed }
+  #status { margin:14px 0; font-size:.9em; color:var(--muted); min-height:1.2em }
+  .row { display:flex; align-items:center; gap:12px; margin:10px 0; flex-wrap:wrap }
+  .row label { min-width:92px; font-size:.9em; color:var(--muted) }
+  input[type=range] { flex:1; min-width:150px }
+  input[type=number] { width:110px; font:inherit; padding:6px 9px; border:1px solid var(--line); border-radius:8px }
+  .pill { display:inline-block; padding:2px 9px; border-radius:999px; background:#eef1f8;
+          font-size:.78em; margin-right:6px }
+  fieldset { border:1px solid var(--line); border-radius:12px; margin:16px 0 0; padding:12px 16px }
+  legend { font-size:.85em; color:var(--muted); padding:0 6px }
+  .hidden { display:none }
+  .leds { display:flex; gap:16px } .leds label { min-width:auto; color:var(--ink) }
+  .out { font-variant-numeric:tabular-nums; color:var(--ink) }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Wonder Lab · 硬件連線</h1>
+  <div class="sub">UC-Mind100（L2）／ UC-Mind300（L3）— 保持出廠固件，學生毋須重新燒錄</div>
+
+  <button id="connect" class="primary">連接主控板</button>
+  <button id="disconnect" disabled>中斷</button>
+  <a href="#" id="connectAll" class="sub" style="margin-left:8px">顯示所有序列埠</a>
+  <div id="status">未連接。</div>
+  <div id="boardInfo"></div>
+
+  <!-- L3 — Firmata -->
+  <fieldset id="firmata" class="hidden">
+    <legend>L3 控制</legend>
+    <div class="row" id="motor0Row"><label for="motor0">馬達 1</label>
+      <input id="motor0" type="range" min="-255" max="255" value="0" step="5"><span id="motor0val">0</span></div>
+    <div class="row" id="motor1Row"><label for="motor1">馬達 2</label>
+      <input id="motor1" type="range" min="-255" max="255" value="0" step="5"><span id="motor1val">0</span></div>
+    <div class="row" id="buzzerRow"><label for="buzzer">蜂鳴器</label><button id="buzzer">響一下</button></div>
+    <div class="row" id="servoRow"><label for="servo">伺服</label>
+      <input id="servo" type="range" min="0" max="180" value="90" step="1"><span id="servoval">90°</span></div>
+    <div class="row" id="sampleRow"><label for="sample">類比輸入</label>
+      <button id="sample">讀取一次</button><span id="analogVal" class="out">—</span></div>
+  </fieldset>
+
+  <!-- L2 — vendor CLI -->
+  <fieldset id="cli" class="hidden">
+    <legend>L2 控制（出廠 CLI 固件）</legend>
+    <div class="row"><label for="cliMotor">馬達</label>
+      <input id="cliMotor" type="range" min="-255" max="255" value="0" step="5"><span id="cliMotorVal" class="out">0</span></div>
+    <div class="row"><label for="cliDisplay">四位顯示</label>
+      <input id="cliDisplay" type="number" value="8888" min="0" max="9999">
+      <button id="cliDisplaySet">顯示</button></div>
+    <div class="row"><label>LED</label>
+      <div class="leds">
+        <label><input type="checkbox" id="led1"> 1</label>
+        <label><input type="checkbox" id="led2"> 2</label>
+        <label><input type="checkbox" id="led3"> 3</label>
+        <label><input type="checkbox" id="led4"> 4</label>
+      </div></div>
+    <div class="row"><label>按鍵</label>
+      <button id="cliButtons">讀取</button><span id="cliButtonState" class="out">—</span></div>
+    <div class="row"><label for="sensorPin">感測器</label>
+      <input id="sensorPin" type="number" value="6" min="0" max="39">
+      <label style="min-width:auto"><input type="checkbox" id="sensorOk"> 已接上</label>
+      <button id="sensorRead">讀取</button><span id="sensorValue" class="out">—</span></div>
+    <div class="sub" style="margin:6px 0 0">空接腳讀取會令固件重啟 — 讀取前必須確認模組已接上。</div>
+  </fieldset>
+</div>
+
+<script type="module">
+  import { connectBoard } from './lab.js';
+
+  const $ = (id) => document.getElementById(id);
+  const status = (msg) => { $('status').textContent = msg; };
+  let session = null;
+
+  const show = (id, on) => $(id).classList.toggle('hidden', !on);
+
+  async function connect(opts = {}) {
+    $('connect').disabled = true;
+    status('正在偵測固件（Firmata 57600 / 出廠 CLI 115200）…');
+    try {
+      session = await connectBoard(opts);             // detects the protocol itself
+      const isCli = session.protocol === 'cli';
+      $('boardInfo').innerHTML =
+        `<span class="pill">${session.boardName}</span>` +
+        `<span class="pill">${session.level}</span>` +
+        (isCli ? '<span class="pill">出廠 CLI</span>'
+               : `<span class="pill">Firmata ${session.info.firmata.join('.')}</span>`) +
+        `<span class="pill">${isCli ? '115200' : '57600'}</span>`;
+      show('cli', isCli);
+      show('firmata', !isCli);
+
+      // gate every control on what the board actually reports, not on which protocol it speaks
+      const cap = session.capabilities;
+      show('motor0Row', cap.motors >= 1);
+      show('motor1Row', cap.motors >= 2);
+      show('buzzerRow', !!cap.buzzer);
+      show('servoRow', !!cap.servo);
+      show('sampleRow', !!cap.analogIn);
+
+      if (isCli) {
+        status('已連接：出廠 CLI — 可使用馬達、顯示、LED、按鍵與感測器。');
+      } else {
+        const can = [];
+        if (cap.motors) can.push('馬達');
+        if (cap.buzzer) can.push('蜂鳴器');
+        if (cap.servo) can.push('伺服');
+        if (cap.analogIn) can.push('類比輸入');
+        status(`已連接：Firmata — 可使用${can.join('、') || '（無可用區塊）'}。`);
+      }
+      $('disconnect').disabled = false;
+    } catch (err) {
+      status('連接失敗：' + err.message);
+      $('connect').disabled = false;
+    }
+  }
+
+  async function guard(fn) {
+    if (!session) return;
+    try { await fn(); } catch (err) { status('錯誤：' + err.message); }
+  }
+
+  $('connect').addEventListener('click', () => connect());
+  // escape hatch: the chooser only lists likely bridges, so allow an unfiltered look
+  $('connectAll').addEventListener('click', (e) => { e.preventDefault(); connect({ allPorts: true }); });
+  $('disconnect').addEventListener('click', () => guard(async () => {
+    await session.close(); session = null;
+    $('boardInfo').innerHTML = '';
+    show('cli', false); show('firmata', false);
+    $('connect').disabled = false; $('disconnect').disabled = true;
+    status('未連接。');
+  }));
+
+  // ---- L3 (Firmata) ----
+  for (const i of [0, 1]) {
+    const slider = $('motor' + i);
+    slider.addEventListener('input', () => { $('motor' + i + 'val').textContent = slider.value; });
+    slider.addEventListener('change', () => guard(() =>
+      Number(slider.value) === 0 ? session.motorStop(i) : session.motor(i, Number(slider.value))));
+  }
+  $('buzzer').addEventListener('click', () => guard(async () => {
+    await session.buzzer(true); await new Promise((r) => setTimeout(r, 200)); await session.buzzer(false);
+  }));
+  $('servo').addEventListener('input', () => { $('servoval').textContent = $('servo').value + '°'; });
+  $('servo').addEventListener('change', () => guard(() => session.servo(9, Number($('servo').value))));
+  $('sample').addEventListener('click', () => guard(async () => {
+    const v = await session.sampleAnalog(session.board.profile.analogPin, 400);
+    $('analogVal').textContent = v === null ? '（無讀數）' : String(v);
+  }));
+
+  // ---- L2 (vendor CLI) ----
+  $('cliMotor').addEventListener('input', () => { $('cliMotorVal').textContent = $('cliMotor').value; });
+  $('cliMotor').addEventListener('change', () => guard(() =>
+    Number($('cliMotor').value) === 0 ? session.motorStop() : session.motor(Number($('cliMotor').value))));
+  $('cliDisplaySet').addEventListener('click', () => guard(() => session.display(Number($('cliDisplay').value))));
+  for (const i of [1, 2, 3, 4]) {
+    $('led' + i).addEventListener('change', (e) => guard(() => session.led(i, e.target.checked)));
+  }
+  $('cliButtons').addEventListener('click', () => guard(async () => {
+    const b = await session.buttons();
+    $('cliButtonState').textContent = b.map((v, i) => `K${i + 1}:${v ? '●' : '○'}`).join('  ');
+  }));
+  $('sensorRead').addEventListener('click', () => guard(async () => {
+    const pin = Number($('sensorPin').value);
+    if (!$('sensorOk').checked) {
+      status('請先確認感測器已接上 — 空接腳讀取會令固件重啟。');
+      return;
+    }
+    session.declareSensors({ [pin]: 'ultrasonic' });       // the guard then allows this pin only
+    const v = await session.readSensor(pin);
+    $('sensorValue').textContent = v === '' ? '（無讀數）' : v;
+  }));
+
+  window.__labReady = true;          // the page is wired up (used by the browser test)
+</script>
+</body>
+</html>

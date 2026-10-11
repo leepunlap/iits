@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wonder Lab · 積木與素材總表</title>
+<style>
+  :root { --line:#e7e9ee; --ink:#10161d; --muted:#69707a; --accent:#2f8f6b; --warn:#b4690e; --bad:#b03030 }
+  * { box-sizing:border-box }
+  body { margin:0; font-family:'Noto Sans TC',-apple-system,"PingFang HK",sans-serif; color:var(--ink); background:#f7f6f2 }
+  header { position:sticky; top:0; background:#fff; border-bottom:1px solid var(--line); padding:14px 20px;
+           display:flex; gap:14px; align-items:center; flex-wrap:wrap; z-index:5 }
+  h1 { font-size:1.05em; margin:0 }
+  select,input { font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:8px; background:#fff }
+  main { display:grid; grid-template-columns:minmax(300px,1fr) minmax(320px,1.1fr) minmax(300px,1fr); gap:18px; padding:18px 20px 40px }
+  @media (max-width:1300px) { main { grid-template-columns:1fr 1fr } }
+  @media (max-width:900px) { main { grid-template-columns:1fr } }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px }
+  .panel h2 { font-size:.95em; margin:0 0 10px; color:var(--muted); font-weight:600 }
+  .cat { margin:0 0 12px }
+  .cat h3 { font-size:.86em; margin:0 0 6px; display:flex; gap:8px; align-items:center }
+  .cat h3 .n { color:var(--muted); font-weight:400 }
+  .blk { display:flex; gap:8px; align-items:baseline; padding:4px 0; border-top:1px dashed var(--line); cursor:pointer }
+  .blk:hover { background:#fafbfd }
+  .prog { display:flex; flex-direction:column; gap:8px }
+  .step { border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:.82em }
+  .step .head { display:flex; justify-content:space-between; align-items:center; gap:8px }
+  .step code { font-size:.95em }
+  .step .args { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px }
+  .step label { display:flex; gap:4px; align-items:center; color:var(--muted) }
+  .step input, .step select { padding:3px 6px; font-size:.95em; width:92px }
+  .step button.del { border:none; background:none; color:var(--bad); cursor:pointer; font-size:1.1em }
+  pre { background:#0f1720; color:#d7e2ee; padding:10px; border-radius:10px; overflow:auto; max-height:260px; font-size:.76em }
+  .blk code { font-size:.82em }
+  .blk .args { color:var(--muted); font-size:.78em; flex:1 }
+  .badge { font-size:.68em; padding:1px 7px; border-radius:999px; white-space:nowrap }
+  .b-cli { background:#e3f5ec; color:#1d6b4f } .b-onewire { background:#fff1d6; color:var(--warn) }
+  .b-codegen { background:#fdeaea; color:var(--bad) } .b-local { background:#eef1f8; color:var(--muted) }
+  .ver { background:#1d6b4f; color:#fff } .unver { background:#f1f1f3; color:var(--muted) }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:10px }
+  .cell { border:1px solid var(--line); border-radius:10px; padding:6px; text-align:center; font-size:.72em; color:var(--muted) }
+  .cell img { width:100%; height:56px; object-fit:contain; display:block }
+  .cell button { font:inherit; font-size:.9em; margin-top:4px; border:1px solid var(--line); border-radius:7px;
+                 background:#fff; cursor:pointer; padding:2px 8px }
+  .tabs { display:flex; gap:8px; margin-bottom:10px }
+  .tabs button { font:inherit; padding:5px 12px; border:1px solid var(--line); border-radius:999px; background:#fff; cursor:pointer }
+  .tabs button[aria-pressed=true] { background:var(--accent); color:#fff; border-color:var(--accent) }
+  .note { color:var(--muted); font-size:.8em; margin:8px 0 0 }
+  .more { margin-top:10px }
+</style>
+</head>
+<body>
+<header>
+  <h1>Wonder Lab · 積木與素材</h1>
+  <label>班級／級別
+    <select id="level"></select>
+  </label>
+  <input id="search" type="search" placeholder="搜尋積木…" size="18">
+  <span id="count" class="note"></span>
+</header>
+<main>
+  <section class="panel">
+    <h2>積木（全部都在，只按班級隱藏）</h2>
+    <div id="palette"></div>
+    <p class="note">
+      <span class="badge b-cli">即時 CLI</span> 已可在硬體上執行 ·
+      <span class="badge b-onewire">需 OneWire 固件</span> ·
+      <span class="badge b-codegen">僅限上傳模式</span> ·
+      <span class="badge b-local">本機／計時器</span>
+    </p>
+  </section>
+  <section class="panel">
+    <h2>程式（點左邊積木加入）</h2>
+    <div class="row" style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+      <label>主控板 <select id="board"><option value="esp32">UC-Mind100 (ESP32)</option><option value="uno">UC-Mind300 (AVR/Uno)</option></select></label>
+      <button id="run" class="primary" style="background:var(--accent);color:#fff;border-color:var(--accent)">執行（編譯）</button>
+      <button id="clear">清空</button>
+    </div>
+    <div id="program" class="prog"><p class="note">尚未加入積木。</p></div>
+    <div id="result"></div>
+  </section>
+
+  <section class="panel">
+    <h2>素材</h2>
+    <div class="tabs" id="tabs">
+      <button data-lib="costumes" aria-pressed="true">造型</button>
+      <button data-lib="sounds" aria-pressed="false">音效</button>
+      <button data-lib="backdrops" aria-pressed="false">背景</button>
+    </div>
+    <div id="media" class="grid"></div>
+    <div class="more"><button id="more">載入更多</button> <span id="mediaCount" class="note"></span></div>
+  </section>
+</main>
+<script type="module">
+  const $ = (id) => document.getElementById(id);
+  const ASSETS = './assets/';
+  const VERIFIED = new Set(['espMinSetDcMotor', 'espMinSetDcMotorStop', 'espSetFourDigitDisplay',
+                            'esp32SetLedButtonSensor', 'esp32ReadLedButtonSensorDigital']);
+  const MECH = { cli: ['b-cli', '即時 CLI'], onewire: ['b-onewire', '需 OneWire 固件'],
+                 codegen: ['b-codegen', '僅限上傳模式'], local: ['b-local', '本機／計時器'],
+                 unknown: ['b-local', '未定'] };
+
+  const [vis, spec] = await Promise.all([
+    fetch('./visibility.json').then((r) => r.json()),
+    fetch('./blocks.json').then((r) => r.json()),
+  ]);
+  const GENERIC = new Set(['speechSynthesis', 'bluetoothController', 'speech', 'ucMakeAiSensor', '?']);
+  const blocks = spec.blocks.filter((b) => !GENERIC.has(b.category));
+  // Which blocks belong to which board: the esp* families are the ESP32 kits (UC-Mind100 and the
+  // bigger ESP boards); everything else is the AVR family (UC-Mind300). Picking a block for the
+  // wrong board compiles to calls that do not exist there (e.g. runMin() is ESP32-only).
+  const BOARD_MATCH = { esp32: (op) => /^esp/i.test(op), uno: (op) => !/^esp/i.test(op) };
+
+  // ---- level / class selection ------------------------------------------------
+  const entries = [
+    ...Object.entries(vis.levels).map(([k, v]) => [k, v.label || k, v]),
+    ...Object.entries(vis.classes || {}).map(([k, v]) => [k, `${k} 班`, { ...(vis.levels[v.inherit] || {}), ...v }]),
+  ];
+  for (const [key, label] of entries) $('level').add(new Option(label, key));
+  $('level').value = vis.defaultLevel;
+
+  function current() {
+    const key = $('level').value;
+    const lv = vis.levels[key];
+    if (lv) return lv;
+    const cls = (vis.classes || {})[key] || {};
+    const base = vis.levels[cls.inherit] || {};
+    return { ...base, hideCategories: [...(base.hideCategories || []), ...(cls.hideCategories || [])],
+             hideBlocks: [...(base.hideBlocks || []), ...(cls.hideBlocks || [])], hideMedia: cls.hideMedia || base.hideMedia || [] };
+  }
+
+  // ---- palette ----------------------------------------------------------------
+  function renderPalette() {
+    const cfg = current();
+    const hideCat = new Set(cfg.hideCategories || []);
+    const hideBlk = new Set(cfg.hideBlocks || []);
+    const q = $('search').value.trim().toLowerCase();
+    const matchBoard = BOARD_MATCH[$('board').value] || (() => true);
+    const shown = blocks.filter((b) => !hideCat.has(b.category) && !hideBlk.has(b.opcode)
+      && matchBoard(b.opcode)
+      && (!q || b.opcode.toLowerCase().includes(q) || (b.text || '').toLowerCase().includes(q)));
+    const byCat = {};
+    for (const b of shown) (byCat[b.category] ||= []).push(b);
+    $('palette').innerHTML = Object.entries(byCat).map(([cat, list]) => `
+      <div class="cat"><h3>${cat} <span class="n">${list.length}</span></h3>
+        ${list.map((b) => {
+          const [cls, label] = MECH[b.mechanism] || MECH.unknown;
+          const args = (b.args || []).map((a) => `${a.name}${a.menu ? '[' + a.menu + ']' : ''}${a.default ? '=' + a.default : ''}`).join(', ');
+          return `<div class="blk" data-op="${b.opcode}" title="點擊加入程式"><code>${b.opcode}</code>
+            <span class="args">${args || '—'}</span>
+            ${VERIFIED.has(b.opcode) ? '<span class="badge ver">已驗證</span>' : '<span class="badge unver">未驗證</span>'}
+            <span class="badge ${cls}">${label}</span></div>`;
+        }).join('')}
+      </div>`).join('') || '<p class="note">此班級沒有顯示任何積木。</p>';
+    $('count').textContent = `${shown.length} / ${blocks.length} 個積木可見（${$('board').value === 'uno' ? 'AVR' : 'ESP32'}）`;
+  }
+
+  // ---- media ------------------------------------------------------------------
+  let lib = 'costumes', items = [], shown = 0;
+  const PAGE = 36;
+  async function loadLib(name) {
+    lib = name;
+    for (const b of $('tabs').children) b.setAttribute('aria-pressed', String(b.dataset.lib === name));
+    items = await fetch(`./libraries/${name}.json`).then((r) => r.json());
+    shown = 0; $('media').innerHTML = '';
+    renderMore();
+  }
+  function renderMore() {
+    const cfg = current();
+    if ((cfg.hideMedia || []).includes(lib)) {
+      $('media').innerHTML = `<p class="note">此班級未開放${lib}。</p>`; $('mediaCount').textContent = ''; return;
+    }
+    const slice = items.slice(shown, shown + PAGE);
+    $('media').insertAdjacentHTML('beforeend', slice.map((it) => {
+      const id = it.md5ext || (it.assetId + '.' + (it.dataFormat || 'png'));
+      if (lib === 'sounds' || it.dataFormat === 'wav' || it.dataFormat === 'mp3') {
+        return `<div class="cell">🔊<div>${it.name}</div>
+          <button data-play="${id}">▶</button></div>`;
+      }
+      return `<div class="cell"><img loading="lazy" src="${ASSETS}${id}" alt="${it.name}"><div>${it.name}</div></div>`;
+    }).join(''));
+    shown += slice.length;
+    $('mediaCount').textContent = `${shown} / ${items.length}`;
+    $('more').disabled = shown >= items.length;
+  }
+  $('media').addEventListener('click', (e) => {
+    const id = e.target.dataset?.play;
+    if (id) new Audio(ASSETS + id).play().catch(() => {});
+  });
+  $('more').addEventListener('click', renderMore);
+  $('tabs').addEventListener('click', (e) => { if (e.target.dataset.lib) loadLib(e.target.dataset.lib); });
+
+  $('level').addEventListener('change', () => {
+    $('board').value = boardFor[$('level').value] || 'esp32';   // board follows the level by default
+    renderPalette(); shown = 0; $('media').innerHTML = ''; renderMore();
+  });
+  $('search').addEventListener('input', renderPalette);
+
+  // ---- program: click a palette block to add it, edit its args, then build ----
+  const program = [];
+  const boardFor = { L1: 'esp32', L2: 'esp32', L3: 'uno', L4: 'esp32' };
+
+  function addBlock(spec) {
+    const fields = {}, values = {};
+    for (const a of spec.args || []) {
+      // args with a menu are Blockly *fields*; the rest are input values — matching how the
+      // vendor's codegen reads them (getFieldValue vs valueToCode)
+      if (a.menu) fields[a.name] = a.default || (a.values && a.values[0]) || '';
+      else values[a.name] = a.default || '0';
+    }
+    program.push({ opcode: spec.opcode, fields, values, spec });
+    renderProgram();
+  }
+
+  function renderProgram() {
+    const el = $('program');
+    if (!program.length) { el.innerHTML = '<p class="note">尚未加入積木。</p>'; return; }
+    el.innerHTML = program.map((p, i) => `
+      <div class="step"><div class="head"><code>${p.opcode}</code><button class="del" data-del="${i}">✕</button></div>
+        <div class="args">${(p.spec.args || []).map((a) => {
+          const isField = !!a.menu;
+          const val = isField ? p.fields[a.name] : p.values[a.name];
+          return a.values && a.values.length
+            ? `<label>${a.name}<select data-i="${i}" data-k="${isField ? 'fields' : 'values'}" data-n="${a.name}">${a.values.map((v) => `<option ${String(v) === String(val) ? 'selected' : ''}>${v}</option>`).join('')}</select></label>`
+            : `<label>${a.name}<input data-i="${i}" data-k="${isField ? 'fields' : 'values'}" data-n="${a.name}" value="${val}"></label>`;
+        }).join('') || '<span class="note">無參數</span>'}</div></div>`).join('');
+  }
+
+  $('program').addEventListener('click', (e) => {
+    const del = e.target.dataset?.del;
+    if (del != null) { program.splice(Number(del), 1); renderProgram(); }
+  });
+  $('program').addEventListener('input', (e) => {
+    const { i, k, n } = e.target.dataset || {};
+    if (i != null && k) program[Number(i)][k][n] = e.target.value;
+  });
+  $('palette').addEventListener('click', (e) => {
+    const row = e.target.closest('.blk');
+    if (!row) return;
+    const spec = blocks.find((b) => b.opcode === row.dataset.op);
+    if (spec) addBlock(spec);
+  });
+  $('clear').addEventListener('click', () => { program.length = 0; renderProgram(); $('result').innerHTML = ''; });
+
+  $('board').addEventListener('change', () => {
+    const match = BOARD_MATCH[$('board').value] || (() => true);
+    const stale = program.filter((p) => !match(p.opcode)).length;
+    renderPalette();
+    if (stale) {
+      $('result').innerHTML = `<p class="note" style="color:var(--warn)">注意：程式中有 ${stale} 個積木不屬於這個主控板，請移除後再編譯。</p>`;
+    }
+  });
+
+  let lastBinary = null;
+
+  /** Flash the compiled binary straight from the browser: Web Serial + esptool-js. */
+  async function flashBoard() {
+    const log = (m) => { const el = $('flashLog'); if (el) el.textContent = String(m).slice(0, 220); };
+    try {
+      const { ESPLoader, Transport } = await import('./vendor/esptool-js/bundle.js');
+      log('選擇序列埠…');
+      // only offer likely bridges in the chooser (CH340/CP210x/FTDI/Arduino/Espressif)
+      let port = (await navigator.serial.getPorts?.() || [])
+        .find((p) => UCMake_PORT_FILTERS.some((f) => f.usbVendorId === p.getInfo?.().usbVendorId)) || null;
+      if (!port) port = await navigator.serial.requestPort({ filters: UCMake_PORT_FILTERS });
+      const transport = new Transport(port, true);
+      const terminal = { clean() {}, writeLine(l) { log(l); }, write(t) { log(t); } };
+      const loader = new ESPLoader({ transport, baudrate: 460800, terminal });
+      log('連接主控板…');
+      await loader.main();
+      log('燒錄中…');
+      await loader.writeFlash({
+        fileArray: [{ data: Uint8Array.from(atob(lastBinary.binary), (c) => c.charCodeAt(0)),
+                      address: parseInt(lastBinary.flashOffset || '0x10000', 16) }],
+        flashSize: 'keep', flashMode: 'keep', flashFreq: 'keep',
+        eraseAll: false, compress: true,
+        reportProgress: (_i, written, total) => log(`燒錄中… ${Math.round((written / total) * 100)}%`),
+      });
+      await loader.after();
+      try { await transport.disconnect(); } catch {}
+      log('✅ 燒錄完成，主控板正在執行程式。');
+      window.__flashed = true;
+    } catch (err) {
+      log('❌ 燒錄失敗：' + err.message);
+    }
+  }
+
+  /**
+   * Flash the UC-Mind300 (ATmega328P / Optiboot) from the browser with the lab's own STK500v1
+   * implementation — no avrdude, no local tooling. Reads the flash back afterwards to verify.
+   */
+  async function flashAvr() {
+    const log = (m) => { const el = $('flashLog'); if (el) el.textContent = String(m).slice(0, 220); };
+    let port = null;
+    try {
+      const { Stk500, parseIntelHex } = await import('./stk500.js');
+      const hexText = atob(lastBinary.binary);          // the AVR build returns Intel HEX as text
+      log('選擇序列埠…');
+      port = (await navigator.serial.getPorts?.() || [])
+        .find((p) => UCMake_PORT_FILTERS.some((f) => f.usbVendorId === p.getInfo?.().usbVendorId)) || null;
+      if (!port) port = await navigator.serial.requestPort({ filters: UCMake_PORT_FILTERS });
+      await port.open({ baudRate: 115200, dataBits: 8, stopBits: 1, parity: 'none', flowControl: 'none' });
+
+      // Let the USB bridge settle BEFORE pulsing: measured on a CH340, writes are dropped for a few
+      // hundred ms after open, so syncing immediately only ever lands at the tail of Optiboot's
+      // window and the next command is answered by the application. Then avrdude's reset order.
+      await new Promise((r) => setTimeout(r, 500));
+      await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+      await new Promise((r) => setTimeout(r, 250));
+      await port.setSignals({ dataTerminalReady: true, requestToSend: true });
+      await new Promise((r) => setTimeout(r, 50));
+
+      const reader = port.readable.getReader();
+      const writer = port.writable.getWriter();
+      const buf = [];
+      (async () => {
+        try { for (;;) { const { value, done } = await reader.read(); if (done) break; if (value) for (const b of value) buf.push(b); } } catch { /* closed */ }
+      })();
+      const transport = {
+        write: async (bytes) => { await writer.write(bytes); },
+        read: async (n, timeout) => {
+          const deadline = Date.now() + timeout;
+          while (buf.length < n && Date.now() < deadline) await new Promise((r) => setTimeout(r, 5));
+          return Uint8Array.from(buf.splice(0, n));
+        },
+        drain: () => { buf.length = 0; },
+      };
+
+      const { bytes, length } = parseIntelHex(hexText);
+      log(`燒錄中… 0%（${length} bytes）`);
+      const flasher = new Stk500(transport, { timeout: 1500 });   // sync uses avrdude's 200 ms/32 loops
+      await flasher.flash(bytes.slice(0, length), (p) => log(`燒錄中… ${Math.round(p * 100)}%`));
+      log('驗證中…');
+      const back = await flasher.read(length);
+      let bad = 0;
+      for (let i = 0; i < length; i += 1) if (back[i] !== bytes[i]) bad += 1;
+      try { await reader.cancel(); reader.releaseLock(); writer.releaseLock(); } catch {}
+      await port.close();
+      log(bad ? `⚠️ 燒錄完成，但讀回有 ${bad} 個位元組不符` : '✅ 燒錄完成並已驗證，主控板正在執行程式。');
+      window.__flashed = !bad;
+    } catch (err) {
+      log('❌ 燒錄失敗：' + err.message);
+      try { await port?.close(); } catch {}
+    }
+  }
+
+  $('run').addEventListener('click', async () => {
+    if (!program.length) { $('result').innerHTML = '<p class="note">先加入積木。</p>'; return; }
+    $('run').disabled = true;
+    $('result').innerHTML = '<p class="note">編譯中…（首次可能要 20–60 秒）</p>';
+    try {
+      const res = await fetch('./api/build', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ board: $('board').value,
+          program: { title: 'Wonder Lab', blocks: program.map(({ opcode, fields, values }) => ({ opcode, fields, values })) } }),
+      });
+      const d = await res.json();
+      if (!d.ok) {
+        $('result').innerHTML = `<p class="note" style="color:var(--bad)">${d.error || '編譯失敗'}</p><pre>${(d.log || '')}</pre>`;
+        return;
+      }
+      const blob = new Blob([Uint8Array.from(atob(d.binary), (c) => c.charCodeAt(0))], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+      const isEsp = $('board').value !== 'uno';
+      $('result').innerHTML = `
+        <p class="note">✅ 編譯成功 · ${Math.round(d.bytes / 1024)} KB · ${(d.ms / 1000).toFixed(1)} 秒 ·
+          <a href="${url}" download="${d.binaryName}">下載 ${d.binaryName}</a></p>
+        <p class="note"><button id="flash">燒錄到主控板（瀏覽器直接燒錄，免安裝）</button>
+          <span class="note">${isEsp ? 'ESP32 / esptool' : 'AVR / STK500 (Optiboot)'}</span></p>
+        <div id="flashLog" class="note"></div>
+        <pre>${d.sketch.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))}</pre>
+        <details><summary class="note">編譯輸出</summary><pre>${d.log}</pre></details>`;
+      window.__lastBuild = { bytes: d.bytes, ms: d.ms, name: d.binaryName };
+      lastBinary = d;
+      $('flash').addEventListener('click', isEsp ? flashBoard : flashAvr);
+    } catch (err) {
+      $('result').innerHTML = `<p class="note" style="color:var(--bad)">無法連接編譯服務：${err.message}</p>`;
+    } finally {
+      $('run').disabled = false;
+    }
+  });
+
+  $('board').value = boardFor[$('level').value] || 'esp32';
+  renderPalette();
+  renderProgram();
+  await loadLib('costumes');
+  window.__labReady = true;
+</script>
+</body>
+</html>

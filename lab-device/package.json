@@ -1,0 +1,9 @@
+{
+  "name": "wonderlab-l23-device",
+  "private": true,
+  "type": "module",
+  "description": "Firmata device layer for the L2/L3 Wonder Lab (UC-Mind100 / UC-Mind300, vendor firmware kept)",
+  "scripts": {
+    "test": "node --test"
+  }
+}

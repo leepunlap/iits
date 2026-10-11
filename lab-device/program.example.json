@@ -1,0 +1,7 @@
+{
+  "title": "L2 · 馬達與顯示器",
+  "blocks": [
+    { "opcode": "espMinSetDcMotor", "fields": { "PIN": "10" }, "values": { "OUT": "100" } },
+    { "opcode": "espSetFourDigitDisplay", "fields": { "PIN": "D" }, "values": { "OUT": "8888" } }
+  ]
+}

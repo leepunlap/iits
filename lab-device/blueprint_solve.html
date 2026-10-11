@@ -116,17 +116,16 @@ function targetMask(img) {
     const i = (y * W0 + x) * 4;
     return 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
   };
-  // the parts box (light blue plate) ends at the last mostly-blue row
+  // The parts box ends with a long dark horizontal rule. Detecting the rule (not just the blue
+  // plate) matters: leaving the rule in adds a full-width line, which then dominates the ink bbox
+  // and squashes the whole drawing.
   let boxEnd = 0;
-  for (let y = 0; y < H0; y += 1) {
-    let blue = 0;
-    for (let x = 0; x < W0; x += 2) {
-      const i = (y * W0 + x) * 4;
-      if (data[i + 2] > data[i] + 6 && data[i + 2] > 180) blue += 1;
-    }
-    if (blue > (W0 / 2) * 0.5) boxEnd = y;
+  for (let y = 0; y < H0 * 0.65; y += 1) {
+    let dark = 0;
+    for (let x = 0; x < W0; x += 1) if (lum(x, y) < 120) dark += 1;
+    if (dark > W0 * 0.45) boxEnd = y;
   }
-  const y0 = Math.min(H0 - 2, boxEnd + 4);
+  const y0 = Math.min(H0 - 2, boxEnd + 5);
   const mask0 = new Uint8Array(W0 * H0);
   for (let y = Math.max(1, y0); y < H0 - 1; y += 1) {
     for (let x = 1; x < W0 - 1; x += 1) {
@@ -162,6 +161,49 @@ function fitMask(mask0, W0, H0) {
   return out;
 }
 
+const TAU = 2;                       // a pixel within 2 px counts as explained
+
+function warpMask(mask, sc, dx, dy, W, H) {
+  const out = new Uint8Array(W * H);
+  const cx = W / 2, cy = H / 2;
+  for (let y = 0; y < H; y += 1) for (let x = 0; x < W; x += 1) {
+    const sx = Math.round((x - cx - dx) / sc + cx);
+    const sy = Math.round((y - cy - dy) / sc + cy);
+    if (sx >= 0 && sx < W && sy >= 0 && sy < H) out[y * W + x] = mask[sy * W + sx];
+  }
+  return out;
+}
+
+function f1Of(mask, targetMask, dtTarget) {
+  const dtRender = distanceTransform(mask);
+  let both = 0, ronly = 0, tonly = 0;
+  for (let i = 0; i < mask.length; i += 1) {
+    if (mask[i]) { if (dtTarget[i] <= TAU) both += 1; else ronly += 1; }
+  }
+  for (let i = 0; i < targetMask.length; i += 1) if (targetMask[i] && dtRender[i] > TAU) tonly += 1;
+  const precision = both / Math.max(1, both + ronly);
+  const recall = both / Math.max(1, both + tonly);
+  return { f1: (2 * precision * recall) / Math.max(1e-9, precision + recall),
+           precision, recall, miss: 1 - recall, extra: 1 - precision };
+}
+
+/** Fit the render's framing (scale + offset) to the target by maximising edge overlap. */
+function alignAndScore(rawMask, targetMask, dtTarget) {
+  let best = null;
+  for (const sc of [0.6, 0.75, 0.9, 1.0, 1.1, 1.25, 1.45, 1.7]) {
+    for (let dx = -34; dx <= 34; dx += 4) {
+      for (let dy = -34; dy <= 34; dy += 4) {
+        const m = warpMask(rawMask, sc, dx, dy, W, H);
+        let n = 0; for (let i = 0; i < m.length; i += 1) n += m[i];
+        if (n < 60) continue;
+        const r = f1Of(m, targetMask, dtTarget);
+        if (!best || r.f1 > best.f1) best = Object.assign(r, { sc, dx, dy, mask: m });
+      }
+    }
+  }
+  return best || { f1: 0, precision: 0, recall: 0, miss: 1, extra: 1, sc: 1, dx: 0, dy: 0, mask: rawMask };
+}
+
 window.__solve = async (req) => {
   const img = new Image();
   await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = req.image; });
@@ -171,24 +213,13 @@ window.__solve = async (req) => {
   const diag = Math.hypot(W, H);
   const TAU = 2;                                        // a pixel within 2 px counts as explained
   const score = (group, cam) => {
-    const mask = fitMask(renderMask(group, cam), W, H);
-    const n = count(mask);
-    if (n < 40) return { total: Infinity, forward: Infinity, backward: Infinity,
-                         miss: Infinity, extra: Infinity, edgePixels: n };
-    const dtRender = distanceTransform(mask);
-    // mean distance both ways (smooth), plus the sharp signal: how much of each drawing is
-    // left unexplained at a 2 px tolerance. A shifted part shows up here, not in the mean.
-    let fsum = 0, fn = 0;
-    for (let i = 0; i < mask.length; i += 1) if (mask[i]) { fsum += dtTarget[i]; fn += 1; }
-    const forward = fsum / fn;
-    const backward = chamfer(target.mask, dtRender);
-    let extra = 0;
-    for (let i = 0; i < mask.length; i += 1) if (mask[i] && dtTarget[i] > TAU) extra += 1;
-    let miss = 0;
-    for (let i = 0; i < target.mask.length; i += 1) if (target.mask[i] && dtRender[i] > TAU) miss += 1;
-    extra /= fn; miss /= Math.max(1, count(target.mask));
-    return { forward: forward / diag, backward: backward / diag,
-             total: (extra + miss) / 2, miss, extra, edgePixels: n };
+    const raw = renderMask(group, cam);
+    const fit = alignAndScore(raw, target.mask, dtTarget);
+    if (!fit) return { total: Infinity, forward: Infinity, backward: Infinity, miss: 1, extra: 1, edgePixels: 0 };
+    const mask = fit.mask || null;
+    return { forward: fit.miss, backward: fit.extra, total: 1 - fit.f1, miss: fit.miss, extra: fit.extra,
+             f1: fit.f1, precision: fit.precision, recall: fit.recall,
+             edgePixels: count(mask || raw) };
   };
 
   const built = req.hypotheses.map((h) => ({ name: h.name, group: buildEdgeModel(h.model) }));
@@ -238,6 +269,33 @@ window.__debugImages = async (req) => {
   scene.remove(group);
   return { target: shown.toDataURL('image/png'), render: renderUrl,
            bbox: [box.min.x, box.min.y, box.min.z, box.max.x, box.max.y, box.max.z], radius };
+};
+/** Overlay: blueprint edges in red, render edges in blue, agreement in black. */
+window.__overlay = async (req) => {
+  const img = new Image();
+  await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = req.image; });
+  const rawT = targetMask(img);
+  const target = fitMask(rawT.mask0, rawT.W0, rawT.H0);
+  const group = buildEdgeModel(req.model);
+  const targetDT = distanceTransform(target);
+  const rawR = renderMask(group, req.cam);
+  const fit = alignAndScore(rawR, target, targetDT);
+  const render = fit.mask || rawR;
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  const idata = ctx.createImageData(W, H);
+  for (let i = 0; i < W * H; i += 1) {
+    const t = target[i], r = render[i];
+    const c = t && r ? [0, 0, 0] : t ? [220, 40, 40] : r ? [40, 90, 220] : [255, 255, 255];
+    idata.data[i*4] = c[0]; idata.data[i*4+1] = c[1]; idata.data[i*4+2] = c[2]; idata.data[i*4+3] = 255;
+  }
+  ctx.putImageData(idata, 0, 0);
+  let both = 0, tonly = 0, ronly = 0;
+  for (let i = 0; i < W * H; i += 1) {
+    if (target[i] && render[i]) both += 1; else if (target[i]) tonly += 1; else if (render[i]) ronly += 1;
+  }
+  return { png: cv.toDataURL('image/png'), both, tonly, ronly,
+           recall: both / Math.max(1, both + tonly), precision: both / Math.max(1, both + ronly) };
 };
 window.__ready = true;
 </script>

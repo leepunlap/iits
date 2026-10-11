@@ -1,0 +1,109 @@
+{
+ "title": "L1 · 201-bp01 · 步驟 1 軀干（依藍圖推導）",
+ "_doc": "Inferred from img/build-01.jpg: 1x 7-hole beam (blue), 2x 15-hole beam, 2x right-angle cross block, 2x pin. One unit = one hole pitch (8 mm). Beams lie flat, holes up; the two long beams meet at a corner and the cross blocks join them from above. camera = the viewpoint that matches the blueprint photo.",
+ "bricks": [
+  {
+   "type": "beam",
+   "holes": 15,
+   "x": 0,
+   "y": 0,
+   "z": 0,
+   "rotY": 0,
+   "color": "#dfe1e4"
+  },
+  {
+   "type": "beam",
+   "holes": 15,
+   "x": 16,
+   "y": 0,
+   "z": 0,
+   "rotY": -90,
+   "color": "#dfe1e4"
+  },
+  {
+   "type": "crossblock",
+   "x": 15.1,
+   "y": 0.9,
+   "z": 0.0,
+   "rotY": 0,
+   "color": "#c2c5c9"
+  },
+  {
+   "type": "crossblock",
+   "x": 15.1,
+   "y": 0.9,
+   "z": 2.1,
+   "rotY": 0,
+   "color": "#c2c5c9"
+  },
+  {
+   "type": "beam",
+   "holes": 7,
+   "x": 16.0,
+   "y": 1.8,
+   "z": 0.2,
+   "rotY": -90,
+   "color": "#1c4fd8"
+  },
+  {
+   "type": "pin",
+   "x": 15.4,
+   "y": 0.9,
+   "z": 9.2,
+   "rotY": 0,
+   "color": "#26282b"
+  },
+  {
+   "type": "pin",
+   "x": 15.4,
+   "y": 0.9,
+   "z": 11.2,
+   "rotY": 0,
+   "color": "#26282b"
+  }
+ ],
+ "steps": [
+  {
+   "label": "步驟 1：兩條 15 孔樑 + 直角連接件",
+   "bricks": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "parts": [
+    {
+     "name": "15 孔樑",
+     "count": 2
+    },
+    {
+     "name": "直角連接件",
+     "count": 2
+    },
+    {
+     "name": "插銷",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "label": "步驟 1（續）：藍色 7 孔樑、兩支插銷",
+   "bricks": [
+    4,
+    5,
+    6
+   ],
+   "parts": [
+    {
+     "name": "7 孔樑（藍）",
+     "count": 1
+    }
+   ]
+  }
+ ],
+ "camera": {
+  "az": 46,
+  "el": 40,
+  "zoom": 1.15
+ }
+}

@@ -17,6 +17,9 @@
   #hud { position:absolute; left:14px; top:12px; background:rgba(255,255,255,.92); border:1px solid var(--line);
          border-radius:12px; padding:10px 12px; font-size:.85em; max-width:260px }
   #stepLabel { font-weight:600; margin-bottom:6px }
+  .bom { list-style:none; margin:0 0 8px; padding:0; font-size:.92em }
+  .bom li { display:flex; justify-content:space-between; gap:10px; padding:1px 0 }
+  .bom b { font-weight:600 }
   footer { padding:12px 18px; background:#fff; border-top:1px solid var(--line); display:flex; gap:12px;
            align-items:center; flex-wrap:wrap }
   button { font:inherit; padding:7px 14px; border-radius:9px; border:1px solid var(--line); background:#fff; cursor:pointer }
@@ -36,6 +39,7 @@
 <div id="view">
   <div id="hud">
     <div id="stepLabel">—</div>
+    <ul id="bom" class="bom"></ul>
     <div class="muted">拖曳旋轉 · 滾輪縮放 · 右鍵平移</div>
   </div>
 </div>
@@ -87,12 +91,93 @@
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    if (window.__ready) frame();
   }
-  new ResizeObserver(resize).observe(view);
+  new ResizeObserver(() => { resize(); }).observe(view);
 
-  // ---- brick geometry (procedural: a box plus studs on top) ---------------------
+  // ---- part geometry ------------------------------------------------------------
+  // The kit is Technic-style: beams with round holes, right-angle cross blocks and pins.
+  // Beams are extruded shapes with real holes (one unit = one hole pitch, 8 mm).
   const boxGeo = new THREE.BoxGeometry(1, 1, 1);
   const studGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.18, 16);
+
+  const matOf = (b) => new THREE.MeshStandardMaterial({
+    color: new THREE.Color(b.color || '#c91a09'), roughness: 0.5, metalness: 0.05 });
+
+  /** A beam: `holes` round holes along its length, rounded ends, extruded to `h` (default 0.62). */
+  function beamMesh(b) {
+    const n = b.holes || 5, h = b.h ?? 0.9, r = 0.5;       // r = half the beam width
+    const shape = new THREE.Shape();
+    shape.moveTo(r, 0);
+    shape.lineTo(n - r, 0);
+    shape.absarc(n - r, r, r, -Math.PI / 2, Math.PI / 2, false);
+    shape.lineTo(r, 2 * r);
+    shape.absarc(r, r, r, Math.PI / 2, (3 * Math.PI) / 2, false);
+    for (let i = 0; i < n; i += 1) {
+      const hole = new THREE.Path();
+      hole.absarc(i + 0.5, r, 0.315, 0, Math.PI * 2, true);
+      shape.holes.push(hole);
+    }
+    const geo = new THREE.ExtrudeGeometry(shape, { depth: h, bevelEnabled: false, curveSegments: 16 });
+    geo.rotateX(-Math.PI / 2);                             // stand the extrusion up: holes vertical
+    geo.translate(0, h, -2 * r);                           // sit on y=0, footprint in x/z
+    return new THREE.Mesh(geo, matOf(b));
+  }
+
+  /** A right-angle cross block: two 2-hole segments joined at 90°, with four outward pins. */
+  function crossblockMesh(b) {
+    const g = new THREE.Group();
+    const m = matOf(b);
+    const H = 0.9, W = 1.0;
+    const segment = (len, alongX) => {
+      const sh = new THREE.Shape();
+      sh.moveTo(0.5, 0); sh.lineTo(len - 0.5, 0);
+      sh.absarc(len - 0.5, 0.5, 0.5, -Math.PI / 2, Math.PI / 2, false);
+      sh.lineTo(0.5, 1); sh.absarc(0.5, 0.5, 0.5, Math.PI / 2, (3 * Math.PI) / 2, false);
+      for (let i = 0; i < len; i += 1) {
+        const hole = new THREE.Path(); hole.absarc(i + 0.5, 0.5, 0.315, 0, Math.PI * 2, true); sh.holes.push(hole);
+      }
+      const geo = new THREE.ExtrudeGeometry(sh, { depth: H, bevelEnabled: false, curveSegments: 14 });
+      geo.rotateX(-Math.PI / 2); geo.translate(0, H, -1);
+      const mesh = new THREE.Mesh(geo, m);
+      if (!alongX) { mesh.rotation.y = Math.PI / 2; mesh.position.set(0.5, 0, 0.5); }
+      return mesh;
+    };
+    g.add(segment(b.lenA || 2, true), segment(b.lenB || 2, false));
+    // four pins on the outward faces (two per segment), as the blueprint shows
+    const pinGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.75, 12);
+    const pin = (x, y, z, axis) => {
+      const p2 = new THREE.Mesh(pinGeo, m);
+      if (axis === 'x') { p2.rotation.z = Math.PI / 2; } else if (axis === 'z') { p2.rotation.x = Math.PI / 2; }
+      p2.position.set(x, y, z); g.add(p2);
+    };
+    const H2 = H / 2;
+    pin(1.0, H2, 2.05, 'z'); pin(2.0, H2, 2.05, 'z');
+    pin(2.05, H2, 1.0, 'x'); pin(2.05, H2, 2.0, 'x');
+    return g;
+  }
+
+  /** A pin: a short cylinder with a stop ridge. */
+  function pinMesh(b) {
+    const g = new THREE.Group();
+    const m = matOf(b);
+    const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, b.len || 1.6, 12), m);
+    shaft.rotation.z = Math.PI / 2; shaft.position.set((b.len || 1.6) / 2, 0, 0);
+    const stop = new THREE.Mesh(new THREE.CylinderGeometry(0.33, 0.33, 0.22, 12), m);
+    stop.rotation.z = Math.PI / 2; stop.position.set(0.75, 0, 0);
+    g.add(shaft, stop);
+    return g;
+  }
+
+  function partMesh(b) {
+    const g = (b.type === 'beam') ? beamMesh(b)
+            : (b.type === 'crossblock') ? crossblockMesh(b)
+            : (b.type === 'pin') ? pinMesh(b) : brickMesh(b);
+    g.position.set((b.x || 0), (b.y || 0), (b.z || 0));
+    if (b.rotY) g.rotation.y = (b.rotY * Math.PI) / 180;
+    return g;
+  }
+
   function brickMesh(b) {
     const g = new THREE.Group();
     const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(b.color || '#c91a09'),
@@ -116,6 +201,27 @@
   // ---- model -------------------------------------------------------------------
   let model = null, groups = [], current = 1, showAll = false, spin = false;
 
+  /** Fit the camera to the model: distance from the vertical FOV so it fills the view. */
+  function frame() {
+    if (!groups.length) return;
+    const bbox = new THREE.Box3();
+    groups.forEach((g) => bbox.expandByObject(g));
+    const size = bbox.getSize(new THREE.Vector3());
+    const centre = bbox.getCenter(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const cam = model.camera || {};
+    const dist = (maxDim / 2) / Math.tan((camera.fov * Math.PI) / 180 / 2) * (cam.zoom ?? 1.5);
+    const az = ((cam.az ?? 35) * Math.PI) / 180, el = ((cam.el ?? 30) * Math.PI) / 180;
+    controls.target.copy(centre);
+    camera.position.set(
+      centre.x + dist * Math.cos(el) * Math.sin(az),
+      centre.y + dist * Math.sin(el),
+      centre.z + dist * Math.cos(el) * Math.cos(az));
+    camera.near = Math.max(0.1, dist / 100); camera.far = dist * 20;
+    camera.updateProjectionMatrix();
+    controls.update();
+  }
+
   function applyStep() {
     const upto = showAll ? model.steps.length : current;
     const visible = new Set();
@@ -123,6 +229,9 @@
     groups.forEach((g, i) => { g.visible = visible.has(i); });
     document.getElementById('stepLabel').textContent = showAll
       ? `全部 ${model.steps.length} 個步驟` : model.steps[current - 1].label;
+    const bom = document.getElementById('bom');
+    const parts = showAll ? null : model.steps[current - 1].parts;
+    bom.innerHTML = (parts || []).map((x) => `<li><span>${x.name}</span><b>${x.count}×</b></li>`).join('');
     document.getElementById('step').value = String(current);
     document.getElementById('prev').disabled = current <= 1;
     document.getElementById('next').disabled = current >= model.steps.length;
@@ -133,7 +242,7 @@
     if (!res.ok) throw new Error(`找不到模型 ${url}`);
     model = await res.json();
     groups.forEach((g) => scene.remove(g));
-    groups = model.bricks.map(brickMesh);
+    groups = model.bricks.map(partMesh);
     groups.forEach((g) => scene.add(g));
 
     document.getElementById('title').textContent = model.title || url;
@@ -144,14 +253,7 @@
     current = 1; showAll = false; applyStep();
 
     // frame the model
-    const bbox = new THREE.Box3();
-    groups.forEach((g) => bbox.expandByObject(g));
-    const size = bbox.getSize(new THREE.Vector3());
-    const centre = bbox.getCenter(new THREE.Vector3());
-    const radius = Math.max(size.x, size.y, size.z) * 1.6 + 3;
-    controls.target.copy(centre);
-    camera.position.set(centre.x + radius, centre.y + radius * 0.8, centre.z + radius);
-    camera.near = 0.1; camera.far = radius * 20; camera.updateProjectionMatrix();
+    frame();
     window.__blueprint = { bricks: model.bricks.length, steps: model.steps.length };
   }
 

@@ -1,0 +1,17 @@
+{
+  "_doc": "Blueprint model format. One stud = 1 unit in x/z, one brick height = 1 unit in y. 'bricks' are the pieces; 'steps' list which bricks exist at that build step, so students can step through the assembly in 3D. Author these from photos, from an LDraw/Studio model, or by hand.",
+  "title": "示範模型：8×2 底盤 + 上層",
+  "parts": "UCMake 結構積木（示範）",
+  "bricks": [
+    { "x": 0, "y": 0, "z": 0, "w": 8, "d": 2, "h": 1, "color": "#4b5563" },
+    { "x": 0, "y": 1, "z": 0, "w": 4, "d": 2, "h": 1, "color": "#c91a09" },
+    { "x": 4, "y": 1, "z": 0, "w": 4, "d": 2, "h": 1, "color": "#c91a09" },
+    { "x": 2, "y": 2, "z": 0, "w": 2, "d": 2, "h": 1, "color": "#0055bf" },
+    { "x": 3, "y": 3, "z": 0, "w": 1, "d": 2, "h": 1, "color": "#f2cd37" }
+  ],
+  "steps": [
+    { "label": "步驟 1：8×2 底盤", "bricks": [0] },
+    { "label": "步驟 2：兩塊 4×2", "bricks": [1, 2] },
+    { "label": "步驟 3：2×2 與感測器位置", "bricks": [3, 4] }
+  ]
+}

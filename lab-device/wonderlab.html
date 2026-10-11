@@ -34,6 +34,7 @@
   .blk code { font-size:.82em }
   .blk .args { color:var(--muted); font-size:.78em; flex:1 }
   .badge { font-size:.68em; padding:1px 7px; border-radius:999px; white-space:nowrap }
+  .b-core { background:#eae6fb; color:#5b46b8 }
   .info { border:1px solid var(--line); background:#fff; border-radius:999px; cursor:pointer;
           font-size:.75em; line-height:1; padding:2px 7px; color:var(--muted) }
   .b-cli { background:#e3f5ec; color:#1d6b4f } .b-onewire { background:#fff1d6; color:var(--warn) }
@@ -42,6 +43,7 @@
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:10px }
   .cell { border:1px solid var(--line); border-radius:10px; padding:6px; text-align:center; font-size:.72em; color:var(--muted) }
   .cell img { width:100%; height:56px; object-fit:contain; display:block }
+  .cell.picked { outline:2px solid var(--accent); background:#f2fbf7 }
   .cell button { font:inherit; font-size:.9em; margin-top:4px; border:1px solid var(--line); border-radius:7px;
                  background:#fff; cursor:pointer; padding:2px 8px }
   .tabs { display:flex; gap:8px; margin-bottom:10px }
@@ -106,14 +108,36 @@
                             'esp32SetLedButtonSensor', 'esp32ReadLedButtonSensorDigital']);
   const MECH = { cli: ['b-cli', '即時 CLI'], onewire: ['b-onewire', '需 OneWire 固件'],
                  codegen: ['b-codegen', '僅限上傳模式'], local: ['b-local', '本機／計時器'],
-                 unknown: ['b-local', '未定'] };
+                 core: ['b-core', '核心（無需硬體）'], unknown: ['b-local', '未定'] };
 
-  const [vis, spec, sem, codegenTable] = await Promise.all([
+  const [vis, spec, sem, codegenTable, core] = await Promise.all([
     fetch('./visibility.json').then((r) => r.json()),
     fetch('./blocks.json').then((r) => r.json()),
     fetch('./semantics.json').then((r) => r.json()),
     fetch('./codegen.json').then((r) => r.json()),
+    fetch('./core-opcodes.json').then((r) => r.json()),
   ]);
+
+  // the costume / backdrop / sound dropdowns draw from the mirrored libraries
+  try {
+    const [cbn, bdn, snd] = await Promise.all([
+      fetch('./libraries/costumes.json').then((r) => r.json()),
+      fetch('./libraries/backdrops.json').then((r) => r.json()),
+      fetch('./libraries/sounds.json').then((r) => r.json()),
+    ]);
+    mediaNames.costume = cbn.map((x) => x.name);
+    mediaNames.backdrop = bdn.map((x) => x.name);
+    mediaNames.sound = snd.map((x) => x.name);
+  } catch { /* libraries unavailable: the pickers fall back to free text */ }
+
+  /** Options for a menu argument — real media names where the menu is costume/backdrop/sound. */
+  function menuOptions(a) {
+    if (a.values && a.values.length) return a.values;
+    if (/costume/i.test(a.menu)) return mediaNames.costume;
+    if (/backdrop/i.test(a.menu)) return mediaNames.backdrop;
+    if (/sound/i.test(a.menu)) return mediaNames.sound;
+    return null;
+  }
 
   /** Value semantics for a block: exact entry first, then the first matching pattern. */
   function semanticsFor(opcode) {
@@ -138,6 +162,7 @@
     }
     let generated;
     try {
+      if (b.core) throw new Error('核心積木由 Wonder Lab 引擎執行，不會產生硬體程式碼');
       const r = generateBlock(codegenTable, { opcode, fields, values });
       const lines = [...Object.values(r.includes || {}), ...Object.values(r.definitions || {})];
       if (r.statement.trim()) lines.push(r.statement.trim());
@@ -146,7 +171,8 @@
 
     const [mechCls, mechLabel] = MECH[b.mechanism] || MECH.unknown;
     const argRows = (b.args || []).map((a) => {
-      const vals = a.values && a.values.length ? ` — 可選 ${a.values.slice(0, 8).join(', ')}${a.values.length > 8 ? '…' : ''}` : '';
+      const opts2 = menuOptions(a);
+      const vals = opts2 && opts2.length ? ` — 可選 ${opts2.slice(0, 6).join(', ')}${opts2.length > 6 ? `… (${opts2.length})` : ''}` : '';
       return `<tr><td><code>${a.name}</code></td><td>${a.type}</td><td>${a.menu || '—'}${vals}</td><td>${a.default ?? '—'}</td></tr>`;
     }).join('') || '<tr><td colspan="4" class="note">無參數</td></tr>';
 
@@ -158,6 +184,7 @@
         <span class="badge ${mechCls}">${mechLabel}</span>
         ${VERIFIED.has(b.opcode) ? '<span class="badge ver">硬體驗證</span>' : '<span class="badge unver">未經硬體驗證</span>'}
       </div>
+      ${b.core ? '<p class="note">這是核心積木：在 Wonder Lab 引擎內執行，不需要主控板，也不需要燒錄。</p>' : ''}
       ${b.commands && b.commands.length ? `<p class="note">即時指令：</p><pre>${esc(b.commands.join('\n'))}</pre>` : ''}
       ${semInfo ? `<p class="note">數值語意${semInfo.verified === 'hardware' ? '（已硬體驗證）' : semInfo.verified === 'inferred' ? '（推導所得，待硬體確認）' : '（未知）'}：</p>
         <p><b>單位／範圍：</b>${esc(semInfo.units || '—')}</p>
@@ -173,8 +200,36 @@
       <p class="note">會產生的 Arduino 程式碼（上傳模式）：</p>
       <pre>${esc(generated)}</pre>`;
   }
+  const mediaNames = { costume: [], backdrop: [], sound: [] };
   const GENERIC = new Set(['speechSynthesis', 'bluetoothController', 'speech', 'ucMakeAiSensor', '?']);
-  const blocks = spec.blocks.filter((b) => !GENERIC.has(b.category));
+  const hwBlocks = spec.blocks.filter((b) => !GENERIC.has(b.category));
+
+  // The lab is a Scratch-derived environment, so its vocabulary is not only hardware: motion,
+  // looks (costumes/backdrops), sound, events, control, sensing, operators, data and pen all run in
+  // the lab engine with no board attached. They were absent from this page entirely.
+  const CORE_LABEL = { motion: '動作', looks: '外觀／造型', sound: '音效', event: '事件',
+                       control: '控制', sensing: '偵測', operator: '運算', data: '變數與清單', pen: '畫筆' };
+  // The whitelist declares arguments two ways: `inputs` (name -> spec string, where "menu:a:b:c"
+  // means a dropdown) and `fields`, which may be a plain list of names. Handle both.
+  function coreArgs(def) {
+    const args = [];
+    for (const [name, t] of Object.entries(def.inputs || {})) {
+      const spec = String(t);
+      args.push({ name, type: spec, menu: spec.startsWith('menu:') ? spec.split(':')[1] : '', default: '' });
+    }
+    const f = def.fields;
+    if (Array.isArray(f)) for (const name of f) args.push({ name, type: 'field', menu: '', default: '' });
+    else if (f) for (const [name, spec2] of Object.entries(f)) {
+      args.push({ name, type: (spec2 && spec2.type) || 'field',
+                  menu: (spec2 && spec2.menu) || '', default: (spec2 && spec2.default) || '' });
+    }
+    return args;
+  }
+  const coreBlocks = Object.entries(core.opcodes || {}).map(([opcode, def]) => ({
+    opcode, core: true, category: opcode.split('_')[0], text: '',
+    type: (def.shape || 'stack').toUpperCase(), mechanism: 'core', args: coreArgs(def),
+  }));
+  const blocks = [...coreBlocks, ...hwBlocks];
   // Which blocks belong to which board: the esp* families are the ESP32 kits (UC-Mind100 and the
   // bigger ESP boards); everything else is the AVR family (UC-Mind300). Picking a block for the
   // wrong board compiles to calls that do not exist there (e.g. runMin() is ESP32-only).
@@ -206,12 +261,12 @@
     const q = $('search').value.trim().toLowerCase();
     const matchBoard = BOARD_MATCH[$('board').value] || (() => true);
     const shown = blocks.filter((b) => !hideCat.has(b.category) && !hideBlk.has(b.opcode)
-      && matchBoard(b.opcode)
+      && (b.core || matchBoard(b.opcode))
       && (!q || b.opcode.toLowerCase().includes(q) || (b.text || '').toLowerCase().includes(q)));
     const byCat = {};
     for (const b of shown) (byCat[b.category] ||= []).push(b);
     $('palette').innerHTML = Object.entries(byCat).map(([cat, list]) => `
-      <div class="cat"><h3>${cat} <span class="n">${list.length}</span></h3>
+      <div class="cat"><h3>${CORE_LABEL[cat] || cat} <span class="n">${list.length}</span></h3>
         ${list.map((b) => {
           const [cls, label] = MECH[b.mechanism] || MECH.unknown;
           const args = (b.args || []).map((a) => `${a.name}${a.menu ? '[' + a.menu + ']' : ''}${a.default ? '=' + a.default : ''}`).join(', ');
@@ -222,7 +277,10 @@
             <button class="info" data-info="${b.opcode}" title="詳情">ⓘ</button></div>`;
         }).join('')}
       </div>`).join('') || '<p class="note">此班級沒有顯示任何積木。</p>';
-    $('count').textContent = `${shown.length} / ${blocks.length} 個積木可見（${$('board').value === 'uno' ? 'AVR' : 'ESP32'}）`;
+    const coreShown = shown.filter((b) => b.core).length;
+    $('count').textContent = `${shown.length} / ${blocks.length} 個積木可見`
+      + `（核心 ${coreShown}/${coreBlocks.length} · 硬體 ${shown.length - coreShown}/${hwBlocks.length} · `
+      + `${$('board').value === 'uno' ? 'AVR' : 'ESP32'}）`;
   }
 
   // ---- media ------------------------------------------------------------------
@@ -244,18 +302,27 @@
     $('media').insertAdjacentHTML('beforeend', slice.map((it) => {
       const id = it.md5ext || (it.assetId + '.' + (it.dataFormat || 'png'));
       if (lib === 'sounds' || it.dataFormat === 'wav' || it.dataFormat === 'mp3') {
-        return `<div class="cell">🔊<div>${it.name}</div>
+        return `<div class="cell" data-name="${it.name}">🔊<div>${it.name}</div>
           <button data-play="${id}">▶</button></div>`;
       }
-      return `<div class="cell"><img loading="lazy" src="${ASSETS}${id}" alt="${it.name}"><div>${it.name}</div></div>`;
+      return `<div class="cell" data-name="${it.name}"><img ${shown > 24 ? 'loading="lazy"' : 'loading="eager"'} src="${ASSETS}${id}" alt="${it.name}"><div>${it.name}</div></div>`;
     }).join(''));
     shown += slice.length;
     $('mediaCount').textContent = `${shown} / ${items.length}`;
     $('more').disabled = shown >= items.length;
   }
+  let pickedName = null;
   $('media').addEventListener('click', (e) => {
-    const id = e.target.dataset?.play;
-    if (id) new Audio(ASSETS + id).play().catch(() => {});
+    const play = e.target.dataset?.play;
+    if (play) { new Audio(ASSETS + play).play().catch(() => {}); return; }
+    const cell = e.target.closest('.cell');
+    if (!cell || !cell.dataset.name) return;
+    for (const c of $('media').querySelectorAll('.cell.picked')) c.classList.remove('picked');
+    cell.classList.add('picked');
+    pickedName = cell.dataset.name;
+    const kind = lib === 'sounds' ? 'sound' : (lib === 'backdrops' ? 'backdrop' : 'costume');
+    picked[kind] = cell.dataset.name;
+    $('mediaCount').textContent = `已選擇${kind === 'sound' ? '音效' : kind === 'backdrop' ? '背景' : '造型'}：${pickedName}（加入相關積木時會自動填入）`;
   });
   $('more').addEventListener('click', renderMore);
   $('tabs').addEventListener('click', (e) => { if (e.target.dataset.lib) loadLib(e.target.dataset.lib); });
@@ -268,6 +335,7 @@
 
   // ---- program: click a palette block to add it, edit its args, then build ----
   const program = [];
+  const picked = { costume: null, backdrop: null, sound: null };
   const boardFor = { L1: 'esp32', L2: 'esp32', L3: 'uno', L4: 'esp32' };
 
   function addBlock(spec) {
@@ -275,8 +343,13 @@
     for (const a of spec.args || []) {
       // args with a menu are Blockly *fields*; the rest are input values — matching how the
       // vendor's codegen reads them (getFieldValue vs valueToCode)
-      if (a.menu) fields[a.name] = a.default || (a.values && a.values[0]) || '';
-      else values[a.name] = a.default || '0';
+      // one bucket per arg, decided the same way the renderer decides it
+      const bucket = a.menu ? fields : values;
+      bucket[a.name] = a.menu ? (a.default || (a.values && a.values[0]) || '') : (a.default || '0');
+      // prefill from the media the teacher just picked (media -> block, instead of browsing only)
+      if (a.name === 'COSTUME' && picked.costume) bucket[a.name] = picked.costume;
+      if (a.name === 'BACKDROP' && picked.backdrop) bucket[a.name] = picked.backdrop;
+      if (a.name === 'SOUND' && picked.sound) bucket[a.name] = picked.sound;
     }
     program.push({ opcode: spec.opcode, fields, values, spec });
     renderProgram();
@@ -290,8 +363,9 @@
         <div class="args">${(p.spec.args || []).map((a) => {
           const isField = !!a.menu;
           const val = isField ? p.fields[a.name] : p.values[a.name];
-          return a.values && a.values.length
-            ? `<label>${a.name}<select data-i="${i}" data-k="${isField ? 'fields' : 'values'}" data-n="${a.name}">${a.values.map((v) => `<option ${String(v) === String(val) ? 'selected' : ''}>${v}</option>`).join('')}</select></label>`
+          const opts = menuOptions(a);
+          return opts && opts.length
+            ? `<label>${a.name}<select data-i="${i}" data-k="${isField ? 'fields' : 'values'}" data-n="${a.name}">${opts.map((v) => `<option ${String(v) === String(val) ? 'selected' : ''}>${v}</option>`).join('')}</select></label>`
             : `<label>${a.name}<input data-i="${i}" data-k="${isField ? 'fields' : 'values'}" data-n="${a.name}" value="${val}"></label>`;
         }).join('') || '<span class="note">無參數</span>'}</div></div>`).join('');
   }

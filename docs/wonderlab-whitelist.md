@@ -48,3 +48,41 @@ python3 check_wonderlab_sounds.py http://127.0.0.1:9871/L4/lessons/assets/lab/
 **After changing the whitelist, deploy all three copies and re-run the sound check.** A whitelist is
 invisible until a lesson needs the missing block, and the failure looks like "the lab doesn't have
 that" rather than a deploy error.
+# Wonder Lab whitelist — now four copies, and a rebuild hazard
+
+**Update 2026-10-12.** The whitelist has a fourth copy, and rebuilding the lab silently reverts a
+manual fix.
+
+| copy | who reads it |
+|---|---|
+| `wonderlab-src/src/opcodes.json` | **source of truth** — the browser engine and the builder read it |
+| `wonderlab-studio/src/opcodes.json` | **the Studio build** — copied into `studio-<hash>/opcodes.json`, which is what the lab actually loads |
+| `wonderlab-src/dist/engine-<hash>/opcodes.json` | the prebuilt engine dir |
+| `/opt/iits-lesson-ai/lab_opcodes.json` | the **server-side validator** |
+
+`build_wonder_lab.py` syncs the source of truth to the **server** copy and warns when that one
+differs. It says nothing about the studio copy.
+
+## What went wrong
+
+`wonderlab-src/src` had grown to **108 opcodes** (the six sound blocks). `wonderlab-studio/src` was
+still **102 with no sound**. So:
+
+* sounds were absent from the lab — the browser reads the studio copy
+* a manual deploy of the 108 file to `studio-<hash>/opcodes.json` worked, until the next
+  `build_lessons_site.py L4` **rsynced the stale 102 file back over it**
+
+The whitelist then looked like it "randomly" lost the sound blocks after every rebuild.
+
+## Fixed
+
+All copies now hold 108. Note the studio build is **content-hashed**: changing its opcodes.json
+changes the directory name (`studio-94562e3655` → `studio-3d0b5668e2`), and `manifest.json` and the
+lesson pages follow automatically. The rsync runs without `--delete`, so the old studio directory
+stays behind harmlessly.
+
+## Invariant
+
+**After changing the whitelist, sync all four copies and rebuild** — do not patch the deployed file,
+because the next build overwrites it. `~/wonderlab-studio` is not a git repo, so that copy exists
+only on the NUC.

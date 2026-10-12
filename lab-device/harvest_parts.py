@@ -15,6 +15,8 @@ and identified by a normalised silhouette so near-identical parts cluster togeth
   python3 harvest_parts.py --out sheet.png --json parts.json <images...>
 """
 import json
+import os
+import re
 import sys
 from collections import deque
 
@@ -119,6 +121,7 @@ def describe(crop_rgb):
 def harvest(paths):
     parts = []            # every part drawing found
     clusters = []         # distinct parts
+    per_image = {}        # image -> [part features], for cross-checking a VLM run
     for path in paths:
         im = Image.open(path).convert('RGB')
         rows = box_rows(im)
@@ -144,7 +147,9 @@ def harvest(paths):
             crop = box.crop((max(0, x0 - pad), max(0, y0 - pad),
                              min(box.width, x1 + pad), min(box.height, y1 + pad)))
             d = describe(crop)
-            d['step'] = path.split('build-')[1].split('.')[0]
+            mstep = re.search(r'build-(\d+)', path) or re.search(r'-(\d+)\.[a-z]+$', path)
+            d['step'] = mstep.group(1) if mstep else os.path.basename(path)
+            d['image'] = os.path.basename(path)
             d['crop'] = crop
             # match to a cluster: same fill and hole count, similar shape and aspect
             hit = None
@@ -164,22 +169,30 @@ def harvest(paths):
             else:
                 hit['steps'].append(d['step'])
             parts.append(d)
-    return parts, clusters
+            per_image.setdefault(os.path.basename(path), []).append(
+                {'holes': d['holes'], 'fill': d['fill'], 'aspect': d['aspect'],
+                 'w': d['w'], 'h': d['h']})
+    return parts, clusters, per_image
 
 
 def main(argv):
-    out = json_out = None
+    out = json_out = per_image_out = None
+    if '--per-image' in argv:
+        i = argv.index('--per-image'); per_image_out = argv[i + 1]; argv = argv[:i] + argv[i + 2:]
     if '--out' in argv:
         i = argv.index('--out'); out = argv[i + 1]; argv = argv[:i] + argv[i + 2:]
     if '--json' in argv:
         i = argv.index('--json'); json_out = argv[i + 1]; argv = argv[:i] + argv[i + 2:]
-    parts, clusters = harvest(argv)
+    parts, clusters, per_image = harvest(argv)
     print(f'part drawings found : {len(parts)}')
     print(f'distinct parts      : {len(clusters)}')
     for i, c in enumerate(sorted(clusters, key=lambda c: -len(c['steps'])), 1):
         steps = sorted(set(c['steps']))
         print(f"  {i:2}  {c['fill']:<5} holes {c['holes']:>2}  aspect {c['aspect']:>5}  "
               f"seen in {len(c['steps'])} drawings, steps {','.join(steps[:8])}")
+    if per_image_out:
+        json.dump(per_image, open(per_image_out, 'w'), ensure_ascii=False, indent=1)
+        print(f'wrote {per_image_out}')
     if json_out:
         json.dump([{k: v for k, v in c.items() if k not in ('sil', 'crop')} for c in clusters],
                   open(json_out, 'w'), ensure_ascii=False, indent=1)

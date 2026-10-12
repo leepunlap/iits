@@ -60,28 +60,47 @@ def ask(endpoint, model, image_b64, timeout=300):
             {'type': 'image_url', 'image_url': {'url': 'data:image/jpeg;base64,' + image_b64}},
         ]}],
         'temperature': 0,
-        'max_tokens': 700,
+        'max_tokens': 2200,          # reasoning models spend most of this thinking
     }).encode()
     req = urllib.request.Request(endpoint.rstrip('/') + '/chat/completions', data=body,
                                  headers={'Content-Type': 'application/json'})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         d = json.load(r)
-    return d['choices'][0]['message']['content']
+    m = d['choices'][0]['message']
+    # qwen3-vl and other reasoning models may leave `content` empty and put the answer in a
+    # reasoning field; take whichever has the JSON.
+    for k in ('content', 'reasoning_content', 'thinking'):
+        v = m.get(k)
+        if v and '{' in v:
+            return v
+    return m.get('content') or ''
 
 
 def parse_json(text):
-    """Models wrap JSON in prose or fences; take the outermost object."""
+    """Models wrap JSON in prose, fences, or reasoning. Take the last object that parses."""
     t = text.strip()
     if '```' in t:
-        parts = t.split('```')
-        t = max(parts, key=len).lstrip('json').strip()
+        t = max(t.split('```'), key=len).lstrip('json').strip()
+    # try the outermost object, then every balanced object from the end (reasoning trails the answer)
     i, j = t.find('{'), t.rfind('}')
-    if i < 0 or j < 0:
-        return None
-    try:
-        return json.loads(t[i:j + 1])
-    except Exception:
-        return None
+    if i >= 0 and j > i:
+        try:
+            return json.loads(t[i:j + 1])
+        except Exception:
+            pass
+    for start in [k for k, ch in enumerate(t) if ch == '{'][::-1]:
+        depth = 0
+        for end in range(start, len(t)):
+            if t[end] == '{':
+                depth += 1
+            elif t[end] == '}':
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(t[start:end + 1])
+                    except Exception:
+                        break
+    return None
 
 
 def main():

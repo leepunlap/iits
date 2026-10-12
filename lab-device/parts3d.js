@@ -33,39 +33,48 @@ export function beamMesh(b) {
   }
   const geo = new THREE.ExtrudeGeometry(shape, { depth: h, bevelEnabled: false, curveSegments: 16 });
   geo.rotateX(-Math.PI / 2);
-  geo.translate(0, h, -2 * r);
+  // Sit on y=0 with the footprint at z 0..1, so beams, the L-mount and pins all share one frame.
+  // (This used to translate by (0, h, -2r), which floated every beam 0.9 above the ground and
+  // offset it 2 in z relative to the other parts - the cause of mounts that never seated.)
+  geo.translate(0, 0, 2 * r);
   return new THREE.Mesh(geo, matOf(b));
 }
 
-/** A right-angle cross block: two 2-hole segments joined at 90°, with four outward pins. */
+/**
+ * The L-mount: ONE integral L-shaped bracket, two 2-hole arms meeting at a shared corner hole,
+ * with two pins protruding from each arm. Built as a single extruded L-profile (not two boxes) -
+ * as two boxes the arms do not meet and the part falls apart, which is exactly what happened.
+ *
+ * Local frame: arm A runs +X, arm B runs +Z, the corner sits at the origin, height 0.9 (y),
+ * holes sit on the 1-unit pitch (centres at 0.5 and 1.5), so a placement on a hole lines up.
+ */
 export function crossblockMesh(b) {
   const g = new THREE.Group();
   const m = matOf(b);
-  const H = 0.9;
-  const segment = (len, alongX) => {
-    const sh = new THREE.Shape();
-    sh.moveTo(0.5, 0); sh.lineTo(len - 0.5, 0);
-    sh.absarc(len - 0.5, 0.5, 0.5, -Math.PI / 2, Math.PI / 2, false);
-    sh.lineTo(0.5, 1); sh.absarc(0.5, 0.5, 0.5, Math.PI / 2, (3 * Math.PI) / 2, false);
-    for (let i = 0; i < len; i += 1) {
-      const hole = new THREE.Path(); hole.absarc(i + 0.5, 0.5, 0.315, 0, Math.PI * 2, true); sh.holes.push(hole);
-    }
-    const geo = new THREE.ExtrudeGeometry(sh, { depth: H, bevelEnabled: false, curveSegments: 14 });
-    geo.rotateX(-Math.PI / 2); geo.translate(0, H, -1);
-    const mesh = new THREE.Mesh(geo, m);
-    if (!alongX) { mesh.rotation.y = Math.PI / 2; mesh.position.set(0.5, 0, 0.5); }
-    return mesh;
+  const H = 0.9, T = 1.0;                     // height and arm thickness (one unit)
+  const L = 2;                                // each arm is two holes long
+
+  const sh = new THREE.Shape();
+  sh.moveTo(0, 0); sh.lineTo(L, 0); sh.lineTo(L, T); sh.lineTo(T, T);
+  sh.lineTo(T, L); sh.lineTo(0, L); sh.closePath();
+  for (const [cx, cy] of [[0.5, 0.5], [1.5, 0.5], [0.5, 1.5]]) {
+    const h = new THREE.Path(); h.absarc(cx, cy, 0.315, 0, Math.PI * 2, true); sh.holes.push(h);
+  }
+  const geo = new THREE.ExtrudeGeometry(sh, { depth: H, bevelEnabled: false, curveSegments: 14 });
+  geo.rotateX(Math.PI / 2);                   // profile XY -> footprint XZ, extrusion -> +Y
+  geo.translate(0, H, 0);                     // sit on y = 0
+  g.add(new THREE.Mesh(geo, m));
+
+  // two pins off each arm end, integral with the part
+  const pinGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.7, 12);
+  const pin = (x, z, axis) => {
+    const q = new THREE.Mesh(pinGeo, m);
+    if (axis === 'x') q.rotation.z = Math.PI / 2; else q.rotation.x = Math.PI / 2;
+    q.position.set(x, H / 2, z);
+    g.add(q);
   };
-  g.add(segment(b.lenA || 2, true), segment(b.lenB || 2, false));
-  const pinGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.75, 12);
-  const pin = (x, y, z, axis) => {
-    const p2 = new THREE.Mesh(pinGeo, m);
-    if (axis === 'x') { p2.rotation.z = Math.PI / 2; } else if (axis === 'z') { p2.rotation.x = Math.PI / 2; }
-    p2.position.set(x, y, z); g.add(p2);
-  };
-  const H2 = H / 2;
-  pin(1.0, H2, 2.05, 'z'); pin(2.0, H2, 2.05, 'z');
-  pin(2.05, H2, 1.0, 'x'); pin(2.05, H2, 2.0, 'x');
+  pin(2.3, 0.5, 'x'); pin(2.3, 1.5, 'x');     // along +X
+  pin(0.5, 2.3, 'z'); pin(1.5, 2.3, 'z');     // along +Z
   return g;
 }
 

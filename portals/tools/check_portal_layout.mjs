@@ -60,7 +60,11 @@ const STUB = `(() => {
   window.fetch = (u, o) => {
     const s = String(u);
     if (s.includes('/api/me')) return json({ok:true, name:'Layout check', admin:true, levels:['L4']});
-    if (s.includes('/api/reg/')) return json({ok:true, classes:[], teachers:[]});
+    if (s.includes('/api/reg/')) return json({ok:true, levels:{L4:'四級'}, classes:[{id:'C1',level:'L4',name:'測試班',status:'active',sessions:[],students:0,teachers:[]}], teachers:[]});
+    if (s.includes('/api/ai/lab/teacher/')) return json({ok:true,
+      class:{id:'C1',level:'L4',name:'測試班',status:'active'},
+      now:Math.floor(Date.now()/1000), rows:[], cls:null, next:null,
+      lessons:[{slug:'501-bp01',title:'小老鼠'}], lesson:{slug:'501-bp01',title:'小老鼠'}});
     if (s.includes('manifest.json')) return json({studio:'studio-stub/', studio_page:'lab-frame.html', assets:'a/'});
     if (s.includes('.json')) return json({slug:'check', title:'x', opening:'', stage:{backdrops:[]}, sprites:[]});
     if (s.includes('/api/ai/')) return json({ok:true, say:'', ops:[]});
@@ -103,9 +107,31 @@ if (m.hasWrap && m.hasCols) {
     && Math.abs(m.panes[0].h - m.panes[1].h) <= 4,
     m.panes.map((p) => `h=${p.h}`).join(' '));
 }
-const shot = (await send('Page.captureScreenshot', { format: 'png' })).result?.data || '';
+let shot = (await send('Page.captureScreenshot', { format: 'png' })).result?.data || '';
 writeFileSync('/tmp/portal_playground.png', Buffer.from(shot, 'base64'));
 console.log('screenshot: /tmp/portal_playground.png');
+
+// ---- 學生視角預覽 must launch the student page directly ----
+await evalx(`location.hash='#library/L4'`);
+await sleep(1800);
+const pv = JSON.parse(await evalx(`JSON.stringify((() => {
+  const a = [...document.querySelectorAll('a')].filter(x => /學生視角預覽/.test(x.textContent));
+  return a.map(x => ({href:x.getAttribute('href'), target:x.getAttribute('target'), text:x.textContent.trim().slice(0,20)}));
+})())`));
+check('學生視角預覽 links straight to the student page', pv.length > 0
+  && pv.every(x => /^\/files\/L4\/lessons\/index\.html/.test(x.href || '') && x.target === '_blank'),
+  JSON.stringify(pv));
+
+// ---- the Wonder Lab class view carries a full screen toggle ----
+await evalx(`location.hash='#wlab/C1'`);
+for (let i = 0; i < 40; i++) { if (await evalx(`!!document.querySelector('.wlh')`)) break; await sleep(250); }
+await sleep(1200);
+const fsBtn = await evalx(`(() => { const b=document.querySelector('#wlfs'); return b ? b.textContent.trim() : null; })()`);
+check('the Wonder Lab view has a full screen toggle', !!fsBtn && /全螢幕/.test(fsBtn), JSON.stringify(fsBtn));
+check('the toggle is a button, not a link', await evalx(`document.querySelector('#wlfs')?.tagName === 'BUTTON'`));
+shot = (await send('Page.captureScreenshot', { format: 'png' })).result?.data || '';
+writeFileSync('/tmp/portal_wlab.png', Buffer.from(shot, 'base64'));
+console.log('screenshot: /tmp/portal_wlab.png');
 chrome.kill(); server.close();
 try { rmSync(profile, { recursive: true, force: true }); rmSync(dir, { recursive: true, force: true }); } catch {}
 console.log(failures ? `\n${failures} check(s) failed` : '\nall layout checks passed');

@@ -424,7 +424,9 @@ function pgRender(){
 async function pgBoot(){
   const BASE='/files/L4/lessons/assets/lab/';
   try{
-    const man=await (await fetch(BASE+'manifest.json')).json();
+    // no-cache, like the lesson lab (lab.js): the manifest names the content-hashed studio folder, so
+    // a cached copy would keep pointing at an older editor after a deploy.
+    const man=await (await fetch(BASE+'manifest.json',{cache:'no-cache'})).json();
     if(!man.studio){$('pgLoad').textContent='找不到積木編輯器（manifest 沒有 studio）。';return;}
     const fr=document.createElement('iframe');
     fr.id='pgFrame'; fr.title='積木編輯器'; fr.style.cssText='width:100%;height:100%;border:0';

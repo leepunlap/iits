@@ -330,7 +330,7 @@ window.addEventListener('hashchange',route);
 /* ---------------- AI playground: Scratch blocks + AI builds them ---------------- */
 let PG={W:null,hist:[],load:null};
 function viewPlayground(){
-  $('view').innerHTML=`<h2>遊樂場 <span class="n">Scratch 積木 + AI 自動砌積木：沒有課程要求</span></h2>
+  $('view').innerHTML=`<h2>遊樂場</h2>
     <div style="display:flex;gap:12px;flex:1;min-height:0">
       <section class="box" style="flex:3;min-height:0">
         <h3>${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></h3>
@@ -341,7 +341,7 @@ function viewPlayground(){
         <h3>${I('sparkles')} AI 學伴</h3>
         <div id="pgLog" style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px"></div>
         <div style="border-top:1px solid #eef0f6;padding:10px 12px;display:flex;gap:8px;align-items:flex-end">
-          <textarea id="pgIn" rows="2" placeholder="想砌甚麼都可以：講出來，AI 會把積木拖到工作區並設定好參數。"
+          <textarea id="pgIn" rows="2" placeholder="講出你想舞台上發生的事。"
             style="flex:1;resize:vertical;font:inherit;font-size:13.5px;padding:9px 11px;border:1px solid #d7dced;border-radius:10px"></textarea>
           <button class="btn pri" id="pgSend">傳送</button>
         </div>
@@ -356,7 +356,7 @@ function viewPlayground(){
 }
 function pgRender(){
   const log=$('pgLog'); if(!log)return;
-  if(!PG.hist.length){log.innerHTML=`<div class="empty">AI 會把積木放到左邊的工作區並設定參數（跟 L4 課堂一樣的積木與動畫）。<br>Enter 換行，⌘／Ctrl+Enter 傳送。每次進入這一頁都會重新開始。</div>`;return;}
+  if(!PG.hist.length){log.innerHTML=`<div class="empty">Enter 換行，⌘／Ctrl+Enter 傳送。</div>`;return;}
   log.innerHTML=PG.hist.map(m=>`<div style="align-self:${m.role==='user'?'flex-end':'flex-start'};max-width:96%">
     <div style="background:${m.role==='user'?'#3d5699':'#fff'};color:${m.role==='user'?'#fff':'#10161d'};border:1px solid ${m.role==='user'?'#3d5699':'#e5e8f0'};border-radius:12px;padding:8px 11px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere">${esc(m.text)}</div></div>`).join('');
   log.scrollTop=log.scrollHeight;

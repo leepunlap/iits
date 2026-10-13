@@ -3631,8 +3631,8 @@ def _post(h, la, u, level, slug):
 # ---------------- AI playground (teachers host): the lesson turn without the lesson ----------------
 PLAYGROUND_LESSON = {
     "title": "遊樂場",
-    "brief": {"goal": "自由創作：這是沙盒，沒有課程要求，也沒有自動評分。學生想砌甚麼就砌甚麼。",
-              "limits": "無限制。不要提及課程、任務、作業或評分。",
+    "brief": {"goal": "依照學生自己的想法砌積木。",
+              "limits": "—",
               "questions": [], "auto_checks": [], "key_ideas": [], "no_fill": []},
     "sprites": [], "stage": {"backdrops": []}, "keys": False,
 }

@@ -719,6 +719,8 @@ class H(http.server.BaseHTTPRequestHandler):
         self._j(200, status(u, f"{level}/{slug}", cfg(), self._realm()))
 
     def do_POST(self):
+        if self.path.split("?")[0] == "/lab/playground" and lab_core is not None:   # teachers playground: no lesson rules
+            return lab_core.playground(self, sys.modules[__name__])
         if self.path.startswith("/lab/teacher/") and getattr(lab_core, "CONSOL", None):   # start / stop / auto switch, no AI call
             return lab_core.CONSOL.teacher(self, sys.modules[__name__], "POST")
         kind, u, level, slug = self._who()

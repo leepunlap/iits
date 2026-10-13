@@ -437,6 +437,9 @@ class Ctx:
     def __init__(self, lesson):
         self.sprites = [s["name"] for s in lesson["sprites"]]
         self.costumes = {s["name"]: [c["name"] for c in s["costumes"]] for s in lesson["sprites"]}
+        # sounds per sprite (empty like the other lessons when a lesson ships none); a stage sound is not
+        # addressable: 播放音效 on the stage plays the STAGE's own sounds, which no lesson uses today.
+        self.sounds = {s["name"]: [x["name"] for x in (s.get("sounds") or [])] for s in lesson["sprites"]}
         self.backdrops = [b["name"] for b in lesson["stage"]["backdrops"]]
         self.errors, self.count = [], 0
         self.vars, self.lists, self.bcasts = set(), set(), set()
@@ -454,6 +457,12 @@ def _menu_ok(kind, v, ctx, sprite):
     if kind == "clone":    return v in ctx.sprites or v == "_myself_"
     if kind == "key":      return v in KEYS
     if kind == "costume":  return v in ctx.costumes.get(sprite, [])
+    # A sound must be one of THIS sprite's own sounds (the VM's sound_play looks the name up on the target's
+    # sprite). "*" is accepted so a lesson can let the model say "any sound" without knowing the name; it
+    # resolves to the sprite's first sound, which is what the VM would do with a 1-based index anyway.
+    if kind == "sound":
+        own = ctx.sounds.get(sprite, [])
+        return v == "*" and bool(own) or v in own
     if kind == "backdrop": return v in ctx.backdrops
     if kind == "color_param": return v in ("color", "saturation", "brightness", "transparency")
     return False
@@ -1293,7 +1302,7 @@ def name_scripts(s, programs, texts=None, prefer=(), protect=()):
 def opcode_cheatsheet():
     rows = []
     for op, d in OPS.items():
-        parts = [f"{k}:{(v.split(':')[3] if v.startswith('menu:') else v)}" for k, v in (d.get("inputs") or {}).items()]
+        parts = [f"{k}:{(v.split(':')[3] if v.startswith('menu:') else v)}" for k, v in (d.get("inputs") or {}).items()]  # menu:<op>:<FIELD>:<kind> -> just the kind
         parts += [f"{k}={'|'.join(v) if isinstance(v, list) else v}" for k, v in (d.get("fields") or {}).items()]
         rows.append(f"{op}[{d['shape']}]" + (f"({', '.join(parts)})" if parts else ""))
     return "\n".join(rows)
@@ -1412,7 +1421,10 @@ def system_prompt(lesson):
     b = lesson.get("brief", {})
     return SYSTEM.format(
         title=lesson.get("title", ""), goal=b.get("goal", ""),
-        sprites="、".join(f"{s['name']}（起點 x={s.get('x', 0)}, y={s.get('y', 0)}{'，開始時隱藏' if s.get('visible') is False else ''}）" for s in lesson["sprites"]),
+        sprites="、".join(f"{s['name']}（起點 x={s.get('x', 0)}, y={s.get('y', 0)}"
+                          f"{'，開始時隱藏' if s.get('visible') is False else ''}"
+                          f"{'，音效：' + '、'.join(x['name'] for x in s.get('sounds') or []) if s.get('sounds') else ''}）"
+                          for s in lesson["sprites"]),
         backdrops="、".join(x["name"] for x in lesson["stage"]["backdrops"]),
         colors="；".join(f"{k} {v}" for k, v in (b.get("colors") or {}).items()) or "—",
         limits=b.get("limits") or "—",
@@ -1552,12 +1564,50 @@ def call_model(messages, key, model, max_tokens=900, temperature=None, params=No
     return (d["choices"][0]["message"]["content"] or ""), d.get("usage", {}), round(time.time() - t0, 2)
 
 
+def _balance_brackets(s):
+    """2026-10-09 (502-bp03 / bp06 replays: 1 in 5 deep builds): the model sometimes writes ONE stray closing bracket in a
+    deeply nested reply (「…]}}},{"do":…」, or 「}]}]}],"focus"」 that closes the root object early), and the repair round
+    repeats the same text. Walk the text outside strings with a bracket stack and drop a closer that does not match the
+    open bracket, or that would close the outermost object while more than whitespace follows. Used only after
+    json.loads failed, so a reply that parses is never touched; returns None when nothing was dropped."""
+    out, stack, dropped, in_str, esc = [], [], 0, False, False
+    pair = {"}": "{", "]": "["}
+    n = len(s)
+    for k, ch in enumerate(s):
+        if in_str:
+            out.append(ch)
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch in "{[":
+            stack.append(ch)
+        elif ch in "}]":
+            if not stack or stack[-1] != pair[ch] or (len(stack) == 1 and s[k + 1:].strip()):
+                dropped += 1
+                continue
+            stack.pop()
+        out.append(ch)
+    return "".join(out) if dropped and not stack and not in_str else None
+
+
 def parse_turn(txt):
     txt = (txt or "").strip()
     i, j = txt.find("{"), txt.rfind("}")
     if i < 0 or j <= i:
         raise ValueError("no JSON object")
-    d = json.loads(txt[i:j + 1])
+    try:
+        d = json.loads(txt[i:j + 1])
+    except json.JSONDecodeError:
+        fixed = _balance_brackets(txt[i:j + 1])
+        if fixed is None:
+            raise
+        d = json.loads(fixed)
     if not isinstance(d, dict):
         raise ValueError("not an object")
     return {"intent": str(d.get("intent") or "build").strip().lower()[:10], "say": str(d.get("say") or "")[:200], "question": str(d.get("question") or "")[:120],
@@ -3576,3 +3626,41 @@ def _post(h, la, u, level, slug):
                "program": out["program"], "focus": focus, "left": st2["left"], "in_class": bool(st2.get("in_class")),
                "masked": masked, "ms": ms, "checks": sig["checks_passed"] + sig["checks_run"], **({"consol": consol} if consol else {}),
                **extra})
+
+
+# ---------------- AI playground (teachers host): no lesson, no whitelist, no auto-checks ----------------
+PLAYGROUND_SYSTEM = (
+    "你是「Wonder Lab 遊樂場」的 AI 編程助手。這裡是一個沒有限制的沙盒：沒有課程簡介、沒有積木白名單、"
+    "沒有自動評分，也不必依課程要求回應。\n"
+    "你可以自由：設計程式邏輯、產生 Wonder Lab / Scratch 積木 JSON、寫 Python / JavaScript / Arduino、"
+    "解釋概念、找 bug、提出幾種做法並比較。\n"
+    "規則：用使用者的語言回答（中文用繁體）；要程式碼時直接給完整可用的程式碼，不要用「…」省略；"
+    "不確定就明說不確定；不要聲稱你執行過其實沒有執行的東西。"
+)
+
+
+def playground(h, la):
+    """Free-form AI coding for the teachers playground. No brief, no whitelist, no guards."""
+    if not (h.headers.get("X-Auth-User", "") or "").strip():
+        return h._j(403, {"ok": False, "reason": "請先登入。"})
+    try:
+        n = int(h.headers.get("Content-Length", "0"))
+        body = json.loads(h.rfile.read(min(n, 200000)) or b"{}")
+    except Exception:
+        return h._j(400, {"ok": False, "reason": "訊息格式不對。"})
+    text = str(body.get("text") or "").strip()
+    if not text:
+        return h._j(400, {"ok": False, "reason": "請先輸入內容。"})
+    msgs = [{"role": "system", "content": PLAYGROUND_SYSTEM}]
+    for m in (body.get("history") or [])[-10:]:
+        role = m.get("role"); content = str(m.get("content") or "")[:8000]
+        if role in ("user", "assistant") and content:
+            msgs.append({"role": role, "content": content})
+    msgs.append({"role": "user", "content": text[:16000]})
+    c = la.cfg()
+    model = c.get("playground_model") or c.get("lab_model") or la.MODEL
+    try:
+        txt, _usage, lat = call_model(msgs, la.API_KEY, model, max_tokens=2400)
+    except Exception as e:
+        return h._j(502, {"ok": False, "reason": "AI 暫時無法回應（%s）。" % type(e).__name__})
+    return h._j(200, {"ok": True, "reply": txt, "model": model, "sec": round(float(lat or 0), 2)})

@@ -97,8 +97,8 @@ table.t td.act{white-space:nowrap}table.t td.act .btn{margin:0 4px 4px 0}
    flex:1 inside it did nothing; these set an explicit height instead of relying on .fullh. */
 body.pg-mode .wrap{padding:0;max-width:none}
 .pg-wrap{display:flex;flex-direction:column;min-height:0;height:calc(100vh - 56px)}
-.pg-cols{display:flex;flex:1;min-height:0;background:#fff}
-.pg-pane{display:flex;flex-direction:column;min-height:0;background:#fff}
+.pg-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);flex:1;min-height:0;background:#fff}
+.pg-pane{display:flex;flex-direction:column;min-height:0;background:#fff;min-width:0}
 .pg-pane+.pg-pane{border-left:1px solid #e5e8f0}
 .pg-bar{display:flex;align-items:center;gap:8px;flex:none;padding:7px 12px;font-size:13px;
         color:#4a5158;border-bottom:1px solid #eef0f6;background:#fbfcfe}
@@ -107,7 +107,7 @@ body.pg-mode .wrap{padding:0;max-width:none}
 .pg-composer{display:flex;gap:8px;align-items:flex-end;flex:none;padding:9px 12px;border-top:1px solid #eef0f6}
 @media(max-width:1000px){
   .pg-wrap{height:calc(100vh - 104px)}
-  .pg-cols{flex-direction:column}
+  .pg-cols{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(220px,42%)}
   .pg-pane+.pg-pane{border-left:0;border-top:1px solid #e5e8f0}
 }
 .ci-n{display:flex;align-items:center;gap:7px;font-weight:800;font-size:14.5px}
@@ -391,12 +391,12 @@ let PG={W:null,hist:[],load:null};
 function viewPlayground(){
   $('view').innerHTML=`<div class="pg-wrap">
     <div class="pg-cols">
-      <section class="pg-pane" style="flex:3">
+      <section class="pg-pane">
         <div class="pg-bar">${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></div>
         <div id="pgStage" style="flex:1;min-height:0;position:relative"></div>
         <div id="pgLoad" class="empty">正在載入積木編輯器…</div>
       </section>
-      <section class="pg-pane" style="flex:2">
+      <section class="pg-pane">
         <div class="pg-bar">${I('sparkles')} AI 學伴</div>
         <div id="pgLog" style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px"></div>
         <div class="pg-composer">

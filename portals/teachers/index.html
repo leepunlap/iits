@@ -88,6 +88,23 @@ table.t td.act{white-space:nowrap}table.t td.act .btn{margin:0 4px 4px 0}
   body.fullh .calg{flex:1;min-height:0;grid-template-rows:auto;grid-auto-rows:minmax(0,1fr)}
   body.fullh .cd{min-height:0;overflow-y:auto}
 }
+/* AI playground: must fill the screen at every width. #view is a plain block, so the old
+   flex:1 inside it did nothing; these set an explicit height instead of relying on .fullh. */
+body.pg-mode .wrap{padding:0;max-width:none}
+.pg-wrap{display:flex;flex-direction:column;min-height:0;height:calc(100vh - 56px)}
+.pg-cols{display:flex;flex:1;min-height:0;background:#fff}
+.pg-pane{display:flex;flex-direction:column;min-height:0;background:#fff}
+.pg-pane+.pg-pane{border-left:1px solid #e5e8f0}
+.pg-bar{display:flex;align-items:center;gap:8px;flex:none;padding:7px 12px;font-size:13px;
+        color:#4a5158;border-bottom:1px solid #eef0f6;background:#fbfcfe}
+.pg-bar .cnt{margin-left:auto;font-size:12px;color:#8a93a3}
+.pg-pane .empty{border:0;background:transparent;padding:18px 14px}
+.pg-composer{display:flex;gap:8px;align-items:flex-end;flex:none;padding:9px 12px;border-top:1px solid #eef0f6}
+@media(max-width:1000px){
+  .pg-wrap{height:calc(100vh - 104px)}
+  .pg-cols{flex-direction:column}
+  .pg-pane+.pg-pane{border-left:0;border-top:1px solid #e5e8f0}
+}
 .ci-n{display:flex;align-items:center;gap:7px;font-weight:800;font-size:14.5px}
 .ci-s{font-size:11.5px;color:#69707a;margin-top:2px;line-height:1.45}
 .ci-m{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:#69707a;margin-top:3px}
@@ -308,7 +325,7 @@ async function route(){
   const h=decodeURIComponent(location.hash.slice(1));const i=h.indexOf('/');
   let v=i<0?h:h.slice(0,i);const arg=i<0?'':h.slice(i+1);
   if(!v)v=ME.legacy?'library':'classes';
-  nav(v);window.scrollTo(0,0);document.body.classList.remove('fullh');wlStop();
+  nav(v);window.scrollTo(0,0);document.body.classList.remove('fullh','pg-mode');wlStop();
   // everything that matters on a page is in the URL, so a refresh lands on the same page:
   // #classes[/archived] · #class/<id>[/<材料分頁>] · #library/<級>[/<材料分頁>] · #preview/<級>/<班>/<課> · #wlab/<班>[/<課>]
   const [a0,a1]=arg.split('/');
@@ -330,24 +347,25 @@ window.addEventListener('hashchange',route);
 /* ---------------- AI playground: Scratch blocks + AI builds them ---------------- */
 let PG={W:null,hist:[],load:null};
 function viewPlayground(){
-  $('view').innerHTML=`<h2>遊樂場</h2>
-    <div style="display:flex;gap:12px;flex:1;min-height:0">
-      <section class="box" style="flex:3;min-height:0">
-        <h3>${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></h3>
+  $('view').innerHTML=`<div class="pg-wrap">
+    <div class="pg-cols">
+      <section class="pg-pane" style="flex:3">
+        <div class="pg-bar">${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></div>
         <div id="pgStage" style="flex:1;min-height:0;position:relative"></div>
-        <div id="pgLoad" class="empty" style="margin:12px">正在載入積木編輯器…</div>
+        <div id="pgLoad" class="empty">正在載入積木編輯器…</div>
       </section>
-      <section class="box" style="flex:2;min-height:0">
-        <h3>${I('sparkles')} AI 學伴</h3>
+      <section class="pg-pane" style="flex:2">
+        <div class="pg-bar">${I('sparkles')} AI 學伴</div>
         <div id="pgLog" style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px"></div>
-        <div style="border-top:1px solid #eef0f6;padding:10px 12px;display:flex;gap:8px;align-items:flex-end">
+        <div class="pg-composer">
           <textarea id="pgIn" rows="2" placeholder="講出你想舞台上發生的事。"
             style="flex:1;resize:vertical;font:inherit;font-size:13.5px;padding:9px 11px;border:1px solid #d7dced;border-radius:10px"></textarea>
           <button class="btn pri" id="pgSend">傳送</button>
         </div>
       </section>
-    </div>`;
-  document.body.classList.add('fullh');
+    </div>
+  </div>`;
+  document.body.classList.add('fullh','pg-mode');
   PG.W=null; PG.hist=[]; PG.load=null;
   pgRender();
   $('pgSend').onclick=pgSend;

@@ -178,6 +178,11 @@ table.tt td{vertical-align:middle}
 .pvn{font-size:11.5px;color:#8a93a3;margin-left:auto}
 .pvf{flex:1;min-height:0;border:1px solid #e5e8f0;border-radius:12px;overflow:hidden;background:#fff}
 .pvf iframe{width:100%;height:100%;border:0;display:block}
+:fullscreen{background:#f7f8fc}
+.pv:fullscreen{gap:0;height:100vh;padding:0;background:#f7f8fc}
+.pv:fullscreen .pvbar{border-radius:0;border-left-width:5px}
+.pv:fullscreen .pvf{border:0;border-radius:0}
+.wlv:fullscreen{height:100vh;overflow:auto;padding:10px 12px;background:#f7f8fc;gap:10px}
 @media(min-width:1000px){body.fullh #view>.pv{height:100%}}
 html.chatfull .pvf{position:fixed;inset:0;z-index:100;border:0;border-radius:0;height:100dvh}
 @media(max-width:700px){.pvn{margin-left:0}}
@@ -268,8 +273,24 @@ td.ex .exb{display:block;width:100%;margin:0;padding:0;border:0;background:none;
 <dialog id="dlg"><div class="dl" id="dlgb"></div></dialog>
 <div id="toast"></div>
 <script>
-const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "external-link": "<path d=\"M15 3h6v6\"/> <path d=\"M10 14 21 3\"/> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>", "chevron-right": "<path d=\"m9 18 6-6-6-6\"/>"};
-const I=n=>'<svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+IC[n]+'</svg>';  // single-colour Lucide icons (ISC), owner 2026-10-07: no emoji
+const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "maximize": "<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/> <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/> <path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/> <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>",
+  "minimize": "<path d=\"M8 3v3a2 2 0 0 1-2 2H3\"/> <path d=\"M21 8h-3a2 2 0 0 1-2-2V3\"/> <path d=\"M3 16h3a2 2 0 0 1 2 2v3\"/> <path d=\"M16 21v-3a2 2 0 0 1 2-2h3\"/>",
+  "external-link": "<path d=\"M15 3h6v6\"/> <path d=\"M10 14 21 3\"/> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>", "chevron-right": "<path d=\"m9 18 6-6-6-6\"/>"};
+const I=n=>'<svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+IC[n]+'</svg>';
+/* Full screen: an app control, so it sits in the view's own bar. Toggles the view container itself,
+   so the bar stays visible and the teacher can always get out. */
+function fsPaint(el,btn){if(!btn)return;const on=document.fullscreenElement===el;
+  btn.innerHTML=I(on?'minimize':'maximize')+(on?' 退出全螢幕':'全螢幕');btn.setAttribute('aria-pressed',on?'true':'false');}
+function fsToggle(el,btn){
+  if(!el||!el.requestFullscreen){toast('此瀏覽器不支援全螢幕。');return;}
+  const done=function(){fsPaint(el,btn);};
+  try{
+    if(document.fullscreenElement)document.exitFullscreen().then(done, done);
+    else el.requestFullscreen().then(done, function(){toast('此瀏覽器不支援全螢幕。');});
+  }catch(e){toast('此瀏覽器不支援全螢幕。');}
+}
+document.addEventListener('fullscreenchange',function(){
+  fsPaint(document.querySelector('.pv'),$('pvfs'));fsPaint(document.querySelector('.wlv'),$('wlfs'));});  // single-colour Lucide icons (ISC), owner 2026-10-07: no emoji
 
 const LVC={L1:'#3d5699',L2:'#2f8f6b',L3:'#d9772e',L4:'#7c4dc4',yai:'#2ea052'};
 const SECS=[{k:'ai',ic:I('bot'),lb:'AI 延伸課程',nt:'師生皆可下載',c:'ai'},{k:'software',ic:I('download'),lb:'軟件下載',nt:'學生可下載',c:'sw'},{k:'teacher',ic:I('book'),lb:'教師專區',nt:'僅教師可見',c:'tea'},{k:'student',ic:I('backpack'),lb:'學生專區',nt:'學生可見',c:'stu'}];
@@ -524,7 +545,7 @@ async function viewClass(id){
     <div class="cpj"><span class="lb">學生註冊碼</span><code id="jcc">${esc(c.joincode)}</code>
       <button class="btn sm" data-a="copy">複製</button>${c.status==='active'||ME.admin?`<button class="btn sm" data-a="rotate" data-v="${esc(c.id)}" title="重新產生後舊碼即時失效，已註冊的學生不受影響">重新產生</button>`:''}
       <a class="hlp" href="${esc(regUrl)}" target="_blank" rel="noopener" title="學生（或家長）到此網址註冊，輸入註冊碼便加入此班；可只輸入「-」後面的六個字">${esc(regUrl.replace('https://',''))}</a></div>
-    ${['L1','L2','L3','L4'].includes(c.level)&&filesOk?`<a class="btn sm pri" href="#preview/${encodeURIComponent(c.level)}/${encodeURIComponent(c.id)}">學生視角預覽</a>`:''}
+    ${['L1','L2','L3','L4'].includes(c.level)&&filesOk?`<a class="btn sm pri" href="/files/${encodeURIComponent(c.level)}/lessons/index.html" target="_blank" rel="noopener">學生視角預覽 ${I('external-link')}</a>`:''}
     ${c.level==='L4'?`<a class="btn sm" href="#wlab/${encodeURIComponent(c.id)}">${I('flask-conical')} Wonder Lab 課堂控制</a>`:''}
     ${ME.admin?`<div class="cpa"><button class="btn sm" data-a="edit" data-v="${esc(c.id)}">${I('pencil')} 編輯</button>
       <button class="btn sm${c.status==='archived'?'':' warn'}" data-a="status" data-v="${esc(c.id)}" data-s="${c.status==='archived'?'active':'archived'}">${c.status==='archived'?'恢復':'封存'}</button></div>`:''}
@@ -553,9 +574,11 @@ async function viewPreview(arg){
     if(c){back='#class/'+encodeURIComponent(c.id);label=c.name+' · '+lv;}}
   el.innerHTML=`<div class="pv"><div class="pvbar"><a class="back" href="${back}">←</a><b>學生視角預覽</b><span class="lvtag">${lvTag(lv)}</span><span class="pvl">${esc(label)}</span>
     <span class="pvn">與學生看到的完全一樣；你在 AI 學伴的提問計入你自己的次數，不影響學生。</span>
+    <button class="btn sm" type="button" id="pvfs" aria-pressed="false">${I('maximize')} 全螢幕</button>
     <a class="btn sm" id="pvnew" href="${pageV}" target="_blank" rel="noopener">新視窗開啟 ${I('external-link')}</a></div>
     <div class="pvf"><iframe id="pvframe" src="${pageV}" title="學生視角預覽" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>`;
   document.body.classList.add('fullh');
+  {const b=$('pvfs');if(b)b.onclick=function(){fsToggle(document.querySelector('.pv'),b);};}
   // keep the URL on the lesson the teacher is looking at (prev/next, lesson picker inside the preview)
   $('pvframe').addEventListener('load',function(){
     let p='';try{p=this.contentWindow.location.pathname;}catch(e){return;}
@@ -699,7 +722,7 @@ function viewLibrary(lv){
   if(!levels[lv])lv='L1';
   $('view').innerHTML=`<h2>教材庫 <span class="n">按級別，所有班級共用</span></h2>
     <div class="lvpick">${Object.entries(levels).map(([k,n])=>`<a href="#library/${k}" class="${k===lv?'on':''}">${lvTag(k)} ${esc(n)}</a>`).join('')}</div>
-    ${['L1','L2','L3','L4'].includes(lv)?`<p style="margin:0 0 10px"><a class="btn sm pri" href="#preview/${lv}">學生視角預覽：${lv} 全部課堂</a></p>`:''}
+    ${['L1','L2','L3','L4'].includes(lv)?`<p style="margin:0 0 10px"><a class="btn sm pri" href="/files/${lv}/lessons/index.html" target="_blank" rel="noopener">學生視角預覽：${lv} 全部課堂 ${I('external-link')}</a></p>`:''}
     <section class="box lib"><div class="mats" id="secs"></div></section>`;
   document.body.classList.add('fullh');
   fileManager(lv,$('secs'));
@@ -779,6 +802,7 @@ function wlRender(d,first){
   <header class="wlh"><a class="back" href="#class/${encodeURIComponent(c.id)}" title="返回班級">←</a>
     <div><h1>${I('flask-conical')} Wonder Lab 課堂控制 ${lvTag(c.level)}</h1><div class="wlt" id="wltl"></div></div>
     <label class="wlpick">課堂 <select id="wlles">${d.lessons.map(x=>`<option value="${esc(x.slug)}"${x.slug===d.lesson.slug?' selected':''}>${esc(x.slug+' '+x.title)}</option>`).join('')}</select></label>
+    <button class="btn sm" type="button" id="wlfs" aria-pressed="false">${I('maximize')} 全螢幕</button>
     <span class="wlr" id="wlr" title="每 10 秒自動更新，不會使用 AI"></span></header>
   ${ok?'':'<div class="cpw">此班已封存，只可查看。</div>'}
   <div class="wlbar"><label class="wlsw"><input type="checkbox" id="wlauto"${ok?'':' disabled'}><i></i>學生達標時自動開始整合</label>
@@ -789,6 +813,7 @@ function wlRender(d,first){
     <table class="t tt"><thead><tr><th>姓名 · 登入名稱</th><th>最後活動</th><th>對話回合</th><th>執行次數</th><th>進度</th><th>卡住</th><th>階段</th><th>學生的解釋</th><th class="act"></th></tr></thead>
     <tbody id="wltb"></tbody></table></div></section></div>`;
   }
+  {const b=$('wlfs');if(b)b.onclick=function(){fsToggle(document.querySelector('.wlv'),b);};}
   $('wltl').innerHTML=esc(c.name)+' · '+tl;
   const au=$('wlauto');if(au&&document.activeElement!==au)au.checked=!!d.auto;
   const r=$('wlr');r.className='wlr';r.innerHTML=I('refresh-cw')+' 每 10 秒更新 · '+esc(new Date(now*1000).toLocaleTimeString('en-GB',{hour12:false}));

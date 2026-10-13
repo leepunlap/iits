@@ -649,6 +649,25 @@ def apply_ops(program, ops, lesson, names=(), info=None):
     for o in (ops or [])[:6]:
         if not isinstance(o, dict):
             continue
+        if o.get("do") == "add_sprite":                     # 由角色庫加入角色
+            lib = str(o.get("name") or "").strip()
+            if lib not in library_names("sprites"):
+                ctx.err(f"角色庫沒有 {lib[:24]!r}"); continue
+            alias = str(o.get("as") or lib).strip()[:24] or lib
+            if alias == STAGE_NAME or alias in ctx.sprites:
+                ctx.err(f"已經有角色叫 {alias[:24]!r}"); continue
+            p["sprites"][alias] = {"scripts": {}, "lib": lib}
+            ctx.sprites = list(ctx.sprites) + [alias]
+            applied.append({"do": "add_sprite", "sprite": alias, "name": lib})
+            continue
+        if o.get("do") == "add_backdrop":                   # 由舞台庫換舞台
+            lib = str(o.get("name") or "").strip()
+            if lib not in library_names("backdrops"):
+                ctx.err(f"舞台庫沒有 {lib[:24]!r}"); continue
+            p.setdefault("stage", {}).setdefault("scripts", {})
+            p["stage"]["backdrop"] = lib
+            applied.append({"do": "add_backdrop", "name": lib})
+            continue
         s = o.get("sprite")
         if s != STAGE_NAME and s not in ctx.sprites:
             ctx.err(f"角色 {str(s)[:20]!r} 不存在（可用：{'、'.join(ctx.sprites)}、{STAGE_NAME}）"); continue
@@ -714,6 +733,36 @@ def _n_stop_all(ops):
     return json.dumps(ops, ensure_ascii=False).count('"STOP_OPTION": "all"')
 
 
+# ---- the UCMake / OpenBlock actor + stage library ---------------------------------------------
+# Built from the ob-libraries export (~/ucmake-library, 340 sprites and 85 backdrops whose assets are
+# all present) and deployed to /var/www/iits/classfiles/_library, served same-origin at /lab-library/
+# because the Studio draws costumes to a canvas.
+_LIBRARY = None
+
+
+def library():
+    global _LIBRARY
+    if _LIBRARY is None:
+        try:
+            with open("/var/www/iits/classfiles/_library/library.json", encoding="utf-8") as f:
+                _LIBRARY = json.load(f)
+        except Exception:
+            _LIBRARY = {"sprites": [], "backdrops": []}
+    return _LIBRARY
+
+
+def library_names(kind):
+    return {str(e.get("name")) for e in library().get(kind) or []}
+
+
+def library_brief(cap=260):
+    """The names, for the prompt: the model must only ask for actors and stages that exist."""
+    sp = [str(e.get("name")) for e in library().get("sprites") or []][:cap]
+    bd = [str(e.get("name")) for e in library().get("backdrops") or []][:cap]
+    return ("【角色庫】用 add_sprite 由角色庫加入角色（name 必須是這個清單其中一個）：" + "、".join(sp) + "\n"
+            "【舞台庫】用 add_backdrop 由舞台庫換舞台（name 必須是這個清單其中一個）：" + "、".join(bd))
+
+
 def normalize_ops(ops, asked_loop, text=""):
     """Fix fix-round (load gate: 10 of 18 identical first turns 「按向上鍵就移動3步」 needed a second model call): two slips of
     the first answer are fixed here instead of by a repair call. (1) 「當綠旗被點擊」 put on top of the event he named (flag,
@@ -724,6 +773,9 @@ def normalize_ops(ops, asked_loop, text=""):
         return ops
     out = []
     for o in ops:
+        if isinstance(o, dict) and o.get("do") in ("add_sprite", "add_backdrop"):
+            out.append(o)          # the library ops are not scripts; they pass through as they are
+            continue
         if not (isinstance(o, dict) and o.get("do") == "set_script" and isinstance(o.get("blocks"), list)):
             out.append(o)
             continue
@@ -1375,6 +1427,9 @@ SYSTEM = """你是「Wonder Lab」的 AI 學伴，對象是中一至中三（12�
 - ops：改程式的指令，可以是 []。只可用：
   {{"do":"set_script","sprite":"角色名","id":"s1","blocks":[積木, …]}}  新增或整段取代一段程式（同一個 id 會被取代）
   {{"do":"delete_script","sprite":"角色名","id":"s1"}}
+  {{"do":"add_sprite","name":"Cat","as":"小貓"}}  由角色庫加入一個角色（name 是庫裏的名字，as 是之後用的角色名；學生自己講的名字優先）
+  {{"do":"add_backdrop","name":"Beach Malibu"}}  由舞台庫換背景
+{library}
   舞台的程式用 "sprite":"舞台"。改一段程式時，整段重寫（保留學生之前的部分和錯誤，只加入他這次說的改動）。
 - 積木：{{"op":"積木碼", 輸入名: 值, 欄位名: 值}}。C 形積木的內容放 SUBSTACK（「否則」放 SUBSTACK2）；條件放 CONDITION（值是一個 boolean 積木）。數值可以是數字、{{"var":"變數名"}} 或另一個 reporter 積木。選單值：角色名、"_edge_"（邊緣）、"_mouse_"、"_random_"、"_myself_"。
   例子：{{"op":"control_repeat","TIMES":10,"SUBSTACK":[{{"op":"motion_changeyby","DY":-10}}]}}
@@ -1418,6 +1473,7 @@ SYSTEM = """你是「Wonder Lab」的 AI 學伴，對象是中一至中三（12�
 
 
 def system_prompt(lesson):
+    """The lesson prompt, plus the actor and stage library the AI may draw on."""
     b = lesson.get("brief", {})
     return SYSTEM.format(
         title=lesson.get("title", ""), goal=b.get("goal", ""),
@@ -1429,7 +1485,7 @@ def system_prompt(lesson):
         colors="；".join(f"{k} {v}" for k, v in (b.get("colors") or {}).items()) or "—",
         limits=b.get("limits") or "—",
         questions="\n".join(f"  {i+1}. {q}" for i, q in enumerate(b.get("questions") or [])),
-        cheat=CHEAT)
+        cheat=CHEAT, library=library_brief())
 
 
 def compact(obj, limit):

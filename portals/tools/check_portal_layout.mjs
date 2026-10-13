@@ -106,6 +106,10 @@ if (m.hasWrap && m.hasCols) {
   check('the panes sit side by side on a wide screen', m.panes.length === 2
     && Math.abs(m.panes[0].h - m.panes[1].h) <= 4,
     m.panes.map((p) => `h=${p.h}`).join(' '));
+  // the AI 學伴 pane must match the lesson lab's: grid-template-columns minmax(280px,440px)
+  const ai = m.panes[1];
+  check('the AI pane is the same width as in the lesson lab (280-440px)',
+    !!ai && ai.w >= 280 && ai.w <= 440, ai ? `AI pane ${ai.w}px, editor ${m.panes[0].w}px` : '');
 }
 let shot = (await send('Page.captureScreenshot', { format: 'png' })).result?.data || '';
 writeFileSync('/tmp/portal_playground.png', Buffer.from(shot, 'base64'));

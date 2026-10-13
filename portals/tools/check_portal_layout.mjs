@@ -111,6 +111,19 @@ let shot = (await send('Page.captureScreenshot', { format: 'png' })).result?.dat
 writeFileSync('/tmp/portal_playground.png', Buffer.from(shot, 'base64'));
 console.log('screenshot: /tmp/portal_playground.png');
 
+// ---- the four strand markers on classes ----
+await evalx(`location.hash='#classes'`);
+for (let i = 0; i < 40; i++) { if (await evalx(`!!document.querySelector('.cc')`)) break; await sleep(250); }
+await sleep(1200);
+const st = JSON.parse(await evalx(`JSON.stringify([...document.querySelectorAll('.cc .st, .ci .st')].map(x => ({
+  text:x.textContent.trim(), colour:getComputedStyle(x).color, icon:!!x.querySelector('svg')})))`));
+check('class rows carry a strand marker with an icon', st.length > 0 && st.every(x => x.icon),
+  JSON.stringify(st.slice(0, 3)));
+check('the strand marker is named, not just coloured', st.length > 0 && st.every(x => x.text.length > 0),
+  JSON.stringify(st.map(x => x.text).slice(0, 4)));
+writeFileSync('/tmp/portal_classes.png', Buffer.from((await send('Page.captureScreenshot', { format: 'png' })).result?.data || '', 'base64'));
+console.log('screenshot: /tmp/portal_classes.png');
+
 // ---- 學生視角預覽 must launch the student page directly ----
 await evalx(`location.hash='#library/L4'`);
 await sleep(1800);

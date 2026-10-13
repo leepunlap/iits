@@ -26,6 +26,11 @@ h2 .sp{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 .cc:hover{border-color:#3d5699;box-shadow:0 10px 24px -14px rgba(61,86,153,.5)}
 .cc-top{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#4a5158}
 .lv{display:inline-block;background:var(--c,#3d5699);color:#fff;font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;vertical-align:middle}
+.st{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;font-size:11.5px;font-weight:600;
+    border-radius:999px;padding:2px 9px 2px 7px;color:var(--c);border:1px solid var(--c);background:#fff}
+.st b{font-weight:600}
+.st .si{width:13px;height:13px;flex:none;opacity:.9}
+.st.i{padding:2px 6px}
 .arch{font-size:11px;color:#8a93a3;border:1px solid #d7dced;border-radius:6px;padding:1px 6px;font-weight:400}
 .cc-name{font-size:18px;font-weight:800;margin:6px 0 2px}
 .cc-sch{font-size:12.5px;color:#4a5158;min-height:1.2em}
@@ -275,6 +280,10 @@ td.ex .exb{display:block;width:100%;margin:0;padding:0;border:0;background:none;
 <script>
 const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "maximize": "<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/> <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/> <path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/> <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>",
   "minimize": "<path d=\"M8 3v3a2 2 0 0 1-2 2H3\"/> <path d=\"M21 8h-3a2 2 0 0 1-2-2V3\"/> <path d=\"M3 16h3a2 2 0 0 1 2 2v3\"/> <path d=\"M16 21v-3a2 2 0 0 1 2-2h3\"/>",
+  "strand-build": "<path d=\"m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9\"/> <path d=\"m18 15 4-4\"/> <path d=\"m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5\"/>",
+  "strand-motorize": "<circle cx=\"12\" cy=\"12\" r=\"3\"/> <path d=\"M12 2v3\"/> <path d=\"M12 19v3\"/> <path d=\"M2 12h3\"/> <path d=\"M19 12h3\"/> <path d=\"m4.9 4.9 2.1 2.1\"/> <path d=\"m17 17 2.1 2.1\"/> <path d=\"m19.1 4.9-2.1 2.1\"/> <path d=\"m7 17-2.1 2.1\"/>",
+  "strand-automate": "<path d=\"m17 2 4 4-4 4\"/> <path d=\"M3 11v-1a4 4 0 0 1 4-4h14\"/> <path d=\"m7 22-4-4 4-4\"/> <path d=\"M21 13v1a4 4 0 0 1-4 4H3\"/>",
+  "strand-program": "<path d=\"m16 18 6-6-6-6\"/> <path d=\"m8 6-6 6 6 6\"/>",
   "external-link": "<path d=\"M15 3h6v6\"/> <path d=\"M10 14 21 3\"/> <path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/>", "chevron-right": "<path d=\"m9 18 6-6-6-6\"/>"};
 const I=n=>'<svg class="si" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+IC[n]+'</svg>';
 /* Full screen: an app control, so it sits in the view's own bar. Toggles the view container itself,
@@ -319,6 +328,13 @@ function fd(s){return s+'（'+wd(s)+'）';}
 function tm(x){return x&&x.start?x.start+'–'+x.end:'';}
 function nextSession(s){const t=iso(new Date());return (s||[]).find(x=>x.date>=t)||null;}
 function lvTag(l){return `<span class="lv" style="--c:${LVC[l]||'#3d5699'}">${esc(l)}</span>`;}
+/* The four strands: what a class actually contains, one colour each. */
+const STRAND={L1:{zh:'建構',en:'Build',ic:'strand-build',c:'#b45309'},
+              L2:{zh:'機動',en:'Motorize',ic:'strand-motorize',c:'#0f766e'},
+              L3:{zh:'自動化',en:'Automate',ic:'strand-automate',c:'#6d28d9'},
+              L4:{zh:'編程',en:'Programming',ic:'strand-program',c:'#1d4ed8'}};
+function strandTag(l,text){const k=STRAND[l];if(!k)return '';
+  return `<span class="st" style="--c:${k.c}" title="${esc(k.en)}">${I(k.ic)}${text===false?'':'<b>'+esc(k.zh)+'</b>'}</span>`;}
 function tdate(ts){if(!ts)return '';const d=new Date(ts*1000);return iso(d);}
 
 async function loadClasses(force){
@@ -451,7 +467,7 @@ async function pgSend(){
 function card(c){
   const s=c.sessions||[],nx=c.status==='active'?nextSession(s):null;
   return `<a class="cc" href="#class/${encodeURIComponent(c.id)}">
-    <div class="cc-top"><span>${esc(fd(c.start_date))}</span>${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
+    <div class="cc-top"><span>${esc(fd(c.start_date))}</span>${lvTag(c.level)}${strandTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
     <div class="cc-name">${esc(c.name)}</div>
     <div class="cc-sch">${esc(c.schedule)}</div>
     <div class="cc-meta"><span>${I('calendar-days')} ${s.length} 節${s.length?' · '+esc(md(s[0].date))+' – '+esc(md(s[s.length-1].date)):''}</span><span>${I('backpack')} ${c.students} 位學生</span></div>
@@ -494,7 +510,7 @@ async function viewClasses(){
 function item(c){
   const s=c.sessions||[],nx=c.status==='active'?nextSession(s):null;
   return `<div class="ci" style="--c:${LVC[c.level]||'#3d5699'}" data-cid="${esc(c.id)}"><a class="ci-a" href="#class/${encodeURIComponent(c.id)}">
-    <div class="ci-n">${esc(c.name)} ${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
+    <div class="ci-n">${esc(c.name)} ${lvTag(c.level)}${strandTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</div>
     <div class="ci-s">${esc(c.schedule)}</div>
     <div class="ci-m"><span>${I('calendar-days')} ${s.length} 節${s.length?' · '+esc(md(s[0].date))+' – '+esc(md(s[s.length-1].date)):''}</span><span>${I('backpack')} ${c.students}</span>
       ${c.teachers.length?'<span>'+I('user-round')+' '+c.teachers.map(t=>esc(t.name)).join('、')+'</span>':'<span class="warn">未分配老師</span>'}</div>
@@ -540,7 +556,7 @@ async function viewClass(id){
   el.innerHTML=`<div class="cp" style="--c:${LVC[c.level]||'#3d5699'}">
   <header class="cph">
     <a class="back" href="#classes" title="${ME.admin?'全部班級':'我的班級'}">←</a>
-    <div class="cpt"><h1>${esc(c.name)} ${lvTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</h1>
+    <div class="cpt"><h1>${esc(c.name)} ${lvTag(c.level)}${strandTag(c.level)}${c.status==='archived'?'<span class="arch">已封存</span>':''}</h1>
       <div class="cpi">${esc(fd(c.start_date))} 開課${c.term?' · '+esc(c.term):''}<i>·</i>${info}</div></div>
     <div class="cpj"><span class="lb">學生註冊碼</span><code id="jcc">${esc(c.joincode)}</code>
       <button class="btn sm" data-a="copy">複製</button>${c.status==='active'||ME.admin?`<button class="btn sm" data-a="rotate" data-v="${esc(c.id)}" title="重新產生後舊碼即時失效，已註冊的學生不受影響">重新產生</button>`:''}
@@ -572,7 +588,7 @@ async function viewPreview(arg){
   let back='#library/'+lv,label=lv+' 全部課堂';
   if(cid){const d=await loadClasses();const c=d.classes.find(x=>x.id===decodeURIComponent(cid));
     if(c){back='#class/'+encodeURIComponent(c.id);label=c.name+' · '+lv;}}
-  el.innerHTML=`<div class="pv"><div class="pvbar"><a class="back" href="${back}">←</a><b>學生視角預覽</b><span class="lvtag">${lvTag(lv)}</span><span class="pvl">${esc(label)}</span>
+  el.innerHTML=`<div class="pv"><div class="pvbar"><a class="back" href="${back}">←</a><b>學生視角預覽</b><span class="lvtag">${lvTag(lv)}${strandTag(lv)}</span><span class="pvl">${esc(label)}</span>
     <span class="pvn">與學生看到的完全一樣；你在 AI 學伴的提問計入你自己的次數，不影響學生。</span>
     <button class="btn sm" type="button" id="pvfs" aria-pressed="false">${I('maximize')} 全螢幕</button>
     <a class="btn sm" id="pvnew" href="${pageV}" target="_blank" rel="noopener">新視窗開啟 ${I('external-link')}</a></div>
@@ -721,7 +737,7 @@ function viewLibrary(lv){
   const levels=(DATA&&DATA.levels)||{L1:'一級 · 動力工程＋創意製造',L2:'二級 · 程序交互＋傳感控制',L3:'三級 · 智能控制＋智能創造',L4:'四級 · 創造大師＋程序應用',yai:'YAI · 無廢城市競賽'};
   if(!levels[lv])lv='L1';
   $('view').innerHTML=`<h2>教材庫 <span class="n">按級別，所有班級共用</span></h2>
-    <div class="lvpick">${Object.entries(levels).map(([k,n])=>`<a href="#library/${k}" class="${k===lv?'on':''}">${lvTag(k)} ${esc(n)}</a>`).join('')}</div>
+    <div class="lvpick">${Object.entries(levels).map(([k,n])=>`<a href="#library/${k}" class="${k===lv?'on':''}">${lvTag(k)} ${strandTag(k)} ${esc(n)}</a>`).join('')}</div>
     ${['L1','L2','L3','L4'].includes(lv)?`<p style="margin:0 0 10px"><a class="btn sm pri" href="/files/${lv}/lessons/index.html" target="_blank" rel="noopener">學生視角預覽：${lv} 全部課堂 ${I('external-link')}</a></p>`:''}
     <section class="box lib"><div class="mats" id="secs"></div></section>`;
   document.body.classList.add('fullh');
@@ -800,7 +816,7 @@ function wlRender(d,first){
   if(first){
     $('view').innerHTML=`<div class="wlv">
   <header class="wlh"><a class="back" href="#class/${encodeURIComponent(c.id)}" title="返回班級">←</a>
-    <div><h1>${I('flask-conical')} Wonder Lab 課堂控制 ${lvTag(c.level)}</h1><div class="wlt" id="wltl"></div></div>
+    <div><h1>${I('flask-conical')} Wonder Lab 課堂控制 ${lvTag(c.level)}${strandTag(c.level)}</h1><div class="wlt" id="wltl"></div></div>
     <label class="wlpick">課堂 <select id="wlles">${d.lessons.map(x=>`<option value="${esc(x.slug)}"${x.slug===d.lesson.slug?' selected':''}>${esc(x.slug+' '+x.title)}</option>`).join('')}</select></label>
     <button class="btn sm" type="button" id="wlfs" aria-pressed="false">${I('maximize')} 全螢幕</button>
     <span class="wlr" id="wlr" title="每 10 秒自動更新，不會使用 AI"></span></header>

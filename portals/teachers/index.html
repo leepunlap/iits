@@ -328,13 +328,18 @@ function fd(s){return s+'（'+wd(s)+'）';}
 function tm(x){return x&&x.start?x.start+'–'+x.end:'';}
 function nextSession(s){const t=iso(new Date());return (s||[]).find(x=>x.date>=t)||null;}
 function lvTag(l){return `<span class="lv" style="--c:${LVC[l]||'#3d5699'}">${esc(l)}</span>`;}
-/* The four strands: what a class actually contains, one colour each. */
-const STRAND={L1:{zh:'建構',en:'Build',ic:'strand-build',c:'#b45309'},
-              L2:{zh:'機動',en:'Motorize',ic:'strand-motorize',c:'#0f766e'},
-              L3:{zh:'自動化',en:'Automate',ic:'strand-automate',c:'#6d28d9'},
-              L4:{zh:'編程',en:'Programming',ic:'strand-program',c:'#1d4ed8'}};
-function strandTag(l,text){const k=STRAND[l];if(!k)return '';
-  return `<span class="st" style="--c:${k.c}" title="${esc(k.en)}">${I(k.ic)}${text===false?'':'<b>'+esc(k.zh)+'</b>'}</span>`;}
+/* The strands: what a class actually contains, one icon and colour each. A class shows every strand
+   its lessons cover, so a level usually carries more than one.
+   建構 Build is about hardware: L1-L3 build with the kit (one lesson in L1 and one in L3 have no build
+   section of their own); in L4 only the lessons that need the UC-Mind board build - the software-only
+   ones do not. 編程 Programming follows each lesson's own code content. */
+const STRAND={build:{zh:'建構',en:'Build',ic:'strand-build',c:'#b45309'},
+              motor:{zh:'機動',en:'Motorize',ic:'strand-motorize',c:'#0f766e'},
+              auto:{zh:'自動化',en:'Automate',ic:'strand-automate',c:'#6d28d9'},
+              code:{zh:'編程',en:'Programming',ic:'strand-program',c:'#1d4ed8'}};
+const LEVEL_STRANDS={L1:['build'],L2:['build','code'],L3:['build','code'],L4:['build','code']};
+function strandTag(l,text){return (LEVEL_STRANDS[l]||[]).map(k=>{const v=STRAND[k];
+  return `<span class="st" style="--c:${v.c}" title="${esc(v.en)}">${I(v.ic)}${text===false?'':'<b>'+esc(v.zh)+'</b>'}</span>`;}).join('');}
 function tdate(ts){if(!ts)return '';const d=new Date(ts*1000);return iso(d);}
 
 async function loadClasses(force){

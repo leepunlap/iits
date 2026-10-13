@@ -3628,39 +3628,49 @@ def _post(h, la, u, level, slug):
                **extra})
 
 
-# ---------------- AI playground (teachers host): no lesson, no whitelist, no auto-checks ----------------
-PLAYGROUND_SYSTEM = (
-    "你是「Wonder Lab 遊樂場」的 AI 編程助手。這裡是一個沒有限制的沙盒：沒有課程簡介、沒有積木白名單、"
-    "沒有自動評分，也不必依課程要求回應。\n"
-    "你可以自由：設計程式邏輯、產生 Wonder Lab / Scratch 積木 JSON、寫 Python / JavaScript / Arduino、"
-    "解釋概念、找 bug、提出幾種做法並比較。\n"
-    "規則：用使用者的語言回答（中文用繁體）；要程式碼時直接給完整可用的程式碼，不要用「…」省略；"
-    "不確定就明說不確定；不要聲稱你執行過其實沒有執行的東西。"
-)
+# ---------------- AI playground (teachers host): the lesson turn without the lesson ----------------
+PLAYGROUND_LESSON = {
+    "title": "遊樂場",
+    "brief": {"goal": "自由創作：這是沙盒，沒有課程要求，也沒有自動評分。學生想砌甚麼就砌甚麼。",
+              "limits": "無限制。不要提及課程、任務、作業或評分。",
+              "questions": [], "auto_checks": [], "key_ideas": [], "no_fill": []},
+    "sprites": [], "stage": {"backdrops": []}, "keys": False,
+}
 
 
 def playground(h, la):
-    """Free-form AI coding for the teachers playground. No brief, no whitelist, no guards."""
+    """The teachers AI playground: lab_turn with a stub lesson.
+
+    Reuses lab_turn / parse_turn / apply_ops and the ops the Studio itself validates, so blocks are built
+    by exactly the code path the L4 lessons use - only the lesson brief, checks, hidden answers and
+    whitelist gates are absent. The Studio (lab-frame.html) applies the returned ops with its own
+    animation, which is what makes the AI drag and drop the blocks.
+    """
     if not (h.headers.get("X-Auth-User", "") or "").strip():
         return h._j(403, {"ok": False, "reason": "請先登入。"})
     try:
         n = int(h.headers.get("Content-Length", "0"))
-        body = json.loads(h.rfile.read(min(n, 200000)) or b"{}")
+        body = json.loads(h.rfile.read(min(n, 400000)) or b"{}")
     except Exception:
         return h._j(400, {"ok": False, "reason": "訊息格式不對。"})
     text = str(body.get("text") or "").strip()
     if not text:
         return h._j(400, {"ok": False, "reason": "請先輸入內容。"})
-    msgs = [{"role": "system", "content": PLAYGROUND_SYSTEM}]
-    for m in (body.get("history") or [])[-10:]:
-        role = m.get("role"); content = str(m.get("content") or "")[:8000]
-        if role in ("user", "assistant") and content:
-            msgs.append({"role": role, "content": content})
-    msgs.append({"role": "user", "content": text[:16000]})
+    hist = [m for m in (body.get("history") or [])[-8:]
+            if isinstance(m, dict) and m.get("role") in ("user", "assistant")]
+    lesson = dict(PLAYGROUND_LESSON)
+    try:
+        program = sanitize_program(body.get("program"), lesson)
+    except Exception:
+        program = body.get("program") or {"sprites": {}, "stage": {"scripts": {}}}
     c = la.cfg()
     model = c.get("playground_model") or c.get("lab_model") or la.MODEL
+    t0 = time.time()
     try:
-        txt, _usage, lat = call_model(msgs, la.API_KEY, model, max_tokens=2400)
+        out = lab_turn(lesson, hist, program, body.get("run"), text, la.API_KEY, model)
     except Exception as e:
         return h._j(502, {"ok": False, "reason": "AI 暫時無法回應（%s）。" % type(e).__name__})
-    return h._j(200, {"ok": True, "reply": txt, "model": model, "sec": round(float(lat or 0), 2)})
+    return h._j(200, {"ok": True, "model": model, "ms": int((time.time() - t0) * 1000),
+                      "say": out.get("say", ""), "question": out.get("question", ""),
+                      "ops": out.get("ops") or [], "errors": out.get("errors") or [],
+                      "program": out.get("program"), "focus": out.get("focus")})

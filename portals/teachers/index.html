@@ -435,10 +435,12 @@ async function pgBoot(){
     await ready;
     const W=fr.contentWindow&&fr.contentWindow.WLStudio;
     if(!W||typeof W.boot!=='function'){$('pgLoad').textContent='積木編輯器未就緒。';return;}
-    // reuse a built lesson stage (sprites + original art) as the playground's starting stage
-    const lesson=await (await fetch(BASE+'501-bp01.json')).json();
-    lesson.title='遊樂場'; lesson.opening='想在舞台上做甚麼？講出來，我幫你砌積木。';
-    await W.boot({lesson:lesson,assetBase:BASE+'a/',project:null,program:null,onEvent:function(){}});
+    // No pre-populated sprites: the playground starts on an empty stage with one neutral backdrop.
+    // Everything that appears on it is imported - by the AI from the UCMake library (340 actors),
+    // or by hand from the editor's own picker. assetBase points at the library so that backdrop loads.
+    const lesson={title:'遊樂場', opening:'想在舞台上做甚麼？講出來，我幫你砌積木。', sprites:[],
+      stage:{backdrops:[{assetId:'e7c147730f19d284bcd7b3f00af19bb6', name:'Blue Sky', ext:'svg', cx:240, cy:180, res:1}]}};
+    await W.boot({lesson:lesson,assetBase:'/lab-library/a/',project:null,program:null,onEvent:function(){}});
     PG.W=W; $('pgLoad').style.display='none';
   }catch(e){ if($('pgLoad')) $('pgLoad').textContent='積木編輯器載入失敗，請重新載入這一頁。'; }
 }

@@ -2,7 +2,16 @@
 
 **Where.** Every Wonder Lab editor loads the same frame (`studio-<hash>/lab-frame.html`, built from
 `~/wonderlab-studio/src`), so one control appears in all of them: the L4 lesson pages and the teachers'
-遊樂場. It is a small floating bar, bottom-left: `主控板 [UC-Mind100 ▾] [連接] 未連接`.
+遊樂場. It sits in the editor's own top menu bar, after the menus:
+`主控板 [UC-Mind100 ▾] [USB 埠 ▾] [連接] [斷開] 未連接`. In the bar it inherits the bar's colour, so it
+reads correctly in any theme; if the bar is ever missing it falls back to a floating control at the
+bottom left.
+
+The port list holds the ports this page already has permission for. **Web Serial cannot enumerate
+ports that were never granted**, so a fresh browser shows `未授權任何埠` plus `＋ 選擇新的埠…`, which
+opens the browser's own chooser (filtered to the UC-Mind bridges). Once a board has been granted it
+appears in the list with its bridge name (`CH340:7523 (最近使用)`) and can be picked without the
+chooser again. `斷開` closes the session and stays disabled until something is connected.
 
 **What it does.** Choosing a model and pressing 連接 asks the browser for a serial port through the
 chooser, filtered to the USB bridges a UC-Mind kit uses (CH340/CP210x/FTDI/Arduino/Espressif — the same

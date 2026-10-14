@@ -7,8 +7,11 @@
 # L1/teacher/創意製造 · 15_直昇機_演示課件.pptx returned 200 and 48,837,257 bytes at 00:56, and by 06:49
 # the only thing left under each level was `lessons/`. Every 教材庫 tab therefore rendered 尚無檔案.
 #
-# The shape a healthy level has (verified in an earlier session's own listing):
-#   L1/{ai,software,teacher,student,lessons}   L4/... → exactly five children
+# The shape a healthy level has (verified against the live tree):
+#   L1/{ai,software,teacher,student,lessons}   L4/... (yai: teacher/ + student/ only)
+# A level also carries its per-lesson stage dirs at the root (201-bp01 …, assets/), so the real
+# child count is 36–38, not five. The assertions below key on the NAMED sections and lessons/ being
+# present (and above their floors), never on the child count, so they hold either way.
 # The failure mode is an rsync --delete whose SOURCE is a built lesson stage (which contains only
 # lessons/ + assets/) applied to the LEVEL ROOT instead of to ../lessons/. Such a delete removes the
 # four material sections and leaves lessons/ looking perfect — which is why it is invisible until a

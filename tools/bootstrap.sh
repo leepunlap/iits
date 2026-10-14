@@ -47,10 +47,14 @@ echo "  nginx $(nginx -v 2>&1 | sed 's/.*nginx\///') · python3 $(python3 -V 2>&
 say "trees from $NUC  (reads only — nothing on the NUC changes)"
 mkdir -p "$ROOT"/{portals,classfiles,service,service-config,backend,logs,config,data}
 rsync -a --delete "$NUC":/var/www/ycltesthk-portals/ "$ROOT/portals/"
-# CAVEAT: Apple ships openrsync, which ACCEPTS -H and silently ignores it, so on a stock macOS the
-# four UCMake installers are stored once per level (~3.5 GB) instead of hardlinked (~870 MB).
-# `brew install rsync` puts a real rsync on PATH and makes -H do what it says.
-rsync -aH          --rsync-path="sudo -n rsync" "$NUC":/var/www/iits/classfiles/  "$ROOT/classfiles/"
+# -H matters: the four UCMake installers are the same file on every level, so honouring -H keeps
+# them hardlinked (~870 MB) instead of stored once per level (~3.5 GB). GNU rsync is already
+# installed at /opt/homebrew/bin/rsync and honours -H, but /opt/homebrew/bin is last on PATH, so a
+# bare `rsync` resolves to Apple's openrsync, which ACCEPTS -H and silently ignores it. Invoke the
+# GNU path explicitly, falling back to bare rsync only if that copy is absent.
+RSYNC=/opt/homebrew/bin/rsync
+[ -x "$RSYNC" ] || RSYNC=rsync
+"$RSYNC" -aH          --rsync-path="sudo -n rsync" "$NUC":/var/www/iits/classfiles/  "$ROOT/classfiles/"
 rsync -a --exclude '*.bak*' "$NUC":/opt/iits-lesson-ai/ "$ROOT/service/"
 rsync -a          "$NUC":/etc/iits-lesson-ai/ "$ROOT/service-config/" 2>/dev/null || true
 rsync -a          "$NUC":/var/www/iits/classfiles/_library/ "$ROOT/classfiles/_library/" 2>/dev/null || true

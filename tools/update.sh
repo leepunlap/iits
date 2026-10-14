@@ -23,7 +23,10 @@ echo "syncing from $HOST (reads only on the NUC)"
 rsync -a --delete "$HOST":/var/www/ycltesthk-portals/ "$ROOT/portals/"
 # Materials: the whole classfiles tree, not just a level — pulling one level at a time is how the
 # 2026-10-13 section loss was first noticed. Same source shape, so --delete cannot flatten a level.
-rsync -a --delete "$HOST":/var/www/iits/classfiles/  "$ROOT/classfiles/"
+# CAVEAT: Apple ships openrsync, which ACCEPTS -H and silently ignores it, so on a stock macOS the
+# four UCMake installers are stored once per level (~3.5 GB) instead of hardlinked (~870 MB).
+# `brew install rsync` puts a real rsync on PATH and makes -H do what it says.
+rsync -aH --delete --rsync-path="sudo -n rsync" "$HOST":/var/www/iits/classfiles/  "$ROOT/classfiles/"
 # The AI service + its config, and the two service sources.
 rsync -a --exclude '*.bak*' "$HOST":/opt/iits-lesson-ai/ "$ROOT/service/"
 rsync -a "$HOST":/etc/iits-lesson-ai/ "$ROOT/service-config/" 2>/dev/null || true

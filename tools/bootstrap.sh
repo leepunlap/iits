@@ -47,7 +47,10 @@ echo "  nginx $(nginx -v 2>&1 | sed 's/.*nginx\///') · python3 $(python3 -V 2>&
 say "trees from $NUC  (reads only — nothing on the NUC changes)"
 mkdir -p "$ROOT"/{portals,classfiles,service,service-config,backend,logs,config,data}
 rsync -a --delete "$NUC":/var/www/ycltesthk-portals/ "$ROOT/portals/"
-rsync -a          "$NUC":/var/www/iits/classfiles/  "$ROOT/classfiles/"
+# CAVEAT: Apple ships openrsync, which ACCEPTS -H and silently ignores it, so on a stock macOS the
+# four UCMake installers are stored once per level (~3.5 GB) instead of hardlinked (~870 MB).
+# `brew install rsync` puts a real rsync on PATH and makes -H do what it says.
+rsync -aH          --rsync-path="sudo -n rsync" "$NUC":/var/www/iits/classfiles/  "$ROOT/classfiles/"
 rsync -a --exclude '*.bak*' "$NUC":/opt/iits-lesson-ai/ "$ROOT/service/"
 rsync -a          "$NUC":/etc/iits-lesson-ai/ "$ROOT/service-config/" 2>/dev/null || true
 rsync -a          "$NUC":/var/www/iits/classfiles/_library/ "$ROOT/classfiles/_library/" 2>/dev/null || true

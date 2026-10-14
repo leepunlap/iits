@@ -24,6 +24,11 @@ PROD_STU=students.ycltesthk.com
 PROD_TEA=teachers.ycltesthk.com
 FAIL=0
 
+# the tree root: walk up from wherever this script lives until local.env appears (it is run both
+# from the tree root and from tools/, and the repo copy sits two levels deeper than the installed one)
+ROOT="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+for _ in 1 2 3 4 5; do [ -f "$ROOT/local.env" ] && break; ROOT="$(dirname "$ROOT")"; done
+
 title() {  # host path -> <title> text
   curl -sk -m 10 --resolve "$1:443:$IP" "https://$1$2" 2>/dev/null \
     | grep -o '<title>[^<]*</title>' | head -1 | sed 's/<[^>]*>//g'
@@ -86,13 +91,26 @@ expect "AI route still gated when logged out" \
 rm -f "$JAR"
 
 echo
+echo "=== local env ==="
+# PORTAL_TEACHER_HOST must be the DEV host. checker.usable() refuses a *self-registered* teacher
+# (every production teacher, the owner's account included) unless the request Host equals it — the
+# default is teachers.ycltesthk.com, so without this every registered teacher gets 401 locally
+# while the same password works in production. A config assertion, so no password lives here.
+DEV_ENV="$ROOT"
+if [ -f "$DEV_ENV/local.env" ]; then
+  expect "PORTAL_TEACHER_HOST is the dev host" \
+    "$(grep -E '^PORTAL_TEACHER_HOST=' "$DEV_ENV/local.env" | cut -d= -f2)" "$TEA"
+  expect "IITS_REG_DATA points at the local tree" \
+    "$(grep -E '^IITS_REG_DATA=' "$DEV_ENV/local.env" | cut -d= -f2 | cut -d' ' -f1)" "$DEV_ENV/config/reg"
+else
+  printf '  FAIL  %-48s %s missing\n' "local.env present" "$DEV_ENV/local.env"; FAIL=1
+fi
+
+echo
 echo "=== TLS (the real *.roadlogica.com wildcard) ==="
 expect "TLS verifies: $TEA" "$(verify $TEA)" "0"
 expect "TLS verifies: $STU" "$(verify $STU)" "0"
 
-HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$HERE"
-for _ in 1 2 3 4 5; do [ -f "$ROOT/local.env" ] && break; ROOT="$(dirname "$ROOT")"; done
 CRT="$ROOT/certs/roadlogica.fullchain.pem"
 if [ -f "$CRT" ]; then
   end=$(openssl x509 -in "$CRT" -noout -enddate 2>/dev/null | cut -d= -f2)

@@ -1,0 +1,20 @@
+# The two lesson hosts, pointed at the local copies by /etc/hosts.
+server {
+    listen 443 ssl;
+    server_name students.ycltesthk.com teachers.ycltesthk.com;
+    ssl_certificate     __ROOT__/local.crt;
+    ssl_certificate_key __ROOT__/local.key;
+
+    root __ROOT__/portals/students;
+    location = /_verify      { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/verify; }
+    location = /_fverify     { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/fverify; }
+    location ~ ^/files/([^/]+)/([^/]+)/(.+)$ { alias __ROOT__/classfiles/$1/$2/$3; }
+    location /lab-library/   { alias __ROOT__/classfiles/_library/; }
+    location ~ ^/api/ai/(chat|status)/files/(L[1-4])/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        proxy_pass http://127.0.0.1:__PORT_AI__/$1/files/$2/lessons/$3;
+    }
+    location ~ ^/api/ai/lab/files/(L4)/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        proxy_pass http://127.0.0.1:__PORT_AI__/lab/files/$1/lessons/$2;
+    }
+    location / { try_files $uri $uri/ =404; }
+}

@@ -9,7 +9,12 @@ set -u
 export PATH=/opt/homebrew/bin:$PATH
 
 HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$HERE"; [ -f "$HERE/local.env" ] || ROOT="$(cd "$HERE/.." && pwd)"
+ROOT="$HERE"
+for _ in 1 2 3 4 5; do
+  [ -f "$ROOT/local.env" ] && break
+  ROOT="$(dirname "$ROOT")"
+done
+[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
 [ -f "$ROOT/local.env" ] || { echo "missing $ROOT/local.env — run tools/bootstrap.sh (or copy tools/local.env.template and set __ROOT__)"; exit 1; }
 
 set -a

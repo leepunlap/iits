@@ -5,7 +5,12 @@
 # Self-locating: works from the tree root or from tools/.
 set -u
 HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$HERE"; [ -f "$HERE/local.env" ] || ROOT="$(cd "$HERE/.." && pwd)"
+ROOT="$HERE"
+for _ in 1 2 3 4 5; do
+  [ -f "$ROOT/local.env" ] && break
+  ROOT="$(dirname "$ROOT")"
+done
+[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
 
 HOST=""
 for h in nuc nuc-ext; do

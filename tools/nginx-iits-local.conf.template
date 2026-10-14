@@ -24,8 +24,11 @@ server {
     http2       on;
     server_name teachers.ycltesthk.com;
 
-    ssl_certificate     __ROOT__/local.crt;
-    ssl_certificate_key __ROOT__/local.key;
+    # The real *.ycltesthk.com Let's Encrypt wildcard, copied from the NUC by tools/refresh-certs.sh
+    # (so the browser trusts it with no warning). It EXPIRES — re-copy before it lapses; the other
+    # three wildcards (giftedintl / roadlogica / supercert) are in certs/ for any local vhost.
+    ssl_certificate     __ROOT__/certs/ycltesthk.fullchain.pem;
+    ssl_certificate_key __ROOT__/certs/ycltesthk.key;
 
     root __ROOT__/portals/teachers;
     index index.html;
@@ -87,8 +90,11 @@ server {
     http2       on;
     server_name students.ycltesthk.com;
 
-    ssl_certificate     __ROOT__/local.crt;
-    ssl_certificate_key __ROOT__/local.key;
+    # The real *.ycltesthk.com Let's Encrypt wildcard, copied from the NUC by tools/refresh-certs.sh
+    # (so the browser trusts it with no warning). It EXPIRES — re-copy before it lapses; the other
+    # three wildcards (giftedintl / roadlogica / supercert) are in certs/ for any local vhost.
+    ssl_certificate     __ROOT__/certs/ycltesthk.fullchain.pem;
+    ssl_certificate_key __ROOT__/certs/ycltesthk.key;
 
     root __ROOT__/portals/students;
     index index.html;

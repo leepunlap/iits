@@ -1,16 +1,27 @@
 #!/bin/bash
-# Asserts the LOCAL dev copy serves the two portals faithfully.
+# Asserts the LOCAL dev copy serves the two portals faithfully AND does not shadow production.
 #
-# WHY THIS EXISTS (rule VII). The bootstrap template declared one server block with
-#   server_name students.ycltesthk.com teachers.ycltesthk.com;  root __ROOT__/portals/students;
-# so on every bootstrapped machine https://teachers.ycltesthk.com/ served the STUDENT tree — the
-# teacher portal was unreachable, and the copy was silently unfaithful to production. It was
-# mistaken for a production incident. The mistake happened; this is the check that catches it.
+# WHY THIS EXISTS (rule VII). Two mistakes happened here, so two checks live here:
 #
-# Measures the served bytes rather than reading the config (rule II/III).
+#  1. The bootstrap template declared ONE server block with
+#       server_name students.ycltesthk.com teachers.ycltesthk.com;  root __ROOT__/portals/students;
+#     so https://teachers.ycltesthk.com/ served the STUDENT tree — the teacher portal was
+#     unreachable on every bootstrapped machine.
+#  2. The dev copy bound the PRODUCTION host names via /etc/hosts, which shadows the live sites on
+#     that machine: you cannot open production from the laptop holding the entry, and a shadowed
+#     teacher host was mistaken for a production outage.
+#
+# So the dev hosts are now students-dev / teachers-dev.roadlogica.com, and this checks both that they
+# work and that the production names still resolve to the server.
+#
+# Measures served bytes rather than reading the config (rule II/III).
 # Usage: tools/check-local-hosts.sh [host-ip]     default 127.0.0.1
 set -u
 IP="${1:-127.0.0.1}"
+STU=students-dev.roadlogica.com
+TEA=teachers-dev.roadlogica.com
+PROD_STU=students.ycltesthk.com
+PROD_TEA=teachers.ycltesthk.com
 FAIL=0
 
 title() {  # host path -> <title> text
@@ -20,56 +31,63 @@ title() {  # host path -> <title> text
 code() {
   curl -sk -o /dev/null -m 10 --resolve "$1:443:$IP" -w '%{http_code}' "https://$1$2" 2>/dev/null
 }
+verify() {  # host -> ssl_verify_result (0 = a real wildcard, trusted with no -k)
+  curl -s -o /dev/null -m 10 --resolve "$1:443:$IP" -w '%{ssl_verify_result}' "https://$1/login.html" 2>/dev/null
+}
+resolves_to() { dscacheutil -q host -a name "$1" 2>/dev/null | awk '/ip_address/{print $2}' | head -1; }
 expect() {  # label actual expected
-  if [ "$2" = "$3" ]; then printf '  ok    %-46s %s\n' "$1" "$2"
-  else printf '  FAIL  %-46s got %s, want %s\n' "$1" "$2" "$3"; FAIL=1; fi
+  if [ "$2" = "$3" ]; then printf '  ok    %-48s %s\n' "$1" "$2"
+  else printf '  FAIL  %-48s got %s, want %s\n' "$1" "$2" "$3"; FAIL=1; fi
 }
 
-echo "=== local portal fidelity (via $IP) ==="
+echo "=== local dev portal fidelity (via $IP) ==="
 
-t=$(title teachers.ycltesthk.com /login.html)
-expect "teachers /login.html is the TEACHER login" "$t" "教師登入 · 工信學堂 IITS"
+expect "teachers-dev login is the TEACHER portal" "$(title $TEA /login.html)" "教師登入 · 工信學堂 IITS"
+expect "students-dev login is the STUDENT portal" "$(title $STU /login.html)" "學生登入 · 工信學堂 IITS"
 
-t=$(title students.ycltesthk.com /login.html)
-expect "students /login.html is the STUDENT login" "$t" "學生登入 · 工信學堂 IITS"
+a=$(curl -sk -m 10 --resolve "$TEA:443:$IP" "https://$TEA/login.html" 2>/dev/null | md5)
+b=$(curl -sk -m 10 --resolve "$STU:443:$IP" "https://$STU/login.html" 2>/dev/null | md5)
+if [ -n "$a" ] && [ "$a" != "$b" ]; then printf '  ok    %-48s %s != %s\n' "the two dev hosts serve different trees" "${a:0:8}" "${b:0:8}"
+else printf '  FAIL  %-48s both %s (the one-block bug)\n' "the two dev hosts serve different trees" "${a:0:8}"; FAIL=1; fi
 
-a=$(curl -sk -m 10 --resolve "teachers.ycltesthk.com:443:$IP" https://teachers.ycltesthk.com/login.html 2>/dev/null | md5)
-b=$(curl -sk -m 10 --resolve "students.ycltesthk.com:443:$IP" https://students.ycltesthk.com/login.html 2>/dev/null | md5)
-if [ -n "$a" ] && [ "$a" != "$b" ]; then printf '  ok    %-46s %s != %s\n' "the two hosts serve different trees" "${a:0:8}" "${b:0:8}"
-else printf '  FAIL  %-46s both %s (the one-block bug)\n' "the two hosts serve different trees" "${a:0:8}"; FAIL=1; fi
+expect "gated: /files/… logged out"      "$(code $STU /files/L1/lessons/index.html)" "302"
+expect "gated: /lab-library/ logged out" "$(code $STU /lab-library/library.json)" "302"
+expect "public: /login.html"             "$(code $STU /login.html)" "200"
 
-expect "gated: /files/… logged out" "$(code students.ycltesthk.com /files/L1/lessons/index.html)" "302"
-expect "gated: /lab-library/ logged out" "$(code students.ycltesthk.com /lab-library/library.json)" "302"
-expect "public: /login.html" "$(code students.ycltesthk.com /login.html)" "200"
-
-# The real *.ycltesthk.com wildcard is served, so TLS verifies with no -k and no keychain change.
-# If this fails, certs/ has lapsed (nothing local renews them) — run tools/refresh-certs.sh.
-for h in students teachers; do
-  v=$(curl -s -o /dev/null -m 10 --resolve "$h.ycltesthk.com:443:$IP" \
-        -w '%{ssl_verify_result}' "https://$h.ycltesthk.com/login.html" 2>/dev/null)
-  expect "TLS verifies: $h.ycltesthk.com" "$v" "0"
+echo
+echo "=== not shadowing production ==="
+# The dev names must be local; the production names must NOT be. An /etc/hosts line is the only way
+# this Mac can intercept them, so test the resolver, not curl.
+expect "$STU resolves locally" "$(resolves_to $STU)" "$IP"
+expect "$TEA resolves locally" "$(resolves_to $TEA)" "$IP"
+for h in $PROD_STU $PROD_TEA; do
+  r=$(resolves_to "$h")
+  if [ "$r" = "$IP" ]; then
+    printf '  FAIL  %-48s %s — /etc/hosts shadows production\n' "$h must NOT resolve locally" "$r"; FAIL=1
+  else
+    printf '  ok    %-48s %s\n' "$h is not shadowed" "${r:-unresolved}"
+  fi
 done
 
-# and the certs must not be close to expiry
-# self-locating: this script is run from the tree root or from tools/
-_HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$_HERE"
-for _ in 1 2 3 4 5; do
-  [ -f "$ROOT/local.env" ] && break
-  ROOT="$(dirname "$ROOT")"
-done
-[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
-CRT="$ROOT/certs/ycltesthk.fullchain.pem"
+echo
+echo "=== TLS (the real *.roadlogica.com wildcard) ==="
+expect "TLS verifies: $TEA" "$(verify $TEA)" "0"
+expect "TLS verifies: $STU" "$(verify $STU)" "0"
+
+HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$HERE"
+for _ in 1 2 3 4 5; do [ -f "$ROOT/local.env" ] && break; ROOT="$(dirname "$ROOT")"; done
+CRT="$ROOT/certs/roadlogica.fullchain.pem"
 if [ -f "$CRT" ]; then
   end=$(openssl x509 -in "$CRT" -noout -enddate 2>/dev/null | cut -d= -f2)
   exp=$(date -j -f "%b %d %T %Y %Z" "$end" +%s 2>/dev/null || echo 0)
   days=$(( (exp - $(date +%s)) / 86400 ))
-  if [ "$days" -gt 14 ]; then printf '  ok    %-46s %s days\n' "wildcard not near expiry" "$days"
-  else printf '  FAIL  %-46s %s days — run tools/refresh-certs.sh\n' "wildcard not near expiry" "$days"; FAIL=1; fi
+  if [ "$days" -gt 14 ]; then printf '  ok    %-48s %s days\n' "roadlogica wildcard not near expiry" "$days"
+  else printf '  FAIL  %-48s %s days — run tools/refresh-certs.sh\n' "roadlogica wildcard not near expiry" "$days"; FAIL=1; fi
 else
-  printf '  FAIL  %-46s certs/ycltesthk.fullchain.pem missing\n' "wildcard present"; FAIL=1
+  printf '  FAIL  %-48s certs/roadlogica.fullchain.pem missing (run tools/refresh-certs.sh)\n' "wildcard present"; FAIL=1
 fi
 
 echo
-[ "$FAIL" = 0 ] && echo "ALL PASSED — the local copy mirrors production" || echo "FAILURES ABOVE — local copy is not faithful"
+[ "$FAIL" = 0 ] && echo "ALL PASSED — dev works and production is untouched" || echo "FAILURES ABOVE"
 exit "$FAIL"

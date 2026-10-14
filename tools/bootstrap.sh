@@ -4,18 +4,23 @@
 #   tools/bootstrap.sh [nuc-host]        default nuc (see ~/.ssh/config)
 #   IITS_LOCAL_ROOT=~/src/IITSWeb tools/bootstrap.sh    put the tree somewhere else
 #
-# What it does: pulls the deployed trees from the NUC, installs nginx, points the two host names at
-# 127.0.0.1, writes an nginx site for them, generates the local env + dev accounts, and starts the
-# services against THIS tree. Nothing on the NUC is touched (reads only).
+# What it does: pulls the deployed trees from the NUC, installs nginx, points the two DEV host names
+# at 127.0.0.1, writes an nginx site for them, generates the local env + dev accounts, copies the
+# wildcard certificates, and starts the services against THIS tree. Nothing on the NUC is touched
+# (reads only).
 #
 # WHY THE ENV AND ACCOUNTS MATTER: the services default to the production paths
 # (/etc/iits-teacher-auth, /var/lib/iits-portal-reg, /var/www/iits/classfiles). None exist on a Mac,
 # so without local.env nothing resolves and no account can ever authenticate — the pages render but
 # login is impossible and the file gates match no files.
 #
+# WHY THE DEV HOST NAMES: the copy must not bind students./teachers.ycltesthk.com in /etc/hosts,
+# because that shadows the live sites and makes production unreachable from this Mac. Dev is
+# students-dev / teachers-dev.roadlogica.com instead.
+#
 # Web Serial note: the serial API needs a "secure context". http://localhost qualifies, and so does
-# https with a self-signed certificate — which is why this serves the real host names over https on
-# 127.0.0.1 with a local certificate you accept once.
+# https with a certificate the browser trusts — which is why this serves the dev host names over
+# https on 127.0.0.1 using the real *.roadlogica.com wildcard.
 #
 # Rule IV: this file and the two *.template files beside it are the SOURCE OF TRUTH for the local
 # environment. Edit them, not the generated copies in ~/… and $(brew --prefix)/etc/nginx/servers/.
@@ -51,11 +56,20 @@ ssh "$NUC" 'sudo tar -C /opt/iits-teacher-auth -cf - checker.py' 2>/dev/null | t
 rsync -a "$NUC":/home/blee/iits-repo/portals/backend/reg.py "$ROOT/backend/" 2>/dev/null || true
 echo "  portals $(du -sh "$ROOT/portals" | cut -f1) · classfiles $(du -sh "$ROOT/classfiles" | cut -f1) · service $(du -sh "$ROOT/service" | cut -f1)"
 
-say "host names -> 127.0.0.1"
-for h in teachers.ycltesthk.com students.ycltesthk.com; do
+say "host names -> 127.0.0.1  (DEV names only)"
+# The dev copy must NOT bind the production names: an /etc/hosts entry shadows the live site on this
+# machine, so you can no longer open production from here — and a shadowed teacher host was once
+# mistaken for a production outage. Dev lives on -dev.roadlogica.com (wildcard DNS + the
+# *.roadlogica.com cert); the production names keep resolving to the NUC.
+if grep -qE '^[[:space:]]*127\.0\.0\.1[[:space:]]+(students|teachers)\.ycltesthk\.com[[:space:]]*$' /etc/hosts; then
+  echo "  removing legacy production-name entries that shadowed the live sites"
+  sudo cp -p /etc/hosts "/etc/hosts.bak-$(date +%Y%m%d-%H%M%S)"
+  sudo sed -i '' -E '/^[[:space:]]*127\.0\.0\.1[[:space:]]+(students|teachers)\.ycltesthk\.com[[:space:]]*$/d' /etc/hosts
+fi
+for h in students-dev.roadlogica.com teachers-dev.roadlogica.com; do
   grep -q " $h" /etc/hosts || echo "127.0.0.1 $h" | sudo tee -a /etc/hosts >/dev/null
 done
-grep -E "ycltesthk" /etc/hosts | sed 's/^/  /'
+grep -E "roadlogica|ycltesthk" /etc/hosts | sed 's/^/  /'
 
 say "certificate for the two hosts"
 if [ ! -f "$ROOT/local.crt" ]; then

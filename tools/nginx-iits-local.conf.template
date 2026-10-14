@@ -1,11 +1,18 @@
-# The two lesson hosts, pointed at the local copies by /etc/hosts.
+# The two DEV lesson hosts, pointed at the local copies by /etc/hosts.
+#
+# WHY -dev.roadlogica.com AND NOT THE PRODUCTION NAMES (owner, 2026-10-14): an /etc/hosts entry for
+# students.ycltesthk.com / teachers.ycltesthk.com SHADOWS the live sites on whichever machine holds
+# it, so you can no longer open production from that laptop — and a shadowed teacher host was
+# mistaken for a production outage. The dev names live under roadlogica.com (wildcard DNS, covered
+# by certs/roadlogica.*), so production keeps resolving to the NUC everywhere.
 #
 # WHY TWO SERVER BLOCKS: this file used to declare ONE block with
 #   server_name students.ycltesthk.com teachers.ycltesthk.com;  root __ROOT__/portals/students;
 # which meant the teacher portal was unreachable on every bootstrapped machine — https://teachers.
-# ycltesthk.com/ served the STUDENT tree. Production has always had two blocks with two roots
-# (see portals/nginx/), so the local copy was silently unfaithful. Keep them separate, and keep the
-# realm header per block: the checker picks its realm from X-Auth-Realm, and its default is "teacher".
+# ycltesthk.com/ served the STUDENT tree (and, because /etc/hosts shadowed that name, it looked like
+# a production outage). Production has always had two blocks with two roots (see portals/nginx/), so
+# the local copy was silently unfaithful. Keep them separate, and keep the realm header per block:
+# the checker picks its realm from X-Auth-Realm, and its default is "teacher".
 #
 # tools/check-local-hosts.sh asserts this shape (rule VII: the mistake happened, so the check exists).
 
@@ -13,7 +20,7 @@
 server {
     listen      80;
     listen      [::]:80;
-    server_name students.ycltesthk.com teachers.ycltesthk.com;
+    server_name students-dev.roadlogica.com teachers-dev.roadlogica.com;
     return 301 https://$host$request_uri;
 }
 
@@ -22,13 +29,13 @@ server {
     listen      443 ssl;
     listen      [::]:443 ssl;
     http2       on;
-    server_name teachers.ycltesthk.com;
+    server_name teachers-dev.roadlogica.com;
 
     # The real *.ycltesthk.com Let's Encrypt wildcard, copied from the NUC by tools/refresh-certs.sh
     # (so the browser trusts it with no warning). It EXPIRES — re-copy before it lapses; the other
     # three wildcards (giftedintl / roadlogica / supercert) are in certs/ for any local vhost.
-    ssl_certificate     __ROOT__/certs/ycltesthk.fullchain.pem;
-    ssl_certificate_key __ROOT__/certs/ycltesthk.key;
+    ssl_certificate     __ROOT__/certs/roadlogica.fullchain.pem;
+    ssl_certificate_key __ROOT__/certs/roadlogica.key;
 
     root __ROOT__/portals/teachers;
     index index.html;
@@ -88,13 +95,13 @@ server {
     listen      443 ssl;
     listen      [::]:443 ssl;
     http2       on;
-    server_name students.ycltesthk.com;
+    server_name students-dev.roadlogica.com;
 
     # The real *.ycltesthk.com Let's Encrypt wildcard, copied from the NUC by tools/refresh-certs.sh
     # (so the browser trusts it with no warning). It EXPIRES — re-copy before it lapses; the other
     # three wildcards (giftedintl / roadlogica / supercert) are in certs/ for any local vhost.
-    ssl_certificate     __ROOT__/certs/ycltesthk.fullchain.pem;
-    ssl_certificate_key __ROOT__/certs/ycltesthk.key;
+    ssl_certificate     __ROOT__/certs/roadlogica.fullchain.pem;
+    ssl_certificate_key __ROOT__/certs/roadlogica.key;
 
     root __ROOT__/portals/students;
     index index.html;

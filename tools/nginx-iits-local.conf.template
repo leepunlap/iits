@@ -1,20 +1,139 @@
 # The two lesson hosts, pointed at the local copies by /etc/hosts.
+#
+# WHY TWO SERVER BLOCKS: this file used to declare ONE block with
+#   server_name students.ycltesthk.com teachers.ycltesthk.com;  root __ROOT__/portals/students;
+# which meant the teacher portal was unreachable on every bootstrapped machine — https://teachers.
+# ycltesthk.com/ served the STUDENT tree. Production has always had two blocks with two roots
+# (see portals/nginx/), so the local copy was silently unfaithful. Keep them separate, and keep the
+# realm header per block: the checker picks its realm from X-Auth-Realm, and its default is "teacher".
+#
+# tools/check-local-hosts.sh asserts this shape (rule VII: the mistake happened, so the check exists).
+
+# --- http: send both names to https -----------------------------------------
 server {
-    listen 443 ssl;
+    listen      80;
+    listen      [::]:80;
     server_name students.ycltesthk.com teachers.ycltesthk.com;
+    return 301 https://$host$request_uri;
+}
+
+# --- https: TEACHERS ---------------------------------------------------------
+server {
+    listen      443 ssl;
+    listen      [::]:443 ssl;
+    http2       on;
+    server_name teachers.ycltesthk.com;
+
+    ssl_certificate     __ROOT__/local.crt;
+    ssl_certificate_key __ROOT__/local.key;
+
+    root __ROOT__/portals/teachers;
+    index index.html;
+
+    location = /_verify  { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/verify;
+                           proxy_pass_request_body off; proxy_set_header Content-Length "";
+                           proxy_set_header Cookie $http_cookie; proxy_set_header Host $host;
+                           proxy_set_header X-Auth-Realm teacher; }
+    location = /_fverify { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/fverify;
+                           proxy_pass_request_body off; proxy_set_header Content-Length "";
+                           proxy_set_header Cookie $http_cookie; proxy_set_header Host $host;
+                           proxy_set_header X-Auth-Realm teacher;
+                           proxy_set_header X-Original-URI $request_uri; }
+
+    # public pages
+    location = /login.html    { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /register.html { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /forgot.html   { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /favicon.ico   { access_log off; log_not_found off; return 204; }
+    location /assets/         { add_header Cache-Control "public, max-age=300"; }
+
+    # per-level file gate: the checker reads files/<level>/<section>/… out of the URI
+    location ~ ^/files/([^/]+)/([^/]+)/(.+)$ {
+        auth_request /_fverify;
+        error_page 401 = @login;
+        alias __ROOT__/classfiles/$1/$2/$3;
+        gzip_static on;
+    }
+    # the UCMake / OpenBlock actor + stage library (same origin on purpose: the Studio draws
+    # costumes to a canvas and a cross-origin asset would taint it)
+    location /lab-library/    { auth_request /_verify; error_page 401 = @login;
+                                alias __ROOT__/classfiles/_library/;
+                                add_header Cache-Control "public, max-age=604800"; }
+
+    # lesson AI 學伴 (:__PORT_AI__) — scoped per lesson by the path, gated per level
+    location ~ ^/api/ai/(chat|status)/files/(L[1-4])/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        auth_request /_fverify; error_page 401 = @login;
+        proxy_pass http://127.0.0.1:__PORT_AI__/$1/files/$2/lessons/$3;
+        proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr;
+    }
+    location ~ ^/api/ai/lab/files/(L4)/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        auth_request /_fverify; error_page 401 = @login;
+        proxy_pass http://127.0.0.1:__PORT_AI__/lab/files/$1/lessons/$2;
+        proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr;
+    }
+    location /api/ { proxy_pass http://127.0.0.1:__PORT_AUTH__/;
+                     proxy_set_header Host $host; proxy_set_header X-Auth-Realm teacher;
+                     proxy_cookie_path /teacher/ /; }
+
+    location / { auth_request /_verify; error_page 401 = @login;
+                 try_files $uri $uri/ =404; add_header Cache-Control "no-store"; }
+    location @login { return 302 /login.html; }
+}
+
+# --- https: STUDENTS ---------------------------------------------------------
+server {
+    listen      443 ssl;
+    listen      [::]:443 ssl;
+    http2       on;
+    server_name students.ycltesthk.com;
+
     ssl_certificate     __ROOT__/local.crt;
     ssl_certificate_key __ROOT__/local.key;
 
     root __ROOT__/portals/students;
-    location = /_verify      { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/verify; }
-    location = /_fverify     { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/fverify; }
-    location ~ ^/files/([^/]+)/([^/]+)/(.+)$ { alias __ROOT__/classfiles/$1/$2/$3; }
-    location /lab-library/   { alias __ROOT__/classfiles/_library/; }
+    index index.html;
+
+    location = /_verify  { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/verify;
+                           proxy_pass_request_body off; proxy_set_header Content-Length "";
+                           proxy_set_header Cookie $http_cookie; proxy_set_header Host $host;
+                           proxy_set_header X-Auth-Realm student; }
+    location = /_fverify { internal; proxy_pass http://127.0.0.1:__PORT_AUTH__/fverify;
+                           proxy_pass_request_body off; proxy_set_header Content-Length "";
+                           proxy_set_header Cookie $http_cookie; proxy_set_header Host $host;
+                           proxy_set_header X-Auth-Realm student;
+                           proxy_set_header X-Original-URI $request_uri; }
+
+    location = /login.html    { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /register.html { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /forgot.html   { add_header Cache-Control "no-cache, no-store, must-revalidate"; }
+    location = /favicon.ico   { access_log off; log_not_found off; return 204; }
+    location /assets/         { add_header Cache-Control "public, max-age=300"; }
+
+    location ~ ^/files/([^/]+)/([^/]+)/(.+)$ {
+        auth_request /_fverify;
+        error_page 401 = @login;
+        alias __ROOT__/classfiles/$1/$2/$3;
+        gzip_static on;
+    }
+    location /lab-library/    { auth_request /_verify; error_page 401 = @login;
+                                alias __ROOT__/classfiles/_library/;
+                                add_header Cache-Control "public, max-age=604800"; }
+
     location ~ ^/api/ai/(chat|status)/files/(L[1-4])/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        auth_request /_fverify; error_page 401 = @login;
         proxy_pass http://127.0.0.1:__PORT_AI__/$1/files/$2/lessons/$3;
+        proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr;
     }
     location ~ ^/api/ai/lab/files/(L4)/lessons/([a-z0-9]+-bp[0-9]+)$ {
+        auth_request /_fverify; error_page 401 = @login;
         proxy_pass http://127.0.0.1:__PORT_AI__/lab/files/$1/lessons/$2;
+        proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr;
     }
-    location / { try_files $uri $uri/ =404; }
+    location /api/ { proxy_pass http://127.0.0.1:__PORT_AUTH__/;
+                     proxy_set_header Host $host; proxy_set_header X-Auth-Realm student;
+                     proxy_cookie_path /student/ /; }
+
+    location / { auth_request /_verify; error_page 401 = @login;
+                 try_files $uri $uri/ =404; add_header Cache-Control "no-store"; }
+    location @login { return 302 /login.html; }
 }

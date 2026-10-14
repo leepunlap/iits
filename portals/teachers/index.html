@@ -445,6 +445,11 @@ async function pgBoot(){
     // or by hand from the editor's own picker. assetBase points at the library so that backdrop loads.
     const lesson={title:'遊樂場', opening:'想在舞台上做甚麼？講出來，我幫你砌積木。', sprites:[],
       stage:{backdrops:[{assetId:'e7c147730f19d284bcd7b3f00af19bb6', name:'Blue Sky', ext:'svg', cx:240, cy:180, res:1}]}};
+    // body.fullh is what sizes the whole chain (flex column -> .wrap flex:1 -> #view 100% -> .pg-wrap
+    // 100%). Without it every height:100% below resolves against an auto-height parent, the editor's
+    // boxes grow with their content and the sprite/stage selectors end up below the fold. The view sets
+    // it itself rather than trusting whatever switched to this view to have done it.
+    document.body.classList.add('fullh');
     // library: the playground gets the full actor / backdrop / costume / sound library (lessons keep
     // the curated suppression), now that /lab-library/ is public and the assets actually load.
     await W.boot({lesson:lesson,assetBase:'/lab-library/a/',project:null,program:null,library:true,onEvent:function(){}});

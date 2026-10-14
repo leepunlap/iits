@@ -70,6 +70,11 @@ render "$HERE/local.env.template" "$ROOT/local.env"
 echo "  $ROOT/local.env"
 python3 "$HERE/make-dev-auth.py" "$ROOT"
 
+say "wildcard certificates"
+# The real Let's Encrypt wildcards from the NUC, so the browser trusts the local hosts with no
+# warning. They expire — refresh-certs.sh writes certs/README.md with the days left.
+"$HERE/refresh-certs.sh" "$NUC" || echo "  ⚠ certs are missing or near expiry — the sites will warn until this succeeds"
+
 say "nginx"
 BREW_NGINX="$(brew --prefix)/etc/nginx"
 mkdir -p "$BREW_NGINX/servers"
@@ -78,7 +83,7 @@ grep -q "servers/\*.conf" "$BREW_NGINX/nginx.conf" || sed -i '' 's|^http {|http 
 nginx -t
 
 say "helper scripts"
-for s in restart.sh update.sh check-local-hosts.sh; do
+for s in restart.sh update.sh check-local-hosts.sh refresh-certs.sh; do
   install -m 755 "$HERE/$s" "$ROOT/$s"; echo "  $ROOT/$s"
 done
 

@@ -14,3 +14,10 @@ portals/mail/last_send_*.json
 
 # mail attachments are large binaries kept on the server, not in git.
 portals/mail/templates/*/*.pdf
+
+# --- TLS material copied from the server for local dev (added 2026-10-14) ---
+# The real Let's Encrypt wildcards land in <root>/certs/ (outside this repo), but never let a
+# private key or a full chain be committed by accident.
+certs/
+*.key
+*.fullchain.pem

@@ -42,6 +42,34 @@ expect "gated: /files/… logged out" "$(code students.ycltesthk.com /files/L1/l
 expect "gated: /lab-library/ logged out" "$(code students.ycltesthk.com /lab-library/library.json)" "302"
 expect "public: /login.html" "$(code students.ycltesthk.com /login.html)" "200"
 
+# The real *.ycltesthk.com wildcard is served, so TLS verifies with no -k and no keychain change.
+# If this fails, certs/ has lapsed (nothing local renews them) — run tools/refresh-certs.sh.
+for h in students teachers; do
+  v=$(curl -s -o /dev/null -m 10 --resolve "$h.ycltesthk.com:443:$IP" \
+        -w '%{ssl_verify_result}' "https://$h.ycltesthk.com/login.html" 2>/dev/null)
+  expect "TLS verifies: $h.ycltesthk.com" "$v" "0"
+done
+
+# and the certs must not be close to expiry
+# self-locating: this script is run from the tree root or from tools/
+_HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$_HERE"
+for _ in 1 2 3 4 5; do
+  [ -f "$ROOT/local.env" ] && break
+  ROOT="$(dirname "$ROOT")"
+done
+[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
+CRT="$ROOT/certs/ycltesthk.fullchain.pem"
+if [ -f "$CRT" ]; then
+  end=$(openssl x509 -in "$CRT" -noout -enddate 2>/dev/null | cut -d= -f2)
+  exp=$(date -j -f "%b %d %T %Y %Z" "$end" +%s 2>/dev/null || echo 0)
+  days=$(( (exp - $(date +%s)) / 86400 ))
+  if [ "$days" -gt 14 ]; then printf '  ok    %-46s %s days\n' "wildcard not near expiry" "$days"
+  else printf '  FAIL  %-46s %s days — run tools/refresh-certs.sh\n' "wildcard not near expiry" "$days"; FAIL=1; fi
+else
+  printf '  FAIL  %-46s certs/ycltesthk.fullchain.pem missing\n' "wildcard present"; FAIL=1
+fi
+
 echo
 [ "$FAIL" = 0 ] && echo "ALL PASSED — the local copy mirrors production" || echo "FAILURES ABOVE — local copy is not faithful"
 exit "$FAIL"

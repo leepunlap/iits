@@ -70,6 +70,22 @@ for h in $PROD_STU $PROD_TEA; do
 done
 
 echo
+echo "=== AI 學伴 route ==="
+# This 404s for EVERY lesson if the /api/ai/ location forgets auth_request_set + X-Auth-User (the
+# service derives the user from that header and refuses without it) — a silent, total failure that
+# looks like "the AI is down". Log in as a dev account and require a 200.
+JAR=$(mktemp)
+curl -sk -m 10 --resolve "$STU:443:$IP" -X POST "https://$STU/api/login" \
+     -H 'Content-Type: application/json' -d '{"u":"L2","p":"devpass"}' -c "$JAR" >/dev/null 2>&1
+expect "AI status answers (not 404)" \
+  "$(curl -sk -o /dev/null -m 20 --resolve "$STU:443:$IP" -b "$JAR" -w '%{http_code}' \
+     "https://$STU/api/ai/status/files/L2/lessons/301-bp01")" "200"
+expect "AI route still gated when logged out" \
+  "$(curl -sk -o /dev/null -m 10 --resolve "$STU:443:$IP" -w '%{http_code}' \
+     "https://$STU/api/ai/status/files/L2/lessons/301-bp01")" "302"
+rm -f "$JAR"
+
+echo
 echo "=== TLS (the real *.roadlogica.com wildcard) ==="
 expect "TLS verifies: $TEA" "$(verify $TEA)" "0"
 expect "TLS verifies: $STU" "$(verify $STU)" "0"

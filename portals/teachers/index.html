@@ -96,7 +96,10 @@ table.t td.act{white-space:nowrap}table.t td.act .btn{margin:0 4px 4px 0}
 /* AI playground: must fill the screen at every width. #view is a plain block, so the old
    flex:1 inside it did nothing; these set an explicit height instead of relying on .fullh. */
 body.pg-mode .wrap{padding:0;max-width:none}
-.pg-wrap{display:flex;flex-direction:column;min-height:0;height:calc(100vh - 56px)}
+/* Fill the space that is actually there. A calc(100vh - Npx) guess was the bug: N was smaller than
+   the real chrome, so the editor over-committed and its sprite/stage selectors fell below the fold.
+   body.fullh gives .wrap flex:1 and #view height:100%, so 100% is the honest number at any window size. */
+.pg-wrap{display:flex;flex-direction:column;min-height:0;height:100%}
 .pg-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);flex:1;min-height:0;background:#fff}
 .pg-pane{display:flex;flex-direction:column;min-height:0;background:#fff;min-width:0}
 .pg-pane+.pg-pane{border-left:1px solid #e5e8f0}
@@ -106,7 +109,7 @@ body.pg-mode .wrap{padding:0;max-width:none}
 .pg-pane .empty{border:0;background:transparent;padding:18px 14px}
 .pg-composer{display:flex;gap:8px;align-items:flex-end;flex:none;padding:9px 12px;border-top:1px solid #eef0f6}
 @media(max-width:1000px){
-  .pg-wrap{height:calc(100vh - 104px)}
+  .pg-wrap{height:100%}
   .pg-cols{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(220px,42%)}
   .pg-pane+.pg-pane{border-left:0;border-top:1px solid #e5e8f0}
 }
@@ -442,7 +445,14 @@ async function pgBoot(){
     // or by hand from the editor's own picker. assetBase points at the library so that backdrop loads.
     const lesson={title:'遊樂場', opening:'想在舞台上做甚麼？講出來，我幫你砌積木。', sprites:[],
       stage:{backdrops:[{assetId:'e7c147730f19d284bcd7b3f00af19bb6', name:'Blue Sky', ext:'svg', cx:240, cy:180, res:1}]}};
-    await W.boot({lesson:lesson,assetBase:'/lab-library/a/',project:null,program:null,onEvent:function(){}});
+    // body.fullh is what sizes the whole chain (flex column -> .wrap flex:1 -> #view 100% -> .pg-wrap
+    // 100%). Without it every height:100% below resolves against an auto-height parent, the editor's
+    // boxes grow with their content and the sprite/stage selectors end up below the fold. The view sets
+    // it itself rather than trusting whatever switched to this view to have done it.
+    document.body.classList.add('fullh');
+    // library: the playground gets the full actor / backdrop / costume / sound library (lessons keep
+    // the curated suppression), now that /lab-library/ is public and the assets actually load.
+    await W.boot({lesson:lesson,assetBase:'/lab-library/a/',project:null,program:null,library:true,onEvent:function(){}});
     PG.W=W; $('pgLoad').style.display='none';
   }catch(e){ if($('pgLoad')) $('pgLoad').textContent='積木編輯器載入失敗，請重新載入這一頁。'; }
 }

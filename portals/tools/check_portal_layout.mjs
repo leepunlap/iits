@@ -71,7 +71,11 @@ const STUB = `(() => {
     return real(u, o);
   };
 })();`;
-await send('Page.enable'); await send('Runtime.enable');
+await send('Page.enable');
+    // strip fullh first: if the layout only works because a harness set it, that is not the page working
+    await send('Page.addScriptToEvaluateOnNewDocument', { source: "document.addEventListener('DOMContentLoaded',function(){document.body.classList.remove('fullh');});" });
+    // --window-size is ignored in headless; this is the only way to test a short window honestly
+    await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: Number(process.env.VH || 900), deviceScaleFactor: 1, mobile: false }); await send('Runtime.enable');
 await send('Page.addScriptToEvaluateOnNewDocument', { source: STUB });
 await send('Page.navigate', { url: URL_ + '#playground' });
 for (let i = 0; i < 60; i += 1) {
@@ -88,7 +92,15 @@ const m = JSON.parse(await evalx(`JSON.stringify((() => {
   const b = r(wrap), c = r(cols), p = panes.map(r);
   return { vh, vw, wrap: b && {h:Math.round(b.height), bottom:Math.round(b.bottom)},
            cols: c && {h:Math.round(c.height), bottom:Math.round(c.bottom), w:Math.round(c.width)},
-           panes: p.map(x => x && {h:Math.round(x.height), w:Math.round(x.width)}),
+           panes: p.map(x => x && {h:Math.round(x.height), w:Math.round(x.width), bottom:Math.round(x.bottom)}),
+           stage: (() => { const e = document.getElementById('pgStage'); if (!e) return null; const r = e.getBoundingClientRect();
+             return { bottom: Math.round(r.bottom), h: Math.round(r.height) }; })(),
+           frame: (() => { const e = document.querySelector('#pgStage iframe'); if (!e) return null; const r = e.getBoundingClientRect();
+             const cs = getComputedStyle(e);
+             return { bottom: Math.round(r.bottom), h: Math.round(r.height), pos: cs.position }; })(),
+           view: (() => { const e = document.getElementById('view'); if (!e) return null; const r = e.getBoundingClientRect();
+             return { bottom: Math.round(r.bottom), h: Math.round(r.height) }; })(),
+           docScroll: document.documentElement.scrollHeight,
            hasWrap: !!wrap, hasCols: !!cols };
 })())`));
 
@@ -108,6 +120,15 @@ if (m.hasWrap && m.hasCols) {
     m.panes.map((p) => `h=${p.h}`).join(' '));
   // the AI 學伴 pane must match the lesson lab's: grid-template-columns minmax(280px,440px)
   const ai = m.panes[1];
+  // the bug this caught: the editor ran past the bottom of the window, so the sprite/stage selectors
+  // could not be reached at all. Nothing in the view may sit below the fold.
+  check('nothing in the playground runs past the bottom of the screen',
+    m.wrap.bottom <= m.vh && (m.panes || []).every((p) => p.bottom <= m.vh) && (!m.stage || m.stage.bottom <= m.vh),
+    `wrap ${m.wrap.bottom} · panes ${(m.panes||[]).map(p => p.bottom).join(',')} · stage ${m.stage ? m.stage.bottom : '-'} vs viewport ${m.vh}`);
+  check('the page itself does not scroll (panes scroll, not the page)',
+    m.docScroll <= m.vh, `document ${m.docScroll} vs viewport ${m.vh}`);
+  check('the editor iframe ends within the screen',
+    !m.frame || m.frame.bottom <= m.vh, m.frame ? `iframe bottom ${m.frame.bottom} (${m.frame.pos}, h ${m.frame.h}) vs viewport ${m.vh}` : 'no iframe');
   check('the AI pane is the same width as in the lesson lab (280-440px)',
     !!ai && ai.w >= 280 && ai.w <= 440, ai ? `AI pane ${ai.w}px, editor ${m.panes[0].w}px` : '');
 }

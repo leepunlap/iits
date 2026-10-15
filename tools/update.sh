@@ -36,6 +36,11 @@ rsync -a --exclude '*.bak*' "$HOST":/opt/iits-lesson-ai/ "$ROOT/service/"
 rsync -a "$HOST":/etc/iits-lesson-ai/ "$ROOT/service-config/" 2>/dev/null || true
 ssh "$HOST" 'sudo tar -C /opt/iits-teacher-auth -cf - checker.py' 2>/dev/null | tar -x -C "$ROOT/backend" 2>/dev/null || true
 rsync -a "$HOST":/home/blee/iits-repo/portals/backend/reg.py "$ROOT/backend/" 2>/dev/null || true
+# Wonder Lab hardware lab: the build service (blocks -> Arduino, :18811) and the static editor it
+# serves. Neither lives under the trees above, so each needs its own line. The service directory is
+# mode 700 but owned by the same user we ssh as; the 3D/blocks assets are ~80 MB.
+rsync -a --exclude 'service.log' "$HOST":/home/blee/lab-hardware-service/ "$ROOT/src/lab-hardware-service/" 2>/dev/null || true
+"$RSYNC" -aH --rsync-path="sudo -n rsync" "$HOST":/var/www/iits/lab-hardware/ "$ROOT/lab-hardware/" 2>/dev/null || true
 
 echo "  portals $(du -sh "$ROOT/portals" | cut -f1) · classfiles $(du -sh "$ROOT/classfiles" | cut -f1)"
 echo "restart the services if the service sources changed: $ROOT/restart.sh"

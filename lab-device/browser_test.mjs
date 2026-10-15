@@ -114,10 +114,15 @@ const stubFor = (pins, name) => `(() => {
 })();`;
 
 
-// A UC-Mind100 running the vendor CLI: silent to Firmata, answers the A1 probe with "180.00".
+// A UC-Mind100 running the vendor CLI: silent to Firmata, answers the read-only detection probe
+// (`A9 16 2 2 1`, the line tracker) with a plausible analog value.
+//
+// The probe used to be `A1 1 1 1`, which the protocol notes flag as a read/WRITE register command
+// that has left a board unresponsive until power-cycled — so detection is now side-effect free and
+// this stub answers the tracker read instead.
 const CLI_STUB = `(() => {
   const written = []; let pending = []; let waiters = []; let line = '';
-  const REPLY = [0x31, 0x38, 0x30, 0x2e, 0x30, 0x30, 0x0d, 0x0a];   // "180.00" CRLF
+  const REPLY = [0x35, 0x31, 0x32, 0x0d, 0x0a];                     // "512" CRLF
   const flush = () => { while (waiters.length && pending.length) {
     waiters.shift()({ value: Uint8Array.from(pending.splice(0)), done: false }); } };
   const onByte = (b) => {
@@ -125,7 +130,7 @@ const CLI_STUB = `(() => {
     if (b === 10) return;                     // LF is part of the terminator; ignore it
     if (b === 13) {                           // CR ends the command
       const cmd = line; line = '';
-      if (cmd === 'A1 1 1 1') { for (const c of REPLY) pending.push(c); flush(); }
+      if (cmd === 'A9 16 2 2 1') { for (const c of REPLY) pending.push(c); flush(); }
       return;
     }
     line += String.fromCharCode(b);
@@ -185,7 +190,8 @@ try {
 
   const info = await cdp.eval('document.getElementById("boardInfo").textContent');
   if (isCli) {
-    check('board readout shows UC-Mind100 on the vendor CLI', info.includes('UC-Mind100') && /CLI/.test(info), JSON.stringify(info));
+    // The verified board, and the one `attachTo` now defaults to: UC-Mind300 on the vendor CLI.
+    check('board readout shows UC-Mind300 on the vendor CLI', info.includes('UC-Mind300') && /CLI/.test(info), JSON.stringify(info));
     check('L2 controls became visible', !(await cdp.eval('document.getElementById("cli").classList.contains("hidden")')));
     check('L3 controls stayed hidden', await cdp.eval('document.getElementById("firmata").classList.contains("hidden")'));
     check('status says the CLI is connected', /已連接/.test(await cdp.eval('document.getElementById("status").textContent')));
@@ -196,10 +202,15 @@ try {
     await cdp.eval(`(() => { const s = document.getElementById('cliMotor'); s.value = '120'; s.dispatchEvent(new Event('change')); })()`);
     await sleep(600);
     const sent = await cdp.eval('new TextDecoder().decode(Uint8Array.from(window.__fakeWritten))');
-    check('display command reached the board', /A10 27 8888/.test(sent), JSON.stringify(sent.slice(-40)));
-    check('LED command reached the board', /A3 25 2 1 0/.test(sent));
-    check('motor command reached the board', /A8 10 0 0 120 0/.test(sent));
-    check('the CLI probe was sent while detecting', /A1 1 1 1/.test(sent));
+    // Verified pins: display = port B = 18, buttons/LEDs = port A = 19.
+    check('display command reached the board on pin 18', /A10 18 8888/.test(sent), JSON.stringify(sent.slice(-40)));
+    check('LED command reached the board on pin 19 (HIGH sent as 0)', /A3 19 2 1 0/.test(sent));
+    check('motor command used a MOTOR NUMBER, not a pin', /A8 1 0 0 120 0/.test(sent));
+    check('detection probed with the read-only tracker read', /A9 16 2 2 1/.test(sent));
+    check('detection did NOT write a register', !/A1 1 1 1/.test(sent),
+      'A1 is a read/WRITE register command that has hung a board');
+    check('no pin-numbered motor command was sent', !/A8 (5|10|9|6) 0 0 /.test(sent),
+      JSON.stringify(sent.slice(-40)));
 
     // the sensor guard: an unconfirmed read must not reach the board at all
     const before = await cdp.eval('window.__fakeWritten.length');
@@ -213,43 +224,32 @@ try {
         document.getElementById('sensorRead').click(); })()`);
     await sleep(900);
     const sent2 = await cdp.eval('new TextDecoder().decode(Uint8Array.from(window.__fakeWritten))');
-    check('confirmed sensor read sends A5 <pin> 4', /A5 6 4/.test(sent2), JSON.stringify(sent2.slice(-20)));
+    check('confirmed sensor read sends A16 <pin> 4', /A16 6 4/.test(sent2), JSON.stringify(sent2.slice(-20)));
     const err = await cdp.eval('document.getElementById("status").textContent');
     check('no error surfaced in the status line', !/錯誤|失敗/.test(err), JSON.stringify(err));
   }
 
   if (!isCli) {
-  const wantBoard = isEsp32 ? 'UC-Mind100' : 'UC-Mind300';
-  const wantLevel = isEsp32 ? 'L2' : 'L3';
-  check(`board readout identifies the ${wantBoard}`, info.includes(wantBoard), JSON.stringify(info));
-  check(`level shown as ${wantLevel}`, info.includes(wantLevel));
-  check('Firmata version shown', /2\.5/.test(info));
-
-  const motorsShown = await cdp.eval('!document.getElementById("motor0Row").classList.contains("hidden")');
-  check(isEsp32 ? 'motor controls hidden on the L2 kit' : 'motor controls visible on the L3 kit',
-        isEsp32 ? !motorsShown : motorsShown);
-  check('analog controls present', await cdp.eval('!!document.getElementById("sample")'));
+  // A board that answers Firmata has been flashed by hand. The device layer no longer carries a
+  // Firmata motor/sensor implementation, so the page must REFUSE it by name instead of driving it
+  // with commands the shipped firmware cannot execute. Identify traffic may still be sent — that is
+  // how the refusal is reached — but no actuator frames may follow.
   const statusText = await cdp.eval('document.getElementById("status").textContent');
-  check(isEsp32 ? 'status omits motors for the 40-pin Firmata board' : 'status reports motors available',
-        isEsp32 ? /類比輸入/.test(statusText) : /馬達/.test(statusText), JSON.stringify(statusText));
+  check('a hand-flashed Firmata board is refused by name', /連接失敗/.test(statusText), JSON.stringify(statusText));
+  check('the refusal says what the board answered', /Firmata 2\.5/.test(statusText), JSON.stringify(statusText));
+  check('the refusal says what the lab speaks', /vendor UC-Mind CLI/.test(statusText), JSON.stringify(statusText));
+  check('the refusal tells the teacher what to do', /reflash/.test(statusText), JSON.stringify(statusText));
+  check('no board readout is shown for a refused board', !info.trim(), JSON.stringify(info));
 
-
-  // drive a motor slider and check the exact frames that reached the (fake) board
-  if (!isEsp32 && !isCli) await cdp.eval(`(() => { const s = document.getElementById('motor0');
+  // drive a motor slider: nothing may reach a board the lab has refused
+  await cdp.eval(`(() => { const s = document.getElementById('motor0');
       s.value = '120'; s.dispatchEvent(new Event('input')); s.dispatchEvent(new Event('change')); })()`);
-  await sleep(500);
+  await sleep(300);
   const total = JSON.parse(await cdp.eval('JSON.stringify(window.__fakeWritten.length)'));
-  check('the page sent identify traffic (F9 + 3 queries = 10 bytes)', total >= 10, `${total} bytes total`);
-  if (!isEsp32) {
-    const tail = JSON.parse(await cdp.eval('JSON.stringify(window.__fakeWritten.slice(-12))'));
-    const expected = [0xf4, 10, 0x03, 0xf4, 9, 0x01, 0x91, 0x02, 0x00, 0xea, 120, 0x00];
-    check('motor slider drove the expected PWM + direction frames',
-      JSON.stringify(tail) === JSON.stringify(expected),
-      'got ' + tail.map((b) => b.toString(16)).join(' '));
-  }
-
-  const err = await cdp.eval('document.getElementById("status").textContent');
-  check('no error surfaced in the status line', !/錯誤|失敗/.test(err), JSON.stringify(err));
+  check('only identify traffic was sent (F9 + 3 queries = 10 bytes)', total === 10, `${total} bytes total`);
+  const frames = JSON.parse(await cdp.eval('JSON.stringify(window.__fakeWritten)'));
+  check('no PWM / pin-mode frames were sent to the refused board',
+    !frames.includes(0xf4), 'got ' + frames.map((b) => b.toString(16)).join(' '));
   }
 } catch (e) {
   console.log('✖ harness error:', e.message);

@@ -1,145 +1,237 @@
-/** Tests for the vendor CLI client. Every expected string is copied from vendors.js. */
+/**
+ * Tests for the vendor CLI client (`ucmake_cli.js`).
+ *
+ * The stale version of this file sent `A17 <pin> …` for the UC-Mind300 and a `2 2`-less tracker
+ * read — both wrong. These tests pin the bench-verified spellings so they cannot drift back, and
+ * they pin the two behaviours that make a working board look broken when violated: writes must not
+ * wait, and a pin must never reach the motor field.
+ */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { UCMakeCli, PROFILES, TERMINATOR, CLI_BAUD, BoardResetError } from './ucmake_cli.js';
+import { UCMakeCli, PROFILES, TERMINATOR, CLI_BAUD, BoardResetError, profileFor } from './ucmake_cli.js';
+import { UcmakeCommandError } from './ucmind300.js';
 
+/** Records writes and replays queued replies (one per read). */
 class MockCli {
-  constructor() { this.written = []; this.queue = []; this.reply = null; }
-  // the board answers *after* the command arrives, so queue the reply on write
-  async write(bytes) {
-    this.written.push(...bytes);
-    // `reply` may be a single string or a queue of them (one per command)
-    const next = Array.isArray(this.reply) ? this.reply.shift() : this.reply;
-    if (next != null) this.queue.push(...new TextEncoder().encode(next));
+  constructor(replies = []) {
+    this.written = [];
+    this.replies = [...replies];
+    this.reads = 0;
+    this.drains = 0;
   }
-  async read() { return Uint8Array.from(this.queue.splice(0)); }
-  async drain() { this.queue.length = 0; }      // discards stale input before a command
+  async write(bytes) { this.written.push(...bytes); }
+  async read() {
+    this.reads += 1;
+    const next = this.replies.shift();
+    return next == null ? new Uint8Array() : new TextEncoder().encode(next);
+  }
+  async drain() { this.drains += 1; }
   async close() { this.closed = true; }
 }
+
 const textOf = (t) => new TextDecoder().decode(Uint8Array.from(t.written));
-const cli = (board = 'UC-Mind100', t = new MockCli()) => [t, new UCMakeCli(t, PROFILES[board])];
+const linesOf = (t) => textOf(t).split('\n\r').filter(Boolean);
+const cli = (board = 'UC-Mind300', t = new MockCli()) => [t, new UCMakeCli(t, PROFILES[board])];
 
 test('terminator and baud match what UCMake uses', () => {
   assert.equal(TERMINATOR, '\n\r');
   assert.equal(CLI_BAUD, 115200);
 });
 
-test('ESP32-min motor commands are byte-for-byte UCMake\'s', async () => {
-  const [t, c] = cli('UC-Mind100');
-  await c.motor(10, 100);
-  assert.equal(textOf(t), 'A8 10 0 0 100 0\n\r');
-  t.written.length = 0;
-  await c.motor(10, -80);
-  assert.equal(textOf(t), 'A8 10 0 0 -80 0\n\r');
-  t.written.length = 0;
-  await c.motorStop();
-  assert.equal(textOf(t), 'A8 10 3 0 0 0\n\r');
+test('profileFor accepts a name or a profile, and rejects an unknown board', () => {
+  assert.equal(profileFor('UC-Mind300').level, 'L3');
+  assert.equal(profileFor(PROFILES['UC-Mind100']).name, 'UC-Mind100');
+  assert.equal(profileFor(undefined).name, 'UC-Mind300', 'the verified board is the default');
+  assert.throws(() => profileFor('UC-Mind500'), /unknown board/);
 });
 
-test('UC-Mind300 motors use function A17', async () => {
+test('the UC-Mind300 is flagged verified; the ESP32 kit is explicitly not', () => {
+  assert.equal(PROFILES['UC-Mind300'].verified, true);
+  assert.equal(PROFILES['UC-Mind100'].verified, false);
+});
+
+// ---------------------------------------------------------------- motors
+test('L3 motors use A8 with a MOTOR NUMBER — never A17, never a pin', async () => {
   const [t, c] = cli('UC-Mind300');
-  await c.motor(1, 120);
-  assert.equal(textOf(t), 'A17 1 0 0 120 0\n\r');
-  t.written.length = 0;
-  await c.motorStop();
-  assert.equal(textOf(t), 'A17 0 3 0 0 0\n\r');
+  await c.motor(1, 150);
+  await c.motor(2, 120);
+  assert.deepEqual(linesOf(t), ['A8 1 0 0 150 0', 'A8 2 0 0 120 0']);
+  assert.doesNotMatch(textOf(t), /A17/, 'A17 is not a verb on this image');
+  assert.doesNotMatch(textOf(t), /A8 1[05] /, 'the pin-numbered form must not come back');
 });
 
-test('display sends a plain decimal value (verified: 8888 shows 8888)', async () => {
+test('motor(speed) is the one-motor shorthand for M1', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.motor(100);
+  assert.deepEqual(linesOf(t), ['A8 1 0 0 100 0']);
+});
+
+test('a pin can never be sent as a motor', async () => {
+  const [t, c] = cli('UC-Mind300');
+  // 5, 6, 9, 11 are the pins the stale implementation wrote to; none is a motor number.
+  for (const pin of [5, 6, 9, 11, 0, 3]) {
+    await assert.rejects(() => c.motor(pin, 150), /which is a pin, not a motor/, `pin ${pin}`);
+  }
+  assert.equal(textOf(t), '', 'nothing may reach the board');
+});
+
+test('stop: one motor by number, or the vendor stop-all with no argument', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.motorStop(1);
+  await c.motorStop(2);
+  await c.motorStop();
+  await c.stopAll();
+  assert.deepEqual(linesOf(t), ['A8 1 0 0 0 0', 'A8 2 0 0 0 0', 'A8 10 3 0 0 0', 'A8 10 3 0 0 0']);
+});
+
+test('differential turn and move are distinct commands', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.driveTurn(150, 150);
+  await c.driveMove(1, 150);
+  assert.deepEqual(linesOf(t), ['A8 10 2 0 150 150', 'A8 10 1 1 150 0']);
+});
+
+// ---------------------------------------------------------------- display
+test('L3 display is A10 on port B = pin 18 (not 27)', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.display(1234);
+  assert.deepEqual(linesOf(t), ['A10 18 1234']);
+  assert.equal(c.profile.displayPin, 18);
+});
+
+test('the ESP32 kit keeps its own display pin', async () => {
   const [t, c] = cli('UC-Mind100');
   await c.display(8888);
-  assert.equal(textOf(t), 'A10 27 8888\n\r');
-  t.written.length = 0;
-  await c.display(500, 27);
-  assert.equal(textOf(t), 'A10 27 500\n\r');
+  assert.deepEqual(linesOf(t), ['A10 27 8888']);
 });
 
-test('4-LED button module: LEDs are addressed by port pin, index and level', async () => {
-  const [t, c] = cli('UC-Mind100');
-  // port A2 = pin 25 on the UC-Mind100; HIGH is sent as 0 (the vendor inverts the level)
-  await c.ledButton(25, 1, true);
-  assert.equal(textOf(t), 'A3 25 2 1 0\n\r');
-  t.written.length = 0;
-  await c.ledButton(25, 4, false);
-  assert.equal(textOf(t), 'A3 25 2 4 1\n\r');
+// ---------------------------------------------------------------- buttons / LEDs
+test('the LED level is inverted: on -> 0', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.setLed(1, true);
+  await c.setLed(1, false);
+  assert.deepEqual(linesOf(t), ['A3 19 2 1 0', 'A3 19 2 1 1']);
 });
 
-test('readButtons returns the four button states (confirmed: held button reads 1)', async () => {
-  const [t, c] = cli('UC-Mind100');
-  c.declareSensors({ 25: 'ledButton' });
-  t.reply = ['1\r\n', '0\r\n', '0\r\n', '0\r\n'];
-  assert.deepEqual(await c.readButtons(25), [true, false, false, false]);
-  assert.deepEqual(c.log.slice(-4), ['A3 25 1 1', 'A3 25 1 2', 'A3 25 1 3', 'A3 25 1 4']);
+test('ledButton accepts both the lesson and the vendor argument order', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.ledButton(1, true);              // index, on
+  await c.ledButton(19, 2, false);         // pin, index, on
+  await c.ledButton(25, 3, true);          // an explicit pin wins over the profile's
+  assert.deepEqual(linesOf(t), ['A3 19 2 1 0', 'A3 19 2 2 1', 'A3 25 2 3 0']);
 });
 
-test('servo / BLE / electromagnet follow the vendor functions', async () => {
-  const [t, c] = cli('UC-Mind100');
-  await c.servo360(1, 90);
-  assert.equal(textOf(t), 'A6 1 90\n\r');
-  t.written.length = 0;
-  await c.ble(5, true);
-  assert.equal(textOf(t), 'A7 5 1\n\r');
-  t.written.length = 0;
-  await c.electromagnet(5, false);
-  assert.equal(textOf(t), 'A12 5 0\n\r');
-
-  const [, l3] = cli('UC-Mind300');
-  await assert.rejects(() => l3.ble(5, true), /no BLE/);
-  await assert.rejects(() => l3.electromagnet(5, true), /no electromagnet/);
+test('readButtons reads all four on pin 19 and decodes to booleans', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['1\r\n', '0\r\n', '0\r\n', '1\r\n']));
+  assert.deepEqual(await c.readButtons(), [true, false, false, true]);
+  assert.deepEqual(linesOf(t), ['A3 19 1 1', 'A3 19 1 2', 'A3 19 1 3', 'A3 19 1 4']);
 });
 
-test('reading an undeclared pin is refused (it panics the firmware)', async () => {
-  const [t, c] = cli('UC-Mind100');
+test('readButton/readButtons alias the vendor name and the lesson name', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['1\r\n', '0\r\n', '1\r\n', '0\r\n', '1\r\n', '0\r\n']));
+  assert.equal(await c.readButton(2), true);
+  assert.equal(await c.readLedButtonDigital(19, 2), false);
+  assert.deepEqual(await c.buttons(), [true, false, true, false]);
+  assert.ok(t.written.length > 0);
+});
+
+// ---------------------------------------------------------------- sensors
+test('the line tracker uses A9 16 2 2 <axis>', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['978\r\n', '88\r\n']));
+  assert.equal(await c.readLineTracker(1), 978);
+  assert.equal(await c.read2LineFollower(16, 2), 88);
+  assert.deepEqual(linesOf(t), ['A9 16 2 2 1', 'A9 16 2 2 2']);
+  assert.doesNotMatch(textOf(t), /A9 16 1 /, 'the "2 2" field is required — without it it is silent');
+});
+
+test('the built-in light sensor is A16 21 0', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['988\r\n', '988\r\n']));
+  assert.equal(await c.readLight(), 988);
+  assert.equal(await c.light(), 988);
+  assert.deepEqual([...new Set(linesOf(t))], ['A16 21 0']);
+});
+
+test('touch is A20 15 0 and BINARY', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['0\r\n', '1\r\n']));
+  assert.equal(await c.readTouch(), false);
+  assert.equal(await c.touch(), true);
+  assert.deepEqual(linesOf(t), ['A20 15 0', 'A20 15 0']);
+});
+
+test('the ultrasonic module still needs a declared pin, and uses A16 <pin> 4', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['42\r\n']));
   await assert.rejects(() => c.readUltrasonic(6), /not a declared ultrasonic/);
   assert.equal(t.written.length, 0, 'nothing may reach the board');
   c.declareSensors({ 6: 'ultrasonic' });
-  t.reply = '42\r\n';
-  assert.equal(await c.readUltrasonic(6), '42');
-  await assert.rejects(() => c.readLineFollower(6, 1), /not a declared lineFollower/);
+  assert.equal(await c.readUltrasonic(6), 42);
+  assert.deepEqual(linesOf(t), ['A16 6 4']);
+});
+
+test('the sound sensor is exposed but never advertised as verified', async () => {
+  const [t, c] = cli('UC-Mind300', new MockCli(['982\r\n']));
+  assert.equal(await c.readSound(), 982);
+  assert.deepEqual(linesOf(t), ['A15 17 0']);
+});
+
+// ---------------------------------------------------------------- protocol behaviour
+test('writes never wait for a reply — silence is the success path', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.motor(1, 150);
+  await c.display(1234);
+  await c.setLed(1, true);
+  assert.equal(t.reads, 0, 'an actuator command must not read');
+  assert.equal(t.drains, 0, 'and must not drain either');
+});
+
+test('reads drain stale input and report a firmware error as an error', async () => {
+  const [, c] = cli('UC-Mind300', new MockCli(['ERROR 参数不足\r\n']));
+  await assert.rejects(() => c.readLight(), UcmakeCommandError);
 });
 
 test('a panic reply is reported as a board reset, not as a reading', async () => {
-  const [t, c] = cli('UC-Mind100');
-  c.declareSensors({ 6: 'ultrasonic' });
-  t.reply = "Guru Meditation Error: Core  1 panic'ed (IllegalInstruction). Exception was unhandled.\r\n";
-  await assert.rejects(() => c.readUltrasonic(6), BoardResetError);
-  await assert.rejects(() => c.readUltrasonic(6), /panicked and rebooted/);
+  const panic = "Guru Meditation Error: Core  1 panic'ed (IllegalInstruction). Exception was unhandled.\r\n";
+  const [, c] = cli('UC-Mind300', new MockCli([panic]));
+  await assert.rejects(() => c.readLight(), (err) => {
+    assert.ok(err instanceof BoardResetError);
+    assert.match(err.message, /panicked and rebooted/);
+    return true;
+  });
 });
 
-test('reads use the right function per board and decode the text reply', async () => {
-  const [t, c] = cli('UC-Mind100');
-  c.declareSensors({ 6: 'ultrasonic', 9: 'lineFollower', 4: 'color' });
-  t.reply = '180.00\r\n';
-  const v = await c.readUltrasonic(6);
-  assert.equal(textOf(t), 'A5 6 4\n\r');
-  assert.equal(v, '180.00');
-
-  t.written.length = 0;
-  await c.readLineFollower(9, 1);
-  assert.equal(textOf(t), 'A9 9 1 1\n\r');
-
-  t.written.length = 0;
-  await c.readColor(4, 2);
-  assert.equal(textOf(t), 'A4 4 3 2\n\r');
-});
-
-test('L3 sensors use the AVR fixed channels', async () => {
+test('tone is refused explicitly — there is no realtime buzzer command', async () => {
   const [t, c] = cli('UC-Mind300');
-  c.declareSensors({ 6: 'ultrasonic' });
-  await c.readLight();
-  assert.equal(textOf(t), 'A16 21 0\n\r');
-  t.written.length = 0;
-  await c.readSound();
-  assert.equal(textOf(t), 'A15 17 0\n\r');
-  t.written.length = 0;
-  await c.readUltrasonic(6);
-  assert.equal(textOf(t), 'A16 6 4\n\r');
+  await assert.rejects(() => c.tone(), (err) => {
+    assert.equal(err.name, 'UnsupportedFeatureError');
+    assert.equal(err.reason, 'sketch-only');
+    return true;
+  });
+  await assert.rejects(() => c.buzzer(), /not available over the realtime serial CLI/);
+  assert.equal(textOf(t), '', 'no bytes may be sent');
+});
+
+test('BLE and electromagnet exist only on the ESP32 kit', async () => {
+  const [t, c] = cli('UC-Mind100');
+  await c.ble(5, true);
+  await c.electromagnet(5, false);
+  assert.deepEqual(linesOf(t), ['A7 5 1', 'A12 5 0']);
+
+  const [, l3] = cli('UC-Mind300');
+  await assert.rejects(() => l3.ble(5, true), /not available over the realtime serial CLI/);
+  await assert.rejects(() => l3.electromagnet(5, true), /not available/);
+});
+
+test('servo uses A6', async () => {
+  const [t, c] = cli('UC-Mind300');
+  await c.servo(9, 90);
+  await c.servo360(9, 45);
+  assert.deepEqual(linesOf(t), ['A6 9 90', 'A6 9 45']);
 });
 
 test('every command is recorded for debugging', async () => {
-  const [, c] = cli('UC-Mind100');
-  await c.motor(10, 50);
+  const [, c] = cli('UC-Mind300');
+  await c.motor(1, 50);
   await c.display(1234);
-  assert.deepEqual(c.log, ['A8 10 0 0 50 0', 'A10 27 1234']);
+  assert.deepEqual(c.log, ['A8 1 0 0 50 0', 'A10 18 1234']);
+  assert.equal(c.last, 'A10 18 1234');
 });

@@ -21,3 +21,7 @@ portals/mail/templates/*/*.pdf
 certs/
 *.key
 *.fullchain.pem
+
+# Proprietary: 105 code-generation functions extracted verbatim from the UCMake app bundle.
+# Present on disk for the sketch path; must never be published.
+lab-device/codegen.json

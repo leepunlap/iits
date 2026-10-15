@@ -91,6 +91,26 @@ expect "AI route still gated when logged out" \
 rm -f "$JAR"
 
 echo
+echo "=== Wonder Lab hardware route ==="
+# The compile service drives arduino-cli, so it sits behind the student gate; the static lab page is
+# deliberately PUBLIC in production (it doubles as a diagnostic). Both prefixes use ^~ so neither the
+# /api/ nor the / catch-all can shadow them — when the lab-hardware locations were missing from this
+# template, the page fell through to the portal catch-all and every request 404'd or redirected.
+WJAR=$(mktemp)
+curl -sk -m 10 --resolve "$STU:443:$IP" -X POST "https://$STU/api/login" \
+     -H 'Content-Type: application/json' -d '{"u":"L4","p":"devpass"}' -c "$WJAR" >/dev/null 2>&1
+expect "lab build service answers when logged in" \
+  "$(curl -sk -o /dev/null -m 15 --resolve "$STU:443:$IP" -b "$WJAR" -w '%{http_code}' \
+     "https://$STU/lab-hardware/api/health")" "200"
+expect "lab build service gated when logged out" \
+  "$(curl -sk -o /dev/null -m 10 --resolve "$STU:443:$IP" -w '%{http_code}' \
+     "https://$STU/lab-hardware/api/health")" "302"
+expect "lab static page is public" \
+  "$(curl -sk -o /dev/null -m 10 --resolve "$STU:443:$IP" -w '%{http_code}' \
+     "https://$STU/lab-hardware/wonderlab.html")" "200"
+rm -f "$WJAR"
+
+echo
 echo "=== local env ==="
 # PORTAL_TEACHER_HOST must be the DEV host. checker.usable() refuses a *self-registered* teacher
 # (every production teacher, the owner's account included) unless the request Host equals it — the

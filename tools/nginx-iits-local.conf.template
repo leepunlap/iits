@@ -172,6 +172,21 @@ server {
                                 alias __ROOT__/classfiles/_library/;
                                 add_header Cache-Control "public, max-age=604800"; }
 
+    # Wonder Lab hardware lab — blocks -> Arduino sketch -> compile (:__PORT_BUILD__). Mirrors the
+    # production student vhost (ycltesthk-portals, students.ycltesthk.com): the compile service is a
+    # resource (it drives arduino-cli), so it sits behind the same student gate as everything else,
+    # while the static lab page stays public so it can be used as a diagnostic. `^~` keeps a later
+    # regex location from shadowing either prefix.
+    location ^~ /lab-hardware/api/ {
+        auth_request /_verify;
+        error_page 401 = @login;
+        proxy_pass http://127.0.0.1:__PORT_BUILD__/api/;
+    }
+    location ^~ /lab-hardware/ {
+        root __ROOT__;
+        try_files $uri $uri/ =404;
+    }
+
     # AI 學伴 (:__PORT_AI__). The path carries files/<LEVEL>/lessons/<slug>, so the existing per-level
     # gate decides access and hands over the verified user. These three headers are NOT optional:
     # without auth_request_set the service sees no X-Auth-User and answers 404 for every lesson.

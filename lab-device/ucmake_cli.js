@@ -1,79 +1,175 @@
 /**
- * UCMake vendor realtime protocol — the text CLI the UCMakeDesktop app itself drives.
+ * UCMake vendor realtime CLI — the text protocol the UCMakeDesktop app itself drives.
  *
- * UCMake does NOT talk Firmata to these boards. For realtime it flashes the vendor CLI firmware
- * (`arduinoESP32Min.standardFirmata.ino.bin` / `arduinoUno.standardFirmata.ino.hex`) and then sends
- * short text commands:  `A<function> <args…>` terminated by LF+CR, 115200 8N1.
+ * UCMake does **not** talk Firmata to these boards for realtime control. It sends short text
+ * commands: `A<function> <args…>` terminated by LF+CR at 115200 8N1. The firmware file is *named*
+ * `arduinoUno.standardFirmata.ino.hex` — there is no Firmata in the image.
  *
- * Every template below is copied from the app's own runtime handlers (`vendors.js`), so the lab
- * sends byte-for-byte what UCMake sends. Writes are fire-and-forget; reads answer with text.
+ * ⚠️ **Rewritten 2026-10-14 against the bench-verified protocol.** What this file used to say, and
+ * what is now known to be true:
  *
- *   ESP32-min (UC-Mind100 / L2)   ESP32 + others (UC-Mind300 / L3)
- *   A8  <pin> 0 0 <speed> 0       A17 <pin> 0 0 <speed> 0     DC motor
- *   A8  10 3 0 0 0                A17 0 3 0 0 0              stop all motors
- *   A10 <pin> <value>             A10 <pin> <value>          4-digit display
- *   A5  <pin> 4                   A16 <pin> 4                ultrasonic distance (read)
- *   A9  <pin> 1 <axis>            A9  <pin> 1 <axis>         line follower (read)
- *   A4  <pin> 3 <index>           A4  <pin> 3 <index>        colour sensor (read)
- *   A3  <pin> 1 <level>           —                          LED button (read)
- *   A6  <pin> <value>             A5  <pin> <value>          360° servo
- *   A7  <pin> <0|1>               —                          BLE on/off
- *   A12 <pin> <0|1>               —                          electromagnet
- *   —                             A16 21 0 / A15 17 0        light / sound sensor (read)
+ *   old (stale)                        verified
+ *   ---------------------------------  ---------------------------------------------------------
+ *   `A17 <pin> 0 0 <speed> 0` (L3)     `A8 <motor> 0 0 <speed> 0`. Field 1 is a **MOTOR NUMBER**
+ *                                      (1 = M1, 2 = M2), *not a pin*; `A17` is not a verb on this
+ *                                      image. Sending a pin silently does nothing — the one bug
+ *                                      that cost a full day.
+ *   `A9 <pin> 1 <axis>` (tracker)      `A9 16 2 2 <axis>`. The `2 2` field is required (without it
+ *                                      the board is silent) and the port must be the NUMBER 16 —
+ *                                      the `A2` spelling saturates at 1023.
+ *   display on pin 27                  `A10 18 <value>` — the display is port B = pin 18.
+ *   light/sound via `A16 17 0`         light is `A16 21 0` (pin 21 = A7, built in); touch is
+ *                                      `A20 15 0`; buttons/LEDs are `A3 19 …`.
+ *   buzzer by any verb                 **no realtime command exists** — tone is sketch-only.
+ *
+ * The command spellings now live in `ucmind300.js`, with the bench evidence in comments. This module
+ * is the transport-level client that the lab, the probes and the lesson pages share, plus the
+ * profile table that says which pin each module sits on.
+ *
+ * **Writes are fire-and-forget — silence means success. Reads answer with text.** Never gate
+ * progress on a reply to an actuator command.
  */
 
 import { SerialPortTransport, WebSerialTransport } from './firmata.js';
+import {
+  ANALOG_MAX,
+  BAUD,
+  BUZZER_UNSUPPORTED,
+  LED_COUNT,
+  LINE_TRACKER_AXES,
+  MOTOR,
+  MOTOR_COUNT,
+  PINS,
+  PORT_NAMES,
+  TERMINATOR,
+  UcmakeClient,
+  UcmakeCommandError,
+  buttonRead,
+  checkReply,
+  display as buildDisplay,
+  ledSet,
+  lineTrackerRead,
+  lightRead,
+  motorRun,
+  motorStop,
+  parseAnalog,
+  servo as buildServo,
+  soundRead,
+  touchRead,
+  ultrasonicRead,
+  unsupportedOnRealtime,
+} from './ucmind300.js';
 
-export const CLI_BAUD = 115200;
-export const TERMINATOR = '\n\r';          // UCMake sends LF then CR
+export {
+  ANALOG_MAX, TERMINATOR, UcmakeCommandError, UcmakeClient, PINS,
+  BAUD, BUZZER_UNSUPPORTED, LED_COUNT, LINE_TRACKER_AXES, MOTOR, MOTOR_COUNT, PORT_NAMES,
+};
+export const CLI_BAUD = BAUD;
 
+/**
+ * Board profiles for the CLI path — **the single profile table**, used by both this client and
+ * `board.js`.
+ *
+ * `UC-Mind300` is the AVR kit and is **bench-verified**. `UC-Mind100` is the ESP32 kit: its pin map
+ * is the vendor's own but its command set was not verified on this bench, so it is flagged
+ * `verified: false` rather than presented as equally known.
+ *
+ * Keys are named for the module so the lesson API and the client cannot drift apart.
+ */
 export const PROFILES = {
   'UC-Mind100': {
     name: 'UC-Mind100', deviceId: 'arduinoEsp32Min', level: 'L2',
-    motorFn: 8, servoFn: 6, hasBle: true, hasElectromagnet: true,
-    displayPin: 27, motorPins: [10, 11], ledPin: 25,   // ports: A1=27 (display), A2=25 (4-LED module)
+    protocol: 'cli', verified: false, baudRate: BAUD,
+    displayPin: 27, ledPin: 25, trackerPin: null,
+    lightPin: null, touchPin: null,
+    ports: { A: 25, B: 27 },
+    motors: 2, differential: true,
+    display: true, leds: 4, buttons: 4, lineTracker: 2,
+    light: false, touch: false, servo: true,
+    buzzer: false,
+    hasBle: true, hasElectromagnet: true,
   },
   'UC-Mind300': {
     name: 'UC-Mind300', deviceId: 'arduinoUno', level: 'L3',
-    motorFn: 17, servoFn: 5, hasBle: false, hasElectromagnet: false,
-    displayPin: 27, motorPins: [1, 2],
+    protocol: 'cli', verified: true, baudRate: BAUD,
+    displayPin: PINS.display,          // 18  — port B
+    ledPin: PINS.ledButton,            // 19  — port A
+    trackerPin: PINS.lineTracker,      // 16  — port C
+    touchPin: PINS.touch,              // 15  — port D
+    lightPin: PINS.light,              // 21  — A7, built in
+    pins: PINS,
+    ports: { A: PINS.ledButton, B: PINS.display, C: PINS.lineTracker, D: PINS.touch },
+    motors: 2, differential: true,
+    display: true, leds: 4, buttons: 4, lineTracker: 2,
+    light: true, touch: true, servo: true,
+    servoPins: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    buzzer: false,
+    analogPin: PINS.light,             // the built-in light sensor, A16 21 0
+    hasBle: false, hasElectromagnet: false,
   },
 };
 
+/** Accept a board name or an already-resolved profile. */
 export function profileFor(name) {
+  if (typeof name !== 'string') return name ?? PROFILES['UC-Mind300'];
   const p = PROFILES[name];
   if (!p) throw new RangeError(`unknown board ${name} (have ${Object.keys(PROFILES).join(', ')})`);
   return p;
 }
 
-const hex = (s) => Uint8Array.from([...s].map((c) => c.charCodeAt(0)));
-
-/** The vendor firmware panics (and reboots) instead of returning an error on a bad read. */
+/** The vendor firmware panics (and reboots) instead of returning an error on some bad reads. */
 export class BoardResetError extends Error {
   constructor(reply) {
-    super('board firmware panicked and rebooted — ' + reply.split('\n')[0].slice(0, 90));
+    super('board firmware panicked and rebooted — ' + String(reply).split('\n')[0].slice(0, 90));
     this.name = 'BoardResetError';
     this.reply = reply;
   }
 }
 
 const PANIC = /Guru Meditation|panicked|abort\(\)/;
+const number = (text) => {
+  const m = String(text).match(/-?\d+(?:\.\d+)?/);
+  return m ? Number(m[0]) : null;
+};
 
-/** Vendor realtime CLI client. Transport-injectable, so tests need no hardware. */
+/**
+ * Turn a raw reply into either a reading or an exception.
+ *
+ * Order matters: the firmware's own error strings are checked first, then a panic. A panic message
+ * can contain digits, so decoding a reply *before* this check would hand a crash dump back as if it
+ * were a sensor reading — which is exactly the confusion this function exists to prevent.
+ */
+export function decodeReply(command, raw) {
+  const text = checkReply(command, raw);
+  if (PANIC.test(text)) throw new BoardResetError(text);
+  return text;
+}
+
+/**
+ * Vendor realtime CLI client. Transport-injectable, so tests need no hardware.
+ *
+ * Defaults to the verified UC-Mind300 profile. Every actuator command is built by `ucmind300.js`,
+ * so the spelling is asserted in exactly one place.
+ */
 export class UCMakeCli {
-  constructor(transport, profile = PROFILES['UC-Mind100']) {
+  constructor(transport, profile = PROFILES['UC-Mind300']) {
+    this.profile = profileFor(profile);
     this.t = transport;
-    this.profile = profile;
-    this.log = [];                     // every command sent, for tests and debugging
-    this.sensors = {};                 // pin -> kind, declared by the lesson set-up
+    this.c = new UcmakeClient(transport, { timeout: this.profile.readTimeout ?? 400 });
+    this.log = this.c.log;                     // every command sent, for tests and debugging
+    this.sensors = {};                         // pin -> kind, for optional plug-in modules
   }
 
+  /** The raw text of the last command sent. */
+  get last() { return this.c.last; }
+
   /**
-   * Declare which modules are physically attached, e.g. `declareSensors({ 6: 'ultrasonic' })`.
+   * Declare a plug-in module's pin before reading it, e.g. `declareSensors({ 6: 'ultrasonic' })`.
    *
-   * This is not bureaucracy: reading a pin with no module on it **panics the vendor firmware**
-   * ("Guru Meditation Error", verified 2026-10-11 on `A5 6 4`). The board reboots, which drops the
-   * session — so the lab refuses to read a pin the lesson has not declared.
+   * Only for modules a lesson may or may not have attached. The fixed devices (display 18,
+   * buttons/LEDs 19, tracker 16, touch 15, light 21) are known and need no declaration, so a simple
+   * lesson never has to call this. The guard exists because on the ESP32 kit an unconfigured pin
+   * genuinely panics the firmware and drops the session.
    */
   declareSensors(map) { Object.assign(this.sensors, map); return this; }
 
@@ -81,117 +177,178 @@ export class UCMakeCli {
     if (this.sensors[pin] !== kind) {
       throw new Error(
         `pin ${pin} is not a declared ${kind} (declared: ${JSON.stringify(this.sensors)}) — ` +
-        'reading an unconfigured pin panics the vendor firmware and reboots the board');
+        `declare it with declareSensors({ ${pin}: '${kind}' }) before reading`,
+      );
     }
     return true;
   }
 
-  /** Send one command, exactly as UCMake does (arguments joined by spaces, LF+CR terminated). */
-  async send(...parts) {
-    const line = parts.join(' ');
-    this.log.push(line);
-    await this.t.write(hex(line + TERMINATOR));
-    return line;
-  }
+  // ---- transport -----------------------------------------------------------------
+  /** Send one command exactly as UCMake does (space-joined args, LF+CR terminated). */
+  async send(...parts) { return this.c.send(parts.join(' ')); }
 
-  /** Send a read command and return the decoded reply ('' on timeout). */
-  async query(parts, ms = 800) {
-    await this.t.drain?.();
-    await this.send(...parts);
-    const raw = await this.t.read(256, ms);
-    const text = new TextDecoder().decode(raw ?? new Uint8Array()).trim();
-    // A missing module makes the firmware panic and reboot: the session is gone, so say so
-    // rather than handing a crash dump back as if it were a sensor reading.
-    if (PANIC.test(text)) throw new BoardResetError(text);
-    return text;
-  }
-
-  // ---- actuators -----------------------------------------------------------------
-  /** DC motor: sign is direction, magnitude is speed. */
-  async motor(pin, speed) {
-    return this.send(`A${this.profile.motorFn}`, pin, 0, 0, speed, 0);
-  }
-  async motorStop() {
-    const f = this.profile.motorFn;
-    return f === 8 ? this.send('A8', 10, 3, 0, 0, 0) : this.send('A17', 0, 3, 0, 0, 0);
-  }
-  /** 4-digit display, pin 27 on both kits; the value is plain decimal (8888 shows 8888). */
-  async display(value, pin = this.profile.displayPin) {
-    return this.send('A10', pin, value);
-  }
   /**
-   * 4-button / 4-LED module. `index` selects the LED (the vendor's menu starts at 1).
-   * The vendor's template is `A3 <pin> 2 <index> ${"HIGH"===LEVEL?0:1}` — i.e. **HIGH is sent
-   * as 0**, so `on: true` sends 0. (On the UC-Mind100 the module sits on port A2 = pin 25.)
+   * Send a read command and return its decoded text reply ('' when the board stays silent).
+   *
+   * The reply is checked for the firmware's error strings *and* for a panic before it is returned:
+   * both mean "this is not a reading". Reads are async, so a caller must `await` — a forgotten
+   * `await` would otherwise turn a rejected read into an unhandled rejection instead of an error at
+   * the call site.
    */
-  async ledButton(pin, index, on) {
-    return this.send('A3', pin, 2, index, on ? 0 : 1);
+  async query(parts, ms) {
+    const line = Array.isArray(parts) ? parts.join(' ') : String(parts);
+    return decodeReply(line, await this.c.raw(line, ms ?? this.c.readTimeout));
   }
-  /** Read one of the four buttons; `level` is the vendor's LED-button index (1-4). */
-  async readLedButtonDigital(pin, level) {
-    this._require(pin, 'ledButton');
-    return this.query(['A3', pin, 1, level]);
+
+  /** A read that answers with one analog level (0..1023) — panics and errors still throw. */
+  async _readNumber(line) { return parseAnalog(await this.query([line])); }
+
+  // ---- actuators (fire-and-forget; silence means success) -------------------------
+  /**
+   * DC motor by **motor number** (1 = M1, 2 = M2) — not by pin — with the vendor's own
+   * `A8 <motor> 0 0 <speed> 0`.
+   *
+   * `motor(speed)` is also accepted: it drives M1, which is the one-motor shape a first lesson
+   * wants. A pin can never reach the wire here — `motorRun()` rejects anything but 1, 2 or the
+   * differential pair, because a pin number is precisely the mistake that used to fail silently.
+   */
+  async motor(motorOrSpeed, maybeSpeed) {
+    const oneArg = maybeSpeed === undefined;
+    return this.c.send(motorRun(oneArg ? 1 : motorOrSpeed, oneArg ? motorOrSpeed : maybeSpeed));
   }
-  /** Read all four buttons on the module at `pin` -> [b1, b2, b3, b4] as booleans. */
-  async readButtons(pin) {
-    const out = [];
-    for (let i = 1; i <= 4; i += 1) out.push((await this.readLedButtonDigital(pin, i)) === '1');
-    return out;
+
+  /** Stop M1/M2 by number; with no argument, the vendor's stop-all. */
+  async motorStop(index) {
+    return index === undefined ? this.c.stopAll() : this.c.send(motorStop(index));
   }
-  async servo360(pin, value) {
-    return this.send(`A${this.profile.servoFn}`, pin, value);
+
+  /** The vendor's hardcoded stop-all, `A8 10 3 0 0 0`. */
+  async stopAll() { return this.c.stopAll(); }
+
+  /** Differential turn — left wheel speed / right wheel speed, `A8 10 2 0 <left> <right>`. */
+  async driveTurn(left, right) { return this.c.turn(left, right); }
+
+  /** Straight-line differential move, `A8 10 1 <lrfb> <speed> 0`. */
+  async driveMove(lrfb, speed) { return this.c.move(lrfb, speed); }
+
+  /** 4-digit display — port B = pin 18 on the UC-Mind300. Fire-and-forget. */
+  async display(value, pin = this.profile.displayPin) {
+    return this.c.send(buildDisplay(value, pin));
   }
+
+  /**
+   * 4-button / 4-LED module. `index` selects the LED (the vendor starts at 1).
+   *
+   * All three spellings are accepted:
+   *   ledButton(1, true)               lesson-shaped: index, on     (uses the profile's port)
+   *   ledButton(19, 1, true)           vendor-shaped: pin, index, on
+   *   setLed(1, true)                  the same thing by name
+   *
+   * The vendor template is `A3 <pin> 2 <index> ${"HIGH"===LEVEL?0:1}` — **HIGH is sent as 0**, so
+   * `on: true` puts a `0` on the wire. `ledSet()` in `ucmind300.js` owns that inversion.
+   */
+  async ledButton(a, b, c) {
+    const explicitPin = c !== undefined;         // (pin, index, on) vs (index, on)
+    const pin = explicitPin ? a : (this.profile.ledPin ?? PINS.ledButton);
+    const index = explicitPin ? b : a;
+    const on = explicitPin ? c : b;
+    return this.c.send(ledSet(index, !!on, pin));
+  }
+
+  /** Lesson-ordered alias: `setLed(index, on)` on the profile's LED module. */
+  async setLed(index, on) { return this.c.setLed(index, on); }
+
+  /** 360° servo: `A6 <pin> <angle>`. */
+  async servo(pin, angle) { return this.c.send(buildServo(pin, angle)); }
+  /** Legacy name for the same command. */
+  async servo360(pin, value) { return this.servo(pin, value); }
+
   async ble(pin, on) {
-    if (!this.profile.hasBle) throw new Error(`${this.profile.name}: no BLE block on this board`);
+    if (!this.profile.hasBle) throw unsupportedOnRealtime(`${this.profile.name}: BLE`);
     return this.send('A7', pin, on ? 1 : 0);
   }
+
   async electromagnet(pin, on) {
-    if (!this.profile.hasElectromagnet) throw new Error(`${this.profile.name}: no electromagnet on this board`);
+    if (!this.profile.hasElectromagnet) throw unsupportedOnRealtime(`${this.profile.name}: electromagnet`);
     return this.send('A12', pin, on ? 1 : 0);
   }
 
-  // ---- sensors (reads) -----------------------------------------------------------
-  /** Ultrasonic distance in cm. */
+  /**
+   * Tone is sketch-only — the vendor's block is `mechanism: "local"` and compiles to
+   * `UCBuzzer::tone()`; no realtime command exists (14 verbs probed on the bench, no tone).
+   * Refused explicitly so silence is never mistaken for a working buzzer. The sketch path
+   * (`codegen.js` + `upload.mjs`) is the real mechanism and is not emulated here.
+   */
+  async tone() { throw unsupportedOnRealtime('buzzer/tone', 'sketch-only'); }
+  async buzzer() { throw unsupportedOnRealtime('buzzer/tone', 'sketch-only'); }
+
+  // ---- sensors (reads; they DO answer) --------------------------------------------
+  /** Line tracker, port C = pin 16: `A9 16 2 2 <axis>`, analog 0..1023. */
+  async readLineTracker(axis, pin = this.profile.trackerPin ?? PINS.lineTracker) {
+    return this._readNumber(lineTrackerRead(axis, pin));
+  }
+  /** The vendor's block name for the same read. */
+  async read2LineFollower(pinOrAxis, maybeAxis) {
+    return maybeAxis === undefined ? this.readLineTracker(pinOrAxis) : this.readLineTracker(maybeAxis, pinOrAxis);
+  }
+
+  /** Built-in light sensor, pin 21 = A7: `A16 21 0`, analog ~0..1023. */
+  async readLight(pin = this.profile.lightPin ?? PINS.light) {
+    return this._readNumber(lightRead(pin));
+  }
+
+  /** Capacitive touch, port D = pin 15: `A20 15 0`. **Binary** — returns true/false, not a level. */
+  async readTouch(pin = this.profile.touchPin ?? PINS.touch) {
+    const n = number(await this.query([touchRead(pin)]));
+    return n === null ? null : n !== 0;
+  }
+
+  /** Read one button (1..4) -> true when pressed. */
+  async readButton(level, pin = this.profile.ledPin ?? PINS.ledButton) {
+    const n = number(await this.query([buttonRead(level, pin)]));
+    return n === null ? null : n !== 0;
+  }
+
+  /** All four buttons -> `[b1, b2, b3, b4]` of true/false. */
+  async readButtons(pin = this.profile.ledPin ?? PINS.ledButton) {
+    const replies = await Promise.all([1, 2, 3, 4].map((i) => this.query([buttonRead(i, pin)])));
+    return replies.map((text) => {
+      const n = number(text);
+      return n === null ? null : n !== 0;
+    });
+  }
+
+  /** The vendor's name for one button read ("LED button pressed?"). */
+  async readLedButtonDigital(pin, level) { return this.readButton(level, pin); }
+
+  /** Ultrasonic distance in cm — an optional module, so its pin must be declared first. */
   async readUltrasonic(pin) {
     this._require(pin, 'ultrasonic');
-    const fn = this.profile.deviceId === 'arduinoEsp32Min' ? 'A5' : 'A16';
-    return this.query([fn, pin, 4]);
+    return this._readNumber(ultrasonicRead(pin));
   }
-  async readLineFollower(pin, axis) {
-    this._require(pin, 'lineFollower');
-    return this.query(['A9', pin, 1, axis]);
-  }
-  async read5LineFollower(pin, axis) {
-    this._require(pin, 'lineFollower');
-    return this.query(['A9', pin, 2, 5, axis]);
-  }
-  async read2LineFollower(pin, axis) {
-    this._require(pin, 'lineFollower');
-    return this.query(['A9', pin, 2, 2, axis]);
-  }
-  async readColor(pin, index) {
-    this._require(pin, 'color');
-    return this.query(['A4', pin, 3, index]);
-  }
-  async readLedButton(pin, level) {
-    this._require(pin, 'ledButton');
-    return this.query(['A3', pin, 1, level]);
-  }
-  /** L3 only: the AVR kit has fixed channels for these. */
-  async readLight() { return this.query(['A16', 21, 0]); }
-  async readSound() { return this.query(['A15', 17, 0]); }
 
-  async close() { await this.t.close?.(); }
+  /** Sound sensor at the AVR's fixed channel (`A15 17 0`). Not bench-verified for the L3 kit. */
+  async readSound(pin = 17) { return this._readNumber(soundRead(pin)); }
+
+  // Convenience aliases matching the lesson-facing names in `board.js`.
+  async lineTracker(axis) { return this.readLineTracker(axis); }
+  async light() { return this.readLight(); }
+  async touch() { return this.readTouch(); }
+  async buttons() { return this.readButtons(); }
+
+  async close() { await this.c.close(); }
 }
 
 /** Open a CLI session over a serial port (Node) — 115200, as UCMake uses. */
-export async function openCli(port, profile = PROFILES['UC-Mind100']) {
+export async function openCli(port, profile = PROFILES['UC-Mind300']) {
   const t = await SerialPortTransport.open(port, { baudRate: CLI_BAUD });
   return new UCMakeCli(t, profile);
 }
 
 /** Ask the browser for a port (lab page). */
-export async function requestCli(profile = PROFILES['UC-Mind100']) {
+export async function requestCli(profile = PROFILES['UC-Mind300']) {
   const t = await WebSerialTransport.request({ baudRate: CLI_BAUD });
   return new UCMakeCli(t, profile);
 }
+
+export { checkReply };

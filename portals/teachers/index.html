@@ -115,7 +115,40 @@ body.pg-mode .wrap{padding:0;max-width:none}
 /* where the editor goes: the host (lab-host.js) fills it with .wl-host > (.wl-sload + iframe.wl-sframe), styled by
    the shared stylesheet, assets/lab/lab.css. This is only the playground's own box in its two-pane layout. */
 .pg-stage{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column}
-.pg-composer{display:flex;gap:8px;align-items:flex-end;flex:none;padding:9px 12px;border-top:1px solid #eef0f6}
+/* ---- AI 學伴 pane: the L4 lesson lab's conversation pane, without the lesson ----
+   MIRROR of the pane block in src/iits-lessons-build/assets_src/lesson.css (the one stylesheet all four
+   levels' lesson pages load: .chbody / .msg / .chnote / .chform, lesson.css lines 195-213). Values are
+   copied VERBATIM and the class names are the lesson's own, so this block can be deleted and replaced by a
+   link to the shared file the moment the pane CSS has a home both sides can load — see the note in the
+   hand-off. portals/tools/check_pg_chat_pane.mjs fails if these values drift from lesson.css, so the two
+   cannot silently diverge (AGENTS.md VII).
+   NOT copied: .chat/.chhead (the pane's frame — the playground's own .pg-pane/.pg-bar does that job),
+   .chcaps/.cprow/.cpclass (lesson caps and class timetable), .sqs/.sq (lesson-suggested questions),
+   .chfab (the lesson's mobile launcher). All lesson-only chrome. */
+/* The lesson page's own body carries line-height:1.75 (lesson.css), and the pane's .chnote and .chform
+   textarea have no line-height of their own — they inherit it. Set the same on the pane, or those two are
+   spaced 'normal' here and the pane is subtly tighter than the lab's. Only the AI pane gets it: the block
+   editor's pane must keep the portal's own metrics. */
+.pg-chat{line-height:1.75}
+/* the row the lesson's animation switch sits in (.wl-sacts); only the row's spacing is ours — the switch
+   inside it is the lab's .wl-animsw, styled by the shared lab.css */
+.pg-sacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px 0}
+.chbody{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#fbf9ff}
+.msg{max-width:88%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.msg.bot{background:#fff;border:1px solid #ece4f8;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:#7c4dc4;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.sys{align-self:center;background:#fff6e0;color:#8a5a00;font-size:12.5px;text-align:center}
+.msg.wait{color:#8a7fa3}
+.chnote{margin:0;padding:6px 14px;font-size:11.5px;color:#8a7fa3;border-top:1px solid #f2ecfa}
+.chform{display:flex;gap:8px;padding:10px 12px 12px;border-top:1px solid #f2ecfa}
+.chform textarea{flex:1;resize:none;border:1px solid #d9c9f3;border-radius:12px;padding:8px 10px;font:inherit;font-size:14px}
+.chform button{flex:none;border:0;border-radius:12px;background:#7c4dc4;color:#fff;font-weight:800;font-size:15px;padding:0 18px;cursor:pointer}
+.chform button:disabled{background:#c7b6e6;cursor:default}
+/* iOS zooms into a text box whose font is under 16 px. The lesson has the same rule twice: lesson.css at
+   narrow widths, and lab.css for the pane on any coarse pointer (#chat .chform textarea). The playground's
+   pane can be a bottom drawer on a tablet at full width, where the width query would not fire, so take the
+   pointer test — the same one the lab uses for this very pane. */
+@media(pointer:coarse){.chform textarea{font-size:16px}}
 @media(max-width:1000px){
   .pg-wrap{height:100%}
   .pg-cols{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(220px,42%)}
@@ -459,30 +492,49 @@ function viewPlayground(){
         <div class="pg-bar">${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></div>
         <div id="pgStage" class="pg-stage"></div>
       </section>
-      <section class="pg-pane">
+      <section class="pg-pane pg-chat">
         <div class="pg-bar">${I('sparkles')} AI 學伴</div>
-        <div id="pgLog" style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px"></div>
-        <div class="pg-composer">
-          <textarea id="pgIn" rows="2" placeholder="講出你想舞台上發生的事。"
-            style="flex:1;resize:vertical;font:inherit;font-size:13.5px;padding:9px 11px;border:1px solid #d7dced;border-radius:10px"></textarea>
-          <button class="btn pri" id="pgSend">傳送</button>
-        </div>
+        <div class="chbody" id="pgLog"></div>
+        <p class="chnote">AI 也會答錯，記得查證。不要輸入名字、電話等個人資料。對話會被記錄，用於了解學習需要。</p>
+        <div class="pg-sacts"><label class="wl-animsw" id="pgAnimBox" hidden><input type="checkbox" id="pgAnim"><span>AI 改積木時播放動畫</span></label></div>
+        <form class="chform" id="pgForm"><textarea id="pgIn" rows="2" placeholder="講出你想舞台上發生的事。"></textarea>
+          <button type="submit" id="pgSend">傳送</button></form>
       </section>
     </div>
   </div>`;
   document.body.classList.add('fullh','pg-mode');
   PG.W=null; PG.hist=[]; PG.load=null;
   pgRender();
-  $('pgSend').onclick=pgSend;
-  $('pgIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey)){e.preventDefault();pgSend();}});
+  $('pgForm').addEventListener('submit',e=>{e.preventDefault();pgSend();});
+  // Enter sends, Shift+Enter breaks the line — the lesson pane's binding (assets_src/chat.js).
+  $('pgIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();pgSend();}});
+  $('pgAnim').addEventListener('change',()=>{if(PG.W&&PG.W.setAnim)PG.W.setAnim($('pgAnim').checked);pgAnim();});
   PG.load=pgBoot();
+}
+/* 「AI 改積木時播放動畫」 — the lesson lab's own switch, not a copy of it: lab.js builds the same
+   <label class="wl-animsw"> and the LOOK comes from the shared lab.css the playground already loads
+   through the lab manifest. In the lesson it lives in .wl-sacts next to the 助教 button and is hidden
+   outside lab mode (lab.css:199); the playground has no modes and is always "the AI builds", so it only
+   needs the studio's own answer to whether the animation is available. The preference itself is the
+   Studio's (WLAnim.setEnabled via ST.setAnim) — the playground keeps no second copy of it. */
+function pgAnim(){
+  const box=$('pgAnimBox'), cb=$('pgAnim'); if(!box||!cb)return;
+  const a=(PG.W&&PG.W.anim)?PG.W.anim():{available:false,enabled:false};
+  box.hidden=!a.available; cb.checked=!!a.enabled;
+}
+/* One message bubble — the lesson pane's add() (assets_src/chat.js): same classes ('msg me|bot|sys',
+   'bot wait' while thinking), same scroll-to-bottom, and a returned node so a waiting bubble can be removed.
+   textContent, so nothing the AI or the server sends is ever parsed as markup. */
+function pgAdd(cls,text){
+  const log=$('pgLog'); if(!log)return null;
+  const d=document.createElement('div'); d.className='msg '+cls; d.textContent=text;
+  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
 }
 function pgRender(){
   const log=$('pgLog'); if(!log)return;
-  if(!PG.hist.length){log.innerHTML=`<div class="empty">Enter 換行，⌘／Ctrl+Enter 傳送。</div>`;return;}
-  log.innerHTML=PG.hist.map(m=>`<div style="align-self:${m.role==='user'?'flex-end':'flex-start'};max-width:96%">
-    <div style="background:${m.role==='user'?'#3d5699':'#fff'};color:${m.role==='user'?'#fff':'#10161d'};border:1px solid ${m.role==='user'?'#3d5699':'#e5e8f0'};border-radius:12px;padding:8px 11px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere">${esc(m.text)}</div></div>`).join('');
-  log.scrollTop=log.scrollHeight;
+  log.innerHTML='';
+  if(!PG.hist.length){const h=document.createElement('div');h.className='empty';h.textContent='Enter 傳送，Shift+Enter 換行。';log.appendChild(h);return;}
+  PG.hist.forEach(m=>pgAdd(m.role==='user'?'me':m.role==='sys'?'sys':'bot',m.text));
 }
 // Mount and boot the Studio. The manifest, the content-hashed studio folder, the frame and WLStudio.boot() are
 // lab-host.js's job (the lesson lab mounts the editor through the very same module, from the very same file); what
@@ -507,37 +559,41 @@ async function pgBoot(){
     // library: the playground gets the full actor / backdrop / costume / sound library (lessons keep
     // the curated suppression), now that /lab-library/ is public and the assets actually load.
     const r=await PG.host.boot(lesson,{assetBase:'/lab-library/a/',library:true});
-    PG.W=r.studio;
+    PG.W=r.studio; pgAnim();      // the studio is up: show its animation preference on the switch
   }catch(e){
     if(!PG.host)toast('積木編輯器載入失敗，請重新載入這一頁。');   // the host reports its own failure in the pane
   }
 }
 async function pgSend(){
-  const inp=$('pgIn'),t=(inp.value||'').trim(); if(!t)return;
+  const inp=$('pgIn'),t=(inp.value||'').trim(); if(!t||inp.disabled)return;
   if(PG.load){try{await PG.load;}catch(e){}}
   if(!PG.W||!PG.host){toast('積木編輯器還未準備好。');return;}
-  const btn=$('pgSend'); btn.disabled=true; btn.textContent='砌緊…';
-  PG.hist.push({role:'user',text:t}); inp.value=''; pgRender();
+  const btn=$('pgSend');
+  // What the endpoint is sent is the conversation only: the lesson pane keeps its notices out of hist too, and
+  // the turn being asked about is excluded from the history it carries.
+  const convo=()=>PG.hist.filter(m=>m.role!=='sys').map(m=>({role:m.role==='user'?'user':'assistant',content:m.text}));
+  inp.value=''; PG.hist.push({role:'user',text:t}); pgRender();
+  const wait=pgAdd('bot wait','想一想…');     // the lesson pane's waiting bubble, removed when the turn lands
+  btn.disabled=inp.disabled=true;
   try{
     // the AI turn is this page's own: the endpoint and the payload differ from a lesson's (lab-host.js carries the
     // transport, not the turn)
-    const r=await PG.host.send('/api/ai/lab/playground',{text:t,
-      history:PG.hist.slice(-9,-1).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),
-      program:PG.W.program()});
-    const d=r.data;
-    if(!d){PG.hist.push({role:'assistant',text:'（連線中斷，請再試一次。）'});}
-    else if(!d.ok){PG.hist.push({role:'assistant',text:'（無法回應：'+esc(d.reason||d.error||('HTTP '+r.status))+'）'});}
+    const r=await PG.host.send('/api/ai/lab/playground',{text:t,history:convo().slice(-9,-1),program:PG.W.program()});
+    const d=r.data; wait.remove();
+    if(!d){PG.hist.push({role:'sys',text:'連線中斷，請再試一次。'});}
+    else if(!d.ok){PG.hist.push({role:'sys',text:'無法回應：'+(d.reason||d.error||('HTTP '+r.status))});}
     else{
       const say=[d.say,d.question].filter(Boolean).join('\n');
       if(say)PG.hist.push({role:'assistant',text:say});
       const m=$('pgModel'); if(m)m.textContent=(d.model||'')+(d.ms?' · '+(d.ms/1000).toFixed(1)+'s':'');
       if((d.ops||[]).length){
         const res=await PG.W.apply(d,{animate:true,maxMs:20000});
-        if(res&&res.skipped)PG.hist.push({role:'assistant',text:'（有 '+res.skipped+' 個改動未能套用。）'});
+        if(res&&res.skipped)PG.hist.push({role:'sys',text:'有 '+res.skipped+' 個改動未能套用。'});
       }
     }
-  }catch(e){PG.hist.push({role:'assistant',text:'（連線中斷，請再試一次。）'});}
-  btn.disabled=false; btn.textContent='傳送'; pgRender();
+  }catch(e){wait.remove();PG.hist.push({role:'sys',text:'連線中斷，請再試一次。'});}
+  btn.disabled=inp.disabled=false; try{inp.focus();}catch(e){}
+  pgRender();
 }
 
 /* ---------------- classes ---------------- */

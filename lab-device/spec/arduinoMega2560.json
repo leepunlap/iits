@@ -1,0 +1,2232 @@
+{
+ "board": "arduinoMega2560",
+ "categories": [
+  {
+   "id": "pin",
+   "name": "Pins",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setPinMode",
+     "text": "set pin [PIN] mode [MODE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "mode",
+       "default": "INPUT"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        },
+        {
+         "text": "5",
+         "value": "5"
+        },
+        {
+         "text": "6",
+         "value": "6"
+        },
+        {
+         "text": "7",
+         "value": "7"
+        },
+        {
+         "text": "8",
+         "value": "8"
+        },
+        {
+         "text": "9",
+         "value": "9"
+        },
+        {
+         "text": "10",
+         "value": "10"
+        },
+        {
+         "text": "11",
+         "value": "11"
+        },
+        {
+         "text": "12",
+         "value": "12"
+        },
+        {
+         "text": "13",
+         "value": "13"
+        },
+        {
+         "text": "14",
+         "value": "14"
+        },
+        {
+         "text": "15",
+         "value": "15"
+        },
+        {
+         "text": "16",
+         "value": "16"
+        },
+        {
+         "text": "17",
+         "value": "17"
+        },
+        {
+         "text": "18",
+         "value": "18"
+        },
+        {
+         "text": "19",
+         "value": "19"
+        },
+        {
+         "text": "20",
+         "value": "20"
+        },
+        {
+         "text": "21",
+         "value": "21"
+        },
+        {
+         "text": "22",
+         "value": "22"
+        },
+        {
+         "text": "23",
+         "value": "23"
+        },
+        {
+         "text": "24",
+         "value": "24"
+        },
+        {
+         "text": "25",
+         "value": "25"
+        },
+        {
+         "text": "26",
+         "value": "26"
+        },
+        {
+         "text": "27",
+         "value": "27"
+        },
+        {
+         "text": "28",
+         "value": "28"
+        },
+        {
+         "text": "29",
+         "value": "29"
+        },
+        {
+         "text": "30",
+         "value": "30"
+        },
+        {
+         "text": "31",
+         "value": "31"
+        },
+        {
+         "text": "32",
+         "value": "32"
+        },
+        {
+         "text": "33",
+         "value": "33"
+        },
+        {
+         "text": "34",
+         "value": "34"
+        },
+        {
+         "text": "35",
+         "value": "35"
+        },
+        {
+         "text": "36",
+         "value": "36"
+        },
+        {
+         "text": "37",
+         "value": "37"
+        },
+        {
+         "text": "38",
+         "value": "38"
+        },
+        {
+         "text": "39",
+         "value": "39"
+        },
+        {
+         "text": "40",
+         "value": "40"
+        },
+        {
+         "text": "41",
+         "value": "41"
+        },
+        {
+         "text": "42",
+         "value": "42"
+        },
+        {
+         "text": "43",
+         "value": "43"
+        },
+        {
+         "text": "44",
+         "value": "44"
+        },
+        {
+         "text": "45",
+         "value": "45"
+        },
+        {
+         "text": "46",
+         "value": "46"
+        },
+        {
+         "text": "47",
+         "value": "47"
+        },
+        {
+         "text": "48",
+         "value": "48"
+        },
+        {
+         "text": "49",
+         "value": "49"
+        },
+        {
+         "text": "50",
+         "value": "50"
+        },
+        {
+         "text": "51",
+         "value": "51"
+        },
+        {
+         "text": "52",
+         "value": "52"
+        },
+        {
+         "text": "53",
+         "value": "53"
+        },
+        {
+         "text": "A0",
+         "value": "A0"
+        },
+        {
+         "text": "A1",
+         "value": "A1"
+        },
+        {
+         "text": "A2",
+         "value": "A2"
+        },
+        {
+         "text": "A3",
+         "value": "A3"
+        },
+        {
+         "text": "A4",
+         "value": "A4"
+        },
+        {
+         "text": "A5",
+         "value": "A5"
+        },
+        {
+         "text": "A6",
+         "value": "A6"
+        },
+        {
+         "text": "A7",
+         "value": "A7"
+        },
+        {
+         "text": "A8",
+         "value": "A8"
+        },
+        {
+         "text": "A9",
+         "value": "A9"
+        },
+        {
+         "text": "A10",
+         "value": "A10"
+        },
+        {
+         "text": "A11",
+         "value": "A11"
+        },
+        {
+         "text": "A12",
+         "value": "A12"
+        },
+        {
+         "text": "A13",
+         "value": "A13"
+        },
+        {
+         "text": "A14",
+         "value": "A14"
+        },
+        {
+         "text": "A15",
+         "value": "A15"
+        }
+       ]
+      },
+      "mode": {
+       "items": [
+        {
+         "text": "input",
+         "value": "INPUT"
+        },
+        {
+         "text": "output",
+         "value": "OUTPUT"
+        },
+        {
+         "text": "input-pullup",
+         "value": "INPUT_PULLUP"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setDigitalOutput",
+     "text": "set digital pin [PIN] out [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        },
+        {
+         "text": "5",
+         "value": "5"
+        },
+        {
+         "text": "6",
+         "value": "6"
+        },
+        {
+         "text": "7",
+         "value": "7"
+        },
+        {
+         "text": "8",
+         "value": "8"
+        },
+        {
+         "text": "9",
+         "value": "9"
+        },
+        {
+         "text": "10",
+         "value": "10"
+        },
+        {
+         "text": "11",
+         "value": "11"
+        },
+        {
+         "text": "12",
+         "value": "12"
+        },
+        {
+         "text": "13",
+         "value": "13"
+        },
+        {
+         "text": "14",
+         "value": "14"
+        },
+        {
+         "text": "15",
+         "value": "15"
+        },
+        {
+         "text": "16",
+         "value": "16"
+        },
+        {
+         "text": "17",
+         "value": "17"
+        },
+        {
+         "text": "18",
+         "value": "18"
+        },
+        {
+         "text": "19",
+         "value": "19"
+        },
+        {
+         "text": "20",
+         "value": "20"
+        },
+        {
+         "text": "21",
+         "value": "21"
+        },
+        {
+         "text": "22",
+         "value": "22"
+        },
+        {
+         "text": "23",
+         "value": "23"
+        },
+        {
+         "text": "24",
+         "value": "24"
+        },
+        {
+         "text": "25",
+         "value": "25"
+        },
+        {
+         "text": "26",
+         "value": "26"
+        },
+        {
+         "text": "27",
+         "value": "27"
+        },
+        {
+         "text": "28",
+         "value": "28"
+        },
+        {
+         "text": "29",
+         "value": "29"
+        },
+        {
+         "text": "30",
+         "value": "30"
+        },
+        {
+         "text": "31",
+         "value": "31"
+        },
+        {
+         "text": "32",
+         "value": "32"
+        },
+        {
+         "text": "33",
+         "value": "33"
+        },
+        {
+         "text": "34",
+         "value": "34"
+        },
+        {
+         "text": "35",
+         "value": "35"
+        },
+        {
+         "text": "36",
+         "value": "36"
+        },
+        {
+         "text": "37",
+         "value": "37"
+        },
+        {
+         "text": "38",
+         "value": "38"
+        },
+        {
+         "text": "39",
+         "value": "39"
+        },
+        {
+         "text": "40",
+         "value": "40"
+        },
+        {
+         "text": "41",
+         "value": "41"
+        },
+        {
+         "text": "42",
+         "value": "42"
+        },
+        {
+         "text": "43",
+         "value": "43"
+        },
+        {
+         "text": "44",
+         "value": "44"
+        },
+        {
+         "text": "45",
+         "value": "45"
+        },
+        {
+         "text": "46",
+         "value": "46"
+        },
+        {
+         "text": "47",
+         "value": "47"
+        },
+        {
+         "text": "48",
+         "value": "48"
+        },
+        {
+         "text": "49",
+         "value": "49"
+        },
+        {
+         "text": "50",
+         "value": "50"
+        },
+        {
+         "text": "51",
+         "value": "51"
+        },
+        {
+         "text": "52",
+         "value": "52"
+        },
+        {
+         "text": "53",
+         "value": "53"
+        },
+        {
+         "text": "A0",
+         "value": "A0"
+        },
+        {
+         "text": "A1",
+         "value": "A1"
+        },
+        {
+         "text": "A2",
+         "value": "A2"
+        },
+        {
+         "text": "A3",
+         "value": "A3"
+        },
+        {
+         "text": "A4",
+         "value": "A4"
+        },
+        {
+         "text": "A5",
+         "value": "A5"
+        },
+        {
+         "text": "A6",
+         "value": "A6"
+        },
+        {
+         "text": "A7",
+         "value": "A7"
+        },
+        {
+         "text": "A8",
+         "value": "A8"
+        },
+        {
+         "text": "A9",
+         "value": "A9"
+        },
+        {
+         "text": "A10",
+         "value": "A10"
+        },
+        {
+         "text": "A11",
+         "value": "A11"
+        },
+        {
+         "text": "A12",
+         "value": "A12"
+        },
+        {
+         "text": "A13",
+         "value": "A13"
+        },
+        {
+         "text": "A14",
+         "value": "A14"
+        },
+        {
+         "text": "A15",
+         "value": "A15"
+        }
+       ]
+      },
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setPwmOutput",
+     "text": "set pwm pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pwmPins",
+       "default": "3"
+      },
+      {
+       "name": "OUT",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      }
+     ],
+     "menus": {
+      "pwmPins": {
+       "items": [
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        },
+        {
+         "text": "5",
+         "value": "5"
+        },
+        {
+         "text": "6",
+         "value": "6"
+        },
+        {
+         "text": "7",
+         "value": "7"
+        },
+        {
+         "text": "8",
+         "value": "8"
+        },
+        {
+         "text": "9",
+         "value": "9"
+        },
+        {
+         "text": "10",
+         "value": "10"
+        },
+        {
+         "text": "11",
+         "value": "11"
+        },
+        {
+         "text": "12",
+         "value": "12"
+        },
+        {
+         "text": "13",
+         "value": "13"
+        },
+        {
+         "text": "44",
+         "value": "44"
+        },
+        {
+         "text": "45",
+         "value": "45"
+        },
+        {
+         "text": "46",
+         "value": "46"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "readDigitalPin",
+     "text": "read digital pin [PIN]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        },
+        {
+         "text": "5",
+         "value": "5"
+        },
+        {
+         "text": "6",
+         "value": "6"
+        },
+        {
+         "text": "7",
+         "value": "7"
+        },
+        {
+         "text": "8",
+         "value": "8"
+        },
+        {
+         "text": "9",
+         "value": "9"
+        },
+        {
+         "text": "10",
+         "value": "10"
+        },
+        {
+         "text": "11",
+         "value": "11"
+        },
+        {
+         "text": "12",
+         "value": "12"
+        },
+        {
+         "text": "13",
+         "value": "13"
+        },
+        {
+         "text": "14",
+         "value": "14"
+        },
+        {
+         "text": "15",
+         "value": "15"
+        },
+        {
+         "text": "16",
+         "value": "16"
+        },
+        {
+         "text": "17",
+         "value": "17"
+        },
+        {
+         "text": "18",
+         "value": "18"
+        },
+        {
+         "text": "19",
+         "value": "19"
+        },
+        {
+         "text": "20",
+         "value": "20"
+        },
+        {
+         "text": "21",
+         "value": "21"
+        },
+        {
+         "text": "22",
+         "value": "22"
+        },
+        {
+         "text": "23",
+         "value": "23"
+        },
+        {
+         "text": "24",
+         "value": "24"
+        },
+        {
+         "text": "25",
+         "value": "25"
+        },
+        {
+         "text": "26",
+         "value": "26"
+        },
+        {
+         "text": "27",
+         "value": "27"
+        },
+        {
+         "text": "28",
+         "value": "28"
+        },
+        {
+         "text": "29",
+         "value": "29"
+        },
+        {
+         "text": "30",
+         "value": "30"
+        },
+        {
+         "text": "31",
+         "value": "31"
+        },
+        {
+         "text": "32",
+         "value": "32"
+        },
+        {
+         "text": "33",
+         "value": "33"
+        },
+        {
+         "text": "34",
+         "value": "34"
+        },
+        {
+         "text": "35",
+         "value": "35"
+        },
+        {
+         "text": "36",
+         "value": "36"
+        },
+        {
+         "text": "37",
+         "value": "37"
+        },
+        {
+         "text": "38",
+         "value": "38"
+        },
+        {
+         "text": "39",
+         "value": "39"
+        },
+        {
+         "text": "40",
+         "value": "40"
+        },
+        {
+         "text": "41",
+         "value": "41"
+        },
+        {
+         "text": "42",
+         "value": "42"
+        },
+        {
+         "text": "43",
+         "value": "43"
+        },
+        {
+         "text": "44",
+         "value": "44"
+        },
+        {
+         "text": "45",
+         "value": "45"
+        },
+        {
+         "text": "46",
+         "value": "46"
+        },
+        {
+         "text": "47",
+         "value": "47"
+        },
+        {
+         "text": "48",
+         "value": "48"
+        },
+        {
+         "text": "49",
+         "value": "49"
+        },
+        {
+         "text": "50",
+         "value": "50"
+        },
+        {
+         "text": "51",
+         "value": "51"
+        },
+        {
+         "text": "52",
+         "value": "52"
+        },
+        {
+         "text": "53",
+         "value": "53"
+        },
+        {
+         "text": "A0",
+         "value": "A0"
+        },
+        {
+         "text": "A1",
+         "value": "A1"
+        },
+        {
+         "text": "A2",
+         "value": "A2"
+        },
+        {
+         "text": "A3",
+         "value": "A3"
+        },
+        {
+         "text": "A4",
+         "value": "A4"
+        },
+        {
+         "text": "A5",
+         "value": "A5"
+        },
+        {
+         "text": "A6",
+         "value": "A6"
+        },
+        {
+         "text": "A7",
+         "value": "A7"
+        },
+        {
+         "text": "A8",
+         "value": "A8"
+        },
+        {
+         "text": "A9",
+         "value": "A9"
+        },
+        {
+         "text": "A10",
+         "value": "A10"
+        },
+        {
+         "text": "A11",
+         "value": "A11"
+        },
+        {
+         "text": "A12",
+         "value": "A12"
+        },
+        {
+         "text": "A13",
+         "value": "A13"
+        },
+        {
+         "text": "A14",
+         "value": "A14"
+        },
+        {
+         "text": "A15",
+         "value": "A15"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readAnalogPin",
+     "text": "read analog pin [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "analogPins",
+       "default": "A0"
+      }
+     ],
+     "menus": {
+      "analogPins": {
+       "items": [
+        {
+         "text": "A0",
+         "value": "A0"
+        },
+        {
+         "text": "A1",
+         "value": "A1"
+        },
+        {
+         "text": "A2",
+         "value": "A2"
+        },
+        {
+         "text": "A3",
+         "value": "A3"
+        },
+        {
+         "text": "A4",
+         "value": "A4"
+        },
+        {
+         "text": "A5",
+         "value": "A5"
+        },
+        {
+         "text": "A6",
+         "value": "A6"
+        },
+        {
+         "text": "A7",
+         "value": "A7"
+        },
+        {
+         "text": "A8",
+         "value": "A8"
+        },
+        {
+         "text": "A9",
+         "value": "A9"
+        },
+        {
+         "text": "A10",
+         "value": "A10"
+        },
+        {
+         "text": "A11",
+         "value": "A11"
+        },
+        {
+         "text": "A12",
+         "value": "A12"
+        },
+        {
+         "text": "A13",
+         "value": "A13"
+        },
+        {
+         "text": "A14",
+         "value": "A14"
+        },
+        {
+         "text": "A15",
+         "value": "A15"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "setServoOutput",
+     "text": "set servo pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pwmPins",
+       "default": "3"
+      },
+      {
+       "name": "OUT",
+       "type": "half_angle",
+       "menu": null,
+       "default": "90"
+      }
+     ],
+     "menus": {
+      "pwmPins": {
+       "items": [
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        },
+        {
+         "text": "5",
+         "value": "5"
+        },
+        {
+         "text": "6",
+         "value": "6"
+        },
+        {
+         "text": "7",
+         "value": "7"
+        },
+        {
+         "text": "8",
+         "value": "8"
+        },
+        {
+         "text": "9",
+         "value": "9"
+        },
+        {
+         "text": "10",
+         "value": "10"
+        },
+        {
+         "text": "11",
+         "value": "11"
+        },
+        {
+         "text": "12",
+         "value": "12"
+        },
+        {
+         "text": "13",
+         "value": "13"
+        },
+        {
+         "text": "44",
+         "value": "44"
+        },
+        {
+         "text": "45",
+         "value": "45"
+        },
+        {
+         "text": "46",
+         "value": "46"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "attachInterrupt",
+     "text": "attach interrupt pin [PIN] mode [MODE] executes",
+     "blockType": "conditional",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "interruptPins",
+       "default": "3"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "interruptMode",
+       "default": "RISING"
+      }
+     ],
+     "menus": {
+      "interruptPins": {
+       "items": [
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "18",
+         "value": "18"
+        },
+        {
+         "text": "19",
+         "value": "19"
+        },
+        {
+         "text": "20",
+         "value": "20"
+        },
+        {
+         "text": "21",
+         "value": "21"
+        }
+       ]
+      },
+      "interruptMode": {
+       "items": [
+        {
+         "text": "rising edge",
+         "value": "RISING"
+        },
+        {
+         "text": "falling edge",
+         "value": "FALLING"
+        },
+        {
+         "text": "change edge",
+         "value": "CHANGE"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "detachInterrupt",
+     "text": "detach interrupt pin [PIN]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "interruptPins",
+       "default": "3"
+      }
+     ],
+     "menus": {
+      "interruptPins": {
+       "items": [
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "18",
+         "value": "18"
+        },
+        {
+         "text": "19",
+         "value": "19"
+        },
+        {
+         "text": "20",
+         "value": "20"
+        },
+        {
+         "text": "21",
+         "value": "21"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "pins": [
+     {
+      "text": "0",
+      "value": "0"
+     },
+     {
+      "text": "1",
+      "value": "1"
+     },
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     },
+     {
+      "text": "4",
+      "value": "4"
+     },
+     {
+      "text": "5",
+      "value": "5"
+     },
+     {
+      "text": "6",
+      "value": "6"
+     },
+     {
+      "text": "7",
+      "value": "7"
+     },
+     {
+      "text": "8",
+      "value": "8"
+     },
+     {
+      "text": "9",
+      "value": "9"
+     },
+     {
+      "text": "10",
+      "value": "10"
+     },
+     {
+      "text": "11",
+      "value": "11"
+     },
+     {
+      "text": "12",
+      "value": "12"
+     },
+     {
+      "text": "13",
+      "value": "13"
+     },
+     {
+      "text": "14",
+      "value": "14"
+     },
+     {
+      "text": "15",
+      "value": "15"
+     },
+     {
+      "text": "16",
+      "value": "16"
+     },
+     {
+      "text": "17",
+      "value": "17"
+     },
+     {
+      "text": "18",
+      "value": "18"
+     },
+     {
+      "text": "19",
+      "value": "19"
+     },
+     {
+      "text": "20",
+      "value": "20"
+     },
+     {
+      "text": "21",
+      "value": "21"
+     },
+     {
+      "text": "22",
+      "value": "22"
+     },
+     {
+      "text": "23",
+      "value": "23"
+     },
+     {
+      "text": "24",
+      "value": "24"
+     },
+     {
+      "text": "25",
+      "value": "25"
+     },
+     {
+      "text": "26",
+      "value": "26"
+     },
+     {
+      "text": "27",
+      "value": "27"
+     },
+     {
+      "text": "28",
+      "value": "28"
+     },
+     {
+      "text": "29",
+      "value": "29"
+     },
+     {
+      "text": "30",
+      "value": "30"
+     },
+     {
+      "text": "31",
+      "value": "31"
+     },
+     {
+      "text": "32",
+      "value": "32"
+     },
+     {
+      "text": "33",
+      "value": "33"
+     },
+     {
+      "text": "34",
+      "value": "34"
+     },
+     {
+      "text": "35",
+      "value": "35"
+     },
+     {
+      "text": "36",
+      "value": "36"
+     },
+     {
+      "text": "37",
+      "value": "37"
+     },
+     {
+      "text": "38",
+      "value": "38"
+     },
+     {
+      "text": "39",
+      "value": "39"
+     },
+     {
+      "text": "40",
+      "value": "40"
+     },
+     {
+      "text": "41",
+      "value": "41"
+     },
+     {
+      "text": "42",
+      "value": "42"
+     },
+     {
+      "text": "43",
+      "value": "43"
+     },
+     {
+      "text": "44",
+      "value": "44"
+     },
+     {
+      "text": "45",
+      "value": "45"
+     },
+     {
+      "text": "46",
+      "value": "46"
+     },
+     {
+      "text": "47",
+      "value": "47"
+     },
+     {
+      "text": "48",
+      "value": "48"
+     },
+     {
+      "text": "49",
+      "value": "49"
+     },
+     {
+      "text": "50",
+      "value": "50"
+     },
+     {
+      "text": "51",
+      "value": "51"
+     },
+     {
+      "text": "52",
+      "value": "52"
+     },
+     {
+      "text": "53",
+      "value": "53"
+     },
+     {
+      "text": "A0",
+      "value": "A0"
+     },
+     {
+      "text": "A1",
+      "value": "A1"
+     },
+     {
+      "text": "A2",
+      "value": "A2"
+     },
+     {
+      "text": "A3",
+      "value": "A3"
+     },
+     {
+      "text": "A4",
+      "value": "A4"
+     },
+     {
+      "text": "A5",
+      "value": "A5"
+     },
+     {
+      "text": "A6",
+      "value": "A6"
+     },
+     {
+      "text": "A7",
+      "value": "A7"
+     },
+     {
+      "text": "A8",
+      "value": "A8"
+     },
+     {
+      "text": "A9",
+      "value": "A9"
+     },
+     {
+      "text": "A10",
+      "value": "A10"
+     },
+     {
+      "text": "A11",
+      "value": "A11"
+     },
+     {
+      "text": "A12",
+      "value": "A12"
+     },
+     {
+      "text": "A13",
+      "value": "A13"
+     },
+     {
+      "text": "A14",
+      "value": "A14"
+     },
+     {
+      "text": "A15",
+      "value": "A15"
+     }
+    ],
+    "mode": [
+     {
+      "text": "input",
+      "value": "INPUT"
+     },
+     {
+      "text": "output",
+      "value": "OUTPUT"
+     },
+     {
+      "text": "input-pullup",
+      "value": "INPUT_PULLUP"
+     }
+    ],
+    "analogPins": [
+     {
+      "text": "A0",
+      "value": "A0"
+     },
+     {
+      "text": "A1",
+      "value": "A1"
+     },
+     {
+      "text": "A2",
+      "value": "A2"
+     },
+     {
+      "text": "A3",
+      "value": "A3"
+     },
+     {
+      "text": "A4",
+      "value": "A4"
+     },
+     {
+      "text": "A5",
+      "value": "A5"
+     },
+     {
+      "text": "A6",
+      "value": "A6"
+     },
+     {
+      "text": "A7",
+      "value": "A7"
+     },
+     {
+      "text": "A8",
+      "value": "A8"
+     },
+     {
+      "text": "A9",
+      "value": "A9"
+     },
+     {
+      "text": "A10",
+      "value": "A10"
+     },
+     {
+      "text": "A11",
+      "value": "A11"
+     },
+     {
+      "text": "A12",
+      "value": "A12"
+     },
+     {
+      "text": "A13",
+      "value": "A13"
+     },
+     {
+      "text": "A14",
+      "value": "A14"
+     },
+     {
+      "text": "A15",
+      "value": "A15"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "pwmPins": [
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     },
+     {
+      "text": "4",
+      "value": "4"
+     },
+     {
+      "text": "5",
+      "value": "5"
+     },
+     {
+      "text": "6",
+      "value": "6"
+     },
+     {
+      "text": "7",
+      "value": "7"
+     },
+     {
+      "text": "8",
+      "value": "8"
+     },
+     {
+      "text": "9",
+      "value": "9"
+     },
+     {
+      "text": "10",
+      "value": "10"
+     },
+     {
+      "text": "11",
+      "value": "11"
+     },
+     {
+      "text": "12",
+      "value": "12"
+     },
+     {
+      "text": "13",
+      "value": "13"
+     },
+     {
+      "text": "44",
+      "value": "44"
+     },
+     {
+      "text": "45",
+      "value": "45"
+     },
+     {
+      "text": "46",
+      "value": "46"
+     }
+    ],
+    "interruptPins": [
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     },
+     {
+      "text": "18",
+      "value": "18"
+     },
+     {
+      "text": "19",
+      "value": "19"
+     },
+     {
+      "text": "20",
+      "value": "20"
+     },
+     {
+      "text": "21",
+      "value": "21"
+     }
+    ],
+    "interruptMode": [
+     {
+      "text": "rising edge",
+      "value": "RISING"
+     },
+     {
+      "text": "falling edge",
+      "value": "FALLING"
+     },
+     {
+      "text": "change edge",
+      "value": "CHANGE"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ]
+   }
+  },
+  {
+   "id": "serial",
+   "name": "Serial",
+   "colour": "#9966FF",
+   "blocks": [
+    {
+     "opcode": "multiSerialBegin",
+     "text": "serial [NO] begin baudrate [VALUE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      },
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": "baudrate",
+       "default": "9600"
+      }
+     ],
+     "menus": {
+      "baudrate": {
+       "items": [
+        {
+         "text": "4800",
+         "value": "4800"
+        },
+        {
+         "text": "9600",
+         "value": "9600"
+        },
+        {
+         "text": "19200",
+         "value": "19200"
+        },
+        {
+         "text": "38400",
+         "value": "38400"
+        },
+        {
+         "text": "57600",
+         "value": "57600"
+        },
+        {
+         "text": "76800",
+         "value": "76800"
+        },
+        {
+         "text": "115200",
+         "value": "115200"
+        }
+       ]
+      },
+      "serialNo": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialPrint",
+     "text": "serial [NO] print [VALUE] [EOL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      },
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": null,
+       "default": "Hello OpenBlock"
+      },
+      {
+       "name": "EOL",
+       "type": "string",
+       "menu": "eol",
+       "default": "warp"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        }
+       ]
+      },
+      "eol": {
+       "items": [
+        {
+         "text": "warp",
+         "value": "warp"
+        },
+        {
+         "text": "no-warp",
+         "value": "noWarp"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialAvailable",
+     "text": "serial [NO] available data length",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialReadAByte",
+     "text": "serial [NO] read a byte",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "0",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "baudrate": [
+     {
+      "text": "4800",
+      "value": "4800"
+     },
+     {
+      "text": "9600",
+      "value": "9600"
+     },
+     {
+      "text": "19200",
+      "value": "19200"
+     },
+     {
+      "text": "38400",
+      "value": "38400"
+     },
+     {
+      "text": "57600",
+      "value": "57600"
+     },
+     {
+      "text": "76800",
+      "value": "76800"
+     },
+     {
+      "text": "115200",
+      "value": "115200"
+     }
+    ],
+    "serialNo": [
+     {
+      "text": "0",
+      "value": "0"
+     },
+     {
+      "text": "1",
+      "value": "1"
+     },
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     }
+    ],
+    "eol": [
+     {
+      "text": "warp",
+      "value": "warp"
+     },
+     {
+      "text": "no-warp",
+      "value": "noWarp"
+     }
+    ]
+   }
+  },
+  {
+   "id": "data",
+   "name": "Data",
+   "colour": "#CF63CF",
+   "blocks": [
+    {
+     "opcode": "dataMap",
+     "text": "map [DATA] from ([ARG0], [ARG1]) to ([ARG2], [ARG3])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      },
+      {
+       "name": "ARG2",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG3",
+       "type": "number",
+       "menu": null,
+       "default": "1000"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConstrain",
+     "text": "constrain [DATA] between ([ARG0], [ARG1])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvert",
+     "text": "convert [DATA] to [TYPE]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "123"
+      },
+      {
+       "name": "TYPE",
+       "type": "string",
+       "menu": "dataType",
+       "default": "INTEGER"
+      }
+     ],
+     "menus": {
+      "dataType": {
+       "items": [
+        {
+         "text": "integer",
+         "value": "INTEGER"
+        },
+        {
+         "text": "decimal",
+         "value": "DECIMAL"
+        },
+        {
+         "text": "string",
+         "value": "STRING"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "dataConvertASCIICharacter",
+     "text": "convert [DATA] to ASCII character",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "97"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvertASCIINumber",
+     "text": "convert [DATA] to ASCII nubmer",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "a"
+      }
+     ],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "dataType": [
+     {
+      "text": "integer",
+      "value": "INTEGER"
+     },
+     {
+      "text": "decimal",
+      "value": "DECIMAL"
+     },
+     {
+      "text": "string",
+      "value": "STRING"
+     }
+    ]
+   }
+  }
+ ]
+}

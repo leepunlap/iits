@@ -1,0 +1,3732 @@
+{
+ "board": "arduinoUno",
+ "categories": [
+  {
+   "id": "dcMotor",
+   "name": "DC Motor",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setDcMotor",
+     "text": "DC Motor [PIN] speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "dcMotorM",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {
+      "dcMotorM": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setDcMotorMove",
+     "text": "Motor Move [PIN] speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "dcMotorLRFB",
+       "default": "2"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      }
+     ],
+     "menus": {
+      "dcMotorLRFB": {
+       "items": [
+        {
+         "text": "Forward",
+         "value": "2"
+        },
+        {
+         "text": "Backward",
+         "value": "1"
+        },
+        {
+         "text": "Right",
+         "value": "3"
+        },
+        {
+         "text": "Left",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setDcMotorMoveLR",
+     "text": "Left wheel speed [PIN] Right wheel speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "setDcMotorStop",
+     "text": "Stop DC Motors",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "setDcMotorMode",
+     "text": "5V 130 DC Motor [PIN] speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "dcMotorM": [
+     {
+      "text": "M1",
+      "value": "1"
+     },
+     {
+      "text": "M2",
+      "value": "2"
+     }
+    ],
+    "dcMotorLRFB": [
+     {
+      "text": "Forward",
+      "value": "2"
+     },
+     {
+      "text": "Backward",
+      "value": "1"
+     },
+     {
+      "text": "Right",
+      "value": "3"
+     },
+     {
+      "text": "Left",
+      "value": "4"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "Buzzer",
+   "name": "Buzzer",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setBuzzer",
+     "text": "play tone on note [PIN]beat[LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "buzzerPins",
+       "default": "3136"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "buzzerLevel",
+       "default": "250"
+      }
+     ],
+     "menus": {
+      "buzzerPins": {
+       "items": [
+        {
+         "text": "B0",
+         "value": "31"
+        },
+        {
+         "text": "C1",
+         "value": "33"
+        },
+        {
+         "text": "D1",
+         "value": "37"
+        },
+        {
+         "text": "E1",
+         "value": "41"
+        },
+        {
+         "text": "F1",
+         "value": "44"
+        },
+        {
+         "text": "G1",
+         "value": "49"
+        },
+        {
+         "text": "A1",
+         "value": "55"
+        },
+        {
+         "text": "B1",
+         "value": "62"
+        },
+        {
+         "text": "C2",
+         "value": "65"
+        },
+        {
+         "text": "D2",
+         "value": "73"
+        },
+        {
+         "text": "E2",
+         "value": "82"
+        },
+        {
+         "text": "F2",
+         "value": "87"
+        },
+        {
+         "text": "G2",
+         "value": "98"
+        },
+        {
+         "text": "A2",
+         "value": "110"
+        },
+        {
+         "text": "B2",
+         "value": "123"
+        },
+        {
+         "text": "C3",
+         "value": "131"
+        },
+        {
+         "text": "D3",
+         "value": "147"
+        },
+        {
+         "text": "E3",
+         "value": "165"
+        },
+        {
+         "text": "F3",
+         "value": "175"
+        },
+        {
+         "text": "G3",
+         "value": "196"
+        },
+        {
+         "text": "A3",
+         "value": "220"
+        },
+        {
+         "text": "B3",
+         "value": "247"
+        },
+        {
+         "text": "C4",
+         "value": "262"
+        },
+        {
+         "text": "D4",
+         "value": "294"
+        },
+        {
+         "text": "E4",
+         "value": "330"
+        },
+        {
+         "text": "F4",
+         "value": "349"
+        },
+        {
+         "text": "G4",
+         "value": "392"
+        },
+        {
+         "text": "A4",
+         "value": "440"
+        },
+        {
+         "text": "B4",
+         "value": "494"
+        },
+        {
+         "text": "C5",
+         "value": "523"
+        },
+        {
+         "text": "D5",
+         "value": "587"
+        },
+        {
+         "text": "E5",
+         "value": "659"
+        },
+        {
+         "text": "F5",
+         "value": "698"
+        },
+        {
+         "text": "G5",
+         "value": "784"
+        },
+        {
+         "text": "A5",
+         "value": "880"
+        },
+        {
+         "text": "B5",
+         "value": "988"
+        },
+        {
+         "text": "C6",
+         "value": "1047"
+        },
+        {
+         "text": "D6",
+         "value": "1175"
+        },
+        {
+         "text": "E6",
+         "value": "1319"
+        },
+        {
+         "text": "F6",
+         "value": "1397"
+        },
+        {
+         "text": "G6",
+         "value": "1568"
+        },
+        {
+         "text": "A6",
+         "value": "1760"
+        },
+        {
+         "text": "B6",
+         "value": "1976"
+        },
+        {
+         "text": "C7",
+         "value": "2093"
+        },
+        {
+         "text": "D7",
+         "value": "2349"
+        },
+        {
+         "text": "E7",
+         "value": "2637"
+        },
+        {
+         "text": "F7",
+         "value": "2794"
+        },
+        {
+         "text": "G7",
+         "value": "3136"
+        },
+        {
+         "text": "A7",
+         "value": "3520"
+        },
+        {
+         "text": "B7",
+         "value": "3951"
+        },
+        {
+         "text": "C8",
+         "value": "4186"
+        },
+        {
+         "text": "D8",
+         "value": "4699"
+        }
+       ]
+      },
+      "buzzerLevel": {
+       "items": [
+        {
+         "text": "Half",
+         "value": "500"
+        },
+        {
+         "text": "Quarter",
+         "value": "250"
+        },
+        {
+         "text": "Eighth",
+         "value": "125"
+        },
+        {
+         "text": "Whole",
+         "value": "1000"
+        },
+        {
+         "text": "Double",
+         "value": "2000"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "buzzerPins": [
+     {
+      "text": "B0",
+      "value": "31"
+     },
+     {
+      "text": "C1",
+      "value": "33"
+     },
+     {
+      "text": "D1",
+      "value": "37"
+     },
+     {
+      "text": "E1",
+      "value": "41"
+     },
+     {
+      "text": "F1",
+      "value": "44"
+     },
+     {
+      "text": "G1",
+      "value": "49"
+     },
+     {
+      "text": "A1",
+      "value": "55"
+     },
+     {
+      "text": "B1",
+      "value": "62"
+     },
+     {
+      "text": "C2",
+      "value": "65"
+     },
+     {
+      "text": "D2",
+      "value": "73"
+     },
+     {
+      "text": "E2",
+      "value": "82"
+     },
+     {
+      "text": "F2",
+      "value": "87"
+     },
+     {
+      "text": "G2",
+      "value": "98"
+     },
+     {
+      "text": "A2",
+      "value": "110"
+     },
+     {
+      "text": "B2",
+      "value": "123"
+     },
+     {
+      "text": "C3",
+      "value": "131"
+     },
+     {
+      "text": "D3",
+      "value": "147"
+     },
+     {
+      "text": "E3",
+      "value": "165"
+     },
+     {
+      "text": "F3",
+      "value": "175"
+     },
+     {
+      "text": "G3",
+      "value": "196"
+     },
+     {
+      "text": "A3",
+      "value": "220"
+     },
+     {
+      "text": "B3",
+      "value": "247"
+     },
+     {
+      "text": "C4",
+      "value": "262"
+     },
+     {
+      "text": "D4",
+      "value": "294"
+     },
+     {
+      "text": "E4",
+      "value": "330"
+     },
+     {
+      "text": "F4",
+      "value": "349"
+     },
+     {
+      "text": "G4",
+      "value": "392"
+     },
+     {
+      "text": "A4",
+      "value": "440"
+     },
+     {
+      "text": "B4",
+      "value": "494"
+     },
+     {
+      "text": "C5",
+      "value": "523"
+     },
+     {
+      "text": "D5",
+      "value": "587"
+     },
+     {
+      "text": "E5",
+      "value": "659"
+     },
+     {
+      "text": "F5",
+      "value": "698"
+     },
+     {
+      "text": "G5",
+      "value": "784"
+     },
+     {
+      "text": "A5",
+      "value": "880"
+     },
+     {
+      "text": "B5",
+      "value": "988"
+     },
+     {
+      "text": "C6",
+      "value": "1047"
+     },
+     {
+      "text": "D6",
+      "value": "1175"
+     },
+     {
+      "text": "E6",
+      "value": "1319"
+     },
+     {
+      "text": "F6",
+      "value": "1397"
+     },
+     {
+      "text": "G6",
+      "value": "1568"
+     },
+     {
+      "text": "A6",
+      "value": "1760"
+     },
+     {
+      "text": "B6",
+      "value": "1976"
+     },
+     {
+      "text": "C7",
+      "value": "2093"
+     },
+     {
+      "text": "D7",
+      "value": "2349"
+     },
+     {
+      "text": "E7",
+      "value": "2637"
+     },
+     {
+      "text": "F7",
+      "value": "2794"
+     },
+     {
+      "text": "G7",
+      "value": "3136"
+     },
+     {
+      "text": "A7",
+      "value": "3520"
+     },
+     {
+      "text": "B7",
+      "value": "3951"
+     },
+     {
+      "text": "C8",
+      "value": "4186"
+     },
+     {
+      "text": "D8",
+      "value": "4699"
+     }
+    ],
+    "buzzerLevel": [
+     {
+      "text": "Half",
+      "value": "500"
+     },
+     {
+      "text": "Quarter",
+      "value": "250"
+     },
+     {
+      "text": "Eighth",
+      "value": "125"
+     },
+     {
+      "text": "Whole",
+      "value": "1000"
+     },
+     {
+      "text": "Double",
+      "value": "2000"
+     }
+    ]
+   }
+  },
+  {
+   "id": "digitDisplay",
+   "name": "DigitDisplay",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setFourDigitDisplay",
+     "text": "4-digit display [PIN] show [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "LEDS",
+   "name": "LED",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setSingleLedOutput",
+     "text": "single led [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "BLEOnOff",
+   "name": "Bluetooth Transmission",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setBLEOnOff",
+     "text": "Signal Transmission [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "digital",
+   "name": "Digital Signal Transmitter",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "digitalset",
+     "text": "Signal Transmitter [PIN] Sends Data [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": null,
+       "default": 0
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "300timer",
+   "name": "Timer",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "start300timer",
+     "text": "Timer Start",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "stop300timer",
+     "text": "Timer Stop",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "clean300timer",
+     "text": "Timer Clean",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "300timerstart",
+     "text": "Timer start [LEVEL] with [OUT] MS",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "TIME_LEVEL",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "5000"
+      }
+     ],
+     "menus": {
+      "TIME_LEVEL": {
+       "items": [
+        {
+         "text": "＞",
+         "value": "1"
+        },
+        {
+         "text": "＜",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "300timerwait",
+     "text": "Timer start with [OUT] MS",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "1000"
+      }
+     ],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "TIME_LEVEL": [
+     {
+      "text": "＞",
+      "value": "1"
+     },
+     {
+      "text": "＜",
+      "value": "2"
+     }
+    ]
+   }
+  },
+  {
+   "id": "eleMagnetOnOff",
+   "name": "Bluetooth Transmission",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setEleMagnetOnOff",
+     "text": "Electro Magnet [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "compassSensor",
+   "name": "compassSensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readCompassSensor",
+     "text": "compass sensor [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis",
+       "default": "x"
+      }
+     ],
+     "menus": {
+      "axis": {
+       "items": [
+        {
+         "text": "X-Axis",
+         "value": "x"
+        },
+        {
+         "text": "Y-Axis",
+         "value": "y"
+        },
+        {
+         "text": "Z-Axis",
+         "value": "z"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "axis": [
+     {
+      "text": "X-Axis",
+      "value": "x"
+     },
+     {
+      "text": "Y-Axis",
+      "value": "y"
+     },
+     {
+      "text": "Z-Axis",
+      "value": "z"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "gyroSensor",
+   "name": "Gyroscope",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "readGyroSensor",
+     "text": "gyro sensor [PIN] [INDEX] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "menuGyroSensor",
+       "default": "1"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis",
+       "default": "x"
+      }
+     ],
+     "menus": {
+      "menuGyroSensor": {
+       "items": [
+        {
+         "text": "Gyration",
+         "value": "1"
+        },
+        {
+         "text": "Acceleration",
+         "value": "2"
+        },
+        {
+         "text": "arduinoUno.menuGyroSensor.palstance",
+         "value": "3"
+        }
+       ]
+      },
+      "axis": {
+       "items": [
+        {
+         "text": "X-Axis",
+         "value": "x"
+        },
+        {
+         "text": "Y-Axis",
+         "value": "y"
+        },
+        {
+         "text": "Z-Axis",
+         "value": "z"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "menuGyroSensor": [
+     {
+      "text": "Gyration",
+      "value": "1"
+     },
+     {
+      "text": "Acceleration",
+      "value": "2"
+     },
+     {
+      "text": "arduinoUno.menuGyroSensor.palstance",
+      "value": "3"
+     }
+    ],
+    "axis": [
+     {
+      "text": "X-Axis",
+      "value": "x"
+     },
+     {
+      "text": "Y-Axis",
+      "value": "y"
+     },
+     {
+      "text": "Z-Axis",
+      "value": "z"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "gestureSensor",
+   "name": "Gesture sensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readGestureSensorDigitalV2",
+     "text": "gesture recognition sensor V2.0 [PIN] detects gesture [LEVEL]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "gestureDirV2",
+       "default": "3"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "gestureDirV2": {
+       "items": [
+        {
+         "text": "Forward",
+         "value": "3"
+        },
+        {
+         "text": "Backward",
+         "value": "4"
+        },
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "1"
+        },
+        {
+         "text": "Up",
+         "value": "6"
+        },
+        {
+         "text": "Down",
+         "value": "5"
+        },
+        {
+         "text": "Clockwise",
+         "value": "7"
+        },
+        {
+         "text": "Counterclockwise",
+         "value": "8"
+        },
+        {
+         "text": "Shake",
+         "value": "9"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ],
+    "gestureDirV1": [
+     {
+      "text": "Forward",
+      "value": "2"
+     },
+     {
+      "text": "Backward",
+      "value": "4"
+     },
+     {
+      "text": "Left",
+      "value": "3"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     },
+     {
+      "text": "Down",
+      "value": "5"
+     }
+    ],
+    "gestureDirV2": [
+     {
+      "text": "Forward",
+      "value": "3"
+     },
+     {
+      "text": "Backward",
+      "value": "4"
+     },
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     },
+     {
+      "text": "Up",
+      "value": "6"
+     },
+     {
+      "text": "Down",
+      "value": "5"
+     },
+     {
+      "text": "Clockwise",
+      "value": "7"
+     },
+     {
+      "text": "Counterclockwise",
+      "value": "8"
+     },
+     {
+      "text": "Shake",
+      "value": "9"
+     }
+    ],
+    "gesturePos": [
+     {
+      "text": "centerX",
+      "value": "1"
+     },
+     {
+      "text": "centerY",
+      "value": "2"
+     },
+     {
+      "text": "size",
+      "value": "3"
+     }
+    ]
+   }
+  },
+  {
+   "id": "humiditySensor",
+   "name": "humidity",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readHumiditySensor",
+     "text": "humiture [PIN] [LEVEL]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "humidity",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "humidity": {
+       "items": [
+        {
+         "text": "humidity",
+         "value": "1"
+        },
+        {
+         "text": "tempperature",
+         "value": "2"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "humidity": [
+     {
+      "text": "humidity",
+      "value": "1"
+     },
+     {
+      "text": "tempperature",
+      "value": "2"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "joystickSensor",
+   "name": "joystick",
+   "colour": "#5CB1D6",
+   "blocks": [
+    {
+     "opcode": "readJoystickSensor",
+     "text": "joystick [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis2d",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis2d": {
+       "items": [
+        {
+         "text": "X-Axis",
+         "value": "1"
+        },
+        {
+         "text": "Y-Axis",
+         "value": "2"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "axis2d": [
+     {
+      "text": "X-Axis",
+      "value": "1"
+     },
+     {
+      "text": "Y-Axis",
+      "value": "2"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "irReceivedSensor",
+   "name": "IR",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readIRReceived",
+     "text": "IR Received [INDEX]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "irrecvIndex",
+       "default": "69"
+      }
+     ],
+     "menus": {
+      "irrecvIndex": {
+       "items": [
+        {
+         "text": "A",
+         "value": "69"
+        },
+        {
+         "text": "B",
+         "value": "70"
+        },
+        {
+         "text": "C",
+         "value": "71"
+        },
+        {
+         "text": "D",
+         "value": "68"
+        },
+        {
+         "text": "E",
+         "value": "67"
+        },
+        {
+         "text": "F",
+         "value": "13"
+        },
+        {
+         "text": "↑",
+         "value": "64"
+        },
+        {
+         "text": "↓",
+         "value": "25"
+        },
+        {
+         "text": "←",
+         "value": "7"
+        },
+        {
+         "text": "→",
+         "value": "9"
+        },
+        {
+         "text": "OK",
+         "value": "21"
+        },
+        {
+         "text": "R0",
+         "value": "22"
+        },
+        {
+         "text": "R1",
+         "value": "12"
+        },
+        {
+         "text": "R2",
+         "value": "24"
+        },
+        {
+         "text": "R3",
+         "value": "94"
+        },
+        {
+         "text": "R4",
+         "value": "8"
+        },
+        {
+         "text": "R5",
+         "value": 28
+        },
+        {
+         "text": "R6",
+         "value": "90"
+        },
+        {
+         "text": "R7",
+         "value": "66"
+        },
+        {
+         "text": "R8",
+         "value": "82"
+        },
+        {
+         "text": "R9",
+         "value": "74"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "irrecvIndex": [
+     {
+      "text": "A",
+      "value": "69"
+     },
+     {
+      "text": "B",
+      "value": "70"
+     },
+     {
+      "text": "C",
+      "value": "71"
+     },
+     {
+      "text": "D",
+      "value": "68"
+     },
+     {
+      "text": "E",
+      "value": "67"
+     },
+     {
+      "text": "F",
+      "value": "13"
+     },
+     {
+      "text": "↑",
+      "value": "64"
+     },
+     {
+      "text": "↓",
+      "value": "25"
+     },
+     {
+      "text": "←",
+      "value": "7"
+     },
+     {
+      "text": "→",
+      "value": "9"
+     },
+     {
+      "text": "OK",
+      "value": "21"
+     },
+     {
+      "text": "R0",
+      "value": "22"
+     },
+     {
+      "text": "R1",
+      "value": "12"
+     },
+     {
+      "text": "R2",
+      "value": "24"
+     },
+     {
+      "text": "R3",
+      "value": "94"
+     },
+     {
+      "text": "R4",
+      "value": "8"
+     },
+     {
+      "text": "R5",
+      "value": 28
+     },
+     {
+      "text": "R6",
+      "value": "90"
+     },
+     {
+      "text": "R7",
+      "value": "66"
+     },
+     {
+      "text": "R8",
+      "value": "82"
+     },
+     {
+      "text": "R9",
+      "value": "74"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "PIRReceivedSensor",
+   "name": "PIR",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readPIRReceived",
+     "text": "PIR [PIN] Received ",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "TouchReceivedSensor",
+   "name": "Touch",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readTouchReceived",
+     "text": "Touch [PIN] Received ",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "lightSensor",
+   "name": "Light sensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readLightSensor",
+     "text": "Light Sensor",
+     "blockType": "reporter",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "soundSensor",
+   "name": "sound sensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readSoundSensor",
+     "text": "Sound Sensor",
+     "blockType": "reporter",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "rainDropSensor",
+   "name": "Rain Drop Sensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readRainDropSensor",
+     "text": "rainDrop [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "moisTureSensor",
+   "name": "Soil Sensor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readMoisTureSensor",
+     "text": "moisture [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ledButtonSensor",
+   "name": "Led button",
+   "colour": "#5CB1D6",
+   "blocks": [
+    {
+     "opcode": "readLedButtonSensorDigital",
+     "text": "LED button [PIN] [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ledButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "ledButtonIndex": {
+       "items": [
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setLedButtonSensor",
+     "text": "LED button [PIN] [INDEX] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "ledButtonIndex",
+       "default": "1"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "ledButtonIndex": {
+       "items": [
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        }
+       ]
+      },
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ],
+    "ledButtonIndex": [
+     {
+      "text": "1",
+      "value": "1"
+     },
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     },
+     {
+      "text": "4",
+      "value": "4"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ]
+   }
+  },
+  {
+   "id": "24GController",
+   "name": "2.4G Controller",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "24GControllerDigital",
+     "text": "Controller button [PIN] [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ControllerButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "ControllerButtonIndex": {
+       "items": [
+        {
+         "text": "Y",
+         "value": "1"
+        },
+        {
+         "text": "X",
+         "value": "2"
+        },
+        {
+         "text": "A",
+         "value": "3"
+        },
+        {
+         "text": "B",
+         "value": "4"
+        },
+        {
+         "text": "LIFT",
+         "value": "5"
+        },
+        {
+         "text": "DOWN",
+         "value": "6"
+        },
+        {
+         "text": "RIGHT",
+         "value": "7"
+        },
+        {
+         "text": "UP",
+         "value": "8"
+        },
+        {
+         "text": "PLUS",
+         "value": "9"
+        },
+        {
+         "text": "MIN",
+         "value": "10"
+        },
+        {
+         "text": "NONE",
+         "value": "11"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "24GControllerDigital_serial",
+     "text": "Controller button [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ControllerButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ControllerButtonIndex": {
+       "items": [
+        {
+         "text": "Y",
+         "value": "1"
+        },
+        {
+         "text": "X",
+         "value": "2"
+        },
+        {
+         "text": "A",
+         "value": "3"
+        },
+        {
+         "text": "B",
+         "value": "4"
+        },
+        {
+         "text": "LIFT",
+         "value": "5"
+        },
+        {
+         "text": "DOWN",
+         "value": "6"
+        },
+        {
+         "text": "RIGHT",
+         "value": "7"
+        },
+        {
+         "text": "UP",
+         "value": "8"
+        },
+        {
+         "text": "PLUS",
+         "value": "9"
+        },
+        {
+         "text": "MIN",
+         "value": "10"
+        },
+        {
+         "text": "NONE",
+         "value": "11"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "24GControllerDigital_reset",
+     "text": "Controller Reset",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ],
+    "ControllerButtonIndex": [
+     {
+      "text": "Y",
+      "value": "1"
+     },
+     {
+      "text": "X",
+      "value": "2"
+     },
+     {
+      "text": "A",
+      "value": "3"
+     },
+     {
+      "text": "B",
+      "value": "4"
+     },
+     {
+      "text": "LIFT",
+      "value": "5"
+     },
+     {
+      "text": "DOWN",
+      "value": "6"
+     },
+     {
+      "text": "RIGHT",
+      "value": "7"
+     },
+     {
+      "text": "UP",
+      "value": "8"
+     },
+     {
+      "text": "PLUS",
+      "value": "9"
+     },
+     {
+      "text": "MIN",
+      "value": "10"
+     },
+     {
+      "text": "NONE",
+      "value": "11"
+     }
+    ]
+   }
+  },
+  {
+   "id": "lineFollower",
+   "name": "line follower",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "readLineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "lineType",
+       "default": "2"
+      }
+     ],
+     "menus": {
+      "lineType": {
+       "items": [
+        {
+         "text": "arduinoUno.lineFollower.2LineFollower",
+         "value": "2"
+        },
+        {
+         "text": "arduinoUno.lineFollower.5LineFollower",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "read2LineFollower",
+     "text": "line follower [PIN] [AXIS2]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "AXIS2",
+       "type": "number",
+       "menu": "axis2",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis2": {
+       "items": [
+        {
+         "text": "S1",
+         "value": "1"
+        },
+        {
+         "text": "S2",
+         "value": "2"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "read5LineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis5",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis5": {
+       "items": [
+        {
+         "text": "S1",
+         "value": "1"
+        },
+        {
+         "text": "S2",
+         "value": "2"
+        },
+        {
+         "text": "S3",
+         "value": "3"
+        },
+        {
+         "text": "S4",
+         "value": "4"
+        },
+        {
+         "text": "S5",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "contrast5LineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "TYPE",
+       "type": "string",
+       "menu": "lineType",
+       "default": "2"
+      },
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "INPUT",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "lineType": {
+       "items": [
+        {
+         "text": "arduinoUno.lineFollower.2LineFollower",
+         "value": "2"
+        },
+        {
+         "text": "arduinoUno.lineFollower.5LineFollower",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "lineType": [
+     {
+      "text": "arduinoUno.lineFollower.2LineFollower",
+      "value": "2"
+     },
+     {
+      "text": "arduinoUno.lineFollower.5LineFollower",
+      "value": "5"
+     }
+    ],
+    "axis2": [
+     {
+      "text": "S1",
+      "value": "1"
+     },
+     {
+      "text": "S2",
+      "value": "2"
+     }
+    ],
+    "axis5": [
+     {
+      "text": "S1",
+      "value": "1"
+     },
+     {
+      "text": "S2",
+      "value": "2"
+     },
+     {
+      "text": "S3",
+      "value": "3"
+     },
+     {
+      "text": "S4",
+      "value": "4"
+     },
+     {
+      "text": "S5",
+      "value": "5"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "colourSensor",
+   "name": "colour",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setColorWb",
+     "text": "set color sensor [PIN] while balance",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setColorSensor",
+     "text": "set color sensor [PIN] light [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readColorSensor",
+     "text": "color sensor  [PIN] [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "colorIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "colorIndex": {
+       "items": [
+        {
+         "text": "light",
+         "value": "1"
+        },
+        {
+         "text": "red",
+         "value": "2"
+        },
+        {
+         "text": "green",
+         "value": "3"
+        },
+        {
+         "text": "blue",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ],
+    "colorIndex": [
+     {
+      "text": "light",
+      "value": "1"
+     },
+     {
+      "text": "red",
+      "value": "2"
+     },
+     {
+      "text": "green",
+      "value": "3"
+     },
+     {
+      "text": "blue",
+      "value": "4"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ultrasonicSensor",
+   "name": "ultrasonic",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setUltrasonicColor",
+     "text": "ultrasonic [PIN]RGB[OUT1]R[OUT2]B[OUT3]B[OUT4]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": "ultrasonicLed",
+       "default": "1"
+      },
+      {
+       "name": "OUT2",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      },
+      {
+       "name": "OUT3",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      },
+      {
+       "name": "OUT4",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      },
+      "ultrasonicLed": {
+       "items": [
+        {
+         "text": "Both",
+         "value": "3"
+        },
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readUltrasonicDistanceCm",
+     "text": "ultrasonic [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ],
+    "ultrasonicLed": [
+     {
+      "text": "Both",
+      "value": "3"
+     },
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ucmakeServo",
+   "name": "servo",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setUCMake360Servo",
+     "text": "360° servo [PIN] angle [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "A5"
+      },
+      {
+       "name": "OUT",
+       "type": "angle",
+       "menu": null,
+       "default": "90"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "A5"
+        },
+        {
+         "text": "PortB",
+         "value": "A4"
+        },
+        {
+         "text": "PortC",
+         "value": "A2"
+        },
+        {
+         "text": "PortD",
+         "value": "A1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "A5"
+     },
+     {
+      "text": "PortB",
+      "value": "A4"
+     },
+     {
+      "text": "PortC",
+      "value": "A2"
+     },
+     {
+      "text": "PortD",
+      "value": "A1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bluetoothController",
+   "name": "Bluetooth controller",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "readBluetoothControllerButton",
+     "text": "bluetooth controller button [PIN]pressed",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "blConButton",
+       "default": "5"
+      }
+     ],
+     "menus": {
+      "blConButton": {
+       "items": [
+        {
+         "text": "R2",
+         "value": "5"
+        },
+        {
+         "text": "R1",
+         "value": "6"
+        },
+        {
+         "text": "L2",
+         "value": "7"
+        },
+        {
+         "text": "L1",
+         "value": "8"
+        },
+        {
+         "text": "HOME",
+         "value": "9"
+        },
+        {
+         "text": "BL",
+         "value": "10"
+        },
+        {
+         "text": "Y",
+         "value": "11"
+        },
+        {
+         "text": "B",
+         "value": "12"
+        },
+        {
+         "text": "A",
+         "value": "13"
+        },
+        {
+         "text": "X",
+         "value": "14"
+        },
+        {
+         "text": "PLUS",
+         "value": "15"
+        },
+        {
+         "text": "MODE",
+         "value": "16"
+        },
+        {
+         "text": "UP",
+         "value": "17"
+        },
+        {
+         "text": "DOWN",
+         "value": "18"
+        },
+        {
+         "text": "LEFT",
+         "value": "19"
+        },
+        {
+         "text": "RIGHT",
+         "value": "20"
+        },
+        {
+         "text": "MINUS",
+         "value": "21"
+        },
+        {
+         "text": "BR",
+         "value": "22"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readBluetoothControllerJoystick",
+     "text": "bluetooth controller joystick [PIN] [AXIS] value",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "rightLeft",
+       "default": "2"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis2d",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis2d": {
+       "items": [
+        {
+         "text": "X-Axis",
+         "value": "1"
+        },
+        {
+         "text": "Y-Axis",
+         "value": "2"
+        }
+       ]
+      },
+      "rightLeft": {
+       "items": [
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "axis2d": [
+     {
+      "text": "X-Axis",
+      "value": "1"
+     },
+     {
+      "text": "Y-Axis",
+      "value": "2"
+     }
+    ],
+    "blConButton": [
+     {
+      "text": "R2",
+      "value": "5"
+     },
+     {
+      "text": "R1",
+      "value": "6"
+     },
+     {
+      "text": "L2",
+      "value": "7"
+     },
+     {
+      "text": "L1",
+      "value": "8"
+     },
+     {
+      "text": "HOME",
+      "value": "9"
+     },
+     {
+      "text": "BL",
+      "value": "10"
+     },
+     {
+      "text": "Y",
+      "value": "11"
+     },
+     {
+      "text": "B",
+      "value": "12"
+     },
+     {
+      "text": "A",
+      "value": "13"
+     },
+     {
+      "text": "X",
+      "value": "14"
+     },
+     {
+      "text": "PLUS",
+      "value": "15"
+     },
+     {
+      "text": "MODE",
+      "value": "16"
+     },
+     {
+      "text": "UP",
+      "value": "17"
+     },
+     {
+      "text": "DOWN",
+      "value": "18"
+     },
+     {
+      "text": "LEFT",
+      "value": "19"
+     },
+     {
+      "text": "RIGHT",
+      "value": "20"
+     },
+     {
+      "text": "MINUS",
+      "value": "21"
+     },
+     {
+      "text": "BR",
+      "value": "22"
+     }
+    ],
+    "rightLeft": [
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     }
+    ]
+   }
+  }
+ ]
+}

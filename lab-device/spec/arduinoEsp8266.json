@@ -1,0 +1,1076 @@
+{
+ "board": "arduinoEsp8266",
+ "categories": [
+  {
+   "id": "pin",
+   "name": "Pins",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setPinMode",
+     "text": "set pin [PIN] mode [MODE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "4"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "mode",
+       "default": "INPUT"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        },
+        {
+         "text": "GPIO16",
+         "value": "16"
+        },
+        {
+         "text": "A0",
+         "value": "A0"
+        }
+       ]
+      },
+      "mode": {
+       "items": [
+        {
+         "text": "input",
+         "value": "INPUT"
+        },
+        {
+         "text": "output",
+         "value": "OUTPUT"
+        },
+        {
+         "text": "input-pullup",
+         "value": "INPUT_PULLUP"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setDigitalOutput",
+     "text": "set digital pin [PIN] out [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "digitalPins",
+       "default": "4"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "digitalPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        },
+        {
+         "text": "GPIO16",
+         "value": "16"
+        }
+       ]
+      },
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "1"
+        },
+        {
+         "text": "low",
+         "value": "0"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setPwmOutput",
+     "text": "set pwm pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pwmPins",
+       "default": "4"
+      },
+      {
+       "name": "OUT",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      }
+     ],
+     "menus": {
+      "pwmPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "readDigitalPin",
+     "text": "read digital pin [PIN]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "digitalPins",
+       "default": "4"
+      }
+     ],
+     "menus": {
+      "digitalPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        },
+        {
+         "text": "GPIO16",
+         "value": "16"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readAnalogPin",
+     "text": "read analog pin [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "analogPins",
+       "default": "A0"
+      }
+     ],
+     "menus": {
+      "analogPins": {
+       "items": [
+        {
+         "text": "A0",
+         "value": "A0"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "setServoOutput",
+     "text": "set servo pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pwmPins",
+       "default": "4"
+      },
+      {
+       "name": "OUT",
+       "type": "half_angle",
+       "menu": null,
+       "default": "90"
+      }
+     ],
+     "menus": {
+      "pwmPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "esp8266AttachInterrupt",
+     "text": "attach interrupt pin [PIN] mode [MODE] executes",
+     "blockType": "conditional",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "interruptPins",
+       "default": "4"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "interruptMode",
+       "default": "RISING"
+      }
+     ],
+     "menus": {
+      "interruptPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        }
+       ]
+      },
+      "interruptMode": {
+       "items": [
+        {
+         "text": "rising edge",
+         "value": "RISING"
+        },
+        {
+         "text": "falling edge",
+         "value": "FALLING"
+        },
+        {
+         "text": "change edge",
+         "value": "CHANGE"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "detachInterrupt",
+     "text": "detach interrupt pin [PIN]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "interruptPins",
+       "default": "4"
+      }
+     ],
+     "menus": {
+      "interruptPins": {
+       "items": [
+        {
+         "text": "GPIO0",
+         "value": "0"
+        },
+        {
+         "text": "GPIO1",
+         "value": "1"
+        },
+        {
+         "text": "GPIO2",
+         "value": "2"
+        },
+        {
+         "text": "GPIO3",
+         "value": "3"
+        },
+        {
+         "text": "GPIO4",
+         "value": "4"
+        },
+        {
+         "text": "GPIO5",
+         "value": "5"
+        },
+        {
+         "text": "GPIO12",
+         "value": "12"
+        },
+        {
+         "text": "GPIO13",
+         "value": "13"
+        },
+        {
+         "text": "GPIO14",
+         "value": "14"
+        },
+        {
+         "text": "GPIO15",
+         "value": "15"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "pins": [
+     {
+      "text": "GPIO0",
+      "value": "0"
+     },
+     {
+      "text": "GPIO1",
+      "value": "1"
+     },
+     {
+      "text": "GPIO2",
+      "value": "2"
+     },
+     {
+      "text": "GPIO3",
+      "value": "3"
+     },
+     {
+      "text": "GPIO4",
+      "value": "4"
+     },
+     {
+      "text": "GPIO5",
+      "value": "5"
+     },
+     {
+      "text": "GPIO12",
+      "value": "12"
+     },
+     {
+      "text": "GPIO13",
+      "value": "13"
+     },
+     {
+      "text": "GPIO14",
+      "value": "14"
+     },
+     {
+      "text": "GPIO15",
+      "value": "15"
+     },
+     {
+      "text": "GPIO16",
+      "value": "16"
+     },
+     {
+      "text": "A0",
+      "value": "A0"
+     }
+    ],
+    "mode": [
+     {
+      "text": "input",
+      "value": "INPUT"
+     },
+     {
+      "text": "output",
+      "value": "OUTPUT"
+     },
+     {
+      "text": "input-pullup",
+      "value": "INPUT_PULLUP"
+     }
+    ],
+    "digitalPins": [
+     {
+      "text": "GPIO0",
+      "value": "0"
+     },
+     {
+      "text": "GPIO1",
+      "value": "1"
+     },
+     {
+      "text": "GPIO2",
+      "value": "2"
+     },
+     {
+      "text": "GPIO3",
+      "value": "3"
+     },
+     {
+      "text": "GPIO4",
+      "value": "4"
+     },
+     {
+      "text": "GPIO5",
+      "value": "5"
+     },
+     {
+      "text": "GPIO12",
+      "value": "12"
+     },
+     {
+      "text": "GPIO13",
+      "value": "13"
+     },
+     {
+      "text": "GPIO14",
+      "value": "14"
+     },
+     {
+      "text": "GPIO15",
+      "value": "15"
+     },
+     {
+      "text": "GPIO16",
+      "value": "16"
+     }
+    ],
+    "analogPins": [
+     {
+      "text": "A0",
+      "value": "A0"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "1"
+     },
+     {
+      "text": "low",
+      "value": "0"
+     }
+    ],
+    "pwmPins": [
+     {
+      "text": "GPIO0",
+      "value": "0"
+     },
+     {
+      "text": "GPIO1",
+      "value": "1"
+     },
+     {
+      "text": "GPIO2",
+      "value": "2"
+     },
+     {
+      "text": "GPIO3",
+      "value": "3"
+     },
+     {
+      "text": "GPIO4",
+      "value": "4"
+     },
+     {
+      "text": "GPIO5",
+      "value": "5"
+     },
+     {
+      "text": "GPIO12",
+      "value": "12"
+     },
+     {
+      "text": "GPIO13",
+      "value": "13"
+     },
+     {
+      "text": "GPIO14",
+      "value": "14"
+     },
+     {
+      "text": "GPIO15",
+      "value": "15"
+     }
+    ],
+    "interruptPins": [
+     {
+      "text": "GPIO0",
+      "value": "0"
+     },
+     {
+      "text": "GPIO1",
+      "value": "1"
+     },
+     {
+      "text": "GPIO2",
+      "value": "2"
+     },
+     {
+      "text": "GPIO3",
+      "value": "3"
+     },
+     {
+      "text": "GPIO4",
+      "value": "4"
+     },
+     {
+      "text": "GPIO5",
+      "value": "5"
+     },
+     {
+      "text": "GPIO12",
+      "value": "12"
+     },
+     {
+      "text": "GPIO13",
+      "value": "13"
+     },
+     {
+      "text": "GPIO14",
+      "value": "14"
+     },
+     {
+      "text": "GPIO15",
+      "value": "15"
+     }
+    ],
+    "interruptMode": [
+     {
+      "text": "rising edge",
+      "value": "RISING"
+     },
+     {
+      "text": "falling edge",
+      "value": "FALLING"
+     },
+     {
+      "text": "change edge",
+      "value": "CHANGE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "serial",
+   "name": "Serial",
+   "colour": "#9966FF",
+   "blocks": [
+    {
+     "opcode": "serialBegin",
+     "text": "serial begin baudrate [VALUE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": "baudrate",
+       "default": "76800"
+      }
+     ],
+     "menus": {
+      "baudrate": {
+       "items": [
+        {
+         "text": "4800",
+         "value": "4800"
+        },
+        {
+         "text": "9600",
+         "value": "9600"
+        },
+        {
+         "text": "19200",
+         "value": "19200"
+        },
+        {
+         "text": "38400",
+         "value": "38400"
+        },
+        {
+         "text": "57600",
+         "value": "57600"
+        },
+        {
+         "text": "76800",
+         "value": "76800"
+        },
+        {
+         "text": "115200",
+         "value": "115200"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "serialPrint",
+     "text": "serial print [VALUE] [EOL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": null,
+       "default": "Hello OpenBlock"
+      },
+      {
+       "name": "EOL",
+       "type": "string",
+       "menu": "eol",
+       "default": "warp"
+      }
+     ],
+     "menus": {
+      "eol": {
+       "items": [
+        {
+         "text": "warp",
+         "value": "warp"
+        },
+        {
+         "text": "no-warp",
+         "value": "noWarp"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "serialAvailable",
+     "text": "serial available data length",
+     "blockType": "reporter",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "serialReadData",
+     "text": "serial read data",
+     "blockType": "reporter",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "baudrate": [
+     {
+      "text": "4800",
+      "value": "4800"
+     },
+     {
+      "text": "9600",
+      "value": "9600"
+     },
+     {
+      "text": "19200",
+      "value": "19200"
+     },
+     {
+      "text": "38400",
+      "value": "38400"
+     },
+     {
+      "text": "57600",
+      "value": "57600"
+     },
+     {
+      "text": "76800",
+      "value": "76800"
+     },
+     {
+      "text": "115200",
+      "value": "115200"
+     }
+    ],
+    "eol": [
+     {
+      "text": "warp",
+      "value": "warp"
+     },
+     {
+      "text": "no-warp",
+      "value": "noWarp"
+     }
+    ]
+   }
+  },
+  {
+   "id": "data",
+   "name": "Data",
+   "colour": "#CF63CF",
+   "blocks": [
+    {
+     "opcode": "dataMap",
+     "text": "map [DATA] from ([ARG0], [ARG1]) to ([ARG2], [ARG3])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      },
+      {
+       "name": "ARG2",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG3",
+       "type": "number",
+       "menu": null,
+       "default": "1000"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConstrain",
+     "text": "constrain [DATA] between ([ARG0], [ARG1])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvert",
+     "text": "convert [DATA] to [TYPE]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "123"
+      },
+      {
+       "name": "TYPE",
+       "type": "string",
+       "menu": "dataType",
+       "default": "INTEGER"
+      }
+     ],
+     "menus": {
+      "dataType": {
+       "items": [
+        {
+         "text": "integer",
+         "value": "INTEGER"
+        },
+        {
+         "text": "decimal",
+         "value": "DECIMAL"
+        },
+        {
+         "text": "string",
+         "value": "STRING"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "dataConvertASCIICharacter",
+     "text": "convert [DATA] to ASCII character",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "97"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvertASCIINumber",
+     "text": "convert [DATA] to ASCII nubmer",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "a"
+      }
+     ],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "dataType": [
+     {
+      "text": "integer",
+      "value": "INTEGER"
+     },
+     {
+      "text": "decimal",
+      "value": "DECIMAL"
+     },
+     {
+      "text": "string",
+      "value": "STRING"
+     }
+    ]
+   }
+  }
+ ]
+}

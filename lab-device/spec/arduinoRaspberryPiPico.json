@@ -1,0 +1,1612 @@
+{
+ "board": "arduinoRaspberryPiPico",
+ "categories": [
+  {
+   "id": "pin",
+   "name": "Pins",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setPinMode",
+     "text": "set pin [PIN] mode [MODE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "mode",
+       "default": "INPUT"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      },
+      "mode": {
+       "items": [
+        {
+         "text": "input",
+         "value": "INPUT"
+        },
+        {
+         "text": "output",
+         "value": "OUTPUT"
+        },
+        {
+         "text": "input-pullup",
+         "value": "INPUT_PULLUP"
+        },
+        {
+         "text": "input-pulldown",
+         "value": "INPUT_PULLDOWN"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setDigitalOutput",
+     "text": "set digital pin [PIN] out [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      },
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "setPwmOutput",
+     "text": "set pwm pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "OUT",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "readDigitalPin",
+     "text": "read digital pin [PIN]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "readAnalogPin",
+     "text": "read analog pin [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "analogPins",
+       "default": "26"
+      }
+     ],
+     "menus": {
+      "analogPins": {
+       "items": [
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "setServoOutput",
+     "text": "set servo pin [PIN] out [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "OUT",
+       "type": "half_angle",
+       "menu": null,
+       "default": "90"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "attachInterrupt",
+     "text": "attach interrupt pin [PIN] mode [MODE] executes",
+     "blockType": "conditional",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      },
+      {
+       "name": "MODE",
+       "type": "string",
+       "menu": "interruptMode",
+       "default": "RISING"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      },
+      "interruptMode": {
+       "items": [
+        {
+         "text": "rising edge",
+         "value": "RISING"
+        },
+        {
+         "text": "falling edge",
+         "value": "FALLING"
+        },
+        {
+         "text": "change edge",
+         "value": "CHANGE"
+        },
+        {
+         "text": "low level",
+         "value": "LOW"
+        },
+        {
+         "text": "high level",
+         "value": "HIGH"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "detachInterrupt",
+     "text": "detach interrupt pin [PIN]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "pins",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "pins": {
+       "items": [
+        {
+         "text": "GP0",
+         "value": "0"
+        },
+        {
+         "text": "GP1",
+         "value": "1"
+        },
+        {
+         "text": "GP2",
+         "value": "2"
+        },
+        {
+         "text": "GP3",
+         "value": "3"
+        },
+        {
+         "text": "GP4",
+         "value": "4"
+        },
+        {
+         "text": "GP5",
+         "value": "5"
+        },
+        {
+         "text": "GP6",
+         "value": "6"
+        },
+        {
+         "text": "GP7",
+         "value": "7"
+        },
+        {
+         "text": "GP8",
+         "value": "8"
+        },
+        {
+         "text": "GP9",
+         "value": "9"
+        },
+        {
+         "text": "GP10",
+         "value": "10"
+        },
+        {
+         "text": "GP11",
+         "value": "11"
+        },
+        {
+         "text": "GP12",
+         "value": "12"
+        },
+        {
+         "text": "GP13",
+         "value": "13"
+        },
+        {
+         "text": "GP14",
+         "value": "14"
+        },
+        {
+         "text": "GP15",
+         "value": "15"
+        },
+        {
+         "text": "GP16",
+         "value": "16"
+        },
+        {
+         "text": "GP17",
+         "value": "17"
+        },
+        {
+         "text": "GP18",
+         "value": "18"
+        },
+        {
+         "text": "GP19",
+         "value": "19"
+        },
+        {
+         "text": "GP20",
+         "value": "20"
+        },
+        {
+         "text": "GP21",
+         "value": "21"
+        },
+        {
+         "text": "GP22",
+         "value": "22"
+        },
+        {
+         "text": "LED",
+         "value": "25"
+        },
+        {
+         "text": "GP26",
+         "value": "26"
+        },
+        {
+         "text": "GP27",
+         "value": "27"
+        },
+        {
+         "text": "GP28",
+         "value": "28"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "pins": [
+     {
+      "text": "GP0",
+      "value": "0"
+     },
+     {
+      "text": "GP1",
+      "value": "1"
+     },
+     {
+      "text": "GP2",
+      "value": "2"
+     },
+     {
+      "text": "GP3",
+      "value": "3"
+     },
+     {
+      "text": "GP4",
+      "value": "4"
+     },
+     {
+      "text": "GP5",
+      "value": "5"
+     },
+     {
+      "text": "GP6",
+      "value": "6"
+     },
+     {
+      "text": "GP7",
+      "value": "7"
+     },
+     {
+      "text": "GP8",
+      "value": "8"
+     },
+     {
+      "text": "GP9",
+      "value": "9"
+     },
+     {
+      "text": "GP10",
+      "value": "10"
+     },
+     {
+      "text": "GP11",
+      "value": "11"
+     },
+     {
+      "text": "GP12",
+      "value": "12"
+     },
+     {
+      "text": "GP13",
+      "value": "13"
+     },
+     {
+      "text": "GP14",
+      "value": "14"
+     },
+     {
+      "text": "GP15",
+      "value": "15"
+     },
+     {
+      "text": "GP16",
+      "value": "16"
+     },
+     {
+      "text": "GP17",
+      "value": "17"
+     },
+     {
+      "text": "GP18",
+      "value": "18"
+     },
+     {
+      "text": "GP19",
+      "value": "19"
+     },
+     {
+      "text": "GP20",
+      "value": "20"
+     },
+     {
+      "text": "GP21",
+      "value": "21"
+     },
+     {
+      "text": "GP22",
+      "value": "22"
+     },
+     {
+      "text": "LED",
+      "value": "25"
+     },
+     {
+      "text": "GP26",
+      "value": "26"
+     },
+     {
+      "text": "GP27",
+      "value": "27"
+     },
+     {
+      "text": "GP28",
+      "value": "28"
+     }
+    ],
+    "mode": [
+     {
+      "text": "input",
+      "value": "INPUT"
+     },
+     {
+      "text": "output",
+      "value": "OUTPUT"
+     },
+     {
+      "text": "input-pullup",
+      "value": "INPUT_PULLUP"
+     },
+     {
+      "text": "input-pulldown",
+      "value": "INPUT_PULLDOWN"
+     }
+    ],
+    "analogPins": [
+     {
+      "text": "GP26",
+      "value": "26"
+     },
+     {
+      "text": "GP27",
+      "value": "27"
+     },
+     {
+      "text": "GP28",
+      "value": "28"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "interruptMode": [
+     {
+      "text": "rising edge",
+      "value": "RISING"
+     },
+     {
+      "text": "falling edge",
+      "value": "FALLING"
+     },
+     {
+      "text": "change edge",
+      "value": "CHANGE"
+     },
+     {
+      "text": "low level",
+      "value": "LOW"
+     },
+     {
+      "text": "high level",
+      "value": "HIGH"
+     }
+    ]
+   }
+  },
+  {
+   "id": "serial",
+   "name": "Serial",
+   "colour": "#9966FF",
+   "blocks": [
+    {
+     "opcode": "raspberryPiPicoMultiSerialBegin",
+     "text": "serial [NO] begin baudrate [VALUE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      },
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": "baudrate",
+       "default": "9600"
+      }
+     ],
+     "menus": {
+      "baudrate": {
+       "items": [
+        {
+         "text": "4800",
+         "value": "4800"
+        },
+        {
+         "text": "9600",
+         "value": "9600"
+        },
+        {
+         "text": "19200",
+         "value": "19200"
+        },
+        {
+         "text": "38400",
+         "value": "38400"
+        },
+        {
+         "text": "57600",
+         "value": "57600"
+        },
+        {
+         "text": "76800",
+         "value": "76800"
+        },
+        {
+         "text": "115200",
+         "value": "115200"
+        }
+       ]
+      },
+      "serialNo": {
+       "items": [
+        {
+         "text": "USB",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialPrint",
+     "text": "serial [NO] print [VALUE] [EOL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      },
+      {
+       "name": "VALUE",
+       "type": "string",
+       "menu": null,
+       "default": "Hello OpenBlock"
+      },
+      {
+       "name": "EOL",
+       "type": "string",
+       "menu": "eol",
+       "default": "warp"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "USB",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        }
+       ]
+      },
+      "eol": {
+       "items": [
+        {
+         "text": "warp",
+         "value": "warp"
+        },
+        {
+         "text": "no-warp",
+         "value": "noWarp"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialAvailable",
+     "text": "serial [NO] available data length",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "USB",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "multiSerialReadAByte",
+     "text": "serial [NO] read a byte",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "NO",
+       "type": "number",
+       "menu": "serialNo",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "serialNo": {
+       "items": [
+        {
+         "text": "USB",
+         "value": "0"
+        },
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "baudrate": [
+     {
+      "text": "4800",
+      "value": "4800"
+     },
+     {
+      "text": "9600",
+      "value": "9600"
+     },
+     {
+      "text": "19200",
+      "value": "19200"
+     },
+     {
+      "text": "38400",
+      "value": "38400"
+     },
+     {
+      "text": "57600",
+      "value": "57600"
+     },
+     {
+      "text": "76800",
+      "value": "76800"
+     },
+     {
+      "text": "115200",
+      "value": "115200"
+     }
+    ],
+    "serialNo": [
+     {
+      "text": "USB",
+      "value": "0"
+     },
+     {
+      "text": "1",
+      "value": "1"
+     },
+     {
+      "text": "2",
+      "value": "2"
+     }
+    ],
+    "eol": [
+     {
+      "text": "warp",
+      "value": "warp"
+     },
+     {
+      "text": "no-warp",
+      "value": "noWarp"
+     }
+    ]
+   }
+  },
+  {
+   "id": "data",
+   "name": "Data",
+   "colour": "#CF63CF",
+   "blocks": [
+    {
+     "opcode": "dataMap",
+     "text": "map [DATA] from ([ARG0], [ARG1]) to ([ARG2], [ARG3])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      },
+      {
+       "name": "ARG2",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG3",
+       "type": "number",
+       "menu": null,
+       "default": "1000"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConstrain",
+     "text": "constrain [DATA] between ([ARG0], [ARG1])",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "50"
+      },
+      {
+       "name": "ARG0",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      },
+      {
+       "name": "ARG1",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvert",
+     "text": "convert [DATA] to [TYPE]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "123"
+      },
+      {
+       "name": "TYPE",
+       "type": "string",
+       "menu": "dataType",
+       "default": "INTEGER"
+      }
+     ],
+     "menus": {
+      "dataType": {
+       "items": [
+        {
+         "text": "integer",
+         "value": "INTEGER"
+        },
+        {
+         "text": "decimal",
+         "value": "DECIMAL"
+        },
+        {
+         "text": "string",
+         "value": "STRING"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "dataConvertASCIICharacter",
+     "text": "convert [DATA] to ASCII character",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "number",
+       "menu": null,
+       "default": "97"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "dataConvertASCIINumber",
+     "text": "convert [DATA] to ASCII nubmer",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "DATA",
+       "type": "string",
+       "menu": null,
+       "default": "a"
+      }
+     ],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "dataType": [
+     {
+      "text": "integer",
+      "value": "INTEGER"
+     },
+     {
+      "text": "decimal",
+      "value": "DECIMAL"
+     },
+     {
+      "text": "string",
+      "value": "STRING"
+     }
+    ]
+   }
+  }
+ ]
+}

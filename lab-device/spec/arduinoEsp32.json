@@ -1,0 +1,5411 @@
+{
+ "board": "arduinoEsp32",
+ "categories": [
+  {
+   "id": "dcMotor",
+   "name": "DC Motor",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetDcMotor",
+     "text": "DC Motor [PIN] speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "dcMotorM",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {
+      "dcMotorM": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        },
+        {
+         "text": "M5",
+         "value": "5"
+        },
+        {
+         "text": "M6",
+         "value": "6"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espSetDcMotorMove",
+     "text": "Motor Move [PIN] speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "dcMotorLRFB",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      }
+     ],
+     "menus": {
+      "dcMotorLRFB": {
+       "items": [
+        {
+         "text": "Forward",
+         "value": "1"
+        },
+        {
+         "text": "Backward",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "4"
+        },
+        {
+         "text": "Left",
+         "value": "3"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espSetDcMotorMoveLR",
+     "text": "Left wheel speed [PIN] Right wheel speed [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espSetDcMotorStop",
+     "text": "Stop DC Motors",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "dcMotorM": [
+     {
+      "text": "M1",
+      "value": "1"
+     },
+     {
+      "text": "M2",
+      "value": "2"
+     },
+     {
+      "text": "M3",
+      "value": "3"
+     },
+     {
+      "text": "M4",
+      "value": "4"
+     },
+     {
+      "text": "M5",
+      "value": "5"
+     },
+     {
+      "text": "M6",
+      "value": "6"
+     }
+    ],
+    "dcMotorLRFB": [
+     {
+      "text": "Forward",
+      "value": "1"
+     },
+     {
+      "text": "Backward",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "4"
+     },
+     {
+      "text": "Left",
+      "value": "3"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "digitDisplay",
+   "name": "DigitDisplay",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetFourDigitDisplay",
+     "text": "4-digit display [PIN] show [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "100"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "BLEOnOff",
+   "name": "arduinoUno.category.BLEOnOffs",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetBLEOnOff",
+     "text": "Signal Transmission [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ESPdigital",
+   "name": "Digital Signal Transmitter",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "ESPdigitalset",
+     "text": "Signal Transmitter [PIN] Sends Data [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": null,
+       "default": 0
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ESPtimer",
+   "name": "Timer",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "startESPtimer",
+     "text": "Timer Start",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "stopESPtimer",
+     "text": "Timer Stop",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "cleanESPtimer",
+     "text": "Timer Clean",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "ESPtimerstart",
+     "text": "Timer start [LEVEL] with [OUT] MS",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "TIME_LEVEL",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "5000"
+      }
+     ],
+     "menus": {
+      "TIME_LEVEL": {
+       "items": [
+        {
+         "text": "＞",
+         "value": "1"
+        },
+        {
+         "text": "＜",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "ESPtimerwait",
+     "text": "Timer start with [OUT] MS",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "1000"
+      }
+     ],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "TIME_LEVEL": [
+     {
+      "text": "＞",
+      "value": "1"
+     },
+     {
+      "text": "＜",
+      "value": "2"
+     }
+    ]
+   }
+  },
+  {
+   "id": "eleMagnetOnOff",
+   "name": "Bluetooth Transmission",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetEleMagnetOnOff",
+     "text": "Electro Magnet [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "espBigLeds",
+   "name": "LED",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "setEspBigSingleLedOutput",
+     "text": "Electro Magnet [PIN] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "espBigHumiditySensor",
+   "name": "humidity",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "espBigReadHumiditySensor",
+     "text": "humiture [PIN] [LEVEL]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "humidity",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "humidity": {
+       "items": [
+        {
+         "text": "humidity",
+         "value": "1"
+        },
+        {
+         "text": "tempperature",
+         "value": "2"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "humidity": [
+     {
+      "text": "humidity",
+      "value": "1"
+     },
+     {
+      "text": "tempperature",
+      "value": "2"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "espBigLedButtonSensor",
+   "name": "Led button",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "espBigReadLedButtonSensorDigital",
+     "text": "LED button [PIN] [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ledButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      },
+      "ledButtonIndex": {
+       "items": [
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espBigSetLedButtonSensor",
+     "text": "LED button [PIN] [INDEX] [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "ledButtonIndex",
+       "default": "1"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      },
+      "ledButtonIndex": {
+       "items": [
+        {
+         "text": "1",
+         "value": "1"
+        },
+        {
+         "text": "2",
+         "value": "2"
+        },
+        {
+         "text": "3",
+         "value": "3"
+        },
+        {
+         "text": "4",
+         "value": "4"
+        }
+       ]
+      },
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ],
+    "ledButtonIndex": [
+     {
+      "text": "1",
+      "value": "1"
+     },
+     {
+      "text": "2",
+      "value": "2"
+     },
+     {
+      "text": "3",
+      "value": "3"
+     },
+     {
+      "text": "4",
+      "value": "4"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ]
+   }
+  },
+  {
+   "id": "espBig24GController",
+   "name": "2.4G Controller",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espBig24GControllerDigital",
+     "text": "Controller button [PIN] [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ControllerButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      },
+      "ControllerButtonIndex": {
+       "items": [
+        {
+         "text": "Y",
+         "value": "1"
+        },
+        {
+         "text": "X",
+         "value": "2"
+        },
+        {
+         "text": "A",
+         "value": "3"
+        },
+        {
+         "text": "B",
+         "value": "4"
+        },
+        {
+         "text": "LIFT",
+         "value": "5"
+        },
+        {
+         "text": "DOWN",
+         "value": "6"
+        },
+        {
+         "text": "RIGHT",
+         "value": "7"
+        },
+        {
+         "text": "UP",
+         "value": "8"
+        },
+        {
+         "text": "PLUS",
+         "value": "9"
+        },
+        {
+         "text": "MIN",
+         "value": "10"
+        },
+        {
+         "text": "NONE",
+         "value": "11"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espBig24GControllerDigital_serial",
+     "text": "Controller button [LEVEL]pressed?",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "LEVEL",
+       "type": "number",
+       "menu": "ControllerButtonIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ControllerButtonIndex": {
+       "items": [
+        {
+         "text": "Y",
+         "value": "1"
+        },
+        {
+         "text": "X",
+         "value": "2"
+        },
+        {
+         "text": "A",
+         "value": "3"
+        },
+        {
+         "text": "B",
+         "value": "4"
+        },
+        {
+         "text": "LIFT",
+         "value": "5"
+        },
+        {
+         "text": "DOWN",
+         "value": "6"
+        },
+        {
+         "text": "RIGHT",
+         "value": "7"
+        },
+        {
+         "text": "UP",
+         "value": "8"
+        },
+        {
+         "text": "PLUS",
+         "value": "9"
+        },
+        {
+         "text": "MIN",
+         "value": "10"
+        },
+        {
+         "text": "NONE",
+         "value": "11"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espBig24GControllerDigital_reset",
+     "text": "Controller Reset",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ],
+    "ControllerButtonIndex": [
+     {
+      "text": "Y",
+      "value": "1"
+     },
+     {
+      "text": "X",
+      "value": "2"
+     },
+     {
+      "text": "A",
+      "value": "3"
+     },
+     {
+      "text": "B",
+      "value": "4"
+     },
+     {
+      "text": "LIFT",
+      "value": "5"
+     },
+     {
+      "text": "DOWN",
+      "value": "6"
+     },
+     {
+      "text": "RIGHT",
+      "value": "7"
+     },
+     {
+      "text": "UP",
+      "value": "8"
+     },
+     {
+      "text": "PLUS",
+      "value": "9"
+     },
+     {
+      "text": "MIN",
+      "value": "10"
+     },
+     {
+      "text": "NONE",
+      "value": "11"
+     }
+    ]
+   }
+  },
+  {
+   "id": "espBigUltrasonicSensor",
+   "name": "ultrasonic",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espBigSetUltrasonicColor",
+     "text": "ultrasonic [PIN]RGB[OUT1]R[OUT2]B[OUT3]B[OUT4]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": "ultrasonicLed",
+       "default": "1"
+      },
+      {
+       "name": "OUT2",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      },
+      {
+       "name": "OUT3",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      },
+      {
+       "name": "OUT4",
+       "type": "uint8_number",
+       "menu": null,
+       "default": "255"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      },
+      "ultrasonicLed": {
+       "items": [
+        {
+         "text": "Both",
+         "value": "3"
+        },
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espBigReadUltrasonicDistanceCm",
+     "text": "ultrasonic [PIN]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ],
+    "ultrasonicLed": [
+     {
+      "text": "Both",
+      "value": "3"
+     },
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "lineFollower",
+   "name": "line follower",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espReadLineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "lineType",
+       "default": "2"
+      }
+     ],
+     "menus": {
+      "lineType": {
+       "items": [
+        {
+         "text": "arduinoUno.lineFollower.2LineFollower",
+         "value": "2"
+        },
+        {
+         "text": "arduinoUno.lineFollower.5LineFollower",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espRead2LineFollower",
+     "text": "line follower [PIN] [AXIS2]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "AXIS2",
+       "type": "number",
+       "menu": "axis2",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis2": {
+       "items": [
+        {
+         "text": "S1",
+         "value": "1"
+        },
+        {
+         "text": "S2",
+         "value": "2"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espRead5LineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis5",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis5": {
+       "items": [
+        {
+         "text": "S1",
+         "value": "1"
+        },
+        {
+         "text": "S2",
+         "value": "2"
+        },
+        {
+         "text": "S3",
+         "value": "3"
+        },
+        {
+         "text": "S4",
+         "value": "4"
+        },
+        {
+         "text": "S5",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espContrast5LineFollower",
+     "text": "line follower [PIN] [AXIS]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "TYPE",
+       "type": "string",
+       "menu": "lineType",
+       "default": "2"
+      },
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "INPUT",
+       "type": "number",
+       "menu": null,
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "lineType": {
+       "items": [
+        {
+         "text": "arduinoUno.lineFollower.2LineFollower",
+         "value": "2"
+        },
+        {
+         "text": "arduinoUno.lineFollower.5LineFollower",
+         "value": "5"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "lineType": [
+     {
+      "text": "arduinoUno.lineFollower.2LineFollower",
+      "value": "2"
+     },
+     {
+      "text": "arduinoUno.lineFollower.5LineFollower",
+      "value": "5"
+     }
+    ],
+    "axis2": [
+     {
+      "text": "S1",
+      "value": "1"
+     },
+     {
+      "text": "S2",
+      "value": "2"
+     }
+    ],
+    "axis5": [
+     {
+      "text": "S1",
+      "value": "1"
+     },
+     {
+      "text": "S2",
+      "value": "2"
+     },
+     {
+      "text": "S3",
+      "value": "3"
+     },
+     {
+      "text": "S4",
+      "value": "4"
+     },
+     {
+      "text": "S5",
+      "value": "5"
+     }
+    ],
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "colourSensor",
+   "name": "colour",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetColorWb",
+     "text": "set color sensor [PIN] while balance",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espSetColorSensor",
+     "text": "set color sensor [PIN] light [LEVEL]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "LEVEL",
+       "type": "string",
+       "menu": "level",
+       "default": "HIGH"
+      }
+     ],
+     "menus": {
+      "level": {
+       "acceptReporters": true,
+       "items": [
+        {
+         "text": "high",
+         "value": "HIGH"
+        },
+        {
+         "text": "low",
+         "value": "LOW"
+        }
+       ]
+      },
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadColorSensor",
+     "text": "color sensor  [PIN] [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "14"
+      },
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "colorIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "PortA",
+         "value": "14"
+        },
+        {
+         "text": "PortB",
+         "value": "5"
+        },
+        {
+         "text": "PortC",
+         "value": "25"
+        },
+        {
+         "text": "PortD",
+         "value": "27"
+        }
+       ]
+      },
+      "colorIndex": {
+       "items": [
+        {
+         "text": "light",
+         "value": "1"
+        },
+        {
+         "text": "red",
+         "value": "2"
+        },
+        {
+         "text": "green",
+         "value": "3"
+        },
+        {
+         "text": "blue",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "level": [
+     {
+      "text": "high",
+      "value": "HIGH"
+     },
+     {
+      "text": "low",
+      "value": "LOW"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ],
+    "colorIndex": [
+     {
+      "text": "light",
+      "value": "1"
+     },
+     {
+      "text": "red",
+      "value": "2"
+     },
+     {
+      "text": "green",
+      "value": "3"
+     },
+     {
+      "text": "blue",
+      "value": "4"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ucmakeServo",
+   "name": "servo",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetUCMake360Servo",
+     "text": "360° servo [PIN] angle [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "ucMakePorts",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "angle",
+       "menu": null,
+       "default": "90"
+      }
+     ],
+     "menus": {
+      "ucMakePorts": {
+       "items": [
+        {
+         "text": "Port1",
+         "value": "1"
+        },
+        {
+         "text": "Port2",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "ucMakePorts": [
+     {
+      "text": "Port1",
+      "value": "1"
+     },
+     {
+      "text": "Port2",
+      "value": "2"
+     }
+    ]
+   }
+  },
+  {
+   "id": "bluetoothController",
+   "name": "Bluetooth controller",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "espReadBluetoothControllerButton",
+     "text": "bluetooth controller button [PIN]pressed",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "blConButton",
+       "default": "5"
+      }
+     ],
+     "menus": {
+      "blConButton": {
+       "items": [
+        {
+         "text": "R2",
+         "value": "5"
+        },
+        {
+         "text": "R1",
+         "value": "6"
+        },
+        {
+         "text": "L2",
+         "value": "7"
+        },
+        {
+         "text": "L1",
+         "value": "8"
+        },
+        {
+         "text": "HOME",
+         "value": "9"
+        },
+        {
+         "text": "BL",
+         "value": "10"
+        },
+        {
+         "text": "Y",
+         "value": "11"
+        },
+        {
+         "text": "B",
+         "value": "12"
+        },
+        {
+         "text": "A",
+         "value": "13"
+        },
+        {
+         "text": "X",
+         "value": "14"
+        },
+        {
+         "text": "PLUS",
+         "value": "15"
+        },
+        {
+         "text": "MODE",
+         "value": "16"
+        },
+        {
+         "text": "UP",
+         "value": "17"
+        },
+        {
+         "text": "DOWN",
+         "value": "18"
+        },
+        {
+         "text": "LEFT",
+         "value": "19"
+        },
+        {
+         "text": "RIGHT",
+         "value": "20"
+        },
+        {
+         "text": "MINUS",
+         "value": "21"
+        },
+        {
+         "text": "BR",
+         "value": "22"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadBluetoothControllerJoystick",
+     "text": "bluetooth controller joystick [PIN] [AXIS] value",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "rightLeft",
+       "default": "2"
+      },
+      {
+       "name": "AXIS",
+       "type": "number",
+       "menu": "axis2d",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "axis2d": {
+       "items": [
+        {
+         "text": "X-Axis",
+         "value": "1"
+        },
+        {
+         "text": "Y-Axis",
+         "value": "2"
+        }
+       ]
+      },
+      "rightLeft": {
+       "items": [
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Right",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "axis2d": [
+     {
+      "text": "X-Axis",
+      "value": "1"
+     },
+     {
+      "text": "Y-Axis",
+      "value": "2"
+     }
+    ],
+    "blConButton": [
+     {
+      "text": "R2",
+      "value": "5"
+     },
+     {
+      "text": "R1",
+      "value": "6"
+     },
+     {
+      "text": "L2",
+      "value": "7"
+     },
+     {
+      "text": "L1",
+      "value": "8"
+     },
+     {
+      "text": "HOME",
+      "value": "9"
+     },
+     {
+      "text": "BL",
+      "value": "10"
+     },
+     {
+      "text": "Y",
+      "value": "11"
+     },
+     {
+      "text": "B",
+      "value": "12"
+     },
+     {
+      "text": "A",
+      "value": "13"
+     },
+     {
+      "text": "X",
+      "value": "14"
+     },
+     {
+      "text": "PLUS",
+      "value": "15"
+     },
+     {
+      "text": "MODE",
+      "value": "16"
+     },
+     {
+      "text": "UP",
+      "value": "17"
+     },
+     {
+      "text": "DOWN",
+      "value": "18"
+     },
+     {
+      "text": "LEFT",
+      "value": "19"
+     },
+     {
+      "text": "RIGHT",
+      "value": "20"
+     },
+     {
+      "text": "MINUS",
+      "value": "21"
+     },
+     {
+      "text": "BR",
+      "value": "22"
+     }
+    ],
+    "rightLeft": [
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Right",
+      "value": "1"
+     }
+    ]
+   }
+  },
+  {
+   "id": "uc36EncoderMotor",
+   "name": "36 Encoder Motor",
+   "colour": "#ba1aff",
+   "blocks": [
+    {
+     "opcode": "esp36EncoderMotorSetOrigin",
+     "text": "36 Encoder Motor [INDEX] set origin",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetSpeed",
+     "text": "36 Encoder Motor [INDEX] Power Set To [OUT]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMoveEncoder",
+     "text": "36 Encoder Motor [INDEX] Move [OUT] Encoder,Speed[OUT1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "2000"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMovesCircle",
+     "text": "36 Encoder Motor [INDEX] Moves [OUT] [TYPE] Speed[OUT1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "5"
+      },
+      {
+       "name": "TYPE",
+       "type": "number",
+       "menu": "esp36EncodeMoveType",
+       "default": "1"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      },
+      "esp36EncodeMoveType": {
+       "items": [
+        {
+         "text": "Circle",
+         "value": "1"
+        },
+        {
+         "text": "Degree",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espRead36EncoderMotor",
+     "text": "36 Encoder Motor [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMovesCircleDouble",
+     "text": "36 Encoder Motor [INDEX] Speed [OUT] [INDEX1] Speed [OUT1] Move [OUT2] [TYPE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      },
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      },
+      {
+       "name": "OUT2",
+       "type": "number",
+       "menu": null,
+       "default": "5"
+      },
+      {
+       "name": "TYPE",
+       "type": "number",
+       "menu": "esp36EncodeMoveType",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      },
+      "esp36EncodeMoveType": {
+       "items": [
+        {
+         "text": "Circle",
+         "value": "1"
+        },
+        {
+         "text": "Degree",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMoveEncoderWait",
+     "text": "36 Encoder Motor [INDEX] Move [OUT] Encoder,Speed[OUT1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "2000"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMovesCircleWait",
+     "text": "36 Encoder Motor [INDEX] Moves [OUT] [TYPE] Speed[OUT1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "5"
+      },
+      {
+       "name": "TYPE",
+       "type": "number",
+       "menu": "esp36EncodeMoveType",
+       "default": "1"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      },
+      "esp36EncodeMoveType": {
+       "items": [
+        {
+         "text": "Circle",
+         "value": "1"
+        },
+        {
+         "text": "Degree",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetMovesCircleDoubleWait",
+     "text": "36 Encoder Motor [INDEX] Speed [OUT] [INDEX1] Speed [OUT1] Move [OUT2] [TYPE]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      },
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      },
+      {
+       "name": "OUT1",
+       "type": "number",
+       "menu": null,
+       "default": "30"
+      },
+      {
+       "name": "OUT2",
+       "type": "number",
+       "menu": null,
+       "default": "5"
+      },
+      {
+       "name": "TYPE",
+       "type": "number",
+       "menu": "esp36EncodeMoveType",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      },
+      "esp36EncodeMoveType": {
+       "items": [
+        {
+         "text": "Circle",
+         "value": "1"
+        },
+        {
+         "text": "Degree",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetStop",
+     "text": "36 Stop Encoder Motor [INDEX]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX",
+       "type": "number",
+       "menu": "esp36EncodeMotorIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "esp36EncodeMotorIndex": {
+       "items": [
+        {
+         "text": "M1",
+         "value": "1"
+        },
+        {
+         "text": "M2",
+         "value": "2"
+        },
+        {
+         "text": "M3",
+         "value": "3"
+        },
+        {
+         "text": "M4",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "esp36EncoderMotorSetStopAll",
+     "text": "36 Stop All Encoder Motor",
+     "blockType": "command",
+     "args": [],
+     "menus": {}
+    }
+   ],
+   "menus": {
+    "esp36EncodeMotorIndex": [
+     {
+      "text": "M1",
+      "value": "1"
+     },
+     {
+      "text": "M2",
+      "value": "2"
+     },
+     {
+      "text": "M3",
+      "value": "3"
+     },
+     {
+      "text": "M4",
+      "value": "4"
+     }
+    ],
+    "esp36EncodeMoveType": [
+     {
+      "text": "Circle",
+      "value": "1"
+     },
+     {
+      "text": "Degree",
+      "value": "2"
+     }
+    ],
+    "ucMakePorts": [
+     {
+      "text": "PortA",
+      "value": "14"
+     },
+     {
+      "text": "PortB",
+      "value": "5"
+     },
+     {
+      "text": "PortC",
+      "value": "25"
+     },
+     {
+      "text": "PortD",
+      "value": "27"
+     }
+    ]
+   }
+  },
+  {
+   "id": "ucMakeAiSensor",
+   "name": "AiSensor",
+   "colour": "#4C97FF",
+   "blocks": [
+    {
+     "opcode": "espSetAiMode",
+     "text": "Set AI vision module to [PIN] mode",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "AiDetectionMode",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "AiDetectionMode": {
+       "items": [
+        {
+         "text": "Camera",
+         "value": "1"
+        },
+        {
+         "text": "Trace Color",
+         "value": "2"
+        },
+        {
+         "text": "Color Learning",
+         "value": "3"
+        },
+        {
+         "text": "Scan Barcode",
+         "value": "4"
+        },
+        {
+         "text": "Scan QR Code",
+         "value": "5"
+        },
+        {
+         "text": "Scan AprilTag",
+         "value": "6"
+        },
+        {
+         "text": "Scan Data Matrices",
+         "value": "7"
+        },
+        {
+         "text": "Scan Road",
+         "value": "8"
+        },
+        {
+         "text": "Face Detecter",
+         "value": "9"
+        },
+        {
+         "text": "Face Recognizer",
+         "value": "10"
+        },
+        {
+         "text": "Face Mask Detecter",
+         "value": "11"
+        },
+        {
+         "text": "Object Detecter",
+         "value": "12"
+        },
+        {
+         "text": "Traffic Signs",
+         "value": "13"
+        },
+        {
+         "text": "Garbage Sorting",
+         "value": "14"
+        },
+        {
+         "text": "Ucmake",
+         "value": "15"
+        },
+        {
+         "text": "Gesture",
+         "value": "16"
+        },
+        {
+         "text": "Mnist",
+         "value": "17"
+        },
+        {
+         "text": "Animation",
+         "value": "18"
+        },
+        {
+         "text": "Picture",
+         "value": "19"
+        },
+        {
+         "text": "Music",
+         "value": "20"
+        },
+        {
+         "text": "Recoder",
+         "value": "21"
+        },
+        {
+         "text": "Self Learning",
+         "value": "22"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espWaitAiMode",
+     "text": "Waiting for AI vision module to change to [PIN] mode",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "string",
+       "menu": "AiDetectionMode",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "AiDetectionMode": {
+       "items": [
+        {
+         "text": "Camera",
+         "value": "1"
+        },
+        {
+         "text": "Trace Color",
+         "value": "2"
+        },
+        {
+         "text": "Color Learning",
+         "value": "3"
+        },
+        {
+         "text": "Scan Barcode",
+         "value": "4"
+        },
+        {
+         "text": "Scan QR Code",
+         "value": "5"
+        },
+        {
+         "text": "Scan AprilTag",
+         "value": "6"
+        },
+        {
+         "text": "Scan Data Matrices",
+         "value": "7"
+        },
+        {
+         "text": "Scan Road",
+         "value": "8"
+        },
+        {
+         "text": "Face Detecter",
+         "value": "9"
+        },
+        {
+         "text": "Face Recognizer",
+         "value": "10"
+        },
+        {
+         "text": "Face Mask Detecter",
+         "value": "11"
+        },
+        {
+         "text": "Object Detecter",
+         "value": "12"
+        },
+        {
+         "text": "Traffic Signs",
+         "value": "13"
+        },
+        {
+         "text": "Garbage Sorting",
+         "value": "14"
+        },
+        {
+         "text": "Ucmake",
+         "value": "15"
+        },
+        {
+         "text": "Gesture",
+         "value": "16"
+        },
+        {
+         "text": "Mnist",
+         "value": "17"
+        },
+        {
+         "text": "Animation",
+         "value": "18"
+        },
+        {
+         "text": "Picture",
+         "value": "19"
+        },
+        {
+         "text": "Music",
+         "value": "20"
+        },
+        {
+         "text": "Recoder",
+         "value": "21"
+        },
+        {
+         "text": "Self Learning",
+         "value": "22"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadCallback",
+     "text": "Read AI vision module data",
+     "blockType": "Boolean",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "espDvpLedSet",
+     "text": "Set AI vision module fill light [PIN]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiValueSwitch",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "AiValueSwitch": {
+       "items": [
+        {
+         "text": "Close",
+         "value": "0"
+        },
+        {
+         "text": "Open",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espSetAudioVolume",
+     "text": "AI visual module sets volume to [INDEX1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "75"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espSetPictureIndex",
+     "text": "AI Vision Module display image number [INDEX1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "0"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espSetAudioIndex",
+     "text": "AI Vision Module play audio number [INDEX1]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "0"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espDrawRect",
+     "text": "Draw rectangle at ([INDEX1], [INDEX2]) with length [INDEX4] and width [INDEX3]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "160"
+      },
+      {
+       "name": "INDEX2",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      },
+      {
+       "name": "INDEX3",
+       "type": "number",
+       "menu": null,
+       "default": "20"
+      },
+      {
+       "name": "INDEX4",
+       "type": "number",
+       "menu": null,
+       "default": "20"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espDrawCross",
+     "text": "Draw cross at ([INDEX1], [INDEX2]) with extension along [INDEX3]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "160"
+      },
+      {
+       "name": "INDEX2",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      },
+      {
+       "name": "INDEX3",
+       "type": "number",
+       "menu": null,
+       "default": "20"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espDrawCycle",
+     "text": "Draw circle at ([INDEX1],  [INDEX2]) with radius [INDEX3]",
+     "blockType": "command",
+     "args": [
+      {
+       "name": "INDEX1",
+       "type": "number",
+       "menu": null,
+       "default": "160"
+      },
+      {
+       "name": "INDEX2",
+       "type": "number",
+       "menu": null,
+       "default": "120"
+      },
+      {
+       "name": "INDEX3",
+       "type": "number",
+       "menu": null,
+       "default": "20"
+      }
+     ],
+     "menus": {}
+    },
+    {
+     "opcode": "espReadColorValue",
+     "text": "AI color recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiTraceColorIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiTraceColorIndex": {
+       "items": [
+        {
+         "text": "Red",
+         "value": "0"
+        },
+        {
+         "text": "Green",
+         "value": "1"
+        },
+        {
+         "text": "Blue",
+         "value": "2"
+        },
+        {
+         "text": "Yellow",
+         "value": "3"
+        },
+        {
+         "text": "Cyan",
+         "value": "4"
+        }
+       ]
+      },
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadDigitalValue",
+     "text": "AI digital recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionNumIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionNumIndex": {
+       "items": [
+        {
+         "text": "Num0",
+         "value": "0"
+        },
+        {
+         "text": "Num1",
+         "value": "1"
+        },
+        {
+         "text": "Num2",
+         "value": "2"
+        },
+        {
+         "text": "Num3",
+         "value": "3"
+        },
+        {
+         "text": "Num4",
+         "value": "4"
+        },
+        {
+         "text": "Num5",
+         "value": "5"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadBarcodeValue",
+     "text": "AI barcode recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionBarCodeIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionBarCodeIndex": {
+       "items": [
+        {
+         "text": "Num1",
+         "value": "0"
+        },
+        {
+         "text": "Num2",
+         "value": "1"
+        },
+        {
+         "text": "Num3",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadQrcodeValue",
+     "text": "AI qrcode recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionQrCodeIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionQrCodeIndex": {
+       "items": [
+        {
+         "text": "Num1",
+         "value": "0"
+        },
+        {
+         "text": "Num2",
+         "value": "1"
+        },
+        {
+         "text": "Num3",
+         "value": "2"
+        },
+        {
+         "text": "Num4",
+         "value": "3"
+        },
+        {
+         "text": "Num5",
+         "value": "4"
+        },
+        {
+         "text": "Num6",
+         "value": "5"
+        },
+        {
+         "text": "Num7",
+         "value": "6"
+        },
+        {
+         "text": "Num8",
+         "value": "7"
+        },
+        {
+         "text": "Num9",
+         "value": "8"
+        },
+        {
+         "text": "IITC",
+         "value": "9"
+        },
+        {
+         "text": "YAITEST",
+         "value": "10"
+        },
+        {
+         "text": "AI",
+         "value": "11"
+        },
+        {
+         "text": "IITC_CN",
+         "value": "12"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadApriltagValue",
+     "text": "AI apriltag recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionNumIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionNumIndex": {
+       "items": [
+        {
+         "text": "Num0",
+         "value": "0"
+        },
+        {
+         "text": "Num1",
+         "value": "1"
+        },
+        {
+         "text": "Num2",
+         "value": "2"
+        },
+        {
+         "text": "Num3",
+         "value": "3"
+        },
+        {
+         "text": "Num4",
+         "value": "4"
+        },
+        {
+         "text": "Num5",
+         "value": "5"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadDataMatricesValue",
+     "text": "AI datamatrices recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionQrCodeIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionQrCodeIndex": {
+       "items": [
+        {
+         "text": "Num1",
+         "value": "0"
+        },
+        {
+         "text": "Num2",
+         "value": "1"
+        },
+        {
+         "text": "Num3",
+         "value": "2"
+        },
+        {
+         "text": "Num4",
+         "value": "3"
+        },
+        {
+         "text": "Num5",
+         "value": "4"
+        },
+        {
+         "text": "Num6",
+         "value": "5"
+        },
+        {
+         "text": "Num7",
+         "value": "6"
+        },
+        {
+         "text": "Num8",
+         "value": "7"
+        },
+        {
+         "text": "Num9",
+         "value": "8"
+        },
+        {
+         "text": "IITC",
+         "value": "9"
+        },
+        {
+         "text": "YAITEST",
+         "value": "10"
+        },
+        {
+         "text": "AI",
+         "value": "11"
+        },
+        {
+         "text": "IITC_CN",
+         "value": "12"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadFaceDetecterValue",
+     "text": "AI face detecter [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionFaceDetecterIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionFaceDetecterIndex": {
+       "items": [
+        {
+         "text": "female",
+         "value": "0"
+        },
+        {
+         "text": "kid",
+         "value": "1"
+        },
+        {
+         "text": "man",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadFaceMaskValue",
+     "text": "AI mask recognition [PIN] Class  [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionMaskIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionMaskIndex": {
+       "items": [
+        {
+         "text": "Without Mask",
+         "value": "0"
+        },
+        {
+         "text": "With Mask",
+         "value": "1"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadFaceRecognitionValue",
+     "text": "AI face recognition [PIN] Class",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionFaceIndex",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "AiDetectionFaceIndex": {
+       "items": [
+        {
+         "text": "Face1",
+         "value": "0"
+        },
+        {
+         "text": "Face2",
+         "value": "1"
+        },
+        {
+         "text": "Face3",
+         "value": "2"
+        },
+        {
+         "text": "Face4",
+         "value": "3"
+        },
+        {
+         "text": "Face5",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadGarbageSortingValue",
+     "text": "AI garbage sorting recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectioGarbageSortingIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectioGarbageSortingIndex": {
+       "items": [
+        {
+         "text": "1.Recyclables:Clothing",
+         "value": "0"
+        },
+        {
+         "text": "2.Kitchen waste:BananaPeelings",
+         "value": "1"
+        },
+        {
+         "text": "2.Kitchen waste:BrokenBones",
+         "value": "5"
+        },
+        {
+         "text": "3.Hazardous waste:WasteBattery",
+         "value": "3"
+        },
+        {
+         "text": "4.Other waste:Basketball",
+         "value": "2"
+        },
+        {
+         "text": "4.Other waste:Toothbrush",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadGestureValue",
+     "text": "AI gesture recognition [PIN] Class",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionGestureIndex",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "AiDetectionGestureIndex": {
+       "items": [
+        {
+         "text": "Love",
+         "value": "0"
+        },
+        {
+         "text": "Fist",
+         "value": "1"
+        },
+        {
+         "text": "Five",
+         "value": "2"
+        },
+        {
+         "text": "Four",
+         "value": "3"
+        },
+        {
+         "text": "Gun",
+         "value": "4"
+        },
+        {
+         "text": "Heart",
+         "value": "5"
+        },
+        {
+         "text": "Nine",
+         "value": "6"
+        },
+        {
+         "text": "Ok",
+         "value": "7"
+        },
+        {
+         "text": "One",
+         "value": "8"
+        },
+        {
+         "text": "Pink",
+         "value": "9"
+        },
+        {
+         "text": "Six",
+         "value": "10"
+        },
+        {
+         "text": "Three",
+         "value": "11"
+        },
+        {
+         "text": "Thumb",
+         "value": "12"
+        },
+        {
+         "text": "Yeah",
+         "value": "13"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadObjectDetecterValue",
+     "text": "AI object detecter recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionObjectDetecterIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionObjectDetecterIndex": {
+       "items": [
+        {
+         "text": "Aeroplane",
+         "value": "0"
+        },
+        {
+         "text": "Bicycle",
+         "value": "1"
+        },
+        {
+         "text": "Bird",
+         "value": "2"
+        },
+        {
+         "text": "Boat",
+         "value": "3"
+        },
+        {
+         "text": "Bottle",
+         "value": "4"
+        },
+        {
+         "text": "Bus",
+         "value": "5"
+        },
+        {
+         "text": "Car",
+         "value": "6"
+        },
+        {
+         "text": "Cat",
+         "value": "7"
+        },
+        {
+         "text": "Chair",
+         "value": "8"
+        },
+        {
+         "text": "Cow",
+         "value": "9"
+        },
+        {
+         "text": "Diningtable",
+         "value": "10"
+        },
+        {
+         "text": "Dog",
+         "value": "11"
+        },
+        {
+         "text": "Horse",
+         "value": "12"
+        },
+        {
+         "text": "Motorbike",
+         "value": "13"
+        },
+        {
+         "text": "Person",
+         "value": "14"
+        },
+        {
+         "text": "Pottedplant",
+         "value": "15"
+        },
+        {
+         "text": "Sheep",
+         "value": "16"
+        },
+        {
+         "text": "Sofa",
+         "value": "17"
+        },
+        {
+         "text": "Train",
+         "value": "18"
+        },
+        {
+         "text": "Tvmonitor",
+         "value": "19"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadTrafficSignsValue",
+     "text": "AI traffic signs recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionTrafficSignsIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionTrafficSignsIndex": {
+       "items": [
+        {
+         "text": "Stop",
+         "value": "0"
+        },
+        {
+         "text": "Straight",
+         "value": "1"
+        },
+        {
+         "text": "Left",
+         "value": "2"
+        },
+        {
+         "text": "Parking",
+         "value": "3"
+        },
+        {
+         "text": "Right",
+         "value": "4"
+        },
+        {
+         "text": "U_Turn",
+         "value": "5"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadUCMakeValue",
+     "text": "AI ucmake recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionUcmakeIndex",
+       "default": "10"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiDetectionUcmakeIndex": {
+       "items": [
+        {
+         "text": "1.Daily Life:Bottles",
+         "value": "10"
+        },
+        {
+         "text": "1.Daily Life:PottedPlants",
+         "value": "2"
+        },
+        {
+         "text": "1.Daily Life:Bicycles",
+         "value": "9"
+        },
+        {
+         "text": "1.Daily Life:Cats",
+         "value": "8"
+        },
+        {
+         "text": "2.Artificial Intelligence:SpeechRecognition",
+         "value": "0"
+        },
+        {
+         "text": "2.Artificial Intelligence:TextTranslation",
+         "value": "4"
+        },
+        {
+         "text": "2.Artificial Intelligence:FaceRecognition",
+         "value": "1"
+        },
+        {
+         "text": "2.Artificial Intelligence:ObjectClassification",
+         "value": "5"
+        },
+        {
+         "text": "3.Aerospace:MannedSpacecraft",
+         "value": "11"
+        },
+        {
+         "text": "3.Aerospace:TiangongSpaceStation",
+         "value": "3"
+        },
+        {
+         "text": "3.Aerospace:Astronaut",
+         "value": "7"
+        },
+        {
+         "text": "3.Aerospace:EarthSatellite",
+         "value": "6"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadSelfLearningValue",
+     "text": "AI self learning recognition [PIN] Class",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionSelfLearningIndex",
+       "default": "0"
+      }
+     ],
+     "menus": {
+      "AiDetectionSelfLearningIndex": {
+       "items": [
+        {
+         "text": "Class1",
+         "value": "0"
+        },
+        {
+         "text": "Class2",
+         "value": "1"
+        },
+        {
+         "text": "Class3",
+         "value": "2"
+        },
+        {
+         "text": "Class4",
+         "value": "3"
+        },
+        {
+         "text": "Class5",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadColorLearningValue",
+     "text": "AI color learning recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiTraceColorLearningIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiTraceColorLearningIndex": {
+       "items": [
+        {
+         "text": "Color1",
+         "value": "0"
+        },
+        {
+         "text": "Color2",
+         "value": "1"
+        },
+        {
+         "text": "Color3",
+         "value": "2"
+        },
+        {
+         "text": "Color4",
+         "value": "3"
+        },
+        {
+         "text": "Color5",
+         "value": "4"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadSpeechRecognitionValue",
+     "text": "AI Vision Module Speech Recognition Keyword [PIN]",
+     "blockType": "Boolean",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiDetectionSpeechRecognitionIndex",
+       "default": "1"
+      }
+     ],
+     "menus": {
+      "AiDetectionSpeechRecognitionIndex": {
+       "items": [
+        {
+         "text": "Xiaoyou Student",
+         "value": "1"
+        },
+        {
+         "text": "Turn on the light",
+         "value": "2"
+        },
+        {
+         "text": "Turn off the light",
+         "value": "3"
+        },
+        {
+         "text": "Please open the door",
+         "value": "4"
+        },
+        {
+         "text": "Please close the door",
+         "value": "5"
+        },
+        {
+         "text": "Goodbye",
+         "value": "6"
+        },
+        {
+         "text": "Move forward",
+         "value": "7"
+        },
+        {
+         "text": "Move backward",
+         "value": "8"
+        },
+        {
+         "text": "Turn left",
+         "value": "9"
+        },
+        {
+         "text": "Turn right",
+         "value": "10"
+        },
+        {
+         "text": "Stop running",
+         "value": "11"
+        },
+        {
+         "text": "Start running",
+         "value": "12"
+        },
+        {
+         "text": "Turn on color light",
+         "value": "13"
+        },
+        {
+         "text": "Turn off color light",
+         "value": "14"
+        },
+        {
+         "text": "Red light on",
+         "value": "15"
+        },
+        {
+         "text": "Green light on",
+         "value": "16"
+        },
+        {
+         "text": "Blue light on",
+         "value": "17"
+        },
+        {
+         "text": "Yellow light on",
+         "value": "18"
+        },
+        {
+         "text": "Purple light on",
+         "value": "19"
+        },
+        {
+         "text": "Cyan light on",
+         "value": "20"
+        },
+        {
+         "text": "Motor 1 forward",
+         "value": "21"
+        },
+        {
+         "text": "Motor 2 forward",
+         "value": "22"
+        },
+        {
+         "text": "Motor 3 forward",
+         "value": "23"
+        },
+        {
+         "text": "Motor 4 forward",
+         "value": "24"
+        },
+        {
+         "text": "Motor 1 reverse",
+         "value": "25"
+        },
+        {
+         "text": "Motor 2 reverse",
+         "value": "26"
+        },
+        {
+         "text": "Motor 3 reverse",
+         "value": "27"
+        },
+        {
+         "text": "Motor 4 reverse",
+         "value": "28"
+        },
+        {
+         "text": "Motor 1 stop",
+         "value": "29"
+        },
+        {
+         "text": "Motor 2 stop",
+         "value": "30"
+        },
+        {
+         "text": "Motor 3 stop",
+         "value": "31"
+        },
+        {
+         "text": "Motor 4 stop",
+         "value": "32"
+        },
+        {
+         "text": "Faster",
+         "value": "33"
+        },
+        {
+         "text": "Slower",
+         "value": "34"
+        },
+        {
+         "text": "Dance",
+         "value": "35"
+        },
+        {
+         "text": "Sing",
+         "value": "36"
+        },
+        {
+         "text": "Who are you",
+         "value": "37"
+        },
+        {
+         "text": "Transform",
+         "value": "38"
+        },
+        {
+         "text": "Fire",
+         "value": "39"
+        },
+        {
+         "text": "Perform",
+         "value": "40"
+        },
+        {
+         "text": "Execute command 1",
+         "value": "41"
+        },
+        {
+         "text": "Execute command 2",
+         "value": "42"
+        },
+        {
+         "text": "Execute command 3",
+         "value": "43"
+        },
+        {
+         "text": "Execute command 4",
+         "value": "44"
+        },
+        {
+         "text": "Play music",
+         "value": "45"
+        },
+        {
+         "text": "Previous song",
+         "value": "46"
+        },
+        {
+         "text": "Next song",
+         "value": "47"
+        },
+        {
+         "text": "Volume up",
+         "value": "48"
+        },
+        {
+         "text": "Volume down",
+         "value": "49"
+        },
+        {
+         "text": "Pause playback",
+         "value": "50"
+        },
+        {
+         "text": "Timer 10 seconds",
+         "value": "51"
+        },
+        {
+         "text": "Timer 30 seconds",
+         "value": "52"
+        },
+        {
+         "text": "Timer 1 minute",
+         "value": "53"
+        },
+        {
+         "text": "Timer 2 minutes",
+         "value": "54"
+        },
+        {
+         "text": "Timer 5 minutes",
+         "value": "55"
+        },
+        {
+         "text": "Turn on voice",
+         "value": "56"
+        },
+        {
+         "text": "Turn off voice",
+         "value": "57"
+        }
+       ]
+      }
+     }
+    },
+    {
+     "opcode": "espReadRoadTurnAngleValue",
+     "text": "AI Vision Road Recognition",
+     "blockType": "reporter",
+     "args": [],
+     "menus": {}
+    },
+    {
+     "opcode": "espReadRoadColorValue",
+     "text": "AI road color  recognition [PIN] Class [INDEX]",
+     "blockType": "reporter",
+     "args": [
+      {
+       "name": "PIN",
+       "type": "number",
+       "menu": "AiTraceColorRoadIndex",
+       "default": "0"
+      },
+      {
+       "name": "INDEX",
+       "type": "string",
+       "menu": "AiDetectionReadValue",
+       "default": "probability"
+      }
+     ],
+     "menus": {
+      "AiDetectionReadValue": {
+       "items": [
+        {
+         "text": "probability",
+         "value": "probability"
+        },
+        {
+         "text": "X",
+         "value": "axis_x"
+        },
+        {
+         "text": "Y",
+         "value": "axis_y"
+        },
+        {
+         "text": "pixels",
+         "value": "pixels"
+        }
+       ]
+      },
+      "AiTraceColorRoadIndex": {
+       "items": [
+        {
+         "text": "Color1",
+         "value": "0"
+        },
+        {
+         "text": "Color2",
+         "value": "1"
+        },
+        {
+         "text": "Color3",
+         "value": "2"
+        }
+       ]
+      }
+     }
+    }
+   ],
+   "menus": {
+    "AiDetectionMode": [
+     {
+      "text": "Camera",
+      "value": "1"
+     },
+     {
+      "text": "Trace Color",
+      "value": "2"
+     },
+     {
+      "text": "Color Learning",
+      "value": "3"
+     },
+     {
+      "text": "Scan Barcode",
+      "value": "4"
+     },
+     {
+      "text": "Scan QR Code",
+      "value": "5"
+     },
+     {
+      "text": "Scan AprilTag",
+      "value": "6"
+     },
+     {
+      "text": "Scan Data Matrices",
+      "value": "7"
+     },
+     {
+      "text": "Scan Road",
+      "value": "8"
+     },
+     {
+      "text": "Face Detecter",
+      "value": "9"
+     },
+     {
+      "text": "Face Recognizer",
+      "value": "10"
+     },
+     {
+      "text": "Face Mask Detecter",
+      "value": "11"
+     },
+     {
+      "text": "Object Detecter",
+      "value": "12"
+     },
+     {
+      "text": "Traffic Signs",
+      "value": "13"
+     },
+     {
+      "text": "Garbage Sorting",
+      "value": "14"
+     },
+     {
+      "text": "Ucmake",
+      "value": "15"
+     },
+     {
+      "text": "Gesture",
+      "value": "16"
+     },
+     {
+      "text": "Mnist",
+      "value": "17"
+     },
+     {
+      "text": "Animation",
+      "value": "18"
+     },
+     {
+      "text": "Picture",
+      "value": "19"
+     },
+     {
+      "text": "Music",
+      "value": "20"
+     },
+     {
+      "text": "Recoder",
+      "value": "21"
+     },
+     {
+      "text": "Self Learning",
+      "value": "22"
+     }
+    ],
+    "AiTraceColorIndex": [
+     {
+      "text": "Red",
+      "value": "0"
+     },
+     {
+      "text": "Green",
+      "value": "1"
+     },
+     {
+      "text": "Blue",
+      "value": "2"
+     },
+     {
+      "text": "Yellow",
+      "value": "3"
+     },
+     {
+      "text": "Cyan",
+      "value": "4"
+     }
+    ],
+    "AiValueSwitch": [
+     {
+      "text": "Close",
+      "value": "0"
+     },
+     {
+      "text": "Open",
+      "value": "1"
+     }
+    ],
+    "AiTraceEnable": [
+     {
+      "text": "False",
+      "value": "0"
+     },
+     {
+      "text": "True",
+      "value": "1"
+     }
+    ],
+    "AiDetectionReadValue": [
+     {
+      "text": "probability",
+      "value": "probability"
+     },
+     {
+      "text": "X",
+      "value": "axis_x"
+     },
+     {
+      "text": "Y",
+      "value": "axis_y"
+     },
+     {
+      "text": "pixels",
+      "value": "pixels"
+     }
+    ],
+    "AiDetectionNumIndex": [
+     {
+      "text": "Num0",
+      "value": "0"
+     },
+     {
+      "text": "Num1",
+      "value": "1"
+     },
+     {
+      "text": "Num2",
+      "value": "2"
+     },
+     {
+      "text": "Num3",
+      "value": "3"
+     },
+     {
+      "text": "Num4",
+      "value": "4"
+     },
+     {
+      "text": "Num5",
+      "value": "5"
+     }
+    ],
+    "AiDetectionBarCodeIndex": [
+     {
+      "text": "Num1",
+      "value": "0"
+     },
+     {
+      "text": "Num2",
+      "value": "1"
+     },
+     {
+      "text": "Num3",
+      "value": "2"
+     }
+    ],
+    "AiDetectionQrCodeIndex": [
+     {
+      "text": "Num1",
+      "value": "0"
+     },
+     {
+      "text": "Num2",
+      "value": "1"
+     },
+     {
+      "text": "Num3",
+      "value": "2"
+     },
+     {
+      "text": "Num4",
+      "value": "3"
+     },
+     {
+      "text": "Num5",
+      "value": "4"
+     },
+     {
+      "text": "Num6",
+      "value": "5"
+     },
+     {
+      "text": "Num7",
+      "value": "6"
+     },
+     {
+      "text": "Num8",
+      "value": "7"
+     },
+     {
+      "text": "Num9",
+      "value": "8"
+     },
+     {
+      "text": "IITC",
+      "value": "9"
+     },
+     {
+      "text": "YAITEST",
+      "value": "10"
+     },
+     {
+      "text": "AI",
+      "value": "11"
+     },
+     {
+      "text": "IITC_CN",
+      "value": "12"
+     }
+    ],
+    "AiDetectionFaceDetecterIndex": [
+     {
+      "text": "female",
+      "value": "0"
+     },
+     {
+      "text": "kid",
+      "value": "1"
+     },
+     {
+      "text": "man",
+      "value": "2"
+     }
+    ],
+    "AiDetectionMaskIndex": [
+     {
+      "text": "Without Mask",
+      "value": "0"
+     },
+     {
+      "text": "With Mask",
+      "value": "1"
+     }
+    ],
+    "AiDetectionFaceIndex": [
+     {
+      "text": "Face1",
+      "value": "0"
+     },
+     {
+      "text": "Face2",
+      "value": "1"
+     },
+     {
+      "text": "Face3",
+      "value": "2"
+     },
+     {
+      "text": "Face4",
+      "value": "3"
+     },
+     {
+      "text": "Face5",
+      "value": "4"
+     }
+    ],
+    "AiDetectioGarbageSortingIndex": [
+     {
+      "text": "1.Recyclables:Clothing",
+      "value": "0"
+     },
+     {
+      "text": "2.Kitchen waste:BananaPeelings",
+      "value": "1"
+     },
+     {
+      "text": "2.Kitchen waste:BrokenBones",
+      "value": "5"
+     },
+     {
+      "text": "3.Hazardous waste:WasteBattery",
+      "value": "3"
+     },
+     {
+      "text": "4.Other waste:Basketball",
+      "value": "2"
+     },
+     {
+      "text": "4.Other waste:Toothbrush",
+      "value": "4"
+     }
+    ],
+    "AiDetectionGestureIndex": [
+     {
+      "text": "Love",
+      "value": "0"
+     },
+     {
+      "text": "Fist",
+      "value": "1"
+     },
+     {
+      "text": "Five",
+      "value": "2"
+     },
+     {
+      "text": "Four",
+      "value": "3"
+     },
+     {
+      "text": "Gun",
+      "value": "4"
+     },
+     {
+      "text": "Heart",
+      "value": "5"
+     },
+     {
+      "text": "Nine",
+      "value": "6"
+     },
+     {
+      "text": "Ok",
+      "value": "7"
+     },
+     {
+      "text": "One",
+      "value": "8"
+     },
+     {
+      "text": "Pink",
+      "value": "9"
+     },
+     {
+      "text": "Six",
+      "value": "10"
+     },
+     {
+      "text": "Three",
+      "value": "11"
+     },
+     {
+      "text": "Thumb",
+      "value": "12"
+     },
+     {
+      "text": "Yeah",
+      "value": "13"
+     }
+    ],
+    "AiDetectionObjectDetecterIndex": [
+     {
+      "text": "Aeroplane",
+      "value": "0"
+     },
+     {
+      "text": "Bicycle",
+      "value": "1"
+     },
+     {
+      "text": "Bird",
+      "value": "2"
+     },
+     {
+      "text": "Boat",
+      "value": "3"
+     },
+     {
+      "text": "Bottle",
+      "value": "4"
+     },
+     {
+      "text": "Bus",
+      "value": "5"
+     },
+     {
+      "text": "Car",
+      "value": "6"
+     },
+     {
+      "text": "Cat",
+      "value": "7"
+     },
+     {
+      "text": "Chair",
+      "value": "8"
+     },
+     {
+      "text": "Cow",
+      "value": "9"
+     },
+     {
+      "text": "Diningtable",
+      "value": "10"
+     },
+     {
+      "text": "Dog",
+      "value": "11"
+     },
+     {
+      "text": "Horse",
+      "value": "12"
+     },
+     {
+      "text": "Motorbike",
+      "value": "13"
+     },
+     {
+      "text": "Person",
+      "value": "14"
+     },
+     {
+      "text": "Pottedplant",
+      "value": "15"
+     },
+     {
+      "text": "Sheep",
+      "value": "16"
+     },
+     {
+      "text": "Sofa",
+      "value": "17"
+     },
+     {
+      "text": "Train",
+      "value": "18"
+     },
+     {
+      "text": "Tvmonitor",
+      "value": "19"
+     }
+    ],
+    "AiDetectionTrafficSignsIndex": [
+     {
+      "text": "Stop",
+      "value": "0"
+     },
+     {
+      "text": "Straight",
+      "value": "1"
+     },
+     {
+      "text": "Left",
+      "value": "2"
+     },
+     {
+      "text": "Parking",
+      "value": "3"
+     },
+     {
+      "text": "Right",
+      "value": "4"
+     },
+     {
+      "text": "U_Turn",
+      "value": "5"
+     }
+    ],
+    "AiDetectionUcmakeIndex": [
+     {
+      "text": "1.Daily Life:Bottles",
+      "value": "10"
+     },
+     {
+      "text": "1.Daily Life:PottedPlants",
+      "value": "2"
+     },
+     {
+      "text": "1.Daily Life:Bicycles",
+      "value": "9"
+     },
+     {
+      "text": "1.Daily Life:Cats",
+      "value": "8"
+     },
+     {
+      "text": "2.Artificial Intelligence:SpeechRecognition",
+      "value": "0"
+     },
+     {
+      "text": "2.Artificial Intelligence:TextTranslation",
+      "value": "4"
+     },
+     {
+      "text": "2.Artificial Intelligence:FaceRecognition",
+      "value": "1"
+     },
+     {
+      "text": "2.Artificial Intelligence:ObjectClassification",
+      "value": "5"
+     },
+     {
+      "text": "3.Aerospace:MannedSpacecraft",
+      "value": "11"
+     },
+     {
+      "text": "3.Aerospace:TiangongSpaceStation",
+      "value": "3"
+     },
+     {
+      "text": "3.Aerospace:Astronaut",
+      "value": "7"
+     },
+     {
+      "text": "3.Aerospace:EarthSatellite",
+      "value": "6"
+     }
+    ],
+    "AiDetectionSelfLearningIndex": [
+     {
+      "text": "Class1",
+      "value": "0"
+     },
+     {
+      "text": "Class2",
+      "value": "1"
+     },
+     {
+      "text": "Class3",
+      "value": "2"
+     },
+     {
+      "text": "Class4",
+      "value": "3"
+     },
+     {
+      "text": "Class5",
+      "value": "4"
+     }
+    ],
+    "AiTraceColorLearningIndex": [
+     {
+      "text": "Color1",
+      "value": "0"
+     },
+     {
+      "text": "Color2",
+      "value": "1"
+     },
+     {
+      "text": "Color3",
+      "value": "2"
+     },
+     {
+      "text": "Color4",
+      "value": "3"
+     },
+     {
+      "text": "Color5",
+      "value": "4"
+     }
+    ],
+    "AiDetectionSpeechRecognitionIndex": [
+     {
+      "text": "Xiaoyou Student",
+      "value": "1"
+     },
+     {
+      "text": "Turn on the light",
+      "value": "2"
+     },
+     {
+      "text": "Turn off the light",
+      "value": "3"
+     },
+     {
+      "text": "Please open the door",
+      "value": "4"
+     },
+     {
+      "text": "Please close the door",
+      "value": "5"
+     },
+     {
+      "text": "Goodbye",
+      "value": "6"
+     },
+     {
+      "text": "Move forward",
+      "value": "7"
+     },
+     {
+      "text": "Move backward",
+      "value": "8"
+     },
+     {
+      "text": "Turn left",
+      "value": "9"
+     },
+     {
+      "text": "Turn right",
+      "value": "10"
+     },
+     {
+      "text": "Stop running",
+      "value": "11"
+     },
+     {
+      "text": "Start running",
+      "value": "12"
+     },
+     {
+      "text": "Turn on color light",
+      "value": "13"
+     },
+     {
+      "text": "Turn off color light",
+      "value": "14"
+     },
+     {
+      "text": "Red light on",
+      "value": "15"
+     },
+     {
+      "text": "Green light on",
+      "value": "16"
+     },
+     {
+      "text": "Blue light on",
+      "value": "17"
+     },
+     {
+      "text": "Yellow light on",
+      "value": "18"
+     },
+     {
+      "text": "Purple light on",
+      "value": "19"
+     },
+     {
+      "text": "Cyan light on",
+      "value": "20"
+     },
+     {
+      "text": "Motor 1 forward",
+      "value": "21"
+     },
+     {
+      "text": "Motor 2 forward",
+      "value": "22"
+     },
+     {
+      "text": "Motor 3 forward",
+      "value": "23"
+     },
+     {
+      "text": "Motor 4 forward",
+      "value": "24"
+     },
+     {
+      "text": "Motor 1 reverse",
+      "value": "25"
+     },
+     {
+      "text": "Motor 2 reverse",
+      "value": "26"
+     },
+     {
+      "text": "Motor 3 reverse",
+      "value": "27"
+     },
+     {
+      "text": "Motor 4 reverse",
+      "value": "28"
+     },
+     {
+      "text": "Motor 1 stop",
+      "value": "29"
+     },
+     {
+      "text": "Motor 2 stop",
+      "value": "30"
+     },
+     {
+      "text": "Motor 3 stop",
+      "value": "31"
+     },
+     {
+      "text": "Motor 4 stop",
+      "value": "32"
+     },
+     {
+      "text": "Faster",
+      "value": "33"
+     },
+     {
+      "text": "Slower",
+      "value": "34"
+     },
+     {
+      "text": "Dance",
+      "value": "35"
+     },
+     {
+      "text": "Sing",
+      "value": "36"
+     },
+     {
+      "text": "Who are you",
+      "value": "37"
+     },
+     {
+      "text": "Transform",
+      "value": "38"
+     },
+     {
+      "text": "Fire",
+      "value": "39"
+     },
+     {
+      "text": "Perform",
+      "value": "40"
+     },
+     {
+      "text": "Execute command 1",
+      "value": "41"
+     },
+     {
+      "text": "Execute command 2",
+      "value": "42"
+     },
+     {
+      "text": "Execute command 3",
+      "value": "43"
+     },
+     {
+      "text": "Execute command 4",
+      "value": "44"
+     },
+     {
+      "text": "Play music",
+      "value": "45"
+     },
+     {
+      "text": "Previous song",
+      "value": "46"
+     },
+     {
+      "text": "Next song",
+      "value": "47"
+     },
+     {
+      "text": "Volume up",
+      "value": "48"
+     },
+     {
+      "text": "Volume down",
+      "value": "49"
+     },
+     {
+      "text": "Pause playback",
+      "value": "50"
+     },
+     {
+      "text": "Timer 10 seconds",
+      "value": "51"
+     },
+     {
+      "text": "Timer 30 seconds",
+      "value": "52"
+     },
+     {
+      "text": "Timer 1 minute",
+      "value": "53"
+     },
+     {
+      "text": "Timer 2 minutes",
+      "value": "54"
+     },
+     {
+      "text": "Timer 5 minutes",
+      "value": "55"
+     },
+     {
+      "text": "Turn on voice",
+      "value": "56"
+     },
+     {
+      "text": "Turn off voice",
+      "value": "57"
+     }
+    ],
+    "AiTraceColorRoadIndex": [
+     {
+      "text": "Color1",
+      "value": "0"
+     },
+     {
+      "text": "Color2",
+      "value": "1"
+     },
+     {
+      "text": "Color3",
+      "value": "2"
+     }
+    ]
+   }
+  }
+ ]
+}

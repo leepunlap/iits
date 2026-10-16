@@ -27,7 +27,12 @@ CLASSDIR=os.environ.get("IITS_CLASSDIR","/var/www/iits/classfiles"); LEVELS={"L1
 # "lessons" is built by the offline lesson generator and rsynced in, so no account may upload, rename
 # or delete inside it — otherwise a teacher could overwrite a generated page (or move a lesson dir) and
 # serve unreviewed HTML on the students' origin.
-READONLY_SECTIONS={"lessons"}
+# Generated content the portal serves but must never be edited through the file manager.
+# `ai` (AI 延伸課程) and `software` (軟件下載) are published by the build pipeline, exactly like
+# `lessons`. They were missing here until 2026-10-16: the UI hid the upload control for them, but
+# the API accepted upload/rename/delete anyway, so the restriction was presentation-layer only.
+# The build writes to disk directly and never calls this API, so nothing legitimate is blocked.
+READONLY_SECTIONS={"lessons","ai","software"}
 
 def secret():
     with open(SECRETF,"rb") as f: return f.read().strip()

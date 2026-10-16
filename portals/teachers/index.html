@@ -1,6 +1,11 @@
 <!doctype html><html lang="zh-Hant"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-store">
+<!-- Wonder Lab: where the lesson lab's assets are served from — manifest.json, lab-host.js, lab.css and the
+     content-hashed studio-<hex>/ folder the editor is. ONE declaration; the playground code and the shared host
+     module (src/wonderlab-src/src/lab-host.js) take it from here and nothing else hardcodes a path. A local test
+     tree overrides it by setting window.WL_LAB_BASE before this page's script runs. -->
+<meta name="wl-lab-base" content="/files/L4/lessons/assets/lab/">
 <title>教師專區 · 工信學堂 IITS</title>
 <style>
 /* icons (2026-10-07) */
@@ -107,6 +112,9 @@ body.pg-mode .wrap{padding:0;max-width:none}
         color:#4a5158;border-bottom:1px solid #eef0f6;background:#fbfcfe}
 .pg-bar .cnt{margin-left:auto;font-size:12px;color:#8a93a3}
 .pg-pane .empty{border:0;background:transparent;padding:18px 14px}
+/* where the editor goes: the host (lab-host.js) fills it with .wl-host > (.wl-sload + iframe.wl-sframe), styled by
+   the shared stylesheet, assets/lab/lab.css. This is only the playground's own box in its two-pane layout. */
+.pg-stage{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column}
 .pg-composer{display:flex;gap:8px;align-items:flex-end;flex:none;padding:9px 12px;border-top:1px solid #eef0f6}
 @media(max-width:1000px){
   .pg-wrap{height:100%}
@@ -173,6 +181,17 @@ table.tt td{vertical-align:middle}
 .mlist .frow{display:flex;align-items:center;gap:10px;padding:5px 14px;border-bottom:1px solid #f4f5fa;text-decoration:none;color:inherit}
 .mlist .frow:hover{background:#f4f7fc}.mlist .frow .nm{flex:1;font-size:12.5px;word-break:break-all;line-height:1.4}
 .mlist .frow .fdl{color:#3d5699;font-size:13px}
+/* upload row: only rendered for the two classroom sections (see SECS w:1) */
+.mlist .fup{display:flex;align-items:center;gap:9px;padding:9px 14px;border-bottom:1px solid #eef1f7;background:#fafbfd}
+.mlist .fup label{cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin:0}
+.mlist .fup .fupnote{font-size:12px;color:#5c6577;word-break:break-all}
+/* per-file rename/delete: ALWAYS visible (owner 2026-10-16). Hover-only hid the control until you
+   already knew it was there — no good for a teacher meeting this page for the first time. */
+.mlist .frow .fact{display:inline-flex;gap:2px}
+.mlist .frow .ficon{border:0;background:none;padding:3px;cursor:pointer;color:#8a93a3;line-height:0;border-radius:6px}
+.mlist .frow .ficon:hover{background:#eef1f7;color:#3d5699}
+.mlist .frow .ficon.del:hover{background:#fdecec;color:#c0392b}
+.mlist .frow .nm{color:inherit}
 .box.lib{flex:1}
 @media(min-width:1000px){
   body.fullh #view>.cp{height:100%}
@@ -281,7 +300,7 @@ td.ex .exb{display:block;width:100%;margin:0;padding:0;border:0;background:none;
 <dialog id="dlg"><div class="dl" id="dlgb"></div></dialog>
 <div id="toast"></div>
 <script>
-const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "maximize": "<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/> <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/> <path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/> <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>",
+const IC={"bot": "<path d=\"M12 8V4H8\"/> <rect width=\"16\" height=\"12\" x=\"4\" y=\"8\" rx=\"2\"/> <path d=\"M2 14h2\"/> <path d=\"M20 14h2\"/> <path d=\"M15 13v2\"/> <path d=\"M9 13v2\"/>", "download": "<path d=\"M12 15V3\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 10 5 5 5-5\"/>", "upload": "<path d=\"M12 3v12\"/> <path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/> <path d=\"m7 8 5-5 5 5\"/>", "trash-2": "<path d=\"M3 6h18\"/> <path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6\"/> <path d=\"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"/> <line x1=\"10\" x2=\"10\" y1=\"11\" y2=\"17\"/> <line x1=\"14\" x2=\"14\" y1=\"11\" y2=\"17\"/>", "book": "<path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20\"/>", "backpack": "<path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z\"/> <path d=\"M8 10h8\"/> <path d=\"M8 18h8\"/> <path d=\"M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6\"/> <path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"/>", "calendar-days": "<path d=\"M8 2v3\"/> <path d=\"M16 2v3\"/> <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/> <path d=\"M3 9h18\"/> <path d=\"M8 13h.01\"/> <path d=\"M12 13h.01\"/> <path d=\"M16 13h.01\"/> <path d=\"M8 17h.01\"/> <path d=\"M12 17h.01\"/> <path d=\"M16 17h.01\"/>", "user-round": "<circle cx=\"12\" cy=\"8\" r=\"5\"/> <path d=\"M20 21a8 8 0 0 0-16 0\"/>", "trophy": "<path d=\"M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2\"/> <path d=\"M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2\"/> <path d=\"M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3\"/> <path d=\"M4 22h16\"/> <path d=\"M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z\"/> <path d=\"M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3\"/>", "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>", "clock": "<circle cx=\"12\" cy=\"12\" r=\"10\"/> <path d=\"M12 6v6l4 2\"/>", "map-pin": "<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/> <circle cx=\"12\" cy=\"10\" r=\"3\"/>", "pencil": "<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/> <path d=\"m15 5 4 4\"/>", "folder": "<path d=\"M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z\"/>", "school": "<path d=\"M14 21v-3a2 2 0 0 0-4 0v3\"/> <path d=\"M18 4.933V21\"/> <path d=\"m4 6 7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/> <path d=\"m6 11-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11\"/> <path d=\"M6 4.933V21\"/> <circle cx=\"12\" cy=\"9\" r=\"2\"/>", "phone": "<path d=\"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384\"/>", "flask-conical": "<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/> <path d=\"M6.453 15h11.094\"/> <path d=\"M8.5 2h7\"/>", "play": "<path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\"/>", "square": "<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>", "rotate-ccw": "<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/> <path d=\"M3 3v5h5\"/>", "refresh-cw": "<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/> <path d=\"M21 3v5h-5\"/> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/> <path d=\"M8 16H3v5\"/>", "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/> <path d=\"M16 3.128a4 4 0 0 1 0 7.744\"/> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\"/> <circle cx=\"9\" cy=\"7\" r=\"4\"/>", "maximize": "<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/> <path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/> <path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/> <path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>",
   "minimize": "<path d=\"M8 3v3a2 2 0 0 1-2 2H3\"/> <path d=\"M21 8h-3a2 2 0 0 1-2-2V3\"/> <path d=\"M3 16h3a2 2 0 0 1 2 2v3\"/> <path d=\"M16 21v-3a2 2 0 0 1 2-2h3\"/>",
   "strand-build": "<path d=\"m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9\"/> <path d=\"m18 15 4-4\"/> <path d=\"m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5\"/>",
   "strand-motorize": "<circle cx=\"12\" cy=\"12\" r=\"3\"/> <path d=\"M12 2v3\"/> <path d=\"M12 19v3\"/> <path d=\"M2 12h3\"/> <path d=\"M19 12h3\"/> <path d=\"m4.9 4.9 2.1 2.1\"/> <path d=\"m17 17 2.1 2.1\"/> <path d=\"m19.1 4.9-2.1 2.1\"/> <path d=\"m7 17-2.1 2.1\"/>",
@@ -305,7 +324,7 @@ document.addEventListener('fullscreenchange',function(){
   fsPaint(document.querySelector('.pv'),$('pvfs'));fsPaint(document.querySelector('.wlv'),$('wlfs'));});  // single-colour Lucide icons (ISC), owner 2026-10-07: no emoji
 
 const LVC={L1:'#3d5699',L2:'#2f8f6b',L3:'#d9772e',L4:'#7c4dc4',yai:'#2ea052'};
-const SECS=[{k:'ai',ic:I('bot'),lb:'AI 延伸課程',nt:'師生皆可下載',c:'ai'},{k:'software',ic:I('download'),lb:'軟件下載',nt:'學生可下載',c:'sw'},{k:'teacher',ic:I('book'),lb:'教師專區',nt:'僅教師可見',c:'tea'},{k:'student',ic:I('backpack'),lb:'學生專區',nt:'學生可見',c:'stu'}];
+const SECS=[{k:'ai',ic:I('bot'),lb:'AI 延伸課程',nt:'師生皆可下載',c:'ai'},{k:'software',ic:I('download'),lb:'軟件下載',nt:'學生可下載',c:'sw'},{k:'teacher',ic:I('book'),lb:'教師專區',nt:'僅教師可見',c:'tea',w:1},{k:'student',ic:I('backpack'),lb:'學生專區',nt:'學生可見',c:'stu',w:1}];
 const WD='日一二三四五六';
 let ME=null,DATA=null,TEACHERS=null,CUR=null,SHOW_ARCH=false,CAL_LIST=[],CAL_M=null;
 const $=id=>document.getElementById(id);
@@ -389,15 +408,56 @@ function setUrl(h){if(location.hash!==h)history.replaceState(null,'',h);}
 function openSec(k){if(k&&SECS.some(x=>x.k===k)&&document.querySelector('.mtab'))mtab(k,true);}
 window.addEventListener('hashchange',route);
 
-/* ---------------- AI playground: Scratch blocks + AI builds them ---------------- */
-let PG={W:null,hist:[],load:null};
+/* ---------------- AI playground: Scratch blocks + AI builds them ----------------
+   The editor is the SAME Studio the L4 lesson pages mount, through the same module — wonderlab-src/src/lab-host.js,
+   which this folder serves as assets/lab/lab-host.js and (from the same source) inside assets/lab/lab.js. Where that
+   folder is comes from <meta name="wl-lab-base"> — see labBase(). Nothing in this file knows the path. */
+let PG={W:null,hist:[],load:null,host:null,js:null,man:null};
+function labBase(){
+  const set=((window.WL_LAB_BASE||'').trim()||((document.querySelector('meta[name="wl-lab-base"]')||{}).content||'').trim());
+  return set?(set.slice(-1)==='/'?set:set+'/'):'';
+}
+// The host, and the shared stylesheet it needs. The manifest names lab.css and carries the lab build's version hash
+// (manifest.css ends in "?v=<sha1 of lab.js+lab.css>"), which is also exactly when lab-host.js changes — so the script
+// is loaded with that version and a deploy cannot leave a stale host behind. The manifest is then handed to the host,
+// so it is still the host that reads what a manifest means, not this page.
+// The host is built from ONE source (wonderlab-src/src/lab-host.js) two ways: as lab-host.js on its own, and inside
+// lab.js, the lesson lab's bundle that every deploy of this folder already carries. Prefer the small file; fall back
+// to the bundle when this deploy predates it — lab.js's own lesson-page code returns at once on a page with no #chat,
+// and this is one.
+async function pgHost(base){
+  // Do NOT keep a rejected promise. PG.js is memoised for the life of the page, so caching a failure
+  // means one transient hiccup — a 404 while a deploy is mid-flight, a dropped request — leaves the
+  // playground permanently dead: pressing 遊樂場 again hands back the same rejected promise, and only
+  // a full reload clears it (an in-page hash nav does not). Drop the memo on failure so the next
+  // attempt genuinely retries.
+  if(!PG.js)PG.js=(async()=>{
+    const man=await (await fetch(base+'manifest.json',{cache:'no-cache',credentials:'same-origin'})).json();
+    PG.man=man;
+    const ver=(String(man.css||'').split('?v=')[1]||'');
+    if(man.css&&!document.querySelector('link[data-wl-css]')){
+      const l=document.createElement('link');l.rel='stylesheet';l.setAttribute('data-wl-css','1');l.href=base+man.css;document.head.appendChild(l);
+    }
+    if(!window.WonderLabHost)for(const f of ['lab-host.js','lab.js']){
+      try{await pgScript(base+f+(ver?'?v='+ver:''));}catch(e){continue;}
+      if(window.WonderLabHost)break;
+    }
+    if(!window.WonderLabHost)throw new Error('lab-host.js');
+    return window.WonderLabHost;
+  })().catch(err=>{PG.js=null;throw err;});   // a failure must not be memoised — see the note above
+  return PG.js;
+}
+function pgScript(src){
+  return new Promise((ok,bad)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>bad(new Error(src));document.head.appendChild(s);});
+}
 function viewPlayground(){
+  if(PG.host){try{PG.host.destroy();}catch(e){}PG.host=null;}
+  PG.W=null; PG.hist=[]; PG.load=null;
   $('view').innerHTML=`<div class="pg-wrap">
     <div class="pg-cols">
       <section class="pg-pane">
         <div class="pg-bar">${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></div>
-        <div id="pgStage" style="flex:1;min-height:0;position:relative"></div>
-        <div id="pgLoad" class="empty">正在載入積木編輯器…</div>
+        <div id="pgStage" class="pg-stage"></div>
       </section>
       <section class="pg-pane">
         <div class="pg-bar">${I('sparkles')} AI 學伴</div>
@@ -424,22 +484,14 @@ function pgRender(){
     <div style="background:${m.role==='user'?'#3d5699':'#fff'};color:${m.role==='user'?'#fff':'#10161d'};border:1px solid ${m.role==='user'?'#3d5699':'#e5e8f0'};border-radius:12px;padding:8px 11px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere">${esc(m.text)}</div></div>`).join('');
   log.scrollTop=log.scrollHeight;
 }
+// Mount and boot the Studio. The manifest, the content-hashed studio folder, the frame and WLStudio.boot() are
+// lab-host.js's job (the lesson lab mounts the editor through the very same module, from the very same file); what
+// is left here is what only the playground has — the throwaway lesson it opens on, and the full library.
 async function pgBoot(){
-  const BASE='/files/L4/lessons/assets/lab/';
+  const base=labBase();
+  if(!base){toast('未設定 Wonder Lab 路徑（meta wl-lab-base）。');return;}
   try{
-    // no-cache, like the lesson lab (lab.js): the manifest names the content-hashed studio folder, so
-    // a cached copy would keep pointing at an older editor after a deploy.
-    const man=await (await fetch(BASE+'manifest.json',{cache:'no-cache'})).json();
-    if(!man.studio){$('pgLoad').textContent='找不到積木編輯器（manifest 沒有 studio）。';return;}
-    const fr=document.createElement('iframe');
-    fr.id='pgFrame'; fr.title='積木編輯器'; fr.style.cssText='width:100%;height:100%;border:0';
-    fr.setAttribute('allow','microphone; autoplay');
-    const ready=new Promise((ok,bad)=>{fr.onload=ok;fr.onerror=function(){bad(new Error('frame'));};setTimeout(function(){bad(new Error('timeout'));},120000);});
-    fr.src=BASE+man.studio+(man.studio_page||'lab-frame.html');
-    $('pgStage').appendChild(fr);
-    await ready;
-    const W=fr.contentWindow&&fr.contentWindow.WLStudio;
-    if(!W||typeof W.boot!=='function'){$('pgLoad').textContent='積木編輯器未就緒。';return;}
+    const HOST=await pgHost(base);
     // No pre-populated sprites: the playground starts on an empty stage with one neutral backdrop.
     // Everything that appears on it is imported - by the AI from the UCMake library (340 actors),
     // or by hand from the editor's own picker. assetBase points at the library so that backdrop loads.
@@ -450,25 +502,31 @@ async function pgBoot(){
     // boxes grow with their content and the sprite/stage selectors end up below the fold. The view sets
     // it itself rather than trusting whatever switched to this view to have done it.
     document.body.classList.add('fullh');
+    PG.host=HOST.create({base:base,container:'#pgStage',manifest:PG.man,loadingText:'積木編輯器載入中…',
+      frame:{id:'pgFrame',title:'積木編輯器'}});
     // library: the playground gets the full actor / backdrop / costume / sound library (lessons keep
     // the curated suppression), now that /lab-library/ is public and the assets actually load.
-    await W.boot({lesson:lesson,assetBase:'/lab-library/a/',project:null,program:null,library:true,onEvent:function(){}});
-    PG.W=W; $('pgLoad').style.display='none';
-  }catch(e){ if($('pgLoad')) $('pgLoad').textContent='積木編輯器載入失敗，請重新載入這一頁。'; }
+    const r=await PG.host.boot(lesson,{assetBase:'/lab-library/a/',library:true});
+    PG.W=r.studio;
+  }catch(e){
+    if(!PG.host)toast('積木編輯器載入失敗，請重新載入這一頁。');   // the host reports its own failure in the pane
+  }
 }
 async function pgSend(){
   const inp=$('pgIn'),t=(inp.value||'').trim(); if(!t)return;
   if(PG.load){try{await PG.load;}catch(e){}}
-  if(!PG.W){toast('積木編輯器還未準備好。');return;}
+  if(!PG.W||!PG.host){toast('積木編輯器還未準備好。');return;}
   const btn=$('pgSend'); btn.disabled=true; btn.textContent='砌緊…';
   PG.hist.push({role:'user',text:t}); inp.value=''; pgRender();
   try{
-    const r=await fetch('/api/ai/lab/playground',{method:'POST',credentials:'same-origin',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({text:t,history:PG.hist.slice(-9,-1).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),
-                            program:PG.W.program()})});
-    const d=await r.json();
-    if(!d.ok){PG.hist.push({role:'assistant',text:'（無法回應：'+esc(d.reason||d.error||('HTTP '+r.status))+'）'});}
+    // the AI turn is this page's own: the endpoint and the payload differ from a lesson's (lab-host.js carries the
+    // transport, not the turn)
+    const r=await PG.host.send('/api/ai/lab/playground',{text:t,
+      history:PG.hist.slice(-9,-1).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),
+      program:PG.W.program()});
+    const d=r.data;
+    if(!d){PG.hist.push({role:'assistant',text:'（連線中斷，請再試一次。）'});}
+    else if(!d.ok){PG.hist.push({role:'assistant',text:'（無法回應：'+esc(d.reason||d.error||('HTTP '+r.status))+'）'});}
     else{
       const say=[d.say,d.question].filter(Boolean).join('\n');
       if(say)PG.hist.push({role:'assistant',text:say});
@@ -762,21 +820,93 @@ function viewLibrary(lv){
   document.body.classList.add('fullh');
   fileManager(lv,$('secs'));
 }
-/* teaching materials: download only (files are produced and published by the build pipeline, not uploaded here) */
+/* teaching materials: the pipeline-owned sections (ai/software) are download-only; the two classroom
+   sections also accept uploads (opened 2026-10-16). The upload POSTs the raw file body to
+   /api/fm/upload with class+section+name in the query, which is what the backend handler reads; the
+   backend does the real authorisation (realm=teacher + teacher_levels) and refuses `lessons` outright. */
 function fileManager(level,el){
   CUR=level;
   el.innerHTML=`<div class="mtabs">${SECS.map((x,i)=>`<button type="button" class="mtab ${x.c}${i?'':' on'}" data-a="mtab" data-v="${x.k}">${x.ic} ${x.lb} <span class="cnt" id="cnt-${x.k}"></span></button>`).join('')}</div>
-    ${SECS.map((x,i)=>`<div class="mlist${i?'':' on'}" id="list-${x.k}" data-note="${esc(x.nt)}"></div>`).join('')}`;
+    ${SECS.map((x,i)=>`<div class="mlist${i?'':' on'}" id="list-${x.k}" data-note="${esc(x.nt)}" data-w="${x.w||0}"></div>`).join('')}`;
   SECS.forEach(x=>load(x.k));
 }
 function fmt(b){return b>=1048576?(b/1048576).toFixed(1)+' MB':b>=1024?(b/1024).toFixed(0)+' KB':b+' B';}
+/* One file at a time; the server names/validates, and the list is re-read afterwards so the row shows
+   the size the server actually stored rather than what the browser guessed. */
+async function fmUpload(sec,inp){
+  const f=inp.files&&inp.files[0]; if(!f)return;
+  const bar=$('up-'+sec); const say=m=>{ if(bar)bar.textContent=m; };
+  say('上傳中… '+f.name);
+  try{
+    const r=await api('fm/upload?class='+encodeURIComponent(CUR)+'&section='+encodeURIComponent(sec)+'&name='+encodeURIComponent(f.name),
+      {method:'POST',body:f,headers:{'Content-Type':'application/octet-stream'}});
+    if(!r.ok){
+      let why='';try{why=(await r.json()).error||'';}catch(e){}
+      say('上傳失敗：'+fmWhy(why,r.status));
+      return;
+    }
+    say('已上傳：'+f.name);
+    inp.value='';
+    await load(sec);
+  }catch(e){ say('上傳中斷，請再試一次。'); }
+  finally{ setTimeout(()=>{const b=$('up-'+sec); if(b&&b.textContent.indexOf('上傳中')!==0)b.textContent='';},4000); }
+}
+/* the backend's error words, in the teacher's language */
+function fmWhy(why,status){
+  return why==='read-only'?'此區不可上傳。'
+       : why==='bad params'?'檔名或參數不合。'
+       : why==='not found'?'找不到這個檔案（可能已被刪除）。'
+       : why==='檔名已存在'?'已有同名檔案。'
+       : status===403?'你沒有此級別的權限。'
+       : '（'+status+'）';
+}
+/* Rename keeps the file in place; only the name travels, so the bytes are never re-uploaded. */
+async function fmRename(sec,name){
+  const next=prompt('重新命名為：',name); if(next===null)return;
+  const nn=next.trim(); if(!nn||nn===name)return;
+  const bar=$('up-'+sec); const say=m=>{ if(bar)bar.textContent=m; };
+  try{
+    const r=await api('fm/rename?class='+encodeURIComponent(CUR)+'&section='+encodeURIComponent(sec)
+      +'&name='+encodeURIComponent(name)+'&newname='+encodeURIComponent(nn),{method:'POST'});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){ say('改名失敗：'+fmWhy(j.error,r.status)); return; }
+    say('已改名：'+nn);
+    await load(sec);
+  }catch(e){ say('改名中斷，請再試一次。'); }
+}
+async function fmDelete(sec,name){
+  if(!confirm('刪除「'+name+'」？\n此動作無法復原。'))return;
+  const bar=$('up-'+sec); const say=m=>{ if(bar)bar.textContent=m; };
+  try{
+    const r=await api('fm/delete?class='+encodeURIComponent(CUR)+'&section='+encodeURIComponent(sec)
+      +'&name='+encodeURIComponent(name),{method:'POST'});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){ say('刪除失敗：'+fmWhy(j.error,r.status)); return; }
+    say('已刪除：'+name);
+    await load(sec);
+  }catch(e){ say('刪除中斷，請再試一次。'); }
+}
 async function load(sec){
   const el=$('list-'+sec),cnt=$('cnt-'+sec);if(!el)return;el.innerHTML='<div class="fempty">載入中…</div>';
   let r,j;try{r=await api('fm/list?class='+CUR+'&section='+sec);j=await r.json();}catch(e){el.innerHTML='<div class="fempty">載入失敗</div>';return;}
   if(!r.ok){el.innerHTML='<div class="fempty">你沒有此級別教材的權限。</div>';return;}
   const files=j.files||[];cnt.textContent=files.length;
-  el.innerHTML=`<div class="mnote">${esc(el.dataset.note)}</div>`+(files.length?files.map(f=>{const url='/files/'+CUR+'/'+sec+'/'+encodeURIComponent(f.name);
-    return `<a class="frow" href="${url}" target="_blank" rel="noopener"><span class="nm">${esc(f.name)}</span><span class="sz">${fmt(f.size)}</span><span class="fdl">${I('download')}</span></a>`;}).join(''):'<div class="fempty">尚無檔案</div>');
+  const canWrite=el.dataset.w==='1';
+  const up=canWrite?`<div class="fup">
+      <label class="btn sm" for="up-in-${sec}">${I('upload')} 上傳檔案</label>
+      <input id="up-in-${sec}" type="file" style="display:none" data-a="up" data-v="${sec}">
+      <span class="fupnote" id="up-${sec}"></span></div>`:'';
+  // The row is a div, not an <a>: a writable section puts <button>s in it, and a button inside an
+  // anchor is invalid HTML (and the click would fight the link). The name and the download glyph each
+  // carry the link instead, so the row still opens the file from either end.
+  el.innerHTML=`<div class="mnote">${esc(el.dataset.note)}</div>`+up+(files.length?files.map(f=>{
+    const url='/files/'+CUR+'/'+sec+'/'+encodeURIComponent(f.name);
+    const nm=esc(f.name), jq=nm.replace(/"/g,'&quot;');
+    const acts=canWrite?`<span class="fact">`+
+        `<button type="button" class="ficon" title="重新命名" aria-label="重新命名 ${jq}" data-a="fmrn" data-v="${sec}" data-n="${jq}">${I('pencil')}</button>`+
+        `<button type="button" class="ficon del" title="刪除" aria-label="刪除 ${jq}" data-a="fmdel" data-v="${sec}" data-n="${jq}">${I('trash-2')}</button></span>`:'';
+    return `<div class="frow"><a class="nm" href="${url}" target="_blank" rel="noopener">${nm}</a><span class="sz">${fmt(f.size)}</span>${acts}<a class="fdl" href="${url}" target="_blank" rel="noopener" aria-label="下載 ${jq}">${I('download')}</a></div>`;
+  }).join(''):'<div class="fempty">尚無檔案</div>');
 }
 function mtab(k,fromUrl){document.querySelectorAll('.mtab').forEach(b=>b.classList.toggle('on',b.dataset.v===k));
   document.querySelectorAll('.mlist').forEach(l=>l.classList.toggle('on',l.id==='list-'+k));
@@ -889,6 +1019,8 @@ function wlAll(on,b){
   wlAct({action:on?'start':'stop',users:'all'},j=>(on?'已開始整合：':'已停止整合：')+j.changed+' 人'+(on&&j.skipped_idle?'；'+j.skipped_idle+' 人今天未有嘗試，未開始整合':''),b);
 }
 document.addEventListener('change',e=>{
+  const up=e.target.closest&&e.target.closest('[data-a="up"]');
+  if(up){fmUpload(up.dataset.v,up);return;}
   if(e.target.id==='wlauto'){const v=e.target.checked;wlAct({auto:v},()=>v?'已開啟：學生達標時自動開始整合':'已關閉自動整合');}
   else if(e.target.id==='wlles'){WL.les=e.target.value;WL.d=null;setUrl('#wlab/'+encodeURIComponent(WL.cid)+'/'+WL.les);wlLoad();}
 });
@@ -899,6 +1031,8 @@ document.addEventListener('click',e=>{
   if(a==='new')editClass(null);else if(a==='edit')editClass(v);else if(a==='save')saveClass(v,b);else if(a==='gen')genDates();
   else if(a==='close')$('dlg').close();else if(a==='status')setStatus(v,b.dataset.s);else if(a==='copy')copyCode();
   else if(a==='mtab')mtab(v);
+  else if(a==='fmrn')fmRename(v,b.dataset.n);
+  else if(a==='fmdel')fmDelete(v,b.dataset.n);
   else if(a==='calp')calShift(-1);else if(a==='caln')calShift(1);else if(a==='calt'){CAL_M=iso(new Date()).slice(0,7);renderCal();}
   else if(a==='rotate')rotate(v);else if(a==='arch'){SHOW_ARCH=!SHOW_ARCH;setUrl('#classes'+(SHOW_ARCH?'/archived':''));viewClasses();}
   else if(a==='assign')assign(v);else if(a==='saveassign')saveAssign(v,b);

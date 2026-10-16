@@ -7,6 +7,7 @@ How the IITS web stack is put together and how to work on it.
 | [architecture.md](architecture.md) | The whole system: hosts, services, nginx routing, data stores, and the path a request takes from browser to lesson page. **Start here.** |
 | [backend.md](backend.md) | `checker.py` (login, sessions, the file gate) and `reg.py` (registration, classes, join codes, roles) — every endpoint. |
 | [lesson-ai.md](lesson-ai.md) | The Lesson AI 學伴 and **Wonder Lab**: the block-programming tutor, its pedagogy, its safety rails, and the analytics it records. |
+| [shared-copies.md](shared-copies.md) | Which copy of a duplicated lab/portal file is the source of truth, and `tools/check-shared-copies.sh`, the check that fails when one drifts. |
 
 Local, per-directory notes live next to the code:
 

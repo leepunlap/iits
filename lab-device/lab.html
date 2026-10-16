@@ -186,5 +186,16 @@
 
   window.__labReady = true;          // the page is wired up (used by the browser test)
 </script>
+<style>
+  /* Device verdict: the board is USB + Web Serial, so an iPad simply cannot do this lesson. */
+  .hw-notice{margin:10px 0;padding:9px 12px;border-radius:8px;font-size:14px;line-height:1.5}
+  .hw-notice.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+  .hw-notice.bad{background:#fff4e5;border:1px solid #ffcc80;color:#8a4b00}
+  .hw-notice .en{margin-top:4px;font-size:12px;opacity:.75}
+</style>
+<script type="module">
+import { hwSupport, applyHwNotice } from './hw-support.js';
+applyHwNotice(hwSupport());
+</script>
 </body>
 </html>

@@ -18,7 +18,7 @@ for _ in 1 2 3 4 5; do
   [ -f "$ROOT/local.env" ] && break
   ROOT="$(dirname "$ROOT")"
 done
-[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
+[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/src/iits/iits-local}"
 NUC="${1:-}"
 if [ -z "$NUC" ]; then
   for h in nuc nuc-ext; do ssh -o BatchMode=yes -o ConnectTimeout=6 "$h" true 2>/dev/null && { NUC="$h"; break; }; done

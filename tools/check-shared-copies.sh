@@ -65,7 +65,7 @@ for _ in 1 2 3 4 5; do
   [ -f "$ROOT/local.env" ] && break
   ROOT="$(dirname "$ROOT")"
 done
-[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/iits-local}"
+[ -f "$ROOT/local.env" ] || ROOT="${IITS_LOCAL_ROOT:-$HOME/src/iits/iits-local}"
 
 REPO="$ROOT/src/iits-repo"                   # the git repo: everything here is tracked unless noted
 FAIL=0

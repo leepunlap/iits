@@ -105,7 +105,13 @@ body.pg-mode .wrap{padding:0;max-width:none}
    the real chrome, so the editor over-committed and its sprite/stage selectors fell below the fold.
    body.fullh gives .wrap flex:1 and #view height:100%, so 100% is the honest number at any window size. */
 .pg-wrap{display:flex;flex-direction:column;min-height:0;height:100%}
-.pg-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);flex:1;min-height:0;background:#fff}
+/* 380px fixed, exactly as the L4 lesson page splits itself
+   (body{grid-template-columns:minmax(320px,1fr) 380px} -> #chat renders 368px).
+   This was minmax(280px,440px) and those 60px mattered: at 440 the right pane left the
+   Studio's iframe 1000px wide, under its layout breakpoint, so scratch-gui reflowed the
+   sprite selector from 330x399 to 162x526 and the sprite row plus its round paint /
+   add-sprite buttons fell off the bottom. Measured on both surfaces, not guessed. */
+.pg-cols{display:grid;grid-template-columns:minmax(0,1fr) 380px;flex:1;min-height:0;background:#fff}
 .pg-pane{display:flex;flex-direction:column;min-height:0;background:#fff;min-width:0}
 .pg-pane+.pg-pane{border-left:1px solid #e5e8f0}
 .pg-bar{display:flex;align-items:center;gap:8px;flex:none;padding:7px 12px;font-size:13px;
@@ -489,11 +495,9 @@ function viewPlayground(){
   $('view').innerHTML=`<div class="pg-wrap">
     <div class="pg-cols">
       <section class="pg-pane">
-        <div class="pg-bar">${I('blocks')} 積木編輯器 <span class="cnt" id="pgModel"></span></div>
         <div id="pgStage" class="pg-stage"></div>
       </section>
       <section class="pg-pane pg-chat">
-        <div class="pg-bar">${I('sparkles')} AI 學伴</div>
         <div class="chbody" id="pgLog"></div>
         <p class="chnote">AI 也會答錯，記得查證。不要輸入名字、電話等個人資料。對話會被記錄，用於了解學習需要。</p>
         <div class="pg-sacts"><label class="wl-animsw" id="pgAnimBox" hidden><input type="checkbox" id="pgAnim"><span>AI 改積木時播放動畫</span></label></div>

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "_doc": "Wonder Lab whitelist. Input types: num/pos/whole/int/angle (number slot), text, color (#rrggbb), bool (boolean slot, may be empty), stack (array of blocks), broadcast (message name), menu:<menuOpcode>:<FIELD>:<kind>. Field types: var, list, broadcast, key, costume, backdrop, or a list of allowed values. Menu kinds: obj_rm = sprite|_random_|_mouse_, obj_m = sprite|_mouse_, obj_me = sprite|_mouse_|_edge_, clone = sprite|_myself_, costume, backdrop, key, color_param.",
+  "_doc": "Wonder Lab whitelist. Input types: num/pos/whole/int/angle (number slot), text, color (#rrggbb), bool (boolean slot, may be empty), stack (array of blocks), broadcast (message name), menu:<menuOpcode>:<FIELD>:<kind>. Field types: var, list, broadcast, key, costume, backdrop, or a list of allowed values. Menu kinds: obj_rm = sprite|_random_|_mouse_, obj_m = sprite|_mouse_, obj_me = sprite|_mouse_|_edge_, clone = sprite|_myself_, costume, backdrop, sound, key, color_param. costume/backdrop/sound are checked against the LESSON's own names (per sprite for costume and sound), not a fixed list; '*' is accepted for sound only = any sound the lesson defines (the AI may not know the name).",
   "limits": {"blocks_per_script": 60, "scripts_per_sprite": 8, "blocks_total": 300, "depth": 6, "text_len": 40, "vars": 10, "lists": 4, "broadcasts": 8,
              "num_abs_max": 100000, "wait_max": 10, "repeat_max": 1000},
   "keys": ["space", "up arrow", "down arrow", "left arrow", "right arrow", "any",
@@ -78,6 +78,14 @@
     "sensing_mousey":          {"shape": "reporter"},
     "sensing_timer":           {"shape": "reporter"},
     "sensing_resettimer":      {"shape": "stack"},
+
+    "sound_play":              {"shape": "stack", "inputs": {"SOUND_MENU": "menu:sound_sounds_menu:SOUND_MENU:sound"}},
+    "sound_playuntildone":     {"shape": "stack", "inputs": {"SOUND_MENU": "menu:sound_sounds_menu:SOUND_MENU:sound"}},
+    "sound_stopallsounds":     {"shape": "stack"},
+    "sound_cleareffects":      {"shape": "stack"},
+    "sound_setvolumeto":       {"shape": "stack", "inputs": {"VOLUME": "num"}},
+    "sound_changevolumeby":    {"shape": "stack", "inputs": {"VOLUME": "num"}},
+    "sound_volume":            {"shape": "reporter"},
 
     "operator_add":            {"shape": "reporter", "inputs": {"NUM1": "num", "NUM2": "num"}},
     "operator_subtract":       {"shape": "reporter", "inputs": {"NUM1": "num", "NUM2": "num"}},

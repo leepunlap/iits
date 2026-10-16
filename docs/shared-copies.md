@@ -250,10 +250,10 @@ Sizes in bytes, md5 truncated to 8 hex digits. "git-tracked" is the repo the fil
 | `src/iits-repo/lab-device/blocks.json` | 99,081 | `544eebe0` | 2026-10-11 22:38 | yes (iits) | **SOURCE** |  |
 | `lab-hardware/blocks.json` | 99,081 | `544eebe0` | 2026-10-11 22:37 | no | deployed mirror |  |
 | `UCMake-re/lab-device/blocks.json` | 99,081 | `544eebe0` | 2026-10-14 13:53 | no | bench working copy |  |
-| `src/iits-repo/lab-device/core-opcodes.json` | 12,193 | `f7961b9c` | 2026-10-11 23:25 | yes (iits) | **SOURCE** |  |
-| `src/iits-repo/docs/core-opcodes.json` | 12,193 | `f7961b9c` | 2026-10-11 23:25 | yes (iits) | second in-repo copy |  |
-| `lab-hardware/core-opcodes.json` | 12,193 | `f7961b9c` | 2026-10-11 23:23 | no | deployed mirror |  |
-| `UCMake-re/lab-device/core-opcodes.json` | 12,193 | `f7961b9c` | 2026-10-14 13:53 | no | bench working copy |  |
+| `src/iits-repo/lab-device/core-opcodes.json` | 11,008 | `47ae91483e` | 2026-10-16 | yes (iits) | **SOURCE** (was the malformed 109 until 2026-10-16) |  |
+| `src/iits-repo/docs/core-opcodes.json` | 11,008 | `47ae91483e` | 2026-10-16 | yes (iits) | second in-repo copy |  |
+| `lab-hardware/core-opcodes.json` | 11,008 | `47ae91483e` | 2026-10-16 | no | deployed mirror |  |
+| `UCMake-re/lab-device/core-opcodes.json` | 11,008 | `47ae91483e` | 2026-10-16 | no | bench working copy |  |
 | `src/iits-repo/lab-device/visibility.json` | 2,191 | `13b91af5` | 2026-10-11 22:38 | yes (iits) | **SOURCE** |  |
 | `lab-hardware/visibility.json` | 2,191 | `13b91af5` | 2026-10-11 22:37 | no | deployed mirror |  |
 | `UCMake-re/lab-device/visibility.json` | 2,191 | `13b91af5` | 2026-10-14 13:53 | no | bench working copy |  |
@@ -297,7 +297,32 @@ Sizes in bytes, md5 truncated to 8 hex digits. "git-tracked" is the repo the fil
 | `/home/blee/wonderlab-src/src/lab.js` | 71,393 | `ea0f7f6c` | 2026-10-07 21:08 | STALE build source (`WONDERLAB_DIST` default target) |
 | `/home/blee/wonderlab-src/dist/lab.js` | 71,393 | `ea0f7f6c` | 2026-10-14 07:31 | STALE, and has no `lab-host.js` at all |
 | `/home/blee/wonderlab-studio/src/opcodes.json` | 10,957 | `ae06af5a` | 2026-10-09 09:35 | matches source |
-| `/home/blee/iits-repo/lab-device/{blocks,core-opcodes,visibility}.json`, `codegen.js` | — | `544eebe0`/`f7961b9c`/`13b91af5`/`7552e886` | 2026-10-11 | match source |
+| `/home/blee/iits-repo/lab-device/{blocks,core-opcodes,visibility}.json`, `codegen.js` | — | `544eebe0`/`47ae91483e`/`13b91af5`/`7552e886` | 2026-10-11 | match source |
 | `/home/blee/iits-repo/lab-device/{board,lab}.js` | 4,961 / 5,092 | `d94d80e2` / `987714f7` | 2026-10-11 22:38 | STALE — pre-`715a309` |
 | `/home/blee/iits-repo/lab-device/ucmake_cli.js` | 8,312 | `a03227e9` | 2026-10-11 22:38 | STALE — same file as `wonderlab-studio/src/ucmake/ucmake_cli.js` |
 | `/home/blee/iits-repo/lab-device/ucmind300.js` | — | — | — | ABSENT (added by `715a309`, never checked out there) |
+
+
+---
+
+## The 2026-10-16 whitelist correction
+
+`core-opcodes.json` was not merely stale — the 109-opcode variant it held used a **malformed
+schema**. `inputs` and `fields` are object maps to both consumers (`wonderlab.js:68,94` does
+`Object.keys(def.fields||{})`; `lab_core.py:567` does `(d.get("fields") or {}).items()`), but that
+variant wrote `"fields": ["VOLUME"]` — a list. Consequences, both reproduced against the real code:
+
+- **`lab_core.py` raises `AttributeError: 'list' object has no attribute 'items'`** → HTTP 500 on any
+  program using the block.
+- **the JS compiler silently drops the argument** — `sound_play` compiles to `inputs={}` with the
+  sound reference lost.
+
+The corrected file is the shipping 108 plus `sound_creareffects`'s sibling `sound_cleareffects`,
+built programmatically so the diff is one inserted line: **11,008 bytes, 109 opcodes, sha1
+`47ae91483e`**. It is now byte-identical across all 11 live copies.
+
+`tools/check-opcodes-drift.mjs` exists because `check-shared-copies.sh` **cannot** catch this class:
+it hashes each copy against its own chain's source, so it was green on both chains at once while they
+held incompatible whitelists — and it would still be green if every copy were byte-identical *and*
+malformed. The new check validates each copy against the consumer contract first, then asserts the
+canonical is a superset of every other copy.

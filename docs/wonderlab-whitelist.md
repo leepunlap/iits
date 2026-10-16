@@ -86,3 +86,73 @@ stays behind harmlessly.
 **After changing the whitelist, sync all four copies and rebuild** — do not patch the deployed file,
 because the next build overwrites it. `~/wonderlab-studio` is not a git repo, so that copy exists
 only on the NUC.
+
+# The fifth drift: two chains, and a schema that was wrong in one of them
+
+**Update 2026-10-16.** The list had drifted again, in two ways at once, and the copies that hashed
+clean were the ones hiding it.
+
+## There are two chains, not four copies
+
+| chain | source | copies |
+|---|---|---|
+| wonderlab | `wonderlab-src/src/opcodes.json` | `wonderlab-studio/src/`, `wonderlab-studio/server/lab_opcodes.json`, `portals/lesson-ai/lab_opcodes.json`, `ycltesthk-portals/lesson-ai/`, `service/`, `dist/engine-<hash>/`, `classfiles/…/engine-<hash>/` |
+| lab-hardware | `iits-repo/lab-device/core-opcodes.json` | `iits-repo/docs/`, `lab-hardware/`, `UCMake-re/lab-device/` |
+
+`tools/check-shared-copies.sh` hashes each copy against **its own chain's** source, so on 2026-10-16 it
+was passing on both chains at once while they held *incompatible* whitelists: 108 opcodes in the
+wonderlab chain, 109 in the lab-hardware chain. Both chains feed the same lab.
+
+## The two divergences
+
+1. **`sound_cleareffects` existed only in the 109 variant.** The lab-hardware chain had been patched
+   ahead of the wonderlab source, with a `_sound_note` saying so.
+2. **Six `sound_*` entries used a different SCHEMA.** The 109 variant wrote `"fields": ["VOLUME"]`
+   where the 108 variant wrote `"inputs": {"VOLUME": "num"}`. That is not a style difference. Both
+   consumers read `fields` as an **object map**:
+
+   - `wonderlab.js:94` — `Object.keys(def.fields || {})` on a list yields `['0']`, so the compiler
+     emits a field named `"0"` and **silently drops the real argument**. Measured: `sound_play` under
+     the 109 schema compiles to `inputs={} fields={"0":["",null]}` — the sound is not selected at all.
+   - `lab_core.py:567` — `(d.get("fields") or {}).items()` raises `AttributeError` on a non-empty list,
+     so the server validator returns HTTP 500 for any program using the block.
+
+   Four entries were fatal (`sound_play`, `sound_playuntildone`, `sound_setvolumeto`,
+   `sound_changevolumeby`); `"fields": []` on `sound_stopallsounds`, `sound_volume` and
+   `sound_cleareffects` was harmless noise, because an empty list is falsy in both languages.
+
+The authoritative schema is the one the consumers implement, and it is what `_doc` already said:
+`inputs` and `fields` are objects, `menu:<menuOpcode>:<FIELD>:<kind>` is an input *type*, and a field
+type may be a list of allowed values (`"STOP_OPTION": ["all", "this script", …]`) — that list is the
+field's *type*, never the field map itself. `shape`, `inputs`, `fields`, `ext` are the only keys a
+block entry may carry; anything else is read by nobody and silently ignored.
+
+## Corrected
+
+**109 opcodes** — the union, with the 108 schema throughout. `sound_cleareffects` is
+`{"shape": "stack"}` and nothing else, which is what `scratch-blocks/src/blocks/sound.ts` defines: no
+`input_value`, no `field_dropdown`. The two effect blocks (`sound_seteffectto`,
+`sound_changeeffectby`) are still absent from both variants and were **not** added — that is a
+lesson-facing decision, not a drift fix.
+
+## Checking it
+
+`tools/check-opcodes-drift.mjs` is the Rule VII check for this. It DISCOVERS every copy in the tree
+rather than trusting a list, validates each against the consumer contract above, and asserts the live
+copies are **semantically** identical (same opcodes, same schema, same limits/keys) across **both**
+chains — naming the opcode and the exact difference when they are not.
+
+```sh
+node src/iits-repo/tools/check-opcodes-drift.mjs            # exit 1 on drift; no network, no ssh
+node src/iits-repo/tools/check-opcodes-drift.mjs --list     # every copy, its role and its hash
+node src/iits-repo/tools/check-opcodes-drift.mjs --canonical PATH
+```
+
+Content-hashed build output (`classfiles/**`, `dist/**`, `*-<10hex>/`) is reported but never fails:
+an old `studio-<hash>/` is correct, not drift. The one exception is the engine dir `dist/engine.json`
+names, which is live and is checked.
+
+The hash check in `check-shared-copies.sh` is still worth running: it catches byte drift including in
+files that carry no JSON. This one catches what hashing cannot — two chains that agree only with
+themselves, and a malformed file that is byte-identical to every other copy.
+

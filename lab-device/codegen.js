@@ -56,8 +56,13 @@ export function generateBlock(table, spec) {
   const Arduino = makeArduino(block);
   // the extracted source is `function(e){…}` and references the namespace as `o.Arduino`
   const fn = new Function('o', `return ${entry.src};`)({ Arduino });
-  const statement = fn(block) || '';
-  return { statement, includes: Arduino.includes_, definitions: Arduino.definitions_,
+  // A COMMAND returns a string. A REPORTER returns [code, order] - Blockly's convention, and half
+  // the vendor's generators use it. Assuming a string died with "trim is not a function" on the
+  // first gamepad read, which is most of the competition model.
+  const raw = fn(block);
+  const isPair = Array.isArray(raw) && raw.length === 2 && typeof raw[1] === 'number';
+  const statement = isPair ? String(raw[0]) : (raw == null ? '' : String(raw));
+  return { statement, order: isPair ? raw[1] : null, reporter: isPair, includes: Arduino.includes_, definitions: Arduino.definitions_,
            setups: Arduino.setups_, loops: Arduino.loops_ };
 }
 
@@ -76,7 +81,9 @@ export function generateSketch(table, program, { title = 'Wonder Lab' } = {}) {
     for (const v of Object.values(r.includes)) includes.add(v);
     for (const v of Object.values(r.definitions)) definitions.add(v);
     for (const v of Object.values(r.setups)) setups.push(v);
-    if (r.statement.trim()) statements.push(r.statement.trim());
+    // a reporter is an expression, not an instruction: it only becomes code through something that
+    // consumes it, so it is never pushed as a statement on its own
+    if (!r.reporter && r.statement.trim()) statements.push(r.statement.trim());
   }
 
   const code = `/*

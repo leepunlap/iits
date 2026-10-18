@@ -1,10 +1,77 @@
 {
-  "open_from": "07:00",
-  "open_until": "21:00",
-  "per_lesson_hour": 10,
-  "per_lesson_day": 25,
-  "per_student_day": 60,
-  "global_day": 3000,
-  "max_question_chars": 200,
-  "history_turns": 6
+  "comment": "AI 學伴 configuration - supports multiple models with role-based limits",
+
+  "models": {
+    "deepseek-chat": {
+      "provider": "deepseek",
+      "display_name": "DeepSeek Chat",
+      "description": "快速回應，不顯示推理過程",
+      "api_url": "https://api.deepseek.com/chat/completions",
+      "enabled": true,
+      "default": true,
+      "params": {
+        "thinking": {"type": "disabled"}
+      },
+      "max_tokens": 900,
+      "temperature": 0.7,
+      "timeout_seconds": 28,
+      "student_limits": {
+        "per_lesson_hour": 10,
+        "per_lesson_day": 25,
+        "per_student_day": 60,
+        "max_question_chars": 200
+      },
+      "teacher_limits": null,
+      "cost_per_1k_tokens": 0.14
+    },
+
+    "deepseek-reasoner": {
+      "provider": "deepseek",
+      "display_name": "DeepSeek R1 (推理模式)",
+      "description": "深度推理，可顯示思考過程",
+      "api_url": "https://api.deepseek.com/chat/completions",
+      "enabled": true,
+      "default": false,
+      "params": {},
+      "max_tokens": 8000,
+      "temperature": 0.7,
+      "timeout_seconds": 60,
+      "student_limits": {
+        "per_lesson_hour": 3,
+        "per_lesson_day": 10,
+        "per_student_day": 20,
+        "max_question_chars": 300
+      },
+      "teacher_limits": null,
+      "cost_per_1k_tokens": 0.55,
+      "notes": "R1 has stricter limits due to higher cost and longer reasoning time"
+    }
+  },
+
+  "global_limits": {
+    "student_daily_total": 3000,
+    "teacher_daily_total": null,
+    "rate_limit_per_second": 10
+  },
+
+  "open_hours": {
+    "timezone": "Asia/Hong_Kong",
+    "weekday": ["07:00", "21:00"],
+    "weekend": ["08:00", "20:00"],
+    "holidays": []
+  },
+
+  "ui": {
+    "show_model_selector": true,
+    "show_thinking_toggle": true,
+    "show_usage_indicators": true,
+    "student_can_switch": true,
+    "teacher_shows_infinity": true
+  },
+
+  "audit": {
+    "log_all_requests": true,
+    "log_thinking_content": false,
+    "retention_days": 30
+  }
 }

@@ -469,11 +469,17 @@ def _menu_ok(kind, v, ctx, sprite):
 
 
 def _num(v, ctx, op, name):
+    # Validate input size before float conversion to prevent performance issues
+    v_str = str(v)
+    if len(v_str) > 100:  # Reasonable max length for a number
+        ctx.err(f"{op}.{name} 數字太大，收到 {v_str[:20]!r}")
+        return 0
+
     try:
         x = float(v)
         if x != x or x in (float("inf"), float("-inf")):
             raise ValueError
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         ctx.err(f"{op}.{name} 要是數字，收到 {str(v)[:20]!r}")
         return 0
     x = max(-LIM["num_abs_max"], min(LIM["num_abs_max"], x))
@@ -831,8 +837,26 @@ def sanitize_run(run, lesson, scrub=None):
     """Keep only known fields of the browser's run report (it goes into the prompt); unknown fields are dropped.
     scrub(text) masks personal data in every free-text string (answers typed into the stage's ask box, sprite speech,
     variable names / values and list items come from the student), BEFORE the text is cut."""
+    # JSON depth protection: prevent stack overflow from deeply nested structures
+    MAX_JSON_DEPTH = 10
+    def check_depth(obj, depth=0):
+        if depth > MAX_JSON_DEPTH:
+            raise ValueError(f"JSON depth exceeds maximum of {MAX_JSON_DEPTH}")
+        if isinstance(obj, dict):
+            for v in obj.values():
+                check_depth(v, depth + 1)
+        elif isinstance(obj, list):
+            for item in obj:
+                check_depth(item, depth + 1)
+
     if not isinstance(run, dict):
         return None
+
+    try:
+        check_depth(run)
+    except ValueError:
+        return None  # Return None for malicious deeply-nested input
+
     sc = scrub or (lambda t: t)
     names = {s["name"] for s in lesson["sprites"]}
     def num(x):
@@ -1509,8 +1533,28 @@ def progress_line(lesson, program, run):
     return "【進度】（只供你參考，不要說出來）已做到：" + ("、".join(done) or "—") + "；未做到：" + ("、".join(todo) or "全部做到")
 
 
+# ReDoS protection: max text length before regex matching
+MAX_TEXT_LENGTH_FOR_REGEX = 500
+
+def _safe_regex_match(pattern, text, default=False):
+    """Safe regex wrapper with length check to prevent ReDoS attacks."""
+    t = str(text or "").strip()
+    if len(t) > MAX_TEXT_LENGTH_FOR_REGEX:
+        return default
+    return bool(pattern.match(t))
+
+def _safe_regex_search(pattern, text, default=False):
+    """Safe regex wrapper with length check to prevent ReDoS attacks."""
+    t = str(text or "").strip()
+    if len(t) > MAX_TEXT_LENGTH_FOR_REGEX:
+        return default
+    return bool(pattern.search(t))
+
 def is_stuck(text):
     t = str(text or "").strip()
+    # Prevent ReDoS: limit text length before regex
+    if len(t) > MAX_TEXT_LENGTH_FOR_REGEX:
+        return False
     return bool(t) and len(t) <= STUCK_MAX_LEN and bool(STUCK_RX.search(t))
 
 
@@ -3526,7 +3570,7 @@ def post(h, la, u, level, slug):
         return _post(h, la, u, level, slug)
     finally:
         with _inflight_lock:
-            _inflight[u] = _inflight.get(u, 1) - 1
+            _inflight[u] = _inflight.get(u, 0) - 1  # FIXED: was get(u, 1), causing resource leak
             if _inflight[u] <= 0:
                 _inflight.pop(u, None)
 

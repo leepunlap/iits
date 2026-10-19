@@ -132,5 +132,49 @@ for (const [what, re] of [
 ])
   check(what, re);
 
+/* The radius ladder. The lesson pages, the Wonder Lab and this portal build from three files that cannot
+   see each other's CSS at runtime, so the ladder is copied into all three. It is only a ladder if the
+   copies are identical, so compare them, and then prove the ladder is actually used: anything rounded in
+   these files must be a rung, 0 (square) or 50% (a circle). A new literal px value fails here instead of
+   quietly becoming a seventh radius. */
+function wonderlabDir() {
+  const cands = [process.env.WONDERLAB_SRC, join(REPO, '..', 'wonderlab-src')].filter(Boolean);
+  for (const c of cands) {
+    try { readFileSync(join(c, 'src/lab.css')); return c; } catch {}
+  }
+  return null;
+}
+const WONDERLAB = wonderlabDir();
+if (!WONDERLAB) {
+  console.error('cannot find the Wonder Lab source (src/lab.css).\n'
+    + 'Set WONDERLAB_SRC to the folder holding src/, or keep wonderlab-src next to this repo.');
+  process.exit(2);
+}
+const LAB_CSS = join(WONDERLAB, 'src/lab.css');
+
+const ladder = (css) => {
+  const block = css.match(/:root\{[^}]*--r-2xs[^}]*\}/);
+  if (!block) return null;
+  return (block[0].match(/--r-[a-z0-9]+:[^;]+/g) || []).map((d) => d.replace(/\s+/g, '')).sort().join(' | ');
+};
+const sources = { 'lesson.css': lessonCss, 'lab.css': readFileSync(LAB_CSS, 'utf8'), 'teachers portal': portal };
+const rungs = Object.fromEntries(Object.entries(sources).map(([k, v]) => [k, ladder(v)]));
+const base = rungs['lesson.css'];
+check('the radius ladder is defined in all three files',
+  !!base && !!rungs['lab.css'] && !!rungs['teachers portal'],
+  Object.entries(rungs).filter(([, v]) => !v).map(([k]) => `no ladder in ${k}`).join('; '));
+for (const [name, value] of Object.entries(rungs)) {
+  check(`the ladder in ${name} matches lesson.css`, value === base,
+    value === base ? '' : `${name}: ${value}\n      lesson: ${base}`);
+}
+
+for (const [name, css] of Object.entries(sources)) {
+  const literals = [...css.matchAll(/border-radius:\s*([^;}]+)/g)]
+    .flatMap((m) => m[1].trim().split(/\s+/))
+    .filter((v) => v && v !== '0' && v !== '50%' && !v.startsWith('var(--r-'));
+  check(`every radius in ${name} is a rung of the ladder`, literals.length === 0,
+    `literal: ${[...new Set(literals)].join(', ')}`);
+}
+
 console.log(failures ? `\n${failures} check(s) failed` : '\nthe pane mirror matches the lesson source');
 process.exit(failures ? 1 : 0);

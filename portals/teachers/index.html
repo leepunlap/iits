@@ -137,6 +137,8 @@ body.pg-mode .wrap{padding:0;max-width:none}
 /* where the editor goes: the host (lab-host.js) fills it with .wl-host > (.wl-sload + iframe.wl-sframe), styled by
    the shared stylesheet, assets/lab/lab.css. This is only the playground's own box in its two-pane layout. */
 .pg-stage{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column}
+/* the standalone playground's frame: it is the whole pane, so it must own both axes */
+.pg-app{flex:1;min-height:0;min-width:0;width:100%;height:100%;border:0;display:block;background:#fff}
 /* ---- AI 學伴 pane: the L4 lesson lab's conversation pane, without the lesson ----
    MIRROR of the pane block in src/iits-lessons-build/assets_src/lesson.css (the one stylesheet all four
    levels' lesson pages load: .chbody / .msg / .chnote / .chform, lesson.css lines 195-213). Values are
@@ -463,157 +465,61 @@ function setUrl(h){if(location.hash!==h)history.replaceState(null,'',h);}
 function openSec(k){if(k&&SECS.some(x=>x.k===k)&&document.querySelector('.mtab'))mtab(k,true);}
 window.addEventListener('hashchange',route);
 
-/* ---------------- AI playground: Scratch blocks + AI builds them ----------------
-   The editor is the SAME Studio the L4 lesson pages mount, through the same module — wonderlab-src/src/lab-host.js,
-   which this folder serves as assets/lab/lab-host.js and (from the same source) inside assets/lab/lab.js. Where that
-   folder is comes from <meta name="wl-lab-base"> — see labBase(). Nothing in this file knows the path. */
-let PG={W:null,hist:[],load:null,host:null,js:null,man:null};
+/* ---------------- AI playground: the standalone Studio, guide included ----------------
+   This view is the Studio's OWN page — src/index.html in wonderlab-studio, packaged by
+   tools/build_playground.mjs as playground-<hash>/ — mounted here in an iframe.
+
+   It was not always so, and that was the bug: this view used to mount the LESSON shell
+   (lab-frame.html, through lab-host.js) and hand it a throwaway lesson. The 指南 tab, its
+   demonstrations (studio-guide*.js), the voice and the model pill were written for the standalone
+   page and were never part of that build, so the teachers' playground showed an editor with no
+   tutorial at all — the work existed, the mount did not.
+
+   Where the lab folder is comes from <meta name="wl-lab-base"> (see labBase()); the package's
+   content-hashed name comes from the manifest's "playground" key, exactly as "studio" names the
+   lesson shell. Nothing in this file knows either path. */
+let PG={frame:null,base:''};
 function labBase(){
   const set=((window.WL_LAB_BASE||'').trim()||((document.querySelector('meta[name="wl-lab-base"]')||{}).content||'').trim());
   return set?(set.slice(-1)==='/'?set:set+'/'):'';
 }
-// The host, and the shared stylesheet it needs. The manifest names lab.css and carries the lab build's version hash
-// (manifest.css ends in "?v=<sha1 of lab.js+lab.css>"), which is also exactly when lab-host.js changes — so the script
-// is loaded with that version and a deploy cannot leave a stale host behind. The manifest is then handed to the host,
-// so it is still the host that reads what a manifest means, not this page.
-// The host is built from ONE source (wonderlab-src/src/lab-host.js) two ways: as lab-host.js on its own, and inside
-// lab.js, the lesson lab's bundle that every deploy of this folder already carries. Prefer the small file; fall back
-// to the bundle when this deploy predates it — lab.js's own lesson-page code returns at once on a page with no #chat,
-// and this is one.
-async function pgHost(base){
-  // Do NOT keep a rejected promise. PG.js is memoised for the life of the page, so caching a failure
-  // means one transient hiccup — a 404 while a deploy is mid-flight, a dropped request — leaves the
-  // playground permanently dead: pressing 遊樂場 again hands back the same rejected promise, and only
-  // a full reload clears it (an in-page hash nav does not). Drop the memo on failure so the next
-  // attempt genuinely retries.
-  if(!PG.js)PG.js=(async()=>{
-    const man=await (await fetch(base+'manifest.json',{cache:'no-cache',credentials:'same-origin'})).json();
-    PG.man=man;
-    const ver=(String(man.css||'').split('?v=')[1]||'');
-    if(man.css&&!document.querySelector('link[data-wl-css]')){
-      const l=document.createElement('link');l.rel='stylesheet';l.setAttribute('data-wl-css','1');l.href=base+man.css;document.head.appendChild(l);
-    }
-    if(!window.WonderLabHost)for(const f of ['lab-host.js','lab.js']){
-      try{await pgScript(base+f+(ver?'?v='+ver:''));}catch(e){continue;}
-      if(window.WonderLabHost)break;
-    }
-    if(!window.WonderLabHost)throw new Error('lab-host.js');
-    return window.WonderLabHost;
-  })().catch(err=>{PG.js=null;throw err;});   // a failure must not be memoised — see the note above
-  return PG.js;
+// One line of explanation in the middle of the box, for the cases where the package is not there.
+// It is removed the moment the frame loads: a playground that has its editor does not want a caption.
+function pgNote(text){
+  const box=$('pgStage'); if(!box)return;
+  let n=$('pgNote');
+  if(!text){if(n)n.remove();return;}
+  if(!n){n=document.createElement('p');n.id='pgNote';n.style.cssText='margin:0;padding:18px 20px;color:#4a5158;font-size:14px';box.appendChild(n);}
+  n.textContent=text;
 }
-function pgScript(src){
-  return new Promise((ok,bad)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>bad(new Error(src));document.head.appendChild(s);});
+async function pgMount(){
+  const base=labBase();
+  if(!base){pgNote('未設定 Wonder Lab 路徑（meta wl-lab-base）。');return;}
+  let man;
+  try{man=await (await fetch(base+'manifest.json',{cache:'no-cache',credentials:'same-origin'})).json();}
+  catch(e){pgNote('遊樂場載入失敗，請重新載入這一頁。');return;}
+  let dir=man&&man.playground;
+  if(typeof dir!=='string'||!/^playground-[0-9a-f]+\/?$/.test(dir)){
+    pgNote('這個部署還沒有遊樂場套件（manifest 沒有 playground）。');
+    return;
+  }
+  if(dir.slice(-1)!=='/')dir+='/';
+  const f=PG.frame; if(!f)return;
+  // the listener goes on BEFORE the src: a frame that loads from cache fires load in the same tick
+  f.addEventListener('load',()=>pgNote(''),{once:true});
+  // ?api= — a playground turn and a lesson turn are different routes, and the page is the same page.
+  f.src=base+dir+'index.html?api=/api/ai/lab/playground';
 }
 function viewPlayground(){
-  if(PG.host){try{PG.host.destroy();}catch(e){}PG.host=null;}
-  PG.W=null; PG.hist=[]; PG.load=null;
   $('view').innerHTML=`<div class="pg-wrap">
-    <div class="pg-cols">
-      <section class="pg-pane">
-        <div id="pgStage" class="pg-stage"></div>
-      </section>
-      <section class="pg-pane pg-chat">
-        <div class="chbody" id="pgLog"></div>
-        <p class="chnote">AI 也會答錯，記得查證。不要輸入名字、電話等個人資料。對話會被記錄，用於了解學習需要。</p>
-        <div class="pg-sacts"><label class="wl-animsw" id="pgAnimBox" hidden><input type="checkbox" id="pgAnim"><span>AI 改積木時播放動畫</span></label></div>
-        <form class="chform" id="pgForm"><textarea id="pgIn" rows="2" placeholder="講出你想舞台上發生的事。"></textarea>
-          <button type="submit" id="pgSend">傳送</button></form>
-      </section>
-    </div>
+    <section class="pg-pane" id="pgStage" style="flex:1">
+      <iframe id="pgFrame" class="pg-app" title="遊樂場" allow="autoplay; microphone; clipboard-write"></iframe>
+    </section>
   </div>`;
   document.body.classList.add('fullh','pg-mode');
-  PG.W=null; PG.hist=[]; PG.load=null;
-  pgRender();
-  $('pgForm').addEventListener('submit',e=>{e.preventDefault();pgSend();});
-  // Enter sends, Shift+Enter breaks the line — the lesson pane's binding (assets_src/chat.js).
-  $('pgIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();pgSend();}});
-  $('pgAnim').addEventListener('change',()=>{if(PG.W&&PG.W.setAnim)PG.W.setAnim($('pgAnim').checked);pgAnim();});
-  PG.load=pgBoot();
-}
-/* 「AI 改積木時播放動畫」 — the lesson lab's own switch, not a copy of it: lab.js builds the same
-   <label class="wl-animsw"> and the LOOK comes from the shared lab.css the playground already loads
-   through the lab manifest. In the lesson it lives in .wl-sacts next to the 助教 button and is hidden
-   outside lab mode (lab.css:199); the playground has no modes and is always "the AI builds", so it only
-   needs the studio's own answer to whether the animation is available. The preference itself is the
-   Studio's (WLAnim.setEnabled via ST.setAnim) — the playground keeps no second copy of it. */
-function pgAnim(){
-  const box=$('pgAnimBox'), cb=$('pgAnim'); if(!box||!cb)return;
-  const a=(PG.W&&PG.W.anim)?PG.W.anim():{available:false,enabled:false};
-  box.hidden=!a.available; cb.checked=!!a.enabled;
-}
-/* One message bubble — the lesson pane's add() (assets_src/chat.js): same classes ('msg me|bot|sys',
-   'bot wait' while thinking), same scroll-to-bottom, and a returned node so a waiting bubble can be removed.
-   textContent, so nothing the AI or the server sends is ever parsed as markup. */
-function pgAdd(cls,text){
-  const log=$('pgLog'); if(!log)return null;
-  const d=document.createElement('div'); d.className='msg '+cls; d.textContent=text;
-  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
-}
-function pgRender(){
-  const log=$('pgLog'); if(!log)return;
-  log.innerHTML='';
-  if(!PG.hist.length){const h=document.createElement('div');h.className='empty';h.textContent='Enter 傳送，Shift+Enter 換行。';log.appendChild(h);return;}
-  PG.hist.forEach(m=>pgAdd(m.role==='user'?'me':m.role==='sys'?'sys':'bot',m.text));
-}
-// Mount and boot the Studio. The manifest, the content-hashed studio folder, the frame and WLStudio.boot() are
-// lab-host.js's job (the lesson lab mounts the editor through the very same module, from the very same file); what
-// is left here is what only the playground has — the throwaway lesson it opens on, and the full library.
-async function pgBoot(){
-  const base=labBase();
-  if(!base){toast('未設定 Wonder Lab 路徑（meta wl-lab-base）。');return;}
-  try{
-    const HOST=await pgHost(base);
-    // No pre-populated sprites: the playground starts on an empty stage with one neutral backdrop.
-    // Everything that appears on it is imported - by the AI from the UCMake library (340 actors),
-    // or by hand from the editor's own picker. assetBase points at the library so that backdrop loads.
-    const lesson={title:'遊樂場', opening:'想在舞台上做甚麼？講出來，我幫你砌積木。', sprites:[],
-      stage:{backdrops:[{assetId:'e7c147730f19d284bcd7b3f00af19bb6', name:'Blue Sky', ext:'svg', cx:240, cy:180, res:1}]}};
-    // body.fullh is what sizes the whole chain (flex column -> .wrap flex:1 -> #view 100% -> .pg-wrap
-    // 100%). Without it every height:100% below resolves against an auto-height parent, the editor's
-    // boxes grow with their content and the sprite/stage selectors end up below the fold. The view sets
-    // it itself rather than trusting whatever switched to this view to have done it.
-    document.body.classList.add('fullh');
-    PG.host=HOST.create({base:base,container:'#pgStage',manifest:PG.man,loadingText:'積木編輯器載入中…',
-      frame:{id:'pgFrame',title:'積木編輯器'}});
-    // library: the playground gets the full actor / backdrop / costume / sound library (lessons keep
-    // the curated suppression), now that /lab-library/ is public and the assets actually load.
-    const r=await PG.host.boot(lesson,{assetBase:'/lab-library/a/',library:true});
-    PG.W=r.studio; pgAnim();      // the studio is up: show its animation preference on the switch
-  }catch(e){
-    if(!PG.host)toast('積木編輯器載入失敗，請重新載入這一頁。');   // the host reports its own failure in the pane
-  }
-}
-async function pgSend(){
-  const inp=$('pgIn'),t=(inp.value||'').trim(); if(!t||inp.disabled)return;
-  if(PG.load){try{await PG.load;}catch(e){}}
-  if(!PG.W||!PG.host){toast('積木編輯器還未準備好。');return;}
-  const btn=$('pgSend');
-  // What the endpoint is sent is the conversation only: the lesson pane keeps its notices out of hist too, and
-  // the turn being asked about is excluded from the history it carries.
-  const convo=()=>PG.hist.filter(m=>m.role!=='sys').map(m=>({role:m.role==='user'?'user':'assistant',content:m.text}));
-  inp.value=''; PG.hist.push({role:'user',text:t}); pgRender();
-  const wait=pgAdd('bot wait','想一想…');     // the lesson pane's waiting bubble, removed when the turn lands
-  btn.disabled=inp.disabled=true;
-  try{
-    // the AI turn is this page's own: the endpoint and the payload differ from a lesson's (lab-host.js carries the
-    // transport, not the turn)
-    const r=await PG.host.send('/api/ai/lab/playground',{text:t,history:convo().slice(-9,-1),program:PG.W.program()});
-    const d=r.data; wait.remove();
-    if(!d){PG.hist.push({role:'sys',text:'連線中斷，請再試一次。'});}
-    else if(!d.ok){PG.hist.push({role:'sys',text:'無法回應：'+(d.reason||d.error||('HTTP '+r.status))});}
-    else{
-      const say=[d.say,d.question].filter(Boolean).join('\n');
-      if(say)PG.hist.push({role:'assistant',text:say});
-      const m=$('pgModel'); if(m)m.textContent=(d.model||'')+(d.ms?' · '+(d.ms/1000).toFixed(1)+'s':'');
-      if((d.ops||[]).length){
-        const res=await PG.W.apply(d,{animate:true,maxMs:20000});
-        if(res&&res.skipped)PG.hist.push({role:'sys',text:'有 '+res.skipped+' 個改動未能套用。'});
-      }
-    }
-  }catch(e){wait.remove();PG.hist.push({role:'sys',text:'連線中斷，請再試一次。'});}
-  btn.disabled=inp.disabled=false; try{inp.focus();}catch(e){}
-  pgRender();
+  PG.frame=$('pgFrame');
+  pgNote('遊樂場載入中…');
+  pgMount();
 }
 
 /* ---------------- classes ---------------- */

@@ -680,9 +680,9 @@
     'guide.scripts.sub': 'Where you build programs',
     'guide.scripts.intro': 'The Scripts area is where you stack blocks. This chapter covers keeping it tidy.',
     'guide.scripts.sc1.title': 'The Scripts area: blocks stacked together',
-    'guide.scripts.sc1.body': 'The empty space in the middle is the Scripts area. Drag a block from the palette on the left, then drag a second one onto it; they click together into a script. To delete, drag a block back to the palette; to duplicate, right-click and choose Duplicate, or hold Alt/Option and drag a copy.',
-    'guide.scripts.sc2.title': 'Comments: notes to yourself',
-    'guide.scripts.sc2.body': 'Right-click a block or empty space to add a comment. A comment never runs; it records what you were thinking so you or a classmate can follow the program later.',
+    'guide.scripts.sc1.body': 'The empty space in the middle is the Scripts area. Drag a block from the palette on the left, then drag a second one onto it; they click together into a script. Blocks only stick where their notches fit, which is why it is hard to build one wrong.',
+    'guide.scripts.sc2.title': 'Taking one out: drag it back to the palette',
+    'guide.scripts.sc2.body': 'To delete a block, drag it back to the palette on the left and let go; take one out of the middle and the ones below it close up again. To duplicate, right-click and choose Duplicate, or hold Alt/Option and drag a copy out. Right-click also adds a comment, where you can write down what you were thinking.',
 
     'guide.tabs.title': 'Costumes, sounds, variables, My Blocks',
     'guide.tabs.sub': 'The editor’s other tabs',
@@ -697,6 +697,12 @@
     'guide.tabs.tb4.body': 'In the Variables category, click “Make a Variable” to create a slot that holds a number or some text — a score, a number of lives. You can then “show variable” on the stage to watch its value change as the program runs.',
     'guide.tabs.tb5.title': 'My Blocks (custom blocks)',
     'guide.tabs.tb5.body': '“My Blocks” bundles a group of blocks into a block of your own, ready to drag out whenever you need it. It is ideal for an action you repeat, keeping the program short and readable.',
+
+    /* the editor's own wording, so a tap on `menu:file` finds the real item on the menu bar */
+    'guide.menu.file': 'File',
+    'guide.menu.edit': 'Edit',
+    'guide.var.score': 'score',
+    'guide.say.score': 'My score!',
 
     'guide.menu.title': 'Menus, saving and the AI companion',
     'guide.menu.sub': 'Files and other features',

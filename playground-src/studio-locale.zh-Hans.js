@@ -675,9 +675,9 @@
     'guide.scripts.sub': '在哪里搭积木',
     'guide.scripts.intro': '程序区（Scripts）是你叠积木的地方。这一章讲清楚怎样整理积木。',
     'guide.scripts.sc1.title': '程序区：积木拼在一起',
-    'guide.scripts.sc1.body': '中间的空白位置就是程序区。从左边积木区拖一块积木过来，再拖第二块叠上去，「咔」一声接在一起，就是一段程序。要删除，把积木拖回积木区；要复制，右键选「复制」，或者按住 Alt／Option 拖出一份。',
-    'guide.scripts.sc2.title': '注释：给程序写提醒',
-    'guide.scripts.sc2.body': '右键积木或空白处，可以加「注释」。注释不会执行，只是写下你的想法，方便自己或同学之后看得懂。',
+    'guide.scripts.sc1.body': '中间的空白位置就是程序区。从左边积木区拖一块积木过来，再拖第二块叠上去，「咔」一声接在一起，就是一段程序。积木只会在凹凸位对得上的地方才吸得住，所以很难拼错。',
+    'guide.scripts.sc2.title': '拆掉：把积木拖回积木区',
+    'guide.scripts.sc2.body': '要删掉一块积木，把它拖回左边积木区放手就行；拿走中间那块，下面的会自己接回去。要复制就右键选「复制」，或者按住 Alt／Option 拖出一份；右键还可以加「注释」，写下你的想法，方便之后看得懂。',
 
     'guide.tabs.title': '造型、声音、变量、自制积木',
     'guide.tabs.sub': '编辑器的其他分页',
@@ -692,6 +692,12 @@
     'guide.tabs.tb4.body': '在「变量」类积木里按「建立一个变量」，就能创建一个记录数字或文字的位置，例如分数、生命值。创建之后可以在舞台上「显示监视器」，一直看着它的值怎样变化。',
     'guide.tabs.tb5.title': '自制积木（My Blocks）',
     'guide.tabs.tb5.body': '「自制积木」可以把一组常用的积木打包，变成你自己的积木，之后一拖就能用。很适合重复使用的动作，让程序更短、更好读。',
+
+    /* 编辑器自身的用字：`menu:file` 这个 tap 要找的是菜单列上真正写着这个词的那一格 */
+    'guide.menu.file': '文件',
+    'guide.menu.edit': '编辑',
+    'guide.var.score': '分数',
+    'guide.say.score': '我的分数！',
 
     'guide.menu.title': '菜单、保存和 AI 学伴',
     'guide.menu.sub': '文件和其他功能',

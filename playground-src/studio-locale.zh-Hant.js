@@ -682,9 +682,9 @@
     'guide.scripts.sub': '喺邊度砌程式',
     'guide.scripts.intro': '程式區（Scripts）係你疊積木嘅地方。呢一章講清楚點樣整理積木。',
     'guide.scripts.sc1.title': '程式區：積木疊埋一齊',
-    'guide.scripts.sc1.body': '中間嘅空白位置就係程式區。由左邊積木區拖一塊積木過嚟，再拖第二塊疊上去，「咔」一聲接埋，就係一段程式。想刪除，將積木拖返去積木區；想複製，右鍵揀「複製」，或者按住 Alt／Option 拖一份出嚟。',
-    'guide.scripts.sc2.title': '註解：幫程式寫低提醒',
-    'guide.scripts.sc2.body': '右鍵積木或者空白位，可以加「註解」。註解唔會執行，只係寫低你嘅想法，方便自己或者同學之後睇得明。',
+    'guide.scripts.sc1.body': '中間嘅空白位置就係程式區。由左邊積木區拖一塊積木過嚟，再拖第二塊疊上去，「咔」一聲接埋，就係一段程式。積木只會喺凹凸位啱嘅地方先吸得住，所以好難砌錯。',
+    'guide.scripts.sc2.title': '拆走：將積木拖返去積木區',
+    'guide.scripts.sc2.body': '想刪走一塊積木，將佢拖返去左邊積木區放手就得；拎走中間嗰塊，下面嘅會自己接返埋。想複製就右鍵揀「複製」，或者按住 Alt／Option 拖一份出嚟；右鍵仲可以加「註解」，寫低你嘅想法，方便之後睇得明。',
 
     'guide.tabs.title': '造型、音效、變數、自訂積木',
     'guide.tabs.sub': '編輯器嘅其他分頁',
@@ -699,6 +699,15 @@
     'guide.tabs.tb4.body': '喺「變數」類積木撳「建立一個變數」，就可以整一個記住數字或者文字嘅空格，例如分數、生命值。整好之後可以喺舞台上面「顯示監視器」，一路睇住個值點變。',
     'guide.tabs.tb5.title': '自訂積木（My Blocks）',
     'guide.tabs.tb5.body': '「自訂積木」可以將一組常用嘅積木打包，變成你自己嘅積木，之後一拖就用。啱晒重複用嘅動作，令程式短啲、易讀啲。',
+
+    /* The words the hand looks for on the screen: a tap on `menu:file` finds the menu whose own
+       label is this, in whatever language the editor is showing. Not translations of the guide's
+       prose — copies of the editor's own wording, so the press lands on the real item. */
+    'guide.menu.file': '檔案',
+    'guide.menu.edit': '編輯',
+    /* the variable the manual demonstrates with, and what the sprite says when it is set */
+    'guide.var.score': '分數',
+    'guide.say.score': '我嘅分數！',
 
     'guide.menu.title': '選單、存檔同 AI 學伴',
     'guide.menu.sub': '檔案同其他功能',

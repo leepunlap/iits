@@ -60,7 +60,7 @@
 
     /* ---- 指南: the second tab. Every topic and step is addressed by id, so these keys are the only
        place a topic's words live - see studio-guide-topics.js for the structure they belong to. ---- */
-    'guide.intro': '課堂逐步帶你由零開始砌完一堂；操作參考係十張卡，唔記得邊個掣就搵佢；基本操作係幾個短主題。每一步都可以按「示範」，由編輯器自己動手做一次畀你睇。示範會暫時借用畫布，按「返回我的作品」就會還原。',
+    'guide.intro': '呢個指南分四個程度：Tutorial 由零開始，帶你識晒成個編輯器（概念、每粒掣、每個功能）；L2、L3、L4 就一級一級加深。每一步都可以按「示範」，由編輯器自己動手做一次畀你睇。示範會暫時借用畫布，按「返回我的作品」就會還原。',
     'guide.stepCount': '{n} 步',
     'guide.back': '全部主題',
     'guide.steps': '步驟',

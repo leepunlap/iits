@@ -64,7 +64,7 @@
     'chat.bootFailed': '编辑器加载失败',
 
     /* ---- 指南: the second tab (see studio-guide-topics.js for the structure) ---- */
-    'guide.intro': '课堂逐步带你从零开始做完一课；操作参考是十张卡，忘了哪个按钮就找它；基本操作是几个短主题。每一步都可以按「示范」，由编辑器自己动手做一次给你看。示范会暂时借用画布，按「返回我的作品」就会还原。',
+    'guide.intro': '这个指南分四个级别：Tutorial 从零开始，带你认识整个编辑器（概念、每个按钮、每个功能）；L2、L3、L4 则一级一级加深。每一步都可以按「示范」，由编辑器自己动手做一次给你看。示范会暂时借用画布，按「返回我的作品」就会还原。',
     'guide.stepCount': '{n} 步',
     'guide.back': '全部主题',
     'guide.steps': '步骤',

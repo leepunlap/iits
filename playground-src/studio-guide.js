@@ -154,9 +154,15 @@
       { id: 'l4', key: 'guide.level.l4' }
     ];
     function levelOf(t) { return (t && t.level) || 'basic'; }
+    /* Within a shelf: the manual's own chapters first, then the reference cards, then the lesson
+       projects. `kind` is the only hint a topic carries about what it is, so it is what sorts them;
+       a topic with no kind is a chapter of the manual. Ties keep array order. */
+    var KIND_RANK = { ref: 1, lesson: 2 };
+    function rankOf(t) { return (t && t.kind && KIND_RANK[t.kind]) || 0; }
     function inLevel(id) {
       return topics.map(function (t, i) { return { t: t, i: i }; })
-        .filter(function (x) { return levelOf(x.t) === id; });
+        .filter(function (x) { return levelOf(x.t) === id; })
+        .sort(function (a, b) { return rankOf(a.t) - rankOf(b.t) || a.i - b.i; });
     }
 
     /** The steps in a topic. Every step is shown: the pills pick a shelf, not a filter over it. */

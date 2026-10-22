@@ -63,7 +63,7 @@
     'chat.bootFailed': 'The editor did not load',
 
     /* ---- Guide: the second tab (see studio-guide-topics.js for the structure) ---- */
-    'guide.intro': 'Lessons walk you through one lesson from nothing at all. “How do I…” is ten cards for the button you cannot find. The basics are short topics on the editor itself. Most steps have a “Show me” button that makes the editor do it in front of you. A demonstration borrows the canvas for a moment; “Back to my project” puts your work back.',
+    'guide.intro': 'The guide has four levels: Tutorial teaches the whole editor from scratch — concepts, every button, every feature; L2, L3 and L4 go deeper, one step at a time. Most steps have a “Show me” button that makes the editor do it in front of you. A demonstration borrows the canvas for a moment; “Back to my project” puts your work back.',
     'guide.stepCount': '{n} steps',
     'guide.back': 'All topics',
     'guide.steps': 'Steps',

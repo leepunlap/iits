@@ -1,0 +1,333 @@
+/* Wonder Lab Studio (prototype). Copyright (C) 2026 IITS. AGPL-3.0-only. */
+:root {
+  --wl-bg: #ffffff;
+  --wl-pane: #f7f8fa;
+  --wl-line: #dfe3e8;
+  --wl-text: #1d2733;
+  --wl-muted: #5b6876;
+  --wl-accent: #0b7285;
+  --wl-accent-ink: #ffffff;
+  --wl-me: #e3f4f7;
+  --wl-bot: #ffffff;
+  --wl-q: #fff6e0;
+  --wl-chat-w: 360px;
+  --wl-head-h: 44px;
+}
+html, body { height: 100%; margin: 0; }
+body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang HK", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+#wl-app { display: grid; grid-template-columns: minmax(0, 1fr) var(--wl-chat-w); height: 100vh; height: 100dvh; }
+#wl-editor { position: relative; min-width: 0; height: 100%; overflow: hidden; }
+.wl-hidden { display: none !important; }
+
+/* Inline icons. Every svg the page or the modules draw carries class="ic". Without a size they
+   fall back to the SVG default box, which is how the export button grew to 88px tall. */
+.ic { width: 16px; height: 16px; flex: none; }
+
+/* the AI's scripts after a turn: a calm outline, different from the yellow "running" glow */
+.wl-ai { filter: drop-shadow(0 0 3px rgba(11, 114, 133, .95)) drop-shadow(0 0 6px rgba(11, 114, 133, .6)); }
+
+/* ---- chat pane ----
+   The pane is a column with three bands: a 44px header, the conversation (everything that is
+   left), and the composer. It used to be five bands, and the conversation came last. */
+#wl-chat { position: relative; display: flex; flex-direction: column; min-height: 0;
+  border-left: 1px solid var(--wl-line); background: var(--wl-pane); }
+.wl-chat-shell { position: relative; display: flex; flex-direction: column; min-height: 0; height: 100%;
+  --wl-tabs-h: 0px; }
+/* With two tabs the pane has three bands instead of two; the sheet and the popovers hang from the
+   same stack, so they move by the same amount rather than each remembering the extra height. */
+.wl-chat-shell.has-tabs { --wl-tabs-h: 34px; }
+
+.wl-chat-head { display: flex; align-items: center; gap: 4px; height: var(--wl-head-h); padding: 0 8px; box-sizing: border-box;
+  background: var(--wl-accent); color: var(--wl-accent-ink); flex: none; }
+.wl-chat-head .ic { width: 17px; height: 17px; flex: none; }
+.wl-chat-title { font-size: .94rem; margin: 0; font-weight: 700; min-width: 0; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+/* The badge is the first thing to give way: it is secondary information, and English runs about
+   twice the width of the Chinese it replaces. Ellipsis rather than a wrap, because the header is a
+   fixed 44px band and a second line would push the conversation down. */
+.wl-chat-badge { font-size: .68rem; padding: 2px 6px; border-radius: 999px; background: rgba(255, 255, 255, .18);
+  white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
+.wl-chat-badge[hidden] { display: none; }
+.wl-head-spacer { margin-left: auto; }
+.wl-ver-chip { font: inherit; font-size: .66rem; padding: 2px 6px; border: 0; border-radius: 999px;
+  background: rgba(255, 255, 255, .22); color: inherit; cursor: pointer; white-space: nowrap; }
+.wl-ver-chip[hidden] { display: none; }
+.wl-ver-chip:hover { background: rgba(255, 255, 255, .34); }
+.wl-more-btn { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 6px;
+  background: none; color: inherit; cursor: pointer; }
+.wl-more-btn:hover { background: rgba(255, 255, 255, .22); }
+
+/* ---- tabs: the same pane, in another mode ----
+   A 34px strip, equal halves, the active one underlined rather than filled: the header is already a
+   solid band of colour, and a second filled bar under it would read as a second header. */
+.wl-tabs { display: flex; flex: none; height: var(--wl-tabs-h); background: var(--wl-bg);
+  border-bottom: 1px solid var(--wl-line); }
+.wl-tab { flex: 1 1 0; display: flex; align-items: center; justify-content: center; min-width: 0;
+  font: inherit; font-size: .82rem; font-weight: 600; color: var(--wl-muted); background: none;
+  border: 0; border-bottom: 2px solid transparent; cursor: pointer; padding: 0 8px; }
+.wl-tab:hover { color: var(--wl-text); }
+.wl-tab.is-on { color: var(--wl-accent); border-bottom-color: var(--wl-accent); }
+.wl-tab-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wl-tab:focus-visible { outline: 2px solid #ffb000; outline-offset: -3px; }
+
+/* One view shows at a time. With no tabs there is one, and it behaves exactly as the pane did. */
+.wl-views { flex: 1; min-height: 0; display: flex; }
+.wl-view { display: none; flex: 1; min-height: 0; flex-direction: column; }
+.wl-view.is-on { display: flex; }
+
+.wl-menu { position: absolute; top: calc(var(--wl-head-h) + var(--wl-tabs-h) - 4px); right: 8px; z-index: 30; min-width: 168px; padding: 5px;
+  background: var(--wl-bg); border: 1px solid var(--wl-line); border-radius: 10px; box-shadow: 0 6px 20px rgba(0, 0, 0, .16); }
+.wl-menu[hidden] { display: none; }
+.wl-menu-item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 9px; font: inherit; font-size: .82rem;
+  color: var(--wl-text); background: none; border: 0; border-radius: 7px; text-align: left; cursor: pointer; }
+.wl-menu-item:hover { background: var(--wl-pane); }
+.wl-menu-badge { margin-left: auto; font-size: .72rem; color: var(--wl-muted); }
+
+/* Language: a pill in the header showing the language the pane is in, and the list of three under
+   it. It used to live in the ⋯ menu, on the argument that it is a setting a student touches once;
+   in practice a teacher never opened the menu, so the setting may as well not have existed. The
+   active row is filled, so the current language reads at a glance from the list as well. */
+.wl-lang-toggle { display: grid; place-items: center; height: 21px; min-width: 26px; padding: 0 7px;
+  font: inherit; font-size: .7rem; font-weight: 700; letter-spacing: .03em; color: inherit;
+  background: rgba(255, 255, 255, .18); border: 0; border-radius: 999px; cursor: pointer; flex: none; }
+.wl-lang-toggle:hover { background: rgba(255, 255, 255, .3); }
+.wl-lang-short { line-height: 1; }
+
+.wl-lang-pop { position: absolute; top: calc(var(--wl-head-h) + var(--wl-tabs-h) - 2px); right: 8px; z-index: 31; min-width: 138px;
+  padding: 5px; background: var(--wl-bg); border: 1px solid var(--wl-line); border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .16); }
+.wl-lang-pop[hidden] { display: none; }
+.wl-lang { display: flex; flex-direction: column; gap: 2px; }
+.wl-lang-btn { width: 100%; height: 30px; padding: 0 9px; font: inherit; font-size: .8rem; color: var(--wl-text);
+  background: none; border: 0; border-radius: 7px; cursor: pointer; text-align: left; }
+.wl-lang-btn:hover { background: var(--wl-pane); }
+.wl-lang-btn.is-on { color: var(--wl-accent-ink); background: var(--wl-accent); font-weight: 600; }
+.wl-lang-btn:focus-visible { outline: 2px solid #ffb000; outline-offset: 2px; }
+
+.wl-chat-body { flex: 1; min-height: 0; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px;
+  background: var(--wl-bg); }
+.wl-msgs { display: flex; flex-direction: column; gap: 10px; }
+
+.wl-mrow { display: flex; }
+.wl-mrow.is-me { justify-content: flex-end; }
+.wl-mrow.is-sys { justify-content: center; }
+.wl-bubble { max-width: 88%; padding: 9px 11px; border-radius: 12px; font-size: .92rem; line-height: 1.5;
+  white-space: pre-wrap; word-break: break-word; }
+.wl-bubble.me { background: var(--wl-me); border-bottom-right-radius: 4px; }
+.wl-bubble.bot { background: var(--wl-bot); border: 1px solid var(--wl-line); border-bottom-left-radius: 4px; }
+.wl-bubble.q { background: var(--wl-q); border: 1px solid #f2dca6; border-bottom-left-radius: 4px; }
+.wl-bubble.sys { background: none; border: 0; max-width: 100%; padding: 0 6px; font-size: .78rem; color: var(--wl-muted); text-align: center; }
+
+.wl-empty { display: flex; flex-wrap: wrap; gap: 6px; }
+.wl-chip { font: inherit; font-size: .8rem; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--wl-line);
+  background: var(--wl-pane); color: var(--wl-text); cursor: pointer; min-height: 32px;
+  max-width: 100%; text-align: left; }
+.wl-chip:hover { border-color: var(--wl-accent); }
+.wl-chip:focus-visible, .wl-more-btn:focus-visible, .wl-lang-toggle:focus-visible, .wl-ver-chip:focus-visible,
+.wl-menu-item:focus-visible, .wl-undo-btn:focus-visible, .wl-send:focus-visible, .wl-fab:focus-visible,
+.wl-g-topic:focus-visible, .wl-g-demo:focus-visible, .wl-g-dot:focus-visible, .wl-g-back:focus-visible,
+.wl-btn:focus-visible {
+  outline: 2px solid #ffb000; outline-offset: 2px; }
+
+.wl-composer { flex: none; display: flex; flex-direction: column; gap: 7px; padding: 8px 12px 11px;
+  background: var(--wl-bg); border-top: 1px solid var(--wl-line); }
+.wl-ctx { margin: 0; font-size: .72rem; color: var(--wl-muted); }
+.wl-ctx[hidden] { display: none; }
+.wl-input { width: 100%; box-sizing: border-box; resize: none; font: inherit; font-size: .92rem; padding: 9px 10px;
+  border: 1px solid #b9c2cc; border-radius: 10px; min-height: 42px; max-height: 110px; overflow-y: auto; }
+.wl-input:focus { outline: 2px solid var(--wl-accent); outline-offset: 0; border-color: var(--wl-accent); }
+.wl-composer-row { display: flex; align-items: center; gap: 8px; }
+.wl-slot { display: flex; align-items: center; min-width: 0; }
+.wl-spacer { flex: 1; }
+.wl-undo-btn { font: inherit; font-size: .76rem; padding: 5px 10px; min-height: 30px; border-radius: 8px;
+  border: 1px solid var(--wl-line); background: var(--wl-bg); color: var(--wl-muted); cursor: pointer; }
+.wl-undo-btn[hidden] { display: none; }
+.wl-undo-btn:disabled { opacity: .45; cursor: default; }
+.wl-send { flex: none; width: 36px; height: 36px; border-radius: 10px; border: 0; background: var(--wl-accent);
+  color: var(--wl-accent-ink); cursor: pointer; display: grid; place-items: center; }
+.wl-send:disabled { opacity: .5; cursor: default; }
+
+/* ---- the sheet: 版本 / 說明, over the pane instead of beside it ---- */
+.wl-sheet { position: absolute; top: calc(var(--wl-head-h) + var(--wl-tabs-h)); left: 0; right: 0; bottom: 0; z-index: 10;
+  display: flex; flex-direction: column; gap: 10px; padding: 10px 12px; overflow-y: auto; background: var(--wl-bg); }
+.wl-sheet[hidden] { display: none; }
+.wl-sheet-bar { display: flex; align-items: center; gap: 8px; flex: none; }
+.wl-sheet-back { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 7px;
+  background: none; color: var(--wl-text); cursor: pointer; }
+.wl-sheet-back:hover { background: var(--wl-pane); }
+.wl-sheet-title { font-size: .92rem; font-weight: 700; }
+.wl-sheet-body { display: flex; flex-direction: column; gap: 10px; }
+
+.wl-row { display: flex; gap: 6px; flex: none; }
+.wl-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .85rem; padding: 6px 12px; min-height: 36px;
+  border-radius: 8px; border: 1px solid var(--wl-line); background: var(--wl-pane); color: var(--wl-text); cursor: pointer; }
+.wl-btn:disabled { opacity: .45; cursor: default; }
+.wl-btn.wl-small { font-size: .78rem; padding: 3px 9px; min-height: 30px; margin-top: 4px; }
+.wl-help { font-size: .82rem; color: var(--wl-muted); margin: 0; line-height: 1.5; }
+.wl-sheet-body h2 { font-size: .95rem; margin: 6px 0 0; }
+.wl-sheet-body p { font-size: .88rem; line-height: 1.6; margin: 0; }
+.wl-sheet-body a { color: var(--wl-accent); }
+.wl-vlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.wl-v { border: 1px solid var(--wl-line); border-left-width: 4px; border-radius: 8px; padding: 6px 9px; background: var(--wl-bg); }
+.wl-v-hand { border-left-color: #2f9e44; }
+.wl-v-ai { border-left-color: var(--wl-accent); }
+.wl-v-restore, .wl-v-load, .wl-v-start { border-left-color: #868e96; }
+.wl-vmeta { font-size: .82rem; display: flex; gap: 8px; align-items: baseline; }
+.wl-vmeta time { color: var(--wl-muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.wl-vsrc { font-weight: 600; }
+.wl-vinfo { font-size: .78rem; color: var(--wl-muted); margin-top: 2px; }
+.wl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wl-fab { display: none; }
+
+/* ---- the guide tab ----
+   The pane's second mode: topics, one step at a time, and a 示範 button that drives the editor on the
+   left. It is deliberately all text and one accent: the thing worth looking at while it runs is the
+   canvas, not this column. */
+.wl-guide { display: flex; flex-direction: column; flex: 1; min-height: 0; background: var(--wl-bg); }
+.wl-g-body { flex: 1; min-height: 0; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.wl-g-index, .wl-g-topic-page { display: flex; flex-direction: column; gap: 10px; }
+.wl-g-intro { margin: 0; font-size: .82rem; line-height: 1.55; color: var(--wl-muted); }
+
+/* Tutorial / L2 / L3 / L4: four pills, one shelf shown at a time */
+.wl-g-mode { display: flex; gap: 4px; padding: 3px; background: var(--wl-pane);
+  border: 1px solid var(--wl-line); border-radius: 999px; }
+.wl-g-mbtn { flex: 1 1 0; font: inherit; font-size: .8rem; font-weight: 600; padding: 6px 10px; min-height: 32px;
+  border: 0; border-radius: 999px; background: none; color: var(--wl-muted); cursor: pointer; }
+.wl-g-mbtn.is-on { background: var(--wl-accent); color: var(--wl-accent-ink); }
+
+.wl-g-sec { margin: 4px 0 0; font-size: .74rem; font-weight: 700; letter-spacing: .04em; color: var(--wl-muted); }
+
+.wl-g-list { display: flex; flex-direction: column; gap: 6px; }
+.wl-g-topic { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; font: inherit; text-align: left;
+  color: var(--wl-text); background: var(--wl-pane); border: 1px solid var(--wl-line); border-radius: 10px; cursor: pointer; }
+.wl-g-topic:hover { border-color: var(--wl-accent); background: var(--wl-bg); }
+.wl-g-ico { display: grid; place-items: center; width: 30px; height: 30px; flex: none; border-radius: 8px;
+  background: var(--wl-accent); color: var(--wl-accent-ink); }
+.wl-g-ico .ic { width: 17px; height: 17px; }
+.wl-g-tmain { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.wl-g-ttitle { font-size: .9rem; font-weight: 600; }
+.wl-g-tsub { font-size: .74rem; color: var(--wl-muted); }
+.wl-g-chev { display: grid; place-items: center; color: var(--wl-muted); }
+
+.wl-g-bar { display: flex; align-items: center; gap: 6px; }
+.wl-g-back { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; flex: none;
+  border: 0; border-radius: 8px; background: none; color: var(--wl-text); cursor: pointer; }
+.wl-g-back:hover { background: var(--wl-pane); }
+.wl-g-h { margin: 0; font-size: .98rem; font-weight: 700; min-width: 0; }
+
+/* the rail is a progress bar you can press: one bar per step, the current one filled */
+.wl-g-rail { display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 0; }
+.wl-g-dot { width: 34px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: var(--wl-line); cursor: pointer; }
+.wl-g-dot:hover { background: #b9c2cc; }
+.wl-g-dot.is-done { background: #9fd0d8; }
+.wl-g-dot.is-on { background: var(--wl-accent); }
+
+.wl-g-card { display: flex; flex-direction: column; gap: 6px; padding: 11px 12px;
+  background: var(--wl-pane); border: 1px solid var(--wl-line); border-radius: 12px; }
+.wl-g-kick { font-size: .72rem; font-weight: 600; color: var(--wl-accent); letter-spacing: .02em; }
+.wl-g-ctitle { margin: 0; font-size: .95rem; font-weight: 700; line-height: 1.35; }
+.wl-g-cbody { margin: 0; font-size: .86rem; line-height: 1.6; }
+
+.wl-g-acts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.wl-g-demo { font: inherit; font-size: .85rem; font-weight: 600; padding: 8px 14px; min-height: 36px; border: 0;
+  border-radius: 999px; background: var(--wl-accent); color: var(--wl-accent-ink); cursor: pointer; }
+.wl-g-demo:hover { filter: brightness(1.12); }
+.wl-g-demo:disabled { opacity: .6; cursor: default; }
+.wl-g-note { font-size: .76rem; color: var(--wl-muted); }
+.wl-g-note.is-bad { color: #b23c17; }
+
+.wl-g-pager { display: flex; gap: 8px; }
+.wl-g-pager .wl-btn { flex: 1 1 0; justify-content: center; }
+.wl-g-next { font-weight: 600; }
+
+/* while a demonstration holds the canvas: a bar that says so, and the way back */
+.wl-g-foot { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 12px;
+  background: var(--wl-q); border-top: 1px solid #f2dca6; }
+.wl-g-foot[hidden] { display: none; }
+.wl-g-foot-label { margin-right: auto; font-size: .74rem; color: #7a5b12; }
+
+/* the speaker: a mute, not a play button — the voice belongs to the demonstration */
+.wl-g-voice { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; flex: none;
+  margin-left: auto; border: 0; border-radius: 8px; background: none; color: var(--wl-muted); cursor: pointer; }
+.wl-g-voice:hover { background: var(--wl-pane); color: var(--wl-text); }
+.wl-g-voice.is-on { color: var(--wl-accent); }
+
+/* the narration's subtitle, over the bottom of the stage: dark, two lines at most, never in the way */
+.wl-sub { position: fixed; z-index: 480; padding: 7px 12px; border-radius: 9px;
+  background: rgba(18, 22, 34, .84); color: #fff; text-align: center;
+  font-size: .84rem; line-height: 1.5; font-weight: 500;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, .22);
+  pointer-events: none; animation: wl-sub-in .18s ease-out; }
+.wl-sub[hidden] { display: none; }
+/* opacity only: the strip is positioned by an inline transform, which an animation would override */
+@keyframes wl-sub-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---- the marks: where to click, what to drag, which number to change ----
+   An overlay of its own rather than a class on the gui's nodes: the editor is not ours to decorate,
+   and a mark must never be the thing the student's click lands on. */
+.wl-marks { position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 2147481990;
+  pointer-events: none; overflow: visible; }
+.wl-mark { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.97);
+  transition: opacity .2s ease-out, transform .26s cubic-bezier(.2, .8, .3, 1); }
+.wl-mark.is-on { opacity: 1; transform: none; }
+.wl-mark rect, .wl-mark ellipse, .wl-mark path { fill: none; stroke: #ffb000; stroke-width: 3;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px rgba(255, 176, 0, .45)); }
+.wl-mark .wl-mark-tag { fill: #ffb000; stroke: none; filter: none; }
+.wl-mark .wl-mark-text { fill: #3b2a00; stroke: none;
+  font: 700 12.5px/1 system-ui, -apple-system, "PingFang HK", "Noto Sans TC", sans-serif; }
+
+/* the pointer a step that is not about blocks gets: a ring round the region, named */
+.wl-point { position: fixed; z-index: 2147482000; pointer-events: none; border: 3px solid #ffb000; border-radius: 10px;
+  animation: wl-point 1.2s ease-in-out infinite; }
+/* the same ring for a target inside a dialog - one tile of a hundred and seventy, so the rest of the
+   screen goes down while it stays lit; "the elephant is here" has to survive a wall of thumbnails */
+.wl-point.is-strong { border-width: 4px; border-radius: 12px; animation-name: wl-point-strong; }
+.wl-point-label { position: absolute; left: 0; padding: 2px 8px; border-radius: 999px; background: #ffb000; color: #3b2a00;
+  font: 700 12px/1.6 system-ui, -apple-system, "PingFang HK", "Noto Sans TC", sans-serif; white-space: nowrap; }
+.wl-point.is-strong .wl-point-label { font-size: 13px; padding: 3px 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, .28); }
+@keyframes wl-point {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 176, 0, .25), 0 0 0 9999px rgba(15, 23, 42, .08); }
+  50% { box-shadow: 0 0 0 9px rgba(255, 176, 0, .13), 0 0 0 9999px rgba(15, 23, 42, .08); }
+}
+@keyframes wl-point-strong {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 176, 0, .5), 0 0 0 9999px rgba(15, 23, 42, .46); }
+  50% { box-shadow: 0 0 0 12px rgba(255, 176, 0, .28), 0 0 0 9999px rgba(15, 23, 42, .46); }
+}
+
+/* the hand that presses it for you: an arrow that travels, compresses, and leaves a ring behind.
+   It is above the ring, because it is the thing that is on top of the screen. */
+.wl-cur { position: fixed; left: 0; top: 0; z-index: 2147482500; width: 26px; height: 26px; pointer-events: none;
+  opacity: 0; transform: translate3d(-200px, -200px, 0);
+  transition-property: transform, opacity; transition-duration: .6s, .22s;
+  transition-timing-function: cubic-bezier(.22, .61, .36, 1), ease; }
+.wl-cur.is-on { opacity: 1; }
+.wl-cur svg { display: block; width: 26px; height: 26px; transform-origin: 3px 2px;
+  transition: transform .09s ease-out; filter: drop-shadow(0 2px 3px rgba(15, 23, 42, .35)); }
+.wl-cur.is-down svg { transform: scale(.78); }
+
+/* the ripple the press leaves: one ring, gone in half a second, at the point that was pressed */
+.wl-ripple { position: fixed; z-index: 2147482400; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  pointer-events: none; border-radius: 50%; border: 2px solid #ffb000; background: rgba(255, 176, 0, .22); opacity: 0; }
+.wl-ripple.is-go { animation: wl-ripple .46s ease-out forwards; }
+@keyframes wl-ripple {
+  0% { transform: scale(.35); opacity: .95; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* ---- narrower than the editor + pane (iPad landscape 1024, small laptops): the pane slides over from the right ---- */
+@media (max-width: 1279px) {
+  #wl-app { grid-template-columns: minmax(0, 1fr); }
+  #wl-chat { position: fixed; top: 0; right: 0; bottom: 0; width: min(380px, 92vw); z-index: 496; transform: translateX(102%);
+    transition: transform .2s ease; box-shadow: -8px 0 24px rgba(0, 0, 0, .18); }
+  body.wl-chat-open #wl-chat { transform: none; }
+  .wl-fab { display: inline-flex; align-items: center; gap: 6px; position: fixed; top: 7px; right: 10px; z-index: 495; height: 34px; padding: 0 12px;
+    border-radius: 999px; border: 0; background: var(--wl-accent); color: var(--wl-accent-ink); font: inherit; font-size: .88rem; cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
+  body.wl-chat-open .wl-fab { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { #wl-chat { transition: none; } .wl-point { animation: none; } .wl-sub { animation: none; }
+  /* the arrow still appears and still presses; it just does not fly across the screen (the script
+     already asks for a zero-length travel, this covers the browser that ignores the query in JS) */
+  .wl-cur { transition: none; } .wl-cur svg { transition: none; } }

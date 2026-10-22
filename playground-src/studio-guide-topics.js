@@ -57,18 +57,46 @@
       level: 'basic',
       icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/>',
       steps: [
-        /* the overview points at the three places the paragraph names */
-        { id: 'b1', demo: { project: ONE, annotate: [look('stage'), look('sprites'), look('palette', 'square')] } },
+        /* The first step does not describe what Scratch can do, it does it: two blocks snapped
+           together, the flag pressed, and the sprite moving, talking, growing and making a sound.
+           The hand builds the stack and presses the flag, so the paragraph and the picture agree. */
+        { id: 'b1', demo: {
+            project: ONE,
+            scripts: [{ sprite: '@pico', id: 'b1', blocks: [
+              flag,
+              move(60),
+              say('guide.say.hello', 1),
+              { op: 'looks_changesizeby', CHANGE: 40 },
+              { op: 'sound_playuntildone', SOUND_MENU: 'pop' }
+            ] }],
+            annotate: [
+              { shape: 'square', at: 'flyout:first', label: 'guide.act.drag' },
+              { shape: 'circle', at: 'stage', label: 'guide.act.watch', cue: 2 }
+            ],
+            run: 4200
+          }
+        },
         { id: 'b2', demo: { project: ONE, annotate: [look('stage'), look('stageHeader')] } },
         { id: 'b3', demo: { project: ONE, annotate: [look('sprites'), click('addSprite')] } },
         { id: 'b4', demo: { project: ONE, annotate: [look('palette'), look('workspace', 'square')] } },
-        { id: 'b5', demo: { project: ONE, annotate: [click('flag'), look('stop')] } },
+        /* Not a picture of the two buttons: the hand presses the green one, the program runs, and the
+           hand presses the red one. `stop` is what makes the second press happen at the button. */
+        { id: 'b5', demo: {
+            project: ONE,
+            scripts: [{ sprite: '@pico', id: 'b5', blocks: [flag, forever([move(10)])] }],
+            annotate: [click('flag'), { shape: 'circle', at: 'stop', label: 'guide.act.click', cue: 2 }],
+            run: 2400, stop: true
+          }
+        },
         { id: 'b6', demo: { project: ONE, annotate: [look('palette')] } },
         { id: 'b7', demo: { project: ONE, annotate: [look('palette')] } },
         { id: 'b8', demo: { project: ONE, annotate: [look('palette')] } },
-        { id: 'b9', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b9', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, look('workspace', 'square')], run: 0 } },
-        { id: 'b10', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b10', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'field:motion_movesteps/STEPS', label: 'guide.act.type', when: 'built' }], run: 0 } },
-        { id: 'b11', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b11', blocks: [flag, move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, { shape: 'circle', at: 'flag', label: 'guide.act.watch' }], run: 1600 } },
+        /* One program, built up across three steps: the same script id, so the second step retypes
+           the number in the block the first one dragged in, and the third snaps the hat on top of
+           it. That is the thing the copy is claiming — "they click together". */
+        { id: 'b9', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, look('workspace', 'square')], run: 0 } },
+        { id: 'b10', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [move(50)] }], annotate: [{ shape: 'square', at: 'field:motion_movesteps/STEPS', label: 'guide.act.type', when: 'built' }], run: 0 } },
+        { id: 'b11', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [flag, move(50)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, { shape: 'square', at: 'workspace', label: 'guide.act.watch', when: 'built' }, { shape: 'circle', at: 'flag', label: 'guide.act.watch' }], run: 1800 } },
         { id: 'b12', demo: { project: TWO, annotate: [click('addSprite'), look('sprites')] } }
       ]
     },

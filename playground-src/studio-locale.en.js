@@ -618,7 +618,7 @@
     'guide.basics.intro': 'This level is for anyone who has never used Scratch. We walk the screen once, meet the nine block families, then learn to drag a block, change a number, snap blocks together, and press the green flag to run. By the end you will have written your first program.',
 
     'guide.basics.b1.title': 'What is Scratch?',
-    'guide.basics.b1.body': 'Scratch is a visual tool where you build programs by snapping coloured blocks together — no typing code. Stack the blocks and you tell a character (a Sprite) to move, talk, grow, or make sound on the Stage. This level starts from zero and demonstrates each idea live in the editor, so by the end you can write your own first program.',
+    'guide.basics.b1.body': 'Scratch is a visual tool: you build programs by snapping coloured blocks together, no typing code. Rather than describe it, here it is happening — the pointer drags two blocks out of the palette, snaps them together and presses the green flag, and the Sprite moves, talks, grows and makes a sound on the Stage. Every step after this works the same way: the hand does it while you read, then you do it yourself.',
 
     'guide.basics.b2.title': 'The Stage: where your project performs',
     'guide.basics.b2.body': 'The big panel in the middle is the Stage. Every character acts here, and every effect of your program shows up here. Top-left you see two numbers (x and y) — the selected sprite’s position. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. Under the stage you can pick a Backdrop, like changing the set for a play.',

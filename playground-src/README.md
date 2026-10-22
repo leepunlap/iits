@@ -16,11 +16,27 @@ only the built `playground-<hash>/` package was on the server.
 | `studio-guide-topics.js` | the Tutorial manual as data (6 chapters) + L2/L3/L4 skill topics |
 | `studio-guide-lessons.js` | 16 project lessons (501/502-bpXX) — level `l4` |
 | `studio-guide-refs.js` | 10 operation reference cards — level `basic` (Tutorial) |
+| `studio-guide-drive.js` | performs a step on the real editor: prepare, build (through the animator), press the flag, press stop, point the hand |
+| `studio-guide-marks.js` | where the annotations are drawn; the `REGION` table of addressable controls |
+| `studio-app.js` | the shell that seeds assets and builds `blankProject` — kept here because the demonstration sprites' sound lives in it |
 | `studio-i18n.js` | locale registry + translator |
 | `studio-locale.zh-Hant.js` | 繁體（香港）strings — the source language |
 | `studio-locale.en.js` | English |
 | `studio-locale.zh-Hans.js` | 简体 |
 | `studio.css` | the deployed stylesheet; the guide layout lives in the `.wl-g-*` block |
+
+## A step does what it says
+
+A step that names a control points at it, and a step that describes an action
+performs it — the hand walks to the thing before the ring is drawn round it, and
+anything the copy claims (snap two blocks together, make a sprite move, talk,
+grow and make a sound, stop at the red button) happens on the canvas. Anything
+else turns the manual back into captions.
+
+Two hands exist on purpose: `studio-guide-cursor.js` walks to the flag, the stop
+button and the library tiles, while `studio-anim.js` brings its own arrow when it
+drags blocks in. `handTo()` stands down while the animator is running so the two
+are never on screen at once.
 
 ## Levels
 

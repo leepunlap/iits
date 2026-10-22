@@ -621,19 +621,19 @@
     'guide.basics.b1.body': 'Scratch is a visual tool where you build programs by snapping coloured blocks together — no typing code. Stack the blocks and you tell a character (a Sprite) to move, talk, grow, or make sound on the Stage. This level starts from zero and demonstrates each idea live in the editor, so by the end you can write your own first program.',
 
     'guide.basics.b2.title': 'The Stage: where your project performs',
-    'guide.basics.b2.body': 'The big panel in the middle is the Stage. Every character acts here, and every effect of your program shows up here. Top-left you see two numbers (x and y) — the selected sprite’s position. Top-right are buttons to go full screen, pause, or resize. Under the stage you can pick a Backdrop, like changing the set for a play.',
+    'guide.basics.b2.body': 'The big panel in the middle is the Stage. Every character acts here, and every effect of your program shows up here. Top-left you see two numbers (x and y) — the selected sprite’s position. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. Under the stage you can pick a Backdrop, like changing the set for a play.',
 
     'guide.basics.b3.title': 'The Sprite list: your cast',
     'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — the cat, the dog, and so on. Click the cat icon (Add Sprite) at the top-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
 
     'guide.basics.b4.title': 'The Blocks palette and the Scripts area',
-    'guide.basics.b4.body': 'On the left is the Blocks palette, holding nine families of blocks grouped by colour, like a toolbox. Click a family and a column of its blocks (the flyout) appears to the right of the palette. The large area on the right is the Scripts (Code) area: drag blocks out of the palette and stack them here to build a sprite’s program.',
+    'guide.basics.b4.body': 'On the left is the Blocks palette, holding nine standard families of blocks grouped by colour, like a toolbox — plus a UCMake hardware family at the bottom. Click a family and a column of its blocks (the flyout) appears to the right of the palette. The large area on the right is the Scripts (Code) area: drag blocks out of the palette and stack them here to build a sprite’s program.',
 
     'guide.basics.b5.title': 'The green flag and the red stop',
     'guide.basics.b5.body': 'Two important buttons sit above the stage: the green Flag and the red Stop. Once your program is ready, click the green flag and every “when green flag clicked” block starts at once. To stop, click the red button. Almost every Scratch program begins with the green flag.',
 
     'guide.basics.b6.title': 'Nine block families (1 of 2): Motion · Looks · Sound · Events',
-    'guide.basics.b6.body': 'Scratch blocks come in nine colour-coded families. First group: Motion (blue) moves a sprite — steps, turns, go-to. Looks (purple) changes how it appears — speech, costumes, size, transparency. Sound (pink) plays sounds and music. Events (yellow) are the switches — “when green flag clicked”, “when this sprite clicked”, “when key pressed” all live here.',
+    'guide.basics.b6.body': 'Scratch’s standard blocks come in nine colour-coded families, plus a UCMake hardware family. First group: Motion (blue) moves a sprite — steps, turns, go-to. Looks (purple) changes how it appears — speech, costumes, size, transparency. Sound (pink) plays sounds and music. Events (yellow) are the switches — “when green flag clicked”, “when this sprite clicked”, “when key pressed” all live here.',
 
     'guide.basics.b7.title': 'Nine block families (2 of 2): Control · Sensing · Operators · Variables · My Blocks',
     'guide.basics.b7.body': 'Second group: Control (orange) decides how the program flows — repeat, if, wait, stop. Sensing (cyan) asks about the world — touching something, a key pressed, the mouse position. Operators (green) do math and text — add, compare, pick a random number. Variables (red) remember a value that changes, like a score or health. My Blocks (brown) let you wrap several blocks into one reusable block. Spot the colour and you’ll know what it does.',

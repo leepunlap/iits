@@ -3,10 +3,15 @@
  * Copyright (C) 2026 IITS (工信學堂（香港）). Licensed under the GNU Affero General Public License v3.0 only.
  *
  * WHAT THIS IS
- * The guide's structure: a Tutorial that runs from "what is Scratch" to every part of the screen,
+ * The guide's structure: a Tutorial that runs from "what is this" to every part of the screen,
  * then L2 / L3 / L4 as harder shelves of the same course. Each chapter is a topic; each topic a few
  * steps; each step optionally carrying a demonstration for studio-guide-drive.js to perform on the
  * real editor. No DOM, no strings.
+ *
+ * EVERY STEP THAT NAMES A CONTROL POINTS AT IT
+ * A step whose copy says "the green flag" or "the sprite list" carries an `annotate` mark on the
+ * region, because a sentence with no place is how a student learns to ignore the guide. The regions
+ * are resolved by studio-guide-marks.js against the real editor's DOM (see its REGION table).
  *
  * WHERE THE WORDS LIVE
  * Nowhere here. A topic called `stage` with a step called `st1` reads `guide.stage.title` and
@@ -17,13 +22,12 @@
  * THE DEMONSTRATION FORMAT
  *   project  which clean stage to start from (a project with no blocks at all)
  *   scripts  the compact block programs to build, one `set_script` each
- *   focus    the sprite to show while it happens
  *   run      milliseconds to let the program run afterwards; 0 = build only
- *   keys     key presses to simulate afterwards
  *   point    a region to spotlight: flag | stage | sprites | palette | addSprite | addBackdrop
  *   annotate what to point at: { shape:'square'|'circle', at, label, when }
- *            `at` is a region (flag, stage, sprites, palette, addSprite, addBackdrop, flyout,
- *            workspace, toolbar, library), `flyout:first`, or `field:<opcode>/<FIELD>`.
+ *            `at` is a region (flag, stage, sprites, palette, addSprite, addBackdrop, stop,
+ *            stageSize, stageHeader, tabs, spriteInfo, chatTabs, toolbar, workspace, flyout,
+ *            library), `flyout:first`, or `field:<opcode>/<FIELD>`.
  *
  * Steps inside one chapter share a project on purpose.
  *
@@ -37,6 +41,8 @@
   var move = function (n) { return { op: 'motion_movesteps', STEPS: n }; };
   var turn = function (n) { return { op: 'motion_turnright', DEGREES: n }; };
   var say = function (key, secs) { return { op: 'looks_sayforsecs', MESSAGE: { k: key }, SECS: secs }; };
+  var look = function (at, shape) { return { shape: shape || 'circle', at: at, label: 'guide.act.look' }; };
+  var click = function (at, shape) { return { shape: shape || 'circle', at: at, label: 'guide.act.click' }; };
 
   /** One sprite, four steps' worth of stage. Every topic but the last starts from this. */
   var ONE = { sprites: [{ ref: '@pico', x: -200 }] };
@@ -51,18 +57,19 @@
       level: 'basic',
       icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/>',
       steps: [
-        { id: 'b1' },
-        { id: 'b2', demo: { project: ONE, point: 'stage' } },
-        { id: 'b3', demo: { project: ONE, point: 'sprites' } },
-        { id: 'b4', demo: { project: ONE, point: 'palette' } },
-        { id: 'b5', demo: { project: ONE, point: 'flag' } },
-        { id: 'b6' },
-        { id: 'b7' },
-        { id: 'b8' },
-        { id: 'b9', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b9', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }], run: 0 } },
+        /* the overview points at the three places the paragraph names */
+        { id: 'b1', demo: { project: ONE, annotate: [look('stage'), look('sprites'), look('palette', 'square')] } },
+        { id: 'b2', demo: { project: ONE, annotate: [look('stage'), look('stageHeader')] } },
+        { id: 'b3', demo: { project: ONE, annotate: [look('sprites'), click('addSprite')] } },
+        { id: 'b4', demo: { project: ONE, annotate: [look('palette'), look('workspace', 'square')] } },
+        { id: 'b5', demo: { project: ONE, annotate: [click('flag'), look('stop')] } },
+        { id: 'b6', demo: { project: ONE, annotate: [look('palette')] } },
+        { id: 'b7', demo: { project: ONE, annotate: [look('palette')] } },
+        { id: 'b8', demo: { project: ONE, annotate: [look('palette')] } },
+        { id: 'b9', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b9', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, look('workspace', 'square')], run: 0 } },
         { id: 'b10', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b10', blocks: [move(10)] }], annotate: [{ shape: 'square', at: 'field:motion_movesteps/STEPS', label: 'guide.act.type', when: 'built' }], run: 0 } },
         { id: 'b11', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'b11', blocks: [flag, move(10)] }], annotate: [{ shape: 'square', at: 'flyout:first', label: 'guide.act.drag' }, { shape: 'circle', at: 'flag', label: 'guide.act.watch' }], run: 1600 } },
-        { id: 'b12', demo: { project: TWO, point: 'sprites' } }
+        { id: 'b12', demo: { project: TWO, annotate: [click('addSprite'), look('sprites')] } }
       ]
     },
 
@@ -72,9 +79,9 @@
       level: 'basic',
       icon: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>',
       steps: [
-        { id: 'st1', demo: { project: ONE, point: 'stage' } },
-        { id: 'st2', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.look' }] } },
-        { id: 'st3', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'addBackdrop', label: 'guide.act.click' }] } }
+        { id: 'st1', demo: { project: ONE, annotate: [look('stage')] } },
+        { id: 'st2', demo: { project: ONE, annotate: [click('stageSize'), look('stageHeader')] } },
+        { id: 'st3', demo: { project: ONE, annotate: [click('addBackdrop')] } }
       ]
     },
 
@@ -84,9 +91,9 @@
       level: 'basic',
       icon: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/>',
       steps: [
-        { id: 'sp1', demo: { project: ONE, point: 'sprites' } },
-        { id: 'sp2', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'addSprite', label: 'guide.act.click' }] } },
-        { id: 'sp3', demo: { project: TWO, point: 'sprites' } }
+        { id: 'sp1', demo: { project: ONE, annotate: [look('sprites')] } },
+        { id: 'sp2', demo: { project: ONE, annotate: [click('addSprite')] } },
+        { id: 'sp3', demo: { project: TWO, annotate: [look('spriteInfo'), look('sprites')] } }
       ]
     },
 
@@ -96,8 +103,8 @@
       level: 'basic',
       icon: '<rect x="3" y="3" width="8" height="4" rx="1"/><rect x="3" y="10" width="13" height="4" rx="1"/><rect x="3" y="17" width="6" height="4" rx="1"/>',
       steps: [
-        { id: 'sc1', demo: { project: ONE, annotate: [{ shape: 'square', at: 'workspace', label: 'guide.act.drag' }] } },
-        { id: 'sc2' }
+        { id: 'sc1', demo: { project: ONE, annotate: [look('workspace', 'square'), look('palette')] } },
+        { id: 'sc2', demo: { project: ONE, annotate: [look('workspace', 'square')] } }
       ]
     },
 
@@ -107,11 +114,11 @@
       level: 'basic',
       icon: '<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="m2 13 10 5 10-5"/><path d="m2 18 10 5 10-5"/>',
       steps: [
-        { id: 'tb1' },
-        { id: 'tb2' },
-        { id: 'tb3' },
-        { id: 'tb4' },
-        { id: 'tb5' }
+        { id: 'tb1', demo: { project: ONE, annotate: [click('tabs')] } },
+        { id: 'tb2', demo: { project: ONE, annotate: [click('tabs')] } },
+        { id: 'tb3', demo: { project: ONE, annotate: [click('tabs')] } },
+        { id: 'tb4', demo: { project: ONE, annotate: [look('palette')] } },
+        { id: 'tb5', demo: { project: ONE, annotate: [look('palette')] } }
       ]
     },
 
@@ -121,9 +128,9 @@
       level: 'basic',
       icon: '<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
       steps: [
-        { id: 'mn1', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'toolbar', label: 'guide.act.click' }] } },
-        { id: 'mn2' },
-        { id: 'mn3' }
+        { id: 'mn1', demo: { project: ONE, annotate: [click('toolbar')] } },
+        { id: 'mn2', demo: { project: ONE, annotate: [click('toolbar')] } },
+        { id: 'mn3', demo: { project: ONE, annotate: [look('chatTabs')] } }
       ]
     },
 
@@ -238,8 +245,7 @@
               sprite: '@pico', id: 'k3',
               blocks: [{ op: 'event_whenthisspriteclicked' }, say('guide.say.hi', 2)]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.click' }],
-            point: 'stage'
+            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.click' }]
           }
         }
       ]
@@ -252,16 +258,14 @@
       steps: [
         {
           id: 't1',
-          demo: { project: TWO, point: 'sprites' }
+          demo: { project: TWO, annotate: [look('sprites')] }
         },
         {
           id: 't2',
           demo: {
             project: TWO,
             scripts: [{ sprite: '@lumo', id: 't1', blocks: [flag, forever([turn(15), move(5)])] }],
-            annotate: [
-              { shape: 'circle', at: 'sprites', label: 'guide.act.click' }
-            ],
+            annotate: [{ shape: 'circle', at: 'sprites', label: 'guide.act.click' }],
             focus: '@lumo', run: 3200
           }
         }

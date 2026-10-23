@@ -83,28 +83,40 @@
       level: 'basic',
       icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3v18"/>',
       steps: [
-        /* The first step does not describe what Scratch can do, it does it: two blocks snapped
-           together, the flag pressed, and the sprite moving, talking, growing and making a sound.
-           The hand builds the stack and presses the flag, so the paragraph and the picture agree.
+        /* The first step does not describe what Scratch can do, it does it — and it does it in the
+           order the copy says it: the blocks area ringed while "用積木砌程式" is being read, two
+           blocks dragged out of it under the sentence that asks for two, three more under the
+           sentence that asks for three, and the flag pressed on the sentence that names it.
 
-           What is ringed now follows the copy sentence by sentence: nothing while the hand is doing
-           the dragging (the hand is the pointer, and a ring that arrives after the palette has
-           scrolled with it is a ring round empty space), then the flag in the third — because that
-           is the button the third tells the reader to press, and the press now happens on that
-           sentence too (`runAt`). It used to be a ring round the whole stage there, to say "watch
-           the result", and that was the one place the sentence was not talking about: it was naming
-           blocks and a button. A ring the words do not ask for is a ring the eye learns to ignore. */
+           The two entries are the same script (`b1`), the second one grown: a step that stacked all
+           five at once had finished its picture ten seconds early, and what the student watched
+           while "再加三塊積木" was being said was a program that was already complete — the hand
+           sat still and the voice talked over nothing. `cue` is the sentence each entry waits for,
+           and the animator drags in only the blocks that are new, so the stack grows in step with
+           the words instead of arriving whole before them.
+
+           What is ringed follows the same rule: nothing while the hand is dragging (the hand is the
+           pointer, and a ring drawn after the palette has scrolled with it is a ring round empty
+           space), then the flag in the third — the button that sentence names. It used to be a ring
+           round the whole stage there, to say "watch the result", and that was the one place the
+           sentence was not talking about. A ring the words do not ask for is one the eye ignores. */
         { id: 'b1', demo: {
             project: ONE,
-            scripts: [{ sprite: '@pico', id: 'b1', blocks: [
-              flag,
-              move(60),
-              say('guide.say.hello', 1),
-              grow(40),
-              play
-            ] }],
-            annotate: [{ shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 2 }],
-            run: 4200, runAt: 2
+            scripts: [
+              { sprite: '@pico', id: 'b1', cue: 1, blocks: [flag, move(60)] },
+              { sprite: '@pico', id: 'b1', cue: 2, blocks: [
+                flag,
+                move(60),
+                say('guide.say.hello', 1),
+                grow(40),
+                play
+              ] }
+            ],
+            annotate: [
+              { shape: 'square', at: 'palette', label: 'guide.act.look', cue: 0 },
+              { shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 2 }
+            ],
+            run: 3000, runAt: 2
           }
         },
         /* "所有角色喺呢度表演" — so a program runs and the stage is watched while it does. */

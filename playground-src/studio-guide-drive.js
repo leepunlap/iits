@@ -912,6 +912,21 @@
     }
 
     /**
+     * The state each script ends in, one entry per script: a step that grows a script lists it twice
+     * (once per sentence), and only the last entry is the state to wait for, to pace for, to count.
+     */
+    function lastState(scripts) {
+      var out = [];
+      (scripts || []).forEach(function (s) {
+        for (var i = 0; i < out.length; i++) {
+          if (out[i].sprite === s.sprite && out[i].id === s.id) { out[i] = s; return; }
+        }
+        out.push(s);
+      });
+      return out;
+    }
+
+    /**
      * Wait until the VM holds exactly the script that was asked for.
      *
      * The animator promises the *GUI* has the blocks; the VM learns about them through Blockly's
@@ -924,9 +939,12 @@
       var vm = VM(), ops = OPS();
       if (!vm || !ops) return Promise.resolve(false);
       var deadline = Date.now() + (ms || 2500);
+      /* One script, one state: a step that grows a script lists it twice, and only the last entry is
+         the state the editor should be in when this wait is over. */
+      var want = lastState(scripts);
       function check() {
         var prog = ops.snapshot(vm).program;
-        var ok = scripts.every(function (s) {
+        var ok = want.every(function (s) {
           var name = spriteName(s.sprite);
           var holder = name === STAGE ? prog.stage : (prog.sprites || {})[name];
           var have = holder && holder.scripts && holder.scripts[s.id];
@@ -1108,8 +1126,10 @@
         prepared = {
           step: step, demo: demo, idx: idx, token: token,
           adds: demo.add || [],
+          /* `cue` travels with the script: a step may list the same script twice, the second entry
+             being the same stack grown, and the sentence it belongs to is what tells the two apart. */
           scripts: (demo.scripts || []).map(function (s) {
-            return { sprite: s.sprite, id: s.id, blocks: (s.blocks || []).map(resolveBlock) };
+            return { sprite: s.sprite, id: s.id, cue: s.cue, blocks: (s.blocks || []).map(resolveBlock) };
           })
         };
         return true;
@@ -1159,7 +1179,7 @@
          actor that is already on the stage. When the step is only about importing, the counts under
          the button are the actors' — the block animation is not running, so nothing else is using it. */
       /* the clock the narration handed over: from the body's first sentence to its last word */
-      var squeeze = squeezeOf(sync && sync.clock ? sync.clock() : null, adds, scripts, demo.keys, demo.run);
+      var squeeze = squeezeOf(sync && sync.clock ? sync.clock() : null, adds, lastState(scripts), demo.keys, demo.run);
       if (root.console && squeeze < 1) console.info('[guide] hand at ' + Math.round(squeeze * 100) + '% pace');
 
       var chain = Promise.resolve(true);
@@ -1204,10 +1224,35 @@
           return true;
         }
 
-        return step(function () {
-          return build(scripts, { focus: demo.focus ? spriteName(demo.focus) : null, onProgress: onProgress });
-        }).then(function (res) {
-          if (!res || res.ok === false) return false;
+        /* A script may be listed twice: the second entry is the same script grown, and it waits for
+           its own sentence (`cue`). The copy says "the pointer drags two blocks out … then three
+           more", and a demonstration that stacks all five in the first sentence is a demonstration
+           that has finished before the voice has asked for the last three — the student watches a
+           finished program while being told it is being built. The animator only drags in the
+           blocks that are new, so the second entry carries the whole stack and the picture grows.
+           See `settled` for why the earlier entry is not what is checked at the end. */
+        var groups = [], order = [];
+        scripts.forEach(function (s) {
+          var c = Math.max(0, (s && s.cue) | 0);
+          if (!groups[c]) { groups[c] = []; order.push(c); }
+          groups[c].push(s);
+        });
+        order.sort(function (a, b) { return a - b; });
+        var last = order[order.length - 1];
+
+        return order.reduce(function (soFar, c) {
+          return soFar.then(function (ok) {
+            if (!ok || !alive()) return false;
+            if (c > slot) slot = c;                       // the copy names the later blocks later
+            return step(function () {
+              return build(groups[c], { focus: demo.focus ? spriteName(demo.focus) : null, onProgress: onProgress });
+            }).then(function (res) {
+              if (!res || res.ok === false) return false;
+              return settled(groups[c]).then(function () { return true; });
+            });
+          });
+        }, Promise.resolve(true)).then(function (res) {
+          if (!res || res === false) return false;
 
           var target = demo.focus ? ops.targetByName(vm, spriteName(demo.focus)) : null;
           if (target && vm.editingTarget !== target) { try { vm.setEditingTarget(target.id); } catch (e) {} }
@@ -1238,12 +1283,20 @@
                  see it move". Without it the press lands on the next free beat, i.e. one sentence
                  early, and by the time the voice gets to "press the flag" the sprite has already
                  finished moving. Waiting for the named sentence is one line and it is the whole
-                 difference between a demonstration and a recording of one. */
+                 difference between a demonstration and a recording of one.
+
+                 The same sentence can name both the last blocks and the press — "再加三塊積木，撳綠旗"
+                 — and then the build has already waited for it, so waiting again would put the flag
+                 one sentence late: the words would be on to the next thing while the sprite was only
+                 starting to move. Under a sentence that is already being spoken, press. */
               after = after.then(function () {
-                if (demo.runAt != null && demo.runAt > slot) slot = demo.runAt;
-                return step(function () {
+                var press = function () {
                   return pressFlag({ squeeze: squeeze }).then(function () { return wait(demo.run); });
-                });
+                };
+                if (demo.runAt == null) return step(press);
+                if (demo.runAt < slot) return press();
+                slot = demo.runAt;
+                return step(press);
               }).then(function (go) {
                 if (go === false) return false;
                 /* a step about stopping stops at the button, with the hand on it; anything else

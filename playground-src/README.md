@@ -49,6 +49,15 @@ the stage. A ring round the whole stage while the voice is naming blocks and the
 green flag is the failure this rule exists for; it shipped three times, and each
 time a teacher found it before the checker did.
 
+The picture also has to keep the words' *order*. A step may list the same script
+twice, the second grown, each entry carrying the sentence it waits for (`cue`):
+the Tutorial's first step reads "drag two blocks out … add three more, press the
+flag", and stacking all five under the first sentence meant the student watched a
+finished program while being told it was still being built. `src/_grow-check.html`
+holds the narration back sentence by sentence — it cannot use a clock, because
+headless Chrome runs on virtual time — and fails when two blocks are not two
+blocks until the sentence that asks for three.
+
 Two hands exist on purpose: `studio-guide-cursor.js` walks to the flag, the stop
 button and the library tiles, while `studio-anim.js` brings its own arrow when it
 drags blocks in. `handTo()` stands down while the animator is running so the two

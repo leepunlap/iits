@@ -621,7 +621,7 @@
     'guide.basics.b1.body': 'Scratch is a visual tool: you build programs by snapping coloured blocks together, no typing code. Rather than describe it, here it is happening — the pointer drags two blocks out of the palette, the green-flag hat and “move 60 steps”, and they click together into a whole program. Add three blocks and press the green flag: the Sprite moves, talks, grows and makes a sound on the Stage. Every step after this works the same way: the hand does it while you read, then you do it yourself.',
 
     'guide.basics.b2.title': 'The Stage: where your project performs',
-    'guide.basics.b2.body': 'The big panel in the middle is the Stage — every character acts here, and every effect of your program shows up here. Under the stage is a row of sprite details: the name on the left, and x and y on the right — the sprite’s position on the stage; move the sprite and those two numbers move with it. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. At the bottom right, under the stage, you can pick a Backdrop, like changing the set for a play.',
+    'guide.basics.b2.body': 'The big panel in the middle is the Stage — every character acts here, and every effect of your program shows up here. Between the stage and the sprite list is a row of sprite details: the name on the left, and two small boxes marked x and y on the right — the sprite’s position on the stage; move the sprite and those two numbers move with it. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. At the bottom right, under the stage, you can pick a Backdrop, like changing the set for a play.',
 
     'guide.basics.b3.title': 'The Sprite list: your cast',
     'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — here, Pico and Lumo. Click the cat icon (Add Sprite) at the bottom-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
@@ -674,7 +674,7 @@
     'guide.sprites.sp2.title': 'Adding a sprite',
     'guide.sprites.sp2.body': 'Click the cat icon at the bottom-right of the sprite list (Add Sprite) to choose one from the library, paint your own, or upload an image. The new sprite appears in the list and you can start coding it straight away.',
     'guide.sprites.sp3.title': 'Sprite info: position, size, direction',
-    'guide.sprites.sp3.body': 'Once a sprite is selected, its details appear above the list: name, x, y, size (%), direction (degrees), and Show/Hide. Editing these numbers moves or scales the sprite. Right-click a sprite to duplicate, delete or export it.',
+    'guide.sprites.sp3.body': 'Once a sprite is selected, the row of details under the stage appears: name, x, y, size (%), direction (degrees), and Show/Hide. Change the x and y numbers and the sprite moves or scales. Right-click a sprite to duplicate, delete or export it.',
 
     'guide.scripts.title': 'The Scripts area',
     'guide.scripts.sub': 'Where you build programs',

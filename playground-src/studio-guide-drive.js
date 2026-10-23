@@ -73,6 +73,12 @@
     stageHeader: ['[class*="stage-header_stage-header"]'],
     tabs: ['[class*="react-tabs__tab-list"]'],
     spriteInfo: ['[class*="sprite-info_sprite-info"]', '[class*="sprite-info_row-primary"]'],
+    /* The two little boxes the copy calls x and y. They sit in the sprite-info row (scratch-gui's
+       sprite-info component) directly under the stage, and the row is too wide to say which two
+       numbers the sentence is talking about: a ring round the row answers "where is the row", and
+       the student still has to find the x among the name, the direction and the size. */
+    spriteX: ['[class*="sprite-info_"] input[placeholder="x"]', 'input[placeholder="x"]'],
+    spriteY: ['[class*="sprite-info_"] input[placeholder="y"]', 'input[placeholder="y"]'],
     chatTabs: ['[class*="wl-tabs"]']
   };
 

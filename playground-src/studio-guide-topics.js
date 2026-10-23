@@ -141,7 +141,11 @@
             scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, glide(2.2, 60, 0)] }],
             annotate: [
               { shape: 'square', at: 'stage', label: 'guide.act.look', cue: 0 },
-              { shape: 'square', at: 'spriteInfo', label: 'guide.act.look', cue: 1 },
+              /* the two boxes the sentence names, not the row they sit in: a ring round the row
+                 answers "where is the row", and the student still has to find the x among the name,
+                 the direction and the size */
+              { shape: 'square', at: 'spriteX', label: 'guide.act.look', cue: 1 },
+              { shape: 'square', at: 'spriteY', label: 'guide.act.look', cue: 1 },
               { shape: 'square', at: 'stageHeader', label: 'guide.act.look', cue: 2 },
               { shape: 'circle', at: 'addBackdrop', label: 'guide.act.look', cue: 3 }
             ],
@@ -312,7 +316,13 @@
         { id: 'sp3', demo: {
             project: TWO,
             scripts: [{ sprite: '@lumo', id: 'sp3', blocks: [flag, move(80), grow(30)] }],
-            annotate: [look('sprites', 'square'), look('spriteInfo', 'square')],
+            annotate: [
+              { shape: 'square', at: 'sprites', label: 'guide.act.look', cue: 0 },
+              { shape: 'square', at: 'spriteInfo', label: 'guide.act.look', cue: 0 },
+              /* "editing these numbers moves the sprite": the two that move are x and y */
+              { shape: 'square', at: 'spriteX', label: 'guide.act.look', cue: 1 },
+              { shape: 'square', at: 'spriteY', label: 'guide.act.look', cue: 1 }
+            ],
             taps: [tap('sprite:@lumo')], run: 2600
           }
         }

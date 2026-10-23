@@ -54,8 +54,12 @@
   var grow = function (n) { return { op: 'looks_changesizeby', CHANGE: n }; };
   var say = function (key, secs) { return { op: 'looks_sayforsecs', MESSAGE: { k: key }, SECS: secs }; };
   var play = { op: 'sound_playuntildone', SOUND_MENU: 'pop' };
-  /** A beat between two steps of a program, so the audience can see a number in between. */
-  var pause = function (s) { return { op: 'control_wait', DURATION: s }; };
+  /* A walk that takes time, so a sentence about a number changing has something to watch while it is
+     being said. A glide is the only motion block that moves over time by itself: every other one
+     jumps in a single frame, which reads as "it teleported" rather than "it moved". */
+  var glide = function (secs, x, y) {
+    return { op: 'motion_glidesecstoxy', SECS: secs, X: x, Y: y };
+  };
   var word = function (key) { return { k: key }; };
   var score = word('guide.var.score');
   var setScore = function (v) { return { op: 'data_setvariableto', VARIABLE: score, VALUE: v }; };
@@ -131,7 +135,10 @@
            anybody sees change. */
         { id: 'b2', demo: {
             project: ONE,
-            scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, repeat(4, [move(60), pause(0.45)])] }],
+            /* one glide, not four jumps: the sentence says the two numbers follow the sprite as it
+               moves, and a glide is the shape of "following" — the row under the stage counts up while
+               the sentence is being read instead of changing once and sitting still. */
+            scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, glide(2.2, 60, 0)] }],
             annotate: [
               { shape: 'circle', at: 'stage', label: 'guide.act.look', cue: 0 },
               { shape: 'square', at: 'spriteInfo', label: 'guide.act.look', cue: 1 },

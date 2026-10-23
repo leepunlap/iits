@@ -140,7 +140,7 @@
                the sentence is being read instead of changing once and sitting still. */
             scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, glide(2.2, 60, 0)] }],
             annotate: [
-              { shape: 'circle', at: 'stage', label: 'guide.act.look', cue: 0 },
+              { shape: 'square', at: 'stage', label: 'guide.act.look', cue: 0 },
               { shape: 'square', at: 'spriteInfo', label: 'guide.act.look', cue: 1 },
               { shape: 'square', at: 'stageHeader', label: 'guide.act.look', cue: 2 },
               { shape: 'circle', at: 'addBackdrop', label: 'guide.act.look', cue: 3 }
@@ -153,7 +153,7 @@
         { id: 'b3', demo: {
             project: TWO,
             annotate: [
-              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 0 },
+              { shape: 'square', at: 'sprites', label: 'guide.act.look', cue: 0 },
               { shape: 'square', at: 'addSprite', label: 'guide.act.look', cue: 1 }
             ],
             /* two presses on the sentence that says "press one in the list and it is selected": the
@@ -166,7 +166,7 @@
         { id: 'b4', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'b4', blocks: [move(10)] }],
-            annotate: [look('palette'), look('workspace', 'square')], run: 0
+            annotate: [look('palette', 'square'), look('workspace', 'square')], run: 0
           }
         },
         /* Not a picture of the two buttons: the hand presses the green one, the program runs, and the
@@ -187,7 +187,7 @@
         { id: 'b6', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'cats', blocks: [flag, move(30), say('guide.say.hello', 1), play] }],
-            annotate: [look('palette')], run: 3000
+            annotate: [look('palette', 'square')], run: 3000
           }
         },
         /* The second group: Control (the C-block), Operators (the reporter inside it) and Variables.
@@ -199,7 +199,7 @@
               setScore({ op: 'operator_random', FROM: 1, TO: 10 }),
               repeat(3, [move(20)])
             ] }],
-            annotate: [look('palette'), type('field:data_setvariableto/VALUE')], run: 2800
+            annotate: [look('palette', 'square'), type('field:data_setvariableto/VALUE')], run: 2800
           }
         },
         /* Shapes, by building one of each: a hat on top, a stack under it, a C-block holding a
@@ -245,7 +245,7 @@
             add: [{ 'do': 'add_sprite', name: 'Cat', sprite: '@cat', cue: 1 }],
             annotate: [
               { shape: 'circle', at: 'addSprite', label: 'guide.act.click', cue: 1 },
-              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 2 }
+              { shape: 'square', at: 'sprites', label: 'guide.act.look', cue: 2 }
             ]
           }
         }
@@ -263,7 +263,7 @@
         { id: 'st1', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'st1', blocks: [flag, move(150)] }],
-            annotate: [look('stage'), look('spriteInfo', 'square')], run: 2600
+            annotate: [look('stage', 'square'), look('spriteInfo', 'square')], run: 2600
           }
         },
         /* Shrink it, then give it back: two presses on the real toggle, not a ring round it. */
@@ -279,7 +279,7 @@
         { id: 'st3', demo: {
             project: ONE,
             add: [{ 'do': 'add_backdrop', name: 'Blue Sky' }],
-            annotate: [click('addBackdrop'), look('stage')]
+            annotate: [click('addBackdrop'), look('stage', 'square')]
           }
         }
       ]
@@ -293,7 +293,7 @@
       steps: [
         /* Selecting is the lesson, and selecting is a press: 小光, then 小飛. */
         { id: 'sp1', demo: {
-            project: TWO, annotate: [look('sprites')],
+            project: TWO, annotate: [look('sprites', 'square')],
             taps: [tap('sprite:@pico'), tap('sprite:@lumo')]
           }
         },
@@ -303,7 +303,7 @@
             add: [{ 'do': 'add_sprite', name: 'Ben', sprite: '@boy' }],
             annotate: [
               { shape: 'circle', at: 'addSprite', label: 'guide.act.click', cue: 0 },
-              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 1 }
+              { shape: 'square', at: 'sprites', label: 'guide.act.look', cue: 1 }
             ]
           }
         },
@@ -312,7 +312,7 @@
         { id: 'sp3', demo: {
             project: TWO,
             scripts: [{ sprite: '@lumo', id: 'sp3', blocks: [flag, move(80), grow(30)] }],
-            annotate: [look('sprites'), look('spriteInfo', 'square')],
+            annotate: [look('sprites', 'square'), look('spriteInfo', 'square')],
             taps: [tap('sprite:@lumo')], run: 2600
           }
         }
@@ -329,7 +329,7 @@
         { id: 'sc1', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'sc', blocks: [move(10), turn(15)] }],
-            annotate: [look('workspace', 'square'), look('palette')], run: 0
+            annotate: [look('workspace', 'square'), look('palette', 'square')], run: 0
           }
         },
         /* "將積木拖返去積木區" — the animator's way of deleting is exactly that drag, and this step
@@ -337,7 +337,7 @@
         { id: 'sc2', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'sc', blocks: [move(10)] }],
-            annotate: [look('workspace', 'square'), look('palette')], run: 0
+            annotate: [look('workspace', 'square'), look('palette', 'square')], run: 0
           }
         }
       ]
@@ -351,22 +351,22 @@
       steps: [
         /* The three tabs, pressed: 造型, then 音效, then 程式 again. A step about switching panes
            that never switches them has described the tab without showing what it does. */
-        { id: 'tb1', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:1', 1)] } },
-        { id: 'tb2', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:2', 1)] } },
-        { id: 'tb3', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:0', 1)] } },
+        { id: 'tb1', demo: { project: ONE, annotate: [{ shape: 'square', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:1', 1)] } },
+        { id: 'tb2', demo: { project: ONE, annotate: [{ shape: 'square', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:2', 1)] } },
+        { id: 'tb3', demo: { project: ONE, annotate: [{ shape: 'square', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:0', 1)] } },
         /* A variable made and used: the hand opens Variables, drags 「變數設為」, and the monitor
            appears on the stage with the number in it. */
         { id: 'tb4', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'tb4', blocks: [flag, setScore(0), addScore(1), say('guide.say.score', 1)] }],
-            annotate: [look('palette'), { shape: 'circle', at: 'stage', label: 'guide.act.watch', cue: 1 }],
+            annotate: [look('palette', 'square'), { shape: 'square', at: 'stage', label: 'guide.act.watch', cue: 1 }],
             run: 2400
           }
         },
         /* My Blocks: the category is opened and its flyout ringed. Making a procedure is the student's
            own work; what the manual owes them is where the shelf is. */
         { id: 'tb5', demo: {
-            project: ONE, annotate: [look('palette'), look('flyout', 'square')],
+            project: ONE, annotate: [look('palette', 'square'), look('flyout', 'square')],
             taps: [tap('cat:myBlocks', 1)]
           }
         }
@@ -382,7 +382,7 @@
         /* The menu bar, opened and shut: 檔案, then 編輯. `toggle` is what shuts them again, because
            a menu left open covers the canvas the rest of the step is talking about. */
         { id: 'mn1', demo: {
-            project: ONE, annotate: [click('toolbar')],
+            project: ONE, annotate: [click('toolbar', 'square')],
             taps: [tap('menu:file', 1, { toggle: true }), tap('menu:edit', 2, { toggle: true })]
           }
         },
@@ -390,13 +390,13 @@
            round the open list rather than round the word 「檔案」 for the fourth time. */
         { id: 'mn2', demo: {
             project: ONE,
-            annotate: [click('toolbar'), { shape: 'square', at: '[class*="menu-bar_menu-bar-menu"]', label: 'guide.act.look', cue: 1 }],
+            annotate: [click('toolbar', 'square'), { shape: 'square', at: '[class*="menu-bar_menu-bar-menu"]', label: 'guide.act.look', cue: 1 }],
             taps: [tap('menu:file', 1)]
           }
         },
         /* The AI pane: 對話, then back to 指南 — the tab the student is reading lives in there too. */
         { id: 'mn3', demo: {
-            project: ONE, annotate: [look('chatTabs')],
+            project: ONE, annotate: [look('chatTabs', 'square')],
             taps: [tap('chat:0', 1, { hold: 460 }), tap('chat:1', 2, { hold: 240 })]
           }
         }
@@ -444,7 +444,7 @@
             }],
             annotate: [
               drag('flyout:first'),
-              { shape: 'circle', at: 'stage', label: 'guide.act.watch' }
+              { shape: 'square', at: 'stage', label: 'guide.act.watch' }
             ],
             run: 3000
           }
@@ -506,7 +506,7 @@
             keys: ['ArrowRight', 'ArrowLeft'],
             annotate: [
               drag('flyout:first'),
-              { shape: 'circle', at: 'stage', label: 'guide.act.watch' }
+              { shape: 'square', at: 'stage', label: 'guide.act.watch' }
             ]
           }
         },
@@ -518,7 +518,7 @@
               sprite: '@pico', id: 'k3',
               blocks: [{ op: 'event_whenthisspriteclicked' }, say('guide.say.hi', 2)]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.click' }]
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.click' }]
           }
         }
       ]
@@ -533,14 +533,14 @@
            presses the one it is about. */
         {
           id: 't1',
-          demo: { project: TWO, annotate: [look('sprites')], taps: [tap('sprite:@lumo', 1)] }
+          demo: { project: TWO, annotate: [look('sprites', 'square')], taps: [tap('sprite:@lumo', 1)] }
         },
         {
           id: 't2',
           demo: {
             project: TWO,
             scripts: [{ sprite: '@lumo', id: 't1', blocks: [flag, forever([turn(15), move(5)])] }],
-            annotate: [click('sprites')],
+            annotate: [click('sprites', 'square')],
             focus: '@lumo', run: 3200
           }
         }

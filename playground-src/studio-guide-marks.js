@@ -9,6 +9,15 @@
  * shape that could not survive being wrong: a ring on the flag is either on the flag or absent, but an
  * arrow that outlives the dialog it pointed into keeps claiming a place that is no longer there.
  *
+ * WHICH SHAPE IS NOT THE DATA'S CHOICE
+ * A step may ask for one, but it does not get to be wrong about it. A circle is a ring round a
+ * button: at 44px the ellipse clears the corners and everything inside it is the button. Round
+ * something wide — the stage, the sprite list, a column of blocks — the same ellipse passes INSIDE
+ * the corners, so the four corners of the thing being named fall outside the ring that names it.
+ * So the shape is measured, not trusted: `fitsCircle` asks whether the ellipse contains the
+ * rectangle, and anything it cannot contain is drawn as a rectangle. Ask for a circle round the
+ * stage and you get a rectangle, which is the only shape that is true of the stage.
+ *
  * WHY A LAYER AND NOT A HIGHLIGHT
  * The editor belongs to the gui: wrapping a palette block in a class would fight it. So this draws in
  * its own fixed SVG on top, and reads the editor's geometry once per mark. Nothing here is interactive
@@ -174,8 +183,11 @@
     }
 
     /* ---------- the two shapes ---------- */
+    var SQUARE_PAD = 7;
+    var CIRCLE_PAD = 11;
+
     function square(g, r) {
-      var pad = 7;
+      var pad = SQUARE_PAD;
       g.appendChild(el('rect', {
         x: Math.round(r.left - pad), y: Math.round(r.top - pad),
         width: Math.round(r.width + pad * 2), height: Math.round(r.height + pad * 2),
@@ -184,11 +196,25 @@
     }
 
     function circle(g, r) {
-      var pad = 11;
+      var pad = CIRCLE_PAD;
       g.appendChild(el('ellipse', {
         cx: Math.round(r.left + r.width / 2), cy: Math.round(r.top + r.height / 2),
         rx: Math.round(r.width / 2 + pad), ry: Math.round(r.height / 2 + pad)
       }));
+    }
+
+    /**
+     * Can a circle honestly hold this? The ellipse that `circle` draws has the rectangle's own centre
+     * and half-width plus eleven; a point is inside it when (x/rx)² + (y/ry)² ≤ 1, and the point that
+     * decides is the corner. Round a 44px button the answer is 0.89 and the ring holds everything it
+     * names. Round a 470×350 stage it is 1.80 — the ellipse is well inside the corners, so a quarter
+     * of the stage, including all four corners, sits outside the ring drawn to mean "the stage".
+     */
+    function fitsCircle(r) {
+      var rx = r.width / 2 + CIRCLE_PAD, ry = r.height / 2 + CIRCLE_PAD;
+      if (rx <= 0 || ry <= 0) return false;
+      var x = r.width / 2, y = r.height / 2;
+      return (x * x) / (rx * rx) + (y * y) / (ry * ry) <= 1;
     }
 
     /**
@@ -231,7 +257,6 @@
 
     /* ---------- the verb ---------- */
     function build(spec) {
-      var g = el('g', { 'class': 'wl-mark is-' + (spec.shape || 'circle') });
       var r = rectOf(spec.at);
       if (!r) return null;
       /* The block the hand went to can move between the hand arriving and the ring being drawn — a
@@ -239,8 +264,11 @@
          target has left the page is skipped, which is what this file promises; drawn where it now
          is, it would be a frame round the top edge of the window, pointing at nothing. */
       if (r.bottom < 0 || r.top > root.innerHeight || r.right < 0 || r.left > root.innerWidth) return null;
-      if (spec.shape === 'square') square(g, r);
-      else circle(g, r);
+      /* A square is asked for and given. A circle is asked for and checked: see fitsCircle. */
+      var round = spec.shape !== 'square' && fitsCircle(r);
+      var g = el('g', { 'class': 'wl-mark is-' + (round ? 'circle' : 'square') });
+      if (round) circle(g, r);
+      else square(g, r);
       var tagX = r.left - 6, above = r.top - 10, below = r.top + r.height + 8;
 
       if (spec.label) g.fit = tag(g, T(spec.label), tagX, above, below);
@@ -302,7 +330,13 @@
       /** how many marks are on screen — a caller about to draw its own frame asks first */
       count: function () { return shown.length; },
       /** for a caller that has one region to name, without a list */
-      at: function (anchor) { return rectOf(anchor); }
+      at: function (anchor) { return rectOf(anchor); },
+      /**
+       * Would a circle round this rectangle hold it? Exported so a check page can ask the same
+       * question of the data that the renderer asks of the screen: a step that names a circle round
+       * the stage is wrong in the data even when the renderer quietly corrects it.
+       */
+      fitsCircle: fitsCircle
     };
   }
 

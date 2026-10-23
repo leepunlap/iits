@@ -96,7 +96,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rb1', blocks: [flag, { op: 'looks_nextbackdrop' }, wait(1)] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 1800
           }
         }
@@ -116,7 +116,7 @@
               { sprite: '@pico', id: 'rc1', blocks: [flag, wait(0.4), { op: 'event_broadcast', BROADCAST_INPUT: word('guide.refScene.msg') }] },
               { sprite: '@lumo', id: 'rc2', blocks: [{ op: 'event_whenbroadcastreceived', BROADCAST_OPTION: word('guide.refScene.msg') }, say('guide.say.hi', 2)] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         },
@@ -150,7 +150,7 @@
                 { op: 'control_if', CONDITION: { op: 'sensing_touchingobject', TOUCHINGOBJECTMENU: word('guide.sprite.lumo') }, SUBSTACK: [say('guide.say.hi', 1)] }
               ])]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2800
           }
         },
@@ -159,7 +159,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rt2', blocks: [flag, forever([move(10), { op: 'motion_ifonedgebounce' }])] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3000
           }
         }
@@ -221,7 +221,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rn1', blocks: [flag, { op: 'sound_play', SOUND_MENU: 'Meow' }, { op: 'sound_setvolumeto', VOLUME: 60 }] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 1800
           }
         }
@@ -238,7 +238,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rg1', blocks: [flag, forever([{ op: 'looks_nextcostume' }, wait(0.4)])] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2000
           }
         },
@@ -299,7 +299,7 @@
             scripts: [{ sprite: '@pico', id: 'rm1', blocks: [flag, { op: 'motion_gotoxy', X: 0, Y: 0 }, wait(0.6), { op: 'motion_gotoxy', X: 130, Y: -70 }] }],
             annotate: [
               { shape: 'square', at: 'field:motion_gotoxy/X', label: 'guide.act.type', when: 'built' },
-              { shape: 'circle', at: 'stage', label: 'guide.act.watch' }
+              { shape: 'square', at: 'stage', label: 'guide.act.watch' }
             ],
             run: 1800
           }
@@ -309,7 +309,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rm2', blocks: [flag, { op: 'motion_glidesecstoxy', SECS: 2, X: -140, Y: 90 }] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         }
@@ -326,7 +326,7 @@
           demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'rh1', blocks: [flag, repeat(4, [{ op: 'control_create_clone_of', CLONE_OPTION: '_myself_' }, { op: 'motion_changexby', DX: 55 }])] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 1600
           }
         },

@@ -98,7 +98,7 @@
               sprite: '@mouse', id: 'l11',
               blocks: [flag, forever([{ op: 'motion_glideto', SECS: 0.3 }])]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2400
           }
         },
@@ -118,7 +118,7 @@
           demo: {
             project: EMPTY, focus: '@mouse',
             scripts: [{ sprite: '@mouse', id: 'l13', blocks: [flag, { op: 'sound_play', SOUND_MENU: 'Meow' }] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 1600
           }
         },
@@ -130,7 +130,7 @@
               sprite: '@giraffe', id: 'l14',
               blocks: [flag, forever([ifThen(touching('mouse'), [say('guide.l50101.giraffe', 2)])])]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         }
@@ -158,7 +158,7 @@
               { sprite: '@slime', id: 'l22', blocks: [{ op: 'event_whenkeypressed', KEY_OPTION: 'left arrow' }, { op: 'motion_pointindirection', DIRECTION: -90 }, move(6)] }
             ],
             keys: ['ArrowRight', 'ArrowLeft'],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }]
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }]
           }
         },
         {
@@ -202,7 +202,7 @@
               { sprite: '@slime', id: 'l25', blocks: [flag, forever([ifThen(touching('warp'), [{ op: 'motion_gotoxy', X: 0, Y: -165 }])])] },
               { sprite: '@slime', id: 'l26', blocks: [flag, forever([ifThen(touching('goal'), [say('guide.l50102.win', 3)])])] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2800
           }
         }
@@ -228,7 +228,7 @@
               sprite: '@boy', id: 'l31',
               blocks: [flag, { op: 'motion_glidesecstoxy', SECS: 2, X: -60, Y: -110 }]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         },
@@ -240,7 +240,7 @@
               { sprite: '@boy', id: 'l32', blocks: [flag, { op: 'motion_glidesecstoxy', SECS: 1.5, X: -60, Y: -110 }, { op: 'event_broadcast', BROADCAST_INPUT: word('guide.l50103.msg') }] },
               { sprite: '@firework', id: 'l33', blocks: [{ op: 'event_whenbroadcastreceived', BROADCAST_OPTION: word('guide.l50103.msg') }, { op: 'looks_show' }, { op: 'motion_gotoxy', X: -60, Y: -110 }] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -298,7 +298,7 @@
           demo: {
             project: EMPTY, focus: '@dove',
             scripts: [{ sprite: '@dove', id: 'l42', blocks: [flag, repeat(4, [{ op: 'motion_changexby', DX: 50 }, wait(0.4)])] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         },
@@ -307,7 +307,7 @@
           demo: {
             project: EMPTY, focus: '@dove',
             scripts: [{ sprite: '@dove', id: 'l43', blocks: [flag, { op: 'motion_glidesecstoxy', SECS: 2, X: 100, Y: -100 }] }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2800
           }
         },
@@ -345,7 +345,7 @@
               blocks: [flag, { op: 'motion_gotoxy', X: -120, Y: 60 }, { op: 'pen_clear' },
                 { op: 'pen_stamp' }, { op: 'motion_changexby', DX: 140 }, { op: 'pen_stamp' }]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2000
           }
         },
@@ -489,7 +489,7 @@
               { sprite: '@chick', id: 'l132', blocks: [flag, { op: 'looks_hide' }, repeat(5, [{ op: 'control_create_clone_of', CLONE_OPTION: '_myself_' }])] },
               { sprite: '@chick', id: 'l133', blocks: [{ op: 'control_start_as_clone' }, { op: 'looks_show' }, { op: 'motion_gotoxy', X: { op: 'operator_random', FROM: -180, TO: 0 }, Y: -20 }] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         },
@@ -555,7 +555,7 @@
               blocks: [flag, { op: 'motion_gotoxy', X: -200, Y: -100 },
                 repeat(10, [{ op: 'control_create_clone_of', CLONE_OPTION: '_myself_' }, { op: 'motion_changexby', DX: 40 }])]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 2600
           }
         },
@@ -734,7 +734,7 @@
               { sprite: '@ship', id: 'l152', blocks: [{ op: 'event_whenkeypressed', KEY_OPTION: 'left arrow' }, { op: 'motion_pointindirection', DIRECTION: -90 }, move(8)] }
             ],
             keys: ['ArrowRight', 'ArrowLeft'],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }]
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }]
           }
         },
         {
@@ -761,7 +761,7 @@
                 { op: 'motion_gotoxy', X: { op: 'operator_random', FROM: -170, TO: 170 }, Y: 150 },
                 { op: 'motion_glidesecstoxy', SECS: 2, X: 0, Y: -160 }, { op: 'control_delete_this_clone' }] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -841,7 +841,7 @@
               { sprite: '@slime', id: 'l21b', blocks: [{ op: 'event_whenkeypressed', KEY_OPTION: 'left arrow' }, move(-8)] }
             ],
             keys: ['ArrowRight', 'ArrowLeft'],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }]
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }]
           }
         },
         {
@@ -871,7 +871,7 @@
                 { op: 'motion_glidesecstoxy', SECS: 1.6, X: 0, Y: -100 }, wait(1.2),
                 { op: 'control_delete_this_clone' }] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -962,7 +962,7 @@
               sprite: '@face', id: 'l53b',
               blocks: [{ op: 'control_start_as_clone' }, { op: 'looks_show' }, { op: 'looks_setsizeto', SIZE: 24 }]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -1145,7 +1145,7 @@
                   { op: 'data_setvariableto', VARIABLE: word('guide.l50212.curr'), VALUE: { 'var': word('guide.l50212.next') } }]),
                 say('guide.l50212.step3', 2)]
             }],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -1187,7 +1187,7 @@
                 { op: 'motion_gotoxy', X: { op: 'operator_random', FROM: -180, TO: 180 }, Y: { op: 'operator_random', FROM: -120, TO: 120 } },
                 wait(2.4), { op: 'control_delete_this_clone' }] }
             ],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }],
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }],
             run: 3200
           }
         },
@@ -1202,7 +1202,7 @@
                 { op: 'motion_changexby', DX: -20 }, { op: 'event_broadcast', BROADCAST_INPUT: word('guide.l50214.left') }] }
             ],
             keys: ['ArrowRight', 'ArrowLeft'],
-            annotate: [{ shape: 'circle', at: 'stage', label: 'guide.act.watch' }]
+            annotate: [{ shape: 'square', at: 'stage', label: 'guide.act.watch' }]
           }
         },
         {

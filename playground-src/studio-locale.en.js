@@ -621,10 +621,10 @@
     'guide.basics.b1.body': 'Scratch is a visual tool: you build programs by snapping coloured blocks together, no typing code. Rather than describe it, here it is happening — the pointer drags two blocks out of the palette, the green-flag hat and “move 60 steps”, and they click together into a whole program. Add three blocks and press the green flag: the Sprite moves, talks, grows and makes a sound on the Stage. Every step after this works the same way: the hand does it while you read, then you do it yourself.',
 
     'guide.basics.b2.title': 'The Stage: where your project performs',
-    'guide.basics.b2.body': 'The big panel in the middle is the Stage. Every character acts here, and every effect of your program shows up here. Top-left you see two numbers (x and y) — the selected sprite’s position. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. Under the stage you can pick a Backdrop, like changing the set for a play.',
+    'guide.basics.b2.body': 'The big panel in the middle is the Stage — every character acts here, and every effect of your program shows up here. Under the stage is a row of sprite details: the name on the left, and x and y on the right — the sprite’s position on the stage; move the sprite and those two numbers move with it. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. At the bottom right, under the stage, you can pick a Backdrop, like changing the set for a play.',
 
     'guide.basics.b3.title': 'The Sprite list: your cast',
-    'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — the cat, the dog, and so on. Click the cat icon (Add Sprite) at the top-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
+    'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — the cat, the dog, and so on. Click the cat icon (Add Sprite) at the bottom-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
 
     'guide.basics.b4.title': 'The Blocks palette and the Scripts area',
     'guide.basics.b4.body': 'On the left is the Blocks palette, holding nine standard families of blocks grouped by colour, like a toolbox — plus a UCMake hardware family at the bottom. Click a family and a column of its blocks (the flyout) appears to the right of the palette. The large area on the right is the Scripts (Code) area: drag blocks out of the palette and stack them here to build a sprite’s program.',
@@ -651,7 +651,7 @@
     'guide.basics.b11.body': 'Now drag the “when green flag clicked” hat block onto the move block; they click together into your first program. Press the green flag above the stage and “move 50 steps” runs once — the sprite steps forward. Congratulations, you wrote your first Scratch program!',
 
     'guide.basics.b12.title': 'Add another sprite to play with',
-    'guide.basics.b12.body': 'One sprite is sometimes not enough. Click “Add Sprite” (bottom-left) to bring in another actor. Each sprite has its own Scripts area, so you can write “the cat walks while the dog jumps” — two storylines at once. This step is for anyone who hasn’t added a sprite yet; if you already know how, skip to the next level.',
+    'guide.basics.b12.body': 'One sprite is sometimes not enough. Click “Add Sprite” (bottom-right of the sprite list) to bring in another actor. Each sprite has its own Scripts area, so you can write “the cat walks while the dog jumps” — two storylines at once. This step is for anyone who hasn’t added a sprite yet; if you already know how, skip to the next level.',
 
     'guide.levels': 'Levels',
     'guide.act.look': 'Look here',
@@ -664,7 +664,7 @@
     'guide.stage.st2.title': 'Stage controls: smaller, larger, full screen',
     'guide.stage.st2.body': 'The buttons at the top-right of the stage shrink or enlarge it (a smaller stage leaves more room for blocks) and switch to full screen for a performance. They change how you view the stage, never the program itself.',
     'guide.stage.st3.title': 'Backdrops: giving the stage a set',
-    'guide.stage.st3.body': 'Below the stage is the backdrop slot. Click “+” to choose one from the library, paint your own or upload an image. A project can have several backdrops, switched with the “next backdrop” block, like changing the set between scenes.',
+    'guide.stage.st3.body': 'Below the stage is the backdrop slot — click “+” to choose one from the library, paint your own or upload an image. A project can have several backdrops, switched with the “next backdrop” block, like changing the set between scenes.',
 
     'guide.sprites.title': 'Sprites',
     'guide.sprites.sub': 'Your actors',
@@ -672,7 +672,7 @@
     'guide.sprites.sp1.title': 'The sprite list: choosing an actor',
     'guide.sprites.sp1.body': 'The sprite list sits at the bottom-left of the stage and shows every sprite. Click one to select it; every block you stack in the Scripts area then belongs to that sprite. Each sprite has its own scripts, costumes and sounds.',
     'guide.sprites.sp2.title': 'Adding a sprite',
-    'guide.sprites.sp2.body': 'Click “+” at the top-right of the sprite list (Add Sprite) to choose one from the library, paint your own, or upload an image. The new sprite appears in the list and you can start coding it straight away.',
+    'guide.sprites.sp2.body': 'Click the cat icon at the bottom-right of the sprite list (Add Sprite) to choose one from the library, paint your own, or upload an image. The new sprite appears in the list and you can start coding it straight away.',
     'guide.sprites.sp3.title': 'Sprite info: position, size, direction',
     'guide.sprites.sp3.body': 'Once a sprite is selected, its details appear above the list: name, x, y, size (%), direction (degrees), and Show/Hide. Editing these numbers moves or scales the sprite. Right-click a sprite to duplicate, delete or export it.',
 

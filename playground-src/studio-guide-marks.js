@@ -54,7 +54,7 @@
        the green flag's neighbour (stop), the stage-size toggle, the row of stage controls,
        the Code/Costumes/Sounds tabs, the sprite-info fields, and the AI pane's own tabs. */
     stop: ['[class*="stop-all_stop-all-button"]', '[aria-label="Stop"]'],
-    stageSize: ['[class*="stage-size-toggle-group"]'],
+    stageSize: ['[class*="stage-size-toggle-group"]', '[class*="stage-size-row"]'],
     stageHeader: ['[class*="stage-header_stage-header"]'],
     tabs: ['.react-tabs__tab-list', '[class*="react-tabs__tab-list"]'],
     spriteInfo: ['[class*="sprite-info_sprite-info"]', '[class*="sprite-info_row-primary"]'],

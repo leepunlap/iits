@@ -54,6 +54,8 @@
   var grow = function (n) { return { op: 'looks_changesizeby', CHANGE: n }; };
   var say = function (key, secs) { return { op: 'looks_sayforsecs', MESSAGE: { k: key }, SECS: secs }; };
   var play = { op: 'sound_playuntildone', SOUND_MENU: 'pop' };
+  /** A beat between two steps of a program, so the audience can see a number in between. */
+  var pause = function (s) { return { op: 'control_wait', DURATION: s }; };
   var word = function (key) { return { k: key }; };
   var score = word('guide.var.score');
   var setScore = function (v) { return { op: 'data_setvariableto', VARIABLE: score, VALUE: v }; };
@@ -119,19 +121,37 @@
             run: 3000, runAt: 2
           }
         },
-        /* "所有角色喺呢度表演" — so a program runs and the stage is watched while it does. */
+        /* One ring per sentence, on the thing that sentence is about: the stage under "this is the
+           stage", the sprite-info row under "x and y are its position", the header strip under "a row
+           of controls above the stage", the backdrop button under "you can pick a backdrop".
+
+           The row is rung while the program walks, not after it: the sentence claims the numbers
+           follow the sprite, so the sprite has to be moving while the ring is on them. Four short
+           steps rather than one jump, because a number that changes once, in a frame, is not a number
+           anybody sees change. */
         { id: 'b2', demo: {
             project: ONE,
-            scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, move(140)] }],
-            annotate: [look('stage'), look('stageHeader', 'square')],
-            run: 2600
+            scripts: [{ sprite: '@pico', id: 'b2', blocks: [flag, repeat(4, [move(60), pause(0.45)])] }],
+            annotate: [
+              { shape: 'circle', at: 'stage', label: 'guide.act.look', cue: 0 },
+              { shape: 'square', at: 'spriteInfo', label: 'guide.act.look', cue: 1 },
+              { shape: 'square', at: 'stageHeader', label: 'guide.act.look', cue: 2 },
+              { shape: 'circle', at: 'addBackdrop', label: 'guide.act.look', cue: 3 }
+            ],
+            run: 2600, runAt: 1
           }
         },
         /* "撳一撳清單入面某個角色，就會揀中佢" — the hand presses each one, and the editor really
            moves to it: the scripts pane below changes with it. */
         { id: 'b3', demo: {
-            project: TWO, annotate: [look('sprites'), click('addSprite')],
-            taps: [tap('sprite:@pico', 2), tap('sprite:@lumo', 3)]
+            project: TWO,
+            annotate: [
+              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 0 },
+              { shape: 'square', at: 'addSprite', label: 'guide.act.look', cue: 1 }
+            ],
+            /* two presses on the sentence that says "press one in the list and it is selected": the
+               voice runs that as one sentence, so a tap waiting for a fourth beat never happens */
+            taps: [tap('sprite:@pico', 2), tap('sprite:@lumo', 2, { hold: 500 })]
           }
         },
         /* The palette and the scripts area, told by dragging one block from the first into the
@@ -147,8 +167,12 @@
         { id: 'b5', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'b5', blocks: [flag, forever([move(10)])] }],
-            annotate: [click('flag'), { shape: 'circle', at: 'stop', label: 'guide.act.click', cue: 2 }],
-            run: 2400, stop: true
+            annotate: [
+              { shape: 'square', at: 'stageHeader', label: 'guide.act.look', cue: 0 },
+              { shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 1 },
+              { shape: 'circle', at: 'stop', label: 'guide.act.click', cue: 2 }
+            ],
+            run: 2400, runAt: 1, stop: true
           }
         },
         /* The families, one block at a time: the hand opens Events, Motion, Looks and Sound and
@@ -182,14 +206,40 @@
         /* One program, built up across three steps: the same script id, so the second step retypes
            the number in the block the first one dragged in, and the third snaps the hat on top of
            it. That is the thing the copy is claiming — "they click together". */
-        { id: 'b9', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [move(10)] }], annotate: [drag('flyout:first'), look('workspace', 'square')], run: 0 } },
+        /* The block arrives on the sentence that says "pick it up and drag it there", and the flag is
+           pressed on the sentence that says pressing it will not do anything yet — the one claim in
+           this step a reader can only believe by watching it happen. With no hat block above it there
+           is nothing to start, so the press runs nothing, which is the picture the words describe. */
+        { id: 'b9', demo: {
+            project: ONE,
+            scripts: [{ sprite: '@pico', id: 'prog', cue: 1, blocks: [move(10)] }],
+            annotate: [
+              { shape: 'square', at: 'flyout:first', label: 'guide.act.drag', cue: 1 },
+              { shape: 'square', at: 'workspace', label: 'guide.act.look', cue: 2 }
+            ],
+            run: 0
+          }
+        },
         { id: 'b10', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [move(50)] }], annotate: [type('field:motion_movesteps/STEPS')], run: 0 } },
-        { id: 'b11', demo: { project: ONE, scripts: [{ sprite: '@pico', id: 'prog', blocks: [flag, move(50)] }], annotate: [drag('flyout:first'), { shape: 'square', at: 'workspace', label: 'guide.act.watch', when: 'built' }, { shape: 'circle', at: 'flag', label: 'guide.act.watch' }], run: 1800 } },
+        { id: 'b11', demo: {
+            project: ONE,
+            scripts: [{ sprite: '@pico', id: 'prog', blocks: [flag, move(50)] }],
+            annotate: [
+              { shape: 'square', at: 'flyout:first', label: 'guide.act.drag', cue: 0 },
+              { shape: 'square', at: 'workspace', label: 'guide.act.watch', when: 'built' },
+              { shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 1 }
+            ],
+            run: 1800, runAt: 1
+          }
+        },
         /* Adding an actor, for real: the plus, the library, the tile, the sprite on the stage. */
         { id: 'b12', demo: {
             project: ONE,
-            add: [{ 'do': 'add_sprite', name: 'Cat', sprite: '@cat' }],
-            annotate: [click('addSprite'), look('sprites')]
+            add: [{ 'do': 'add_sprite', name: 'Cat', sprite: '@cat', cue: 1 }],
+            annotate: [
+              { shape: 'circle', at: 'addSprite', label: 'guide.act.click', cue: 1 },
+              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 2 }
+            ]
           }
         }
       ]
@@ -211,7 +261,10 @@
         },
         /* Shrink it, then give it back: two presses on the real toggle, not a ring round it. */
         { id: 'st2', demo: {
-            project: ONE, annotate: [look('stageHeader', 'square')],
+            project: ONE,
+            /* the ring is on the two buttons themselves, not on the whole header strip: the sentence
+               says 「右上角有幾個掣」, and the strip runs the width of the stage */
+            annotate: [{ shape: 'square', at: 'stageSize', label: 'guide.act.click', cue: 0 }],
             taps: [tap('stageSize:0', 1), tap('stageSize:1', 2)]
           }
         },
@@ -241,7 +294,10 @@
         { id: 'sp2', demo: {
             project: ONE,
             add: [{ 'do': 'add_sprite', name: 'Ben', sprite: '@boy' }],
-            annotate: [click('addSprite'), look('sprites')]
+            annotate: [
+              { shape: 'circle', at: 'addSprite', label: 'guide.act.click', cue: 0 },
+              { shape: 'circle', at: 'sprites', label: 'guide.act.look', cue: 1 }
+            ]
           }
         },
         /* "改呢啲數字可以直接移動或者縮放角色" — so the program moves and grows the sprite, and the
@@ -288,9 +344,9 @@
       steps: [
         /* The three tabs, pressed: 造型, then 音效, then 程式 again. A step about switching panes
            that never switches them has described the tab without showing what it does. */
-        { id: 'tb1', demo: { project: ONE, annotate: [click('tabs')], taps: [tap('tab:1', 1)] } },
-        { id: 'tb2', demo: { project: ONE, annotate: [click('tabs')], taps: [tap('tab:2', 1)] } },
-        { id: 'tb3', demo: { project: ONE, annotate: [click('tabs')], taps: [tap('tab:0', 1)] } },
+        { id: 'tb1', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:1', 1)] } },
+        { id: 'tb2', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:2', 1)] } },
+        { id: 'tb3', demo: { project: ONE, annotate: [{ shape: 'circle', at: 'tabs', label: 'guide.act.click', cue: 1 }], taps: [tap('tab:0', 1)] } },
         /* A variable made and used: the hand opens Variables, drags 「變數設為」, and the monitor
            appears on the stage with the number in it. */
         { id: 'tb4', demo: {
@@ -353,9 +409,13 @@
             scripts: [{ sprite: '@pico', id: 'a1', blocks: [flag, move(10)] }],
             annotate: [
               drag('flyout:first'),
-              type('field:motion_movesteps/STEPS')
+              type('field:motion_movesteps/STEPS'),
+              /* the sentence after the snap says "press the flag", so the press and the ring wait
+                 for it: the step is the first program a reader ever runs, and a flag pressed before
+                 the words ask for it is the one thing they will not connect to the sprite's step */
+              { shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 1 }
             ],
-            run: 1600
+            run: 1600, runAt: 1
           }
         },
         {

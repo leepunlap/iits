@@ -65,7 +65,11 @@
     workspace: ['.blocklyWorkspace'],
     toolbar: ['[class*="menu-bar_menu-bar"]'],
     library: ['[class*="library_library-scroll-grid"]', '[class*="library_library"]'],
-    stageSize: ['[class*="stage-size-toggle-group"]'],
+    /* 小舞台 / 大舞台 / 全螢幕 are three plain buttons in the stage header row, not the
+       `stage-size-toggle-group` of stock scratch-gui: that name resolves to nothing in this build,
+       so 「撳縮細試下」 was a step with no press in it at all. Both class names are kept so a
+       build that goes back to the upstream markup still lands on the same buttons. */
+    stageSize: ['[class*="stage-size-toggle-group"]', '[class*="stage-size-row"]'],
     stageHeader: ['[class*="stage-header_stage-header"]'],
     tabs: ['[class*="react-tabs__tab-list"]'],
     spriteInfo: ['[class*="sprite-info_sprite-info"]', '[class*="sprite-info_row-primary"]'],
@@ -1184,6 +1188,14 @@
 
       var chain = Promise.resolve(true);
       if (adds.length) {
+        /* An import can wait for a sentence too. A step that opens the sprite library does it in the
+           sentence that says "press the icon and pick one", not in the preamble above it: the picker
+           is the loudest thing on the screen, and it appearing before the words ask for it is the
+           same fault as a ring drawn a sentence early. `cue` is optional; without it the import
+           happens as soon as the step starts, which is what every step did before. */
+        var addAt = 0;
+        adds.forEach(function (a) { var c = Math.max(0, (a && a.cue) | 0); if (c > addAt) addAt = c; });
+        if (addAt > slot) slot = addAt;
         var first = adds[0];
         var region = first['do'] === 'add_backdrop' ? 'addBackdrop' : 'addSprite';
         /* A sentence that already rings the button does not need the picker's own ring on top — but
@@ -1387,6 +1399,9 @@
       ring: ringEl,
       /** the hand, for a page that wants to drive it or a test that wants to read it */
       cursor: C,
+      /** the element a `taps` entry points at, resolved in the live DOM — what the page checks
+          use, so a control that has moved or been renamed is found by the test and not by a class */
+      resolve: tapTarget,
       /** true while a demonstration is being prepared, explained or performed */
       busy: function () { return busyNow; }
     };

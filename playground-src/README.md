@@ -58,6 +58,29 @@ are never on screen at once.
 | 造型、音效、變數、自訂積木 | 5 |
 | 選單、存檔同 AI 學伴 | 3 |
 
+## Voices
+
+Every narrated line is baked ahead of time as one mp3 per line (with a cue track, so the
+subtitle is the clip's own timing) by `tools/build_voice.mjs` in the `wonderlab-studio`
+project. Edge neural voices, `rate -5%`, slower still where a step needs longer to show
+than it takes to say:
+
+| locale | voice |
+|---|---|
+| `zh-Hant` | `zh-HK-HiuMaanNeural` (Cantonese — the copy is Hong Kong Chinese) |
+| `zh-Hans` | `zh-CN-XiaoxiaoNeural` |
+| `en` | `en-GB-RyanNeural` (British, which is the English these students hear) |
+
+Changing a voice changes every clip's hash, so only that language is synthesised again.
+
+## The demonstration's sound
+
+`studio-app.js` seeds one sound onto every sprite of a demonstration project so a
+播放聲音 block has something to play: `defaults/83a9787d4cb6f3b7632b4ddfebf74367.wav`,
+the real 23 ms "pop". The other wav in `defaults/` — `83c36d806dc92327b9e7049a565c6bff`
+— is Scratch's "Meow", and seeding that one is how a step saying "makes a sound" used to
+come out as a cat.
+
 ## Not in git
 
 Assets — audio clips, sprite images, and the ~17 MB `scratch-gui` bundle — are

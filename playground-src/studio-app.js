@@ -54,15 +54,19 @@
       { id: 'dd382de37d368241a1231e2558b0fcaf', type: 'ImageVector', fmt: 'SVG', url: 'assets/sprite-b.svg' },
       /* One sound, so a demonstration can say "and it makes a sound" and then make one. It is the
          "pop" that ships in the package's defaults/, fetched as bytes because a wav read as text is
-         not a wav. A sprite that owns a sound is the only way a 播放聲音 block has anything to play. */
-      { id: '83c36d806dc92327b9e7049a565c6bff', type: 'Sound', fmt: 'WAV', url: 'defaults/83c36d806dc92327b9e7049a565c6bff.wav' }
+         not a wav. A sprite that owns a sound is the only way a 播放聲音 block has anything to play.
+         The other wav in defaults/ — 83c36d806dc92327b9e7049a565c6bff — is Scratch's "Meow", the
+         cat sound of the empty project (the sprite library tags it animals/cat). It was used here
+         first, which is how a step that says "makes a sound" came out as a cat. */
+      { id: '83a9787d4cb6f3b7632b4ddfebf74367', type: 'Sound', fmt: 'WAV', url: 'defaults/83a9787d4cb6f3b7632b4ddfebf74367.wav' }
     ];
 
-  /** The sound every sprite of a demonstration project is given. 22050 Hz, 16-bit mono: read off the
-      wav's own header, because scratch-vm asks for the rate and the sample count, not the bytes. */
+  /** The sound every sprite of a demonstration project is given. 11025 Hz, 16-bit mono, 258 samples
+      (about 23 ms): read off the wav's own header, because scratch-vm asks for the rate and the
+      sample count, not the bytes, and a wrong sample count truncates the sound. */
   var DEMO_SOUND = { name: 'pop', assetId: DEFAULT_ASSETS[3].id,
                      md5ext: DEFAULT_ASSETS[3].id + '.wav', dataFormat: 'wav',
-                     rate: 22050, sampleCount: 18688 };
+                     rate: 11025, sampleCount: 258 };
 
   /**
    * The names a new project gives itself, per editor locale.

@@ -230,17 +230,20 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
 .wl-g-cbody { margin: 0; font-size: .86rem; line-height: 1.6; }
 
 /* The sentence being spoken is lit where it is written: the card already holds these words, so
-   there is no second copy over the stage and nothing laid across the thing being described. The
-   fill runs for exactly as long as the voice is on that sentence — measured when the clip was
-   baked — so the wipe and the voice end together rather than the wipe guessing. */
+   there is no second copy over the stage and nothing laid across the thing being described.
+
+   The whole sentence lights at once, the way a highlighter does, and the next sentence takes the
+   highlighter away from it. Nothing sweeps along the words: a fill that moves makes the student
+   read the sweep instead of the sentence, and the sentence is the thing being taught.
+
+   Amber, not a tint of the accent: the step card is where the eye is, and "this sentence is being
+   said now" has to be unmistakable from across the pane. The warm family is already in the guide
+   (the bar that says the canvas is borrowed), so this reads as the same hand. */
 .wl-g-say { border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .wl-g-say.is-said {
-  background-image: linear-gradient(rgba(11, 114, 133, .17), rgba(11, 114, 133, .17));
-  background-repeat: no-repeat;
-  background-size: 0 100%;
-  animation: wl-say var(--say, 2400ms) linear forwards;
+  background-color: rgba(255, 197, 61, .42);
+  box-shadow: inset 0 -2px 0 rgba(214, 148, 0, .55);
 }
-@keyframes wl-say { from { background-size: 0 100%; } to { background-size: 100% 100%; } }
 
 .wl-g-acts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .wl-g-demo { font: inherit; font-size: .85rem; font-weight: 600; padding: 8px 14px; min-height: 36px; border: 0;
@@ -345,8 +348,6 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
   body.wl-chat-open .wl-fab { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { #wl-chat { transition: none; } .wl-point { animation: none; } .wl-sub { animation: none; }
-  /* the sentence still lights up, it just arrives lit instead of filling in */
-  .wl-g-say.is-said { animation: none; background-size: 100% 100%; }
   /* the arrow still appears and still presses; it just does not fly across the screen (the script
      already asks for a zero-length travel, this covers the browser that ignores the query in JS) */
   .wl-cur { transition: none; } .wl-cur svg { transition: none; } }

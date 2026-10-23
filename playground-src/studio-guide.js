@@ -140,9 +140,9 @@
     /* ---------- the words, where they are already ----------
        The step card holds the sentence being spoken, so the sentence is highlighted there instead of
        being written a second time over the stage: one copy of the words, and nothing laid across
-       the very thing being described. The highlight fills in over exactly the time the voice spends
-       on the sentence — that time was measured when the clip was baked, so the wipe ends when the
-       voice ends rather than when a guess says so. */
+       the very thing being described. The whole sentence lights at once, the way a highlighter
+       does, and the next sentence takes the highlighter away from it — a fill that moves along the
+       words makes the student read the fill instead of the sentence. */
     var cardTitle = null;    // the two elements the sentences are painted into
     var cardBody = null;
     var saidSpans = [];      // one span per sentence, in the order the voice speaks them
@@ -478,7 +478,6 @@
       if (saidIndex >= 0 && saidSpans[saidIndex]) saidSpans[saidIndex].className = 'wl-g-say';
       saidIndex = info.index;
       sp.className = 'wl-g-say is-said';
-      if (info.ms) sp.style.setProperty('--say', Math.max(500, Math.round(info.ms)) + 'ms');
       keepInView(sp);
       return true;
     }

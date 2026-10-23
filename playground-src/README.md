@@ -67,8 +67,8 @@ than it takes to say:
 
 | locale | voice |
 |---|---|
-| `zh-Hant` | `zh-HK-HiuMaanNeural` (Cantonese — the copy is Hong Kong Chinese) |
-| `zh-Hans` | `zh-CN-XiaoxiaoNeural` |
+| `zh-Hant` | `zh-HK-WanLungNeural` (Cantonese — the copy is Hong Kong Chinese) |
+| `zh-Hans` | `zh-CN-YunjianNeural` |
 | `en` | `en-GB-RyanNeural` (British, which is the English these students hear) |
 
 Changing a voice changes every clip's hash, so only that language is synthesised again.

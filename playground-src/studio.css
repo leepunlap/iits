@@ -253,8 +253,10 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
 .wl-g-voice:hover { background: var(--wl-pane); color: var(--wl-text); }
 .wl-g-voice.is-on { color: var(--wl-accent); }
 
-/* the narration's subtitle, over the bottom of the stage: dark, two lines at most, never in the way */
-.wl-sub { position: fixed; z-index: 480; padding: 7px 12px; border-radius: 9px;
+/* the narration's subtitle, over the bottom of the stage: dark, two lines at most, never in the way.
+   border-box because the width is set to the stage's width minus its margins: with the padding added
+   on top of that the strip ended 14px past the right edge of the stage it belongs to. */
+.wl-sub { position: fixed; z-index: 480; padding: 7px 12px; border-radius: 9px; box-sizing: border-box;
   background: rgba(18, 22, 34, .84); color: #fff; text-align: center;
   font-size: .84rem; line-height: 1.5; font-weight: 500;
   box-shadow: 0 8px 24px rgba(15, 23, 42, .22);

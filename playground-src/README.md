@@ -18,6 +18,7 @@ only the built `playground-<hash>/` package was on the server.
 | `studio-guide-refs.js` | 10 operation reference cards — level `basic` (Tutorial) |
 | `studio-guide-drive.js` | performs a step on the real editor: prepare, build (through the animator), press the flag, press stop, point the hand |
 | `studio-guide-marks.js` | where the annotations are drawn; the `REGION` table of addressable controls |
+| `studio-guide-voice.js` | narration and subtitles: plays the baked clips, and places the subtitle strip inside the stage it belongs to |
 | `studio-app.js` | the shell that seeds assets and builds `blankProject` — kept here because the demonstration sprites' sound lives in it |
 | `studio-i18n.js` | locale registry + translator |
 | `studio-locale.zh-Hant.js` | 繁體（香港）strings — the source language |
@@ -39,6 +40,14 @@ belongs to and fails the build when they disagree — a step that says "the poin
 drags two blocks out" over a stack of five is a build error, not a review note.
 It runs inside `npm run build:playground`, so a package whose copy contradicts its
 own screen cannot be produced (`SKIP_CHECKS=1` overrides, deliberately awkward).
+
+So is where the ring lands. A mark belongs to one sentence (`cue`), and
+`tools/check_marks.mjs` holds it against the subtitle baked for that sentence: if
+the words tell the reader to press or drag something, the ring has to be on that
+something — palette and flyout count as one place, and so do the controls above
+the stage. A ring round the whole stage while the voice is naming blocks and the
+green flag is the failure this rule exists for; it shipped three times, and each
+time a teacher found it before the checker did.
 
 Two hands exist on purpose: `studio-guide-cursor.js` walks to the flag, the stop
 button and the library tiles, while `studio-anim.js` brings its own arrow when it

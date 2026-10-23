@@ -85,7 +85,15 @@
       steps: [
         /* The first step does not describe what Scratch can do, it does it: two blocks snapped
            together, the flag pressed, and the sprite moving, talking, growing and making a sound.
-           The hand builds the stack and presses the flag, so the paragraph and the picture agree. */
+           The hand builds the stack and presses the flag, so the paragraph and the picture agree.
+
+           What is ringed now follows the copy sentence by sentence: nothing while the hand is doing
+           the dragging (the hand is the pointer, and a ring that arrives after the palette has
+           scrolled with it is a ring round empty space), then the flag in the third — because that
+           is the button the third tells the reader to press, and the press now happens on that
+           sentence too (`runAt`). It used to be a ring round the whole stage there, to say "watch
+           the result", and that was the one place the sentence was not talking about: it was naming
+           blocks and a button. A ring the words do not ask for is a ring the eye learns to ignore. */
         { id: 'b1', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'b1', blocks: [
@@ -95,11 +103,8 @@
               grow(40),
               play
             ] }],
-            annotate: [
-              drag('flyout:first'),
-              { shape: 'circle', at: 'stage', label: 'guide.act.watch', cue: 2 }
-            ],
-            run: 4200
+            annotate: [{ shape: 'circle', at: 'flag', label: 'guide.act.click', cue: 2 }],
+            run: 4200, runAt: 2
           }
         },
         /* "所有角色喺呢度表演" — so a program runs and the stage is watched while it does. */
@@ -279,7 +284,7 @@
         { id: 'tb4', demo: {
             project: ONE,
             scripts: [{ sprite: '@pico', id: 'tb4', blocks: [flag, setScore(0), addScore(1), say('guide.say.score', 1)] }],
-            annotate: [look('palette'), { shape: 'circle', at: 'stage', label: 'guide.act.watch', cue: 2 }],
+            annotate: [look('palette'), { shape: 'circle', at: 'stage', label: 'guide.act.watch', cue: 1 }],
             run: 2400
           }
         },

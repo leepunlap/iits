@@ -32,6 +32,7 @@
   var doc = root.document;
   var NS = 'http://www.w3.org/2000/svg';
   var STAGGER = 480;         // ms between two marks of the same step: the eye follows one at a time
+  var TOP_STRIP = 56;        // px of the editor's own toolbar: a label there sits on the menus
 
   /** Regions of the editor a step may point at. Upstream's class names carry a build hash: match the prefix. */
   var REGION = {
@@ -211,8 +212,11 @@
         try { w = t.getComputedTextLength(); } catch (e) { w = 0; }
         var boxW = Math.max(est, Math.round(w) + padX * 2), boxH = 23;
         var left = Math.max(4, Math.min(x, root.innerWidth - boxW - 4));
-        // above the shape when there is room, below it otherwise - never on top of the thing it names
-        var top = above - boxH >= 4 ? above - boxH : below;
+        /* Above the shape when there is room, below it otherwise — never on top of the thing it
+           names, and never across the editor's own toolbar: the green flag sits in the top strip, so
+           "above the flag" is where 設定 and 檢視 live, and a label written over them is a label
+           nobody can read. */
+        var top = above - boxH >= TOP_STRIP ? above - boxH : below;
         if (top + boxH > root.innerHeight - 4) top = Math.max(4, above - boxH);
         rect.setAttribute('x', Math.round(left));
         rect.setAttribute('y', Math.round(top));
@@ -230,6 +234,11 @@
       var g = el('g', { 'class': 'wl-mark is-' + (spec.shape || 'circle') });
       var r = rectOf(spec.at);
       if (!r) return null;
+      /* The block the hand went to can move between the hand arriving and the ring being drawn — a
+         palette that scrolls to the next category takes its first block to y = -1400. A mark whose
+         target has left the page is skipped, which is what this file promises; drawn where it now
+         is, it would be a frame round the top edge of the window, pointing at nothing. */
+      if (r.bottom < 0 || r.top > root.innerHeight || r.right < 0 || r.left > root.innerWidth) return null;
       if (spec.shape === 'square') square(g, r);
       else circle(g, r);
       var tagX = r.left - 6, above = r.top - 10, below = r.top + r.height + 8;

@@ -1233,9 +1233,18 @@
               after = after.then(function () { return tapsAll(tapsAfter, squeeze, step); });
             }
             if (demo.run) {
-              after = after.then(function () { return step(function () {
-                return pressFlag({ squeeze: squeeze }).then(function () { return wait(demo.run); });
-              });               }).then(function (go) {
+              /* `runAt` is for the step whose copy names the press in a later sentence than the one
+                 the blocks were built under — "add three more blocks, press the green flag, you will
+                 see it move". Without it the press lands on the next free beat, i.e. one sentence
+                 early, and by the time the voice gets to "press the flag" the sprite has already
+                 finished moving. Waiting for the named sentence is one line and it is the whole
+                 difference between a demonstration and a recording of one. */
+              after = after.then(function () {
+                if (demo.runAt != null && demo.runAt > slot) slot = demo.runAt;
+                return step(function () {
+                  return pressFlag({ squeeze: squeeze }).then(function () { return wait(demo.run); });
+                });
+              }).then(function (go) {
                 if (go === false) return false;
                 /* a step about stopping stops at the button, with the hand on it; anything else
                    just ends, which is what it has always done */

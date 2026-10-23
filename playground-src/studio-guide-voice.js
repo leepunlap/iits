@@ -29,6 +29,12 @@
  * The words (locale files) and when to speak (studio-guide.js). This file knows about audio, one
  * strip of text over the stage, and a preference that survives a reload.
  *
+ * WHERE THE WORDS GO
+ * The step card already holds the sentence being spoken, so the sentence is handed to the caller
+ * and highlighted there — the same words in two places at once is one too many, and the strip over
+ * the stage covers the very thing being described. A caller with nowhere to show them (no card) gets
+ * the strip instead: it is the fallback, not the way round.
+ *
  * ES5, like the rest of the studio's own code: this ships to old browsers.
  */
 (function (root) {
@@ -54,6 +60,7 @@
     var loading = null;
     var on = readPref();
     var sub = null;            // the strip over the stage
+    var sink = null;           // where the words go: the caller's own place for them
     var audio = null;          // the clip currently playing
     var timers = [];
     var seq = 0;               // bumped by every say/stop: stale callbacks find a different number
@@ -133,10 +140,25 @@
       watch(stageEl());
     }
 
-    function cue(text) {
+    /**
+     * One sentence, and where it goes.
+     *
+     * `info` is { text, index, key, ms }: the sentence, its place in the narration, the line it came
+     * from, and how long the voice spends on it — the last one measured, never guessed, because the
+     * highlight that fills in over that time is the only honest one.
+     *
+     * The sink is asked first. If it says it cannot show the sentence (false), the strip over the
+     * stage takes it, so a caller that loses its place never leaves the student with no words at all.
+     */
+    function cue(info) {
+      var empty = !info || !info.text;
+      if (sink) {
+        var handled = sink(empty ? { text: '', index: -1, key: '', ms: 0 } : info);
+        if (handled !== false || empty) return;
+      }
       var s = strip();
-      if (!text) { s.hidden = true; s.textContent = ''; return; }
-      s.textContent = text;
+      if (empty) { s.hidden = true; s.textContent = ''; return; }
+      s.textContent = info.text;
       s.hidden = false;
       place();
     }
@@ -257,6 +279,9 @@
       var list = (keys || []).filter(Boolean);
       stop();                      // one narration at a time — this also cancels the previous clock
       hold = !!(opts && opts.hold);
+      /* where the words go. A caller that has its own place for them takes them; without one the
+         strip over the stage is used, as it always was. */
+      sink = (opts && typeof opts.onCue === 'function') ? opts.onCue : null;
       var from = Math.max(0, (opts && opts.from) | 0);
       if (!on || !list.length) return Promise.resolve(null);
       var mine = seq;
@@ -323,7 +348,7 @@
         var i = 0;
         function next() {
           if (mine !== seq || done) return;
-          if (i >= p.entries.length) { if (!hold) cue(''); return end(); }
+          if (i >= p.entries.length) { if (!hold) cue(null); return end(); }
           var e = p.entries[i++];
           var line = e.clip ? playClip(e, mine, fire) : speakText(e, mine, fire);
           line.then(next, next);
@@ -337,6 +362,11 @@
         n.total = p.total;
         var e = p.entries[from];
         n.first = e ? e.start + (e.cues[0] ? e.cues[0].t : 0) : 0;
+        /* The plan is ready before the voice starts: a caller that shows the words wants them in
+           place first, so the first sentence is not said over a card that has not caught up. */
+        if (opts && typeof opts.onPlan === 'function') {
+          try { opts.onPlan(p); } catch (err) { /* a plan is never a reason to lose the voice */ }
+        }
         start(p);
         return p;
       });
@@ -346,7 +376,7 @@
 
     /** The browser's voice, one utterance per sentence, so the clock can follow the utterances. */
     function speakText(e, mine, fire) {
-      strip().setAttribute('data-from', 'voice');
+      if (!sink) strip().setAttribute('data-from', 'voice');
       var synth = root.speechSynthesis, U = root.SpeechSynthesisUtterance;
       if (!synth || !U) return speakTimed(e, mine, fire, 0);
       var lang = locale(), voice = pickVoice(lang), i = 0;
@@ -355,7 +385,7 @@
           if (mine !== seq) return resolve(false);
           if (i >= e.cues.length) return resolve(true);
           var c = e.cues[i], at = i++;
-          cue(c.s);
+          cue({ text: c.s, index: e.base + at, key: e.key, ms: c.d || estimate(c.s) });
           fire(e.base + at);
           var u = new U(c.s);
           u.lang = EDGE_LANG[lang] || 'zh-HK';
@@ -371,14 +401,14 @@
 
     /** No voice at all: the subtitles still have to move, and so does the clock. */
     function speakTimed(e, mine, fire, from) {
-      strip().setAttribute('data-from', 'timed');
+      if (!sink) strip().setAttribute('data-from', 'timed');
       return new Promise(function (resolve) {
         var i = from || 0;
         function step() {
           if (mine !== seq) return resolve(false);
           if (i >= e.cues.length) return resolve(true);
           var c = e.cues[i], at = i++;
-          cue(c.s);
+          cue({ text: c.s, index: e.base + at, key: e.key, ms: c.d || estimate(c.s) });
           fire(e.base + at);
           timers.push(setTimeout(step, Math.max(MIN_CUE, c.d || estimate(c.s))));
         }
@@ -401,7 +431,7 @@
      */
     function playClip(e, mine, fire) {
       var clip = e.clip;
-      strip().setAttribute('data-from', 'clip');
+      if (!sink) strip().setAttribute('data-from', 'clip');
       return new Promise(function (resolve) {
         var a = new root.Audio(base + clip.file);
         a.preload = 'auto';
@@ -428,12 +458,16 @@
           if (mine !== seq) return;
           var t = a.currentTime * 1000, hit = -1;
           for (var i = 0; i < clip.cues.length; i++) if (t >= clip.cues[i].t) hit = i;
-          if (hit !== shown) { shown = hit; cue(hit >= 0 ? clip.cues[hit].s : ''); }
+          if (hit !== shown) {
+            shown = hit;
+            var c = hit >= 0 ? (e.cues[hit] || clip.cues[hit]) : null;
+            cue(c ? { text: c.s, index: e.base + hit, key: e.key, ms: c.d || 0 } : null);
+          }
         }
         a.addEventListener('timeupdate', tick);
         a.addEventListener('ended', function () {
           drop();
-          if (mine === seq) { audio = null; if (!hold) cue(''); }
+          if (mine === seq) { audio = null; if (!hold) cue(null); }
           resolve(true);
         });
         a.addEventListener('error', function () { drop(); if (mine === seq) audio = null; resolve(false); });
@@ -488,7 +522,13 @@
         audio = null;
       }
       if (root.speechSynthesis) { try { root.speechSynthesis.cancel(); } catch (e) { /* nothing queued */ } }
-      if (sub) { sub.hidden = true; sub.textContent = ''; }
+      /* the words go with it: whoever was showing them is told to stop showing them */
+      var was = sink;
+      sink = null;
+      var shown = was ? was({ text: '', index: -1, key: '', ms: 0 }) : false;
+      if (!shown) {
+        if (sub) { sub.hidden = true; sub.textContent = ''; }
+      }
     }
 
     // some browsers hand over the voice list a moment after the page loads

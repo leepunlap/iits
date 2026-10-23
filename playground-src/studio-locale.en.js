@@ -624,7 +624,7 @@
     'guide.basics.b2.body': 'The big panel in the middle is the Stage — every character acts here, and every effect of your program shows up here. Under the stage is a row of sprite details: the name on the left, and x and y on the right — the sprite’s position on the stage; move the sprite and those two numbers move with it. Above the stage is a row of controls: the green flag to start, the red stop button, the stage-size toggle, and full screen. At the bottom right, under the stage, you can pick a Backdrop, like changing the set for a play.',
 
     'guide.basics.b3.title': 'The Sprite list: your cast',
-    'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — the cat, the dog, and so on. Click the cat icon (Add Sprite) at the bottom-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
+    'guide.basics.b3.body': 'Bottom-left is the Sprite list, showing every character in your project — here, Pico and Lumo. Click the cat icon (Add Sprite) at the bottom-right of that area to pick a new actor from the library, paint one, or upload an image. Click a sprite in the list to select it; any blocks you stack afterward belong to that sprite.',
 
     'guide.basics.b4.title': 'The Blocks palette and the Scripts area',
     'guide.basics.b4.body': 'On the left is the Blocks palette, holding nine standard families of blocks grouped by colour, like a toolbox — plus a UCMake hardware family at the bottom. Click a family and a column of its blocks (the flyout) appears to the right of the palette. The large area on the right is the Scripts (Code) area: drag blocks out of the palette and stack them here to build a sprite’s program.',
@@ -651,7 +651,7 @@
     'guide.basics.b11.body': 'Now drag the “when green flag clicked” hat block onto the move block; they click together into your first program. Press the green flag above the stage and “move 50 steps” runs once — the sprite steps forward. Congratulations, you wrote your first Scratch program!',
 
     'guide.basics.b12.title': 'Add another sprite to play with',
-    'guide.basics.b12.body': 'One sprite is sometimes not enough. Click “Add Sprite” (bottom-right of the sprite list) to bring in another actor. Each sprite has its own Scripts area, so you can write “the cat walks while the dog jumps” — two storylines at once. This step is for anyone who hasn’t added a sprite yet; if you already know how, skip to the next level.',
+    'guide.basics.b12.body': 'One sprite is sometimes not enough. Click “Add Sprite” (bottom-right of the sprite list) to bring in another actor. Each sprite has its own Scripts area, so you can write “Pico walks while Kitten jumps” — two storylines at once. This step is for anyone who hasn’t added a sprite yet; if you already know how, skip to the next level.',
 
     'guide.levels': 'Levels',
     'guide.act.look': 'Look here',

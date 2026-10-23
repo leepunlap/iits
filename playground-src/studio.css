@@ -229,6 +229,19 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
 .wl-g-ctitle { margin: 0; font-size: .95rem; font-weight: 700; line-height: 1.35; }
 .wl-g-cbody { margin: 0; font-size: .86rem; line-height: 1.6; }
 
+/* The sentence being spoken is lit where it is written: the card already holds these words, so
+   there is no second copy over the stage and nothing laid across the thing being described. The
+   fill runs for exactly as long as the voice is on that sentence — measured when the clip was
+   baked — so the wipe and the voice end together rather than the wipe guessing. */
+.wl-g-say { border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.wl-g-say.is-said {
+  background-image: linear-gradient(rgba(11, 114, 133, .17), rgba(11, 114, 133, .17));
+  background-repeat: no-repeat;
+  background-size: 0 100%;
+  animation: wl-say var(--say, 2400ms) linear forwards;
+}
+@keyframes wl-say { from { background-size: 0 100%; } to { background-size: 100% 100%; } }
+
 .wl-g-acts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .wl-g-demo { font: inherit; font-size: .85rem; font-weight: 600; padding: 8px 14px; min-height: 36px; border: 0;
   border-radius: 999px; background: var(--wl-accent); color: var(--wl-accent-ink); cursor: pointer; }
@@ -254,6 +267,8 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
 .wl-g-voice.is-on { color: var(--wl-accent); }
 
 /* the narration's subtitle, over the bottom of the stage: dark, two lines at most, never in the way.
+   A fallback, not the way round: the guide shows the sentence in the step card, which already holds
+   it, so this strip is only for a host with nowhere else to put the words.
    border-box because the width is set to the stage's width minus its margins: with the padding added
    on top of that the strip ended 14px past the right edge of the stage it belongs to. */
 .wl-sub { position: fixed; z-index: 480; padding: 7px 12px; border-radius: 9px; box-sizing: border-box;
@@ -330,6 +345,8 @@ body { background: var(--wl-bg); color: var(--wl-text); overflow: hidden;
   body.wl-chat-open .wl-fab { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { #wl-chat { transition: none; } .wl-point { animation: none; } .wl-sub { animation: none; }
+  /* the sentence still lights up, it just arrives lit instead of filling in */
+  .wl-g-say.is-said { animation: none; background-size: 100% 100%; }
   /* the arrow still appears and still presses; it just does not fly across the screen (the script
      already asks for a zero-length travel, this covers the browser that ignores the query in JS) */
   .wl-cur { transition: none; } .wl-cur svg { transition: none; } }

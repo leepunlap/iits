@@ -137,6 +137,17 @@
 
     var statusEl = null;     // the live line under the 示範 button, if one is painted
 
+    /* ---------- the words, where they are already ----------
+       The step card holds the sentence being spoken, so the sentence is highlighted there instead of
+       being written a second time over the stage: one copy of the words, and nothing laid across
+       the very thing being described. The highlight fills in over exactly the time the voice spends
+       on the sentence — that time was measured when the clip was baked, so the wipe ends when the
+       voice ends rather than when a guess says so. */
+    var cardTitle = null;    // the two elements the sentences are painted into
+    var cardBody = null;
+    var saidSpans = [];      // one span per sentence, in the order the voice speaks them
+    var saidIndex = -1;      // which one is being spoken now
+
     /* ---------- keys ----------
        Derived, never stored: a step carries an id, and its words are found by that id. A missing key
        shows as the key itself, which is how a half-written topic announces itself instead of showing
@@ -297,9 +308,14 @@
 
       var card = h('article', 'wl-g-card');
       card.appendChild(h('div', 'wl-g-kick', T('guide.stepOf', { n: view.step + 1, total: steps.length })));
-      card.appendChild(h('h3', 'wl-g-ctitle', T(keyStep(t, s, 'title'))));
-      card.appendChild(h('p', 'wl-g-cbody', T(keyStep(t, s, 'body'))));
+      var ctitle = h('h3', 'wl-g-ctitle', T(keyStep(t, s, 'title')));
+      card.appendChild(ctitle);
+      var cbody = h('p', 'wl-g-cbody', T(keyStep(t, s, 'body')));
+      card.appendChild(cbody);
       box.appendChild(card);
+      /* the card is where the sentence being spoken is shown, so these two are where the words go */
+      cardTitle = ctitle;
+      cardBody = cbody;
 
       /* The demonstration is a button on the step, not an automatic run: a page that starts moving
          on its own takes the choice away, and a student who has just scrolled into a step may not be
@@ -377,6 +393,10 @@
 
     function paint() {
       statusEl = null;
+      cardTitle = null;
+      cardBody = null;
+      saidSpans = [];
+      saidIndex = -1;
       while (bodyBox.firstChild) bodyBox.removeChild(bodyBox.firstChild);
       bodyBox.appendChild(view.kind === 'index' || !currentTopic() ? renderIndex() : renderTopic());
       renderFoot();
@@ -408,8 +428,75 @@
       take++;                                  // a narration still in the air belongs to the old step
       phase = null;
       clearRunning();
+      clearSaid();
       try { hush(); } catch (e) { /* a voice is never a reason to fail a navigation */ }
       stopFn();
+    }
+
+    /* ---------- the sentence being spoken ---------- */
+    /** Two strings that differ only in spaces are the same sentence. */
+    function flat(s) { return String(s == null ? '' : s).replace(/\s+/g, ''); }
+
+    /**
+     * Split the card into the sentences the voice is about to speak.
+     *
+     * The sentences are the ones the clip was baked with, so the card and the voice say the same
+     * thing in the same pieces. If the pieces do not add up to the line — a clip baked from an
+     * older wording, a line edited after the audio — the card is left as plain text: a highlight
+     * landing between two words is worse than no highlight at all.
+     */
+    function splitCard(keys, cues) {
+      var els = [cardTitle, cardBody], i, k;
+      for (i = 0; i < keys.length; i++) {
+        var list = cues.filter(function (c) { return c.key === keys[i]; });
+        if (!list.length) return false;
+        if (flat(list.map(function (c) { return c.text; }).join('')) !== flat(T(keys[i]))) return false;
+      }
+      for (i = 0; i < els.length; i++) if (els[i]) els[i].textContent = '';
+      saidSpans = [];
+      cues.forEach(function (c) {
+        k = keys.indexOf(c.key);
+        var el = k < 0 ? null : els[k];
+        if (!el) { saidSpans.push(null); return; }
+        var sp = h('span', 'wl-g-say', c.text);
+        el.appendChild(sp);
+        saidSpans.push(sp);
+      });
+      return true;
+    }
+
+    /**
+     * The voice says a sentence: mark it where it is written.
+     *
+     * Returns false when there is nowhere to put it, and the voice falls back to showing the words
+     * over the stage — a sentence nobody can see is a sentence nobody is being taught.
+     */
+    function onCue(info) {
+      if (!info || !info.text) { clearSaid(); return true; }
+      var sp = saidSpans[info.index];
+      if (!sp) return false;
+      if (saidIndex >= 0 && saidSpans[saidIndex]) saidSpans[saidIndex].className = 'wl-g-say';
+      saidIndex = info.index;
+      sp.className = 'wl-g-say is-said';
+      if (info.ms) sp.style.setProperty('--say', Math.max(500, Math.round(info.ms)) + 'ms');
+      keepInView(sp);
+      return true;
+    }
+
+    function clearSaid() {
+      saidSpans.forEach(function (sp) { if (sp) sp.className = 'wl-g-say'; });
+      saidIndex = -1;
+    }
+
+    /** A step's body is longer than the pane: the sentence being spoken is scrolled into sight. */
+    function keepInView(el) {
+      var top = 0, node = el;
+      while (node && node !== bodyBox) { top += node.offsetTop; node = node.offsetParent; }
+      var hgt = el.offsetHeight || 0;
+      var viewTop = bodyBox.scrollTop, viewBottom = viewTop + bodyBox.clientHeight;
+      if (top < viewTop + 12 || top + hgt > viewBottom - 12) {
+        bodyBox.scrollTop = Math.max(0, top - (bodyBox.clientHeight - hgt) / 2);
+      }
     }
 
     /* ---------- the demonstration ---------- */
@@ -454,9 +541,16 @@
 
       var keys = [keyStep(t, s, 'title'), keyStep(t, s, 'body')];
       /* `from: 1` — the heading announces the step, the body is what describes the picture, so the
-         gates are numbered from the body's first sentence. */
+         gates are numbered from the body's first sentence.
+
+         `onCue` is where the words are shown: the sentence is highlighted in the card, which
+         already holds it. `onPlan` fires once the sentences are known and before the voice starts,
+         so the card is already in pieces when the first one is said. */
       var live = narrate
-        ? Promise.resolve(narrate(keys, { hold: true, from: 1 })).then(null, function () { return null; })
+        ? Promise.resolve(narrate(keys, {
+          hold: true, from: 1, onCue: onCue,
+          onPlan: function (p) { if (mine === take) splitCard(keys, p.cues || []); }
+        })).then(null, function () { return null; })
         : Promise.resolve(null);
       /* `perform` is handed the whole clock, not just the sentence gates: the demonstration spreads
          its own pauses across whatever time the narration has, so a step with four actors walks

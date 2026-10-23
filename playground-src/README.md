@@ -33,6 +33,13 @@ anything the copy claims (snap two blocks together, make a sprite move, talk,
 grow and make a sound, stop at the red button) happens on the canvas. Anything
 else turns the manual back into captions.
 
+The claim is checked, not trusted: `tools/check_claims.mjs` in the
+`wonderlab-studio` project reads every sentence against the demonstration it
+belongs to and fails the build when they disagree — a step that says "the pointer
+drags two blocks out" over a stack of five is a build error, not a review note.
+It runs inside `npm run build:playground`, so a package whose copy contradicts its
+own screen cannot be produced (`SKIP_CHECKS=1` overrides, deliberately awkward).
+
 Two hands exist on purpose: `studio-guide-cursor.js` walks to the flag, the stop
 button and the library tiles, while `studio-anim.js` brings its own arrow when it
 drags blocks in. `handTo()` stands down while the animator is running so the two

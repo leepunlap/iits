@@ -145,8 +145,15 @@ const BOOT=Date.now().toString(36);
 let TAB='lessons',LESSON='';
 function readHash(){const h=decodeURIComponent(location.hash.slice(1)).split('/');
   return {cls:h[0]||'',tab:TABS.includes(h[1])?h[1]:'',les:/^\d{3}-bp\d{2}$/.test(h[2]||'')?h[2]:''};}
+/* Where the student was: the class, the tab and the lesson. The URL carries it, and localStorage
+   carries it too, so a portal opened without a hash — a bookmark, a link someone pasted, an address
+   bar that got cleared — opens where the student left off instead of on the first tab of the first
+   class. The hash is the state; this is the copy that survives the hash being lost. */
+const VIEWKEY='iits-student-view';
 function saveState(){if(!CUR)return;const h='#'+CUR+'/'+TAB+(TAB==='lessons'&&LESSON?'/'+LESSON:'');
-  if(location.hash!==h)history.replaceState(null,'',h);}
+  if(location.hash!==h)history.replaceState(null,'',h);
+  try{localStorage.setItem(VIEWKEY,h);}catch(e){}}
+function restoreView(){try{const h=localStorage.getItem(VIEWKEY)||'';if(h&&!location.hash)history.replaceState(null,'',h);}catch(e){}}
 function setTab(p){TAB=TABS.includes(p)?p:'lessons';
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.p===TAB));
   document.querySelectorAll('.pane').forEach(x=>x.classList.toggle('on',x.id==='pane-'+TAB));}
@@ -191,6 +198,7 @@ function show(me,g,les){
   render(cls,'student','list-st',false,'老師尚未上傳檔案。');
 }
 (async()=>{
+  restoreView();
   let me;try{me=await (await api('me')).json();}catch(e){location.href='/login.html';return;}
   if(!me||!me.u){location.href='/login.html';return;}
   const groups=me.groups||[];

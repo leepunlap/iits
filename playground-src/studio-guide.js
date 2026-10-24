@@ -148,6 +148,32 @@
     var saidSpans = [];      // one span per sentence, in the order the voice speaks them
     var saidIndex = -1;      // which one is being spoken now
 
+    /* ---------- where the reader is, remembered ----------
+       A refresh used to throw the reader back to the first page of the course: the shelf, the
+       chapter and the step were all in memory only, and a student who had worked their way to
+       lesson four was sent back to the cover. They are three small strings, so they are kept —
+       written when the reader moves, read when the page comes back. */
+    var PLACE_KEY = 'wl.guide.place';
+
+    function readPlace() {
+      try {
+        var raw = root.localStorage.getItem(PLACE_KEY);
+        var p = raw ? JSON.parse(raw) : null;
+        return (p && typeof p === 'object') ? p : null;
+      } catch (e) { return null; }
+    }
+
+    function writePlace() {
+      try {
+        var t = currentTopic(), s = currentStep();
+        root.localStorage.setItem(PLACE_KEY, JSON.stringify({
+          shelf: view.level,
+          topic: t ? t.id : '',
+          step: s ? s.id : ''
+        }));
+      } catch (e) { /* private mode: the guide still works, it just forgets */ }
+    }
+
     /* ---------- keys ----------
        Derived, never stored: a step carries an id, and its words are found by that id. A missing key
        shows as the key itself, which is how a half-written topic announces itself instead of showing
@@ -216,6 +242,7 @@
           if (view.level === lv.id) return;
           halt();
           view = { kind: 'index', level: lv.id, topic: 0, step: 0 };
+          writePlace();
           paint();
         });
         wrap.appendChild(b);
@@ -406,11 +433,13 @@
        kept its offset would open the next step halfway down. */
     function go(topicIndex, stepIndex) {
       view = { kind: 'topic', level: view.level, topic: topicIndex, step: stepIndex };
+      writePlace();
       paint();
       bodyBox.scrollTop = 0;
     }
     function goIndex() {
       view = { kind: 'index', level: view.level, topic: view.topic, step: 0 };
+      writePlace();
       paint();
       bodyBox.scrollTop = 0;
     }
@@ -624,6 +653,24 @@
 
     if (i18n && typeof i18n.on === 'function') i18n.on(refresh);
 
+    /* The place the reader left, put back: the same chapter, the same step, the same shelf. A place
+       that no longer exists (a chapter rewritten, a step removed) is ignored rather than honoured. */
+    (function restorePlace() {
+      var p = readPlace();
+      if (!p || !p.topic) return;
+      var ti = -1;
+      topics.forEach(function (t, i) { if (t.id === p.topic) ti = i; });
+      if (ti < 0) return;
+      var steps = stepsOf(topics[ti]), si = -1;
+      steps.forEach(function (s, i) { if (s.id === p.step) si = i; });
+      view = {
+        kind: 'topic',
+        level: levelOf(topics[ti]) || p.shelf || 'basic',
+        topic: ti,
+        step: si < 0 ? 0 : si
+      };
+    }());
+
     paint();
 
     return {
@@ -636,6 +683,11 @@
         if (i < 0) return false;
         go(i, Math.max(0, step || 0));
         return true;
+      },
+      /** where the reader is, for a page that wants to say so */
+      place: function () {
+        var t = currentTopic(), s = currentStep();
+        return { shelf: view.level, topic: t ? t.id : '', step: s ? s.id : '' };
       },
       /** the demonstration finished, was stopped, or the canvas was given back */
       sync: function () { renderFoot(); },

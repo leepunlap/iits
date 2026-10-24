@@ -446,6 +446,7 @@ async function route(){
   const h=decodeURIComponent(location.hash.slice(1));const i=h.indexOf('/');
   let v=i<0?h:h.slice(0,i);const arg=i<0?'':h.slice(i+1);
   if(!v)v=ME.legacy?'library':'classes';
+  rememberView();
   nav(v);window.scrollTo(0,0);document.body.classList.remove('fullh','pg-mode');wlStop();
   // everything that matters on a page is in the URL, so a refresh lands on the same page:
   // #classes[/archived] · #class/<id>[/<材料分頁>] · #library/<級>[/<材料分頁>] · #preview/<級>/<班>/<課> · #wlab/<班>[/<課>]
@@ -461,7 +462,14 @@ async function route(){
     return await viewClasses();
   }catch(e){}
 }
-function setUrl(h){if(location.hash!==h)history.replaceState(null,'',h);}
+/* Where the teacher was: the page and the tab. The URL carries it, and localStorage carries it
+   too, so a portal opened without a hash — a bookmark, a link someone pasted, an address bar that
+   got cleared — opens where the teacher left off instead of on the class list. The hash is the
+   state; this is the copy that survives the hash being lost. */
+const VIEWKEY='iits-teacher-view';
+function rememberView(){try{localStorage.setItem(VIEWKEY,location.hash||'');}catch(e){}}
+function restoreView(){try{const h=localStorage.getItem(VIEWKEY)||'';if(h&&!location.hash)history.replaceState(null,'',h);}catch(e){}}
+function setUrl(h){if(location.hash!==h)history.replaceState(null,'',h);rememberView();}
 function openSec(k){if(k&&SECS.some(x=>x.k===k)&&document.querySelector('.mtab'))mtab(k,true);}
 window.addEventListener('hashchange',route);
 
@@ -1032,6 +1040,7 @@ document.addEventListener('click',e=>{
   if(!r.ok){location.href='/login.html';return;}
   ME=await r.json();ME.levels=ME.levels||[];
   $('who').innerHTML=esc(ME.name)+(ME.admin?'<span class="badge">管理員</span>':ME.legacy?'<span class="badge" style="background:#eef1f8;color:#4a5158;border-color:#d7dced">共用帳號</span>':'');
+  restoreView();
   route();
 })();
 </script></body></html>

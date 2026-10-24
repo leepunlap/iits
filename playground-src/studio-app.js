@@ -206,6 +206,52 @@
     S.enabled = on;
 
     var vm = null, store = null, ops = null, trace = null, assist = null, app = null, bootResolve = null;
+    /* ---------- the tab the student was on ----------
+       The editor has three tabs — 程式 / 造型 / 音效 — and a refresh used to open the first one
+       whatever the student was doing: a costume half-finished was closed by the reload that followed
+       it. Upstream keeps the tab in the store, so the tab is read from there and written back to
+       there, with upstream's own action, so a scratch-gui that renames it costs one line here and
+       not a rewrite.
+
+       The restore cannot be a single dispatch: upstream sends the editor back to 程式 whenever a
+       project arrives (project-fetcher-hoc), so a tab restored before that would be undone by the
+       load itself. So the tab is put back whenever the store comes to 程式 while the student has
+       not chosen a tab themselves — and the moment the tab is where the student left it, the
+       remembering starts properly. */
+    var TAB_KEY = 'wl.editor.tab';
+    var lastTab = -1;
+    var savedTab = 0;         // the tab the student had, read at boot
+    var studentChose = false; // the student picked a tab themselves: theirs it is
+    function currentTab() {
+      if (!store) return 0;
+      var st = store.getState();
+      var g = st && st.scratchGui;
+      return (g && g.editorTab ? g.editorTab.activeTabIndex : 0) | 0;
+    }
+    function readTab() {
+      try {
+        var v = parseInt(root.localStorage.getItem(TAB_KEY), 10);
+        if (v === 1 || v === 2) savedTab = v;
+      } catch (e) { /* private mode: the editor still works, it just forgets */ }
+      /* A click on the editor's own tab strip is the student choosing, and nothing may undo it. */
+      try {
+        root.document.addEventListener('click', function (e) {
+          var t = e.target && e.target.closest ? e.target.closest('[role="tab"]') : null;
+          if (!t || !t.parentNode) return;
+          if (/react-tabs__tab-list/.test(String(t.parentNode.className || ''))) studentChose = true;
+        }, true);
+      } catch (e) { }
+    }
+    function onStoreChange() {
+      if (!store) return;
+      var v = currentTab();
+      /* While the tab is still being put back, what the store says is not the student's: upstream's
+         own reset would overwrite what was remembered, so nothing is written until it is settled. */
+      if (savedTab && !studentChose && v === 0) return;
+      if (v === lastTab) return;          // the store moves on every block; only the tab matters
+      lastTab = v;
+      try { root.localStorage.setItem(TAB_KEY, String(v)); } catch (e) { }
+    }
     var loading = true, applying = false;
 
     function $(id) { return root.document.getElementById(id); }
@@ -257,6 +303,8 @@
           return { storage: madeStorage };
         });
         store = state.store;
+        readTab();
+        store.subscribe(onStoreChange);
         /* The object the editor asks for asset URLs. Exposed because "where does this costume come
            from" is a question the driver, the lesson page and _library-check.html all end up asking,
            and the answer must be the one the picker's thumbnails use or it is not the same answer. */
@@ -419,6 +467,14 @@
           S.readyAt = (root.performance && performance.now()) || 0;
           root.document.documentElement.setAttribute('data-wl-ready', '1');
         }
+        /* Put the student's tab back once the editor has settled. Upstream sends the editor back
+           to 程式 whenever a project arrives (project-fetcher-hoc), so a tab put back before that
+           would be undone by the load itself; and a click on the tab strip in the meantime is the
+           student choosing, which nothing undoes. */
+        if (savedTab) setTimeout(function () {
+          if (studentChose) return;
+          try { store.dispatch({ type: 'scratch-gui/navigation/ACTIVATE_TAB', activeTabIndex: savedTab }); } catch (e) { }
+        }, 1200);
         if (bootResolve) { bootResolve(S); bootResolve = null; }
         if (cfg.onLoaded) cfg.onLoaded(S);
         if (cfg.onReady) cfg.onReady(S);
@@ -578,6 +634,189 @@
     S.boot = boot;
     S.send = function (text) { return assist ? assist.send(text) : Promise.resolve(null); };
     S.applyReply = function (d, t) { return assist ? assist.applyReply(d, t) : null; };
+
+    /* ---- the lesson lab's contract, answered again --------------------------------------------
+       lab.js drives the editor across the frame through window.WLStudio, and it was written
+       against studio-lab.js. When the monolith was split, six of the calls it makes were left
+       behind — program, request, anim, glow, apply, loadProgram — so a lesson that opened the new
+       shell got an editor that answered none of them: no program went with a turn, an AI reply had
+       nothing to apply to, 上一步 restored nothing, and the reply's highlight never lit.
+
+       Each of these is either a question the shell can already answer or a call the assistant
+       already performs. None of them re-implements an edit. */
+    var STAGE_NAME = (root.StudioOps && root.StudioOps.STAGE) || '舞台';
+    /** Where a script written without the assistant goes: the shell's own free spot. */
+    function placeFor(target, n) { return core() ? core().place(vm, target, n) : { x: 30, y: 30 + 80 * n }; }
+
+    /** The compact program model — what a turn sends, stores and restores. */
+    S.program = function () {
+      if (!ops || !vm) return { sprites: {}, stage: { scripts: {} } };
+      try { return ops.snapshot(vm).program; } catch (e) { return { sprites: {}, stage: { scripts: {} } }; }
+    };
+
+    /** The actors the service is told about: the stage first, then at most 20 sprites. */
+    function targetsInfo() {
+      var all = [];
+      try { all = vm.runtime.targets.filter(function (t) { return t.isOriginal; }); } catch (e) { return []; }
+      return all.filter(function (t) { return t.isStage; })
+        .concat(all.filter(function (t) { return !t.isStage; }).slice(0, 20))
+        .map(function (t) {
+          return { name: ops.nameOf(t), isStage: t.isStage,
+            costumes: t.getCostumes().slice(0, 30).map(function (c) { return c.name; }),
+            x: Math.round(t.x || 0), y: Math.round(t.y || 0), visible: t.visible !== false };
+        });
+    }
+
+    /** Everything one turn carries: the program, its scripts in words, the actors, the sprite open. */
+    S.request = function () {
+      if (!ops || !vm) return { program: S.program(), blocks: 0, unsupported: [], targets: [], editing: null, text: {} };
+      var snap = { program: S.program(), blocks: 0, unsupported: [] }, text = {};
+      try { snap = ops.snapshot(vm); } catch (e) { /* a program the service cannot read beats no turn at all */ }
+      try { text = ops.texts(vm, root.ScratchBlocks || null, 6000); } catch (e) { text = {}; }
+      return { program: snap.program, blocks: snap.blocks,
+        unsupported: (snap.unsupported || []).map(function (u) { return { sprite: u.sprite, id: u.id }; }),
+        targets: targetsInfo(), editing: vm.editingTarget ? ops.nameOf(vm.editingTarget) : null, text: text };
+    };
+
+    /** Whether the animated build is present and switched on. */
+    S.anim = function () {
+      var A = root.WLAnim, ok = !!(A && typeof A.play === 'function'), on = false;
+      try { on = ok && (typeof A.enabled !== 'function' || !!A.enabled()); } catch (e) { on = false; }
+      return { available: ok, enabled: on };
+    };
+
+    /** The glow on the scripts a reply talks about (reply.focus / reply.focus_sprite). */
+    var glowing = [], glowT = null, glowList = null;
+    function clearGlow() {
+      glowing.forEach(function (el) { el.classList.remove('wl-focus', 'wl-focus-one'); });
+      glowing = [];
+    }
+    function paintGlow(list, scroll) {
+      clearGlow();
+      var ws = S.workspace();
+      if (!ws || !vm || !vm.editingTarget) return 0;
+      var name = ops.nameOf(vm.editingTarget), B = vm.editingTarget.blocks._blocks, first = null, n = 0;
+      list.forEach(function (f) {
+        if (!f || f.sprite !== name) return;
+        var hit = ops.topOf(vm, f.sprite, f.id);
+        if (!hit) return;
+        var id = f.n ? ops.blockAt(B, hit.top, +f.n) : hit.top, b = id && ws.getBlockById(id);
+        if (!b) return;
+        var el = b.getSvgRoot && b.getSvgRoot();
+        if (!el) return;
+        if (f.n) {
+          var path = el.querySelector(':scope > .blocklyPath, :scope > path');
+          if (path) { path.classList.add('wl-focus-one'); glowing.push(path); }
+        } else { el.classList.add('wl-focus'); glowing.push(el); }
+        n += 1;
+        if (!first) first = b;
+      });
+      if (first && scroll) {
+        try {
+          if (ws.scrollBoundsIntoView) ws.scrollBoundsIntoView(first.getBoundingRectangle());
+          else ws.centerOnBlock(first.id);
+        } catch (e) { /* a scroll that fails is not worth losing the glow over */ }
+      }
+      return n;
+    }
+    S.glow = function (focus, focusSprite) {
+      clearTimeout(glowT); glowList = null; clearGlow();
+      if (vm && (!focus || (Array.isArray(focus) && !focus.length)) && typeof focusSprite === 'string') focus = focusSprite;
+      if (!vm || !focus) return 0;
+      if (typeof focus === 'string') {
+        var t0 = ops.targetByName(vm, focus);
+        if (t0 && vm.editingTarget !== t0) vm.setEditingTarget(t0.id);
+        return 0;
+      }
+      var list = (Array.isArray(focus) ? focus : []).filter(function (f) { return f && typeof f.sprite === 'string' && f.id != null; })
+        .slice(0, 8).map(function (f) { return { sprite: f.sprite, id: String(f.id), n: f.n }; });
+      if (!list.length) return 0;
+      try { ops.snapshot(vm); } catch (e) { /* the glow only needs the script ids the snapshot registers */ }
+      var known = list.filter(function (f) { return ops.topOf(vm, f.sprite, f.id); });
+      if (!known.length) return 0;
+      glowList = known;
+      glowT = setTimeout(function () { glowList = null; clearGlow(); }, 12000);
+      var t = ops.targetByName(vm, known[0].sprite);
+      if (t && vm.editingTarget !== t) {
+        vm.setEditingTarget(t.id);
+        setTimeout(function () { paintGlow(known, true); }, 150);
+        return known.length;
+      }
+      return paintGlow(known, true) || known.length;
+    };
+
+    /**
+     * Apply an AI reply. The assistant already owns this — animation first, ops.apply as the
+     * truth — so this is only the shape lab.js expects back.
+     *
+     * Counts come back as zero on the animated path on purpose: that path verified itself against
+     * the instant apply and the assistant has already said what it skipped. Reporting the numbers
+     * here as well is how the student reads the same notice twice.
+     */
+    S.apply = function (d, opt) {
+      opt = opt || {};
+      if (!d || !(d.ops || []).length) {
+        return Promise.resolve({ done: 0, skipped: 0, sideBySide: 0, animated: false, fallback: false });
+      }
+      var p = assist ? Promise.resolve(assist.applyReply(d)) : Promise.resolve().then(function () { return ops.apply(vm, d, placeFor); });
+      return p.then(function (res) {
+        res = res || {};
+        var done = res.done || null;
+        return { done: done ? done.length : (d.ops || []).length,
+          skipped: res.skipped ? res.skipped.length : 0,
+          sideBySide: res.sideBySide ? res.sideBySide.length : 0,
+          animated: !!(res.ok || res.animated), fallback: false };
+      }, function (e) {
+        if (root.console) root.console.warn('[studio] apply failed:', e && e.message);
+        return { done: 0, skipped: (d.ops || []).length, sideBySide: 0, animated: false, fallback: true, error: true };
+      });
+    };
+
+    /**
+     * Replace the scripts with a program — the 「載入你上次的程式」 chip, and a lesson reopened
+     * onto the program the student last had.
+     *
+     * Everything else about the project stays: costumes, sounds, positions and the sprites the
+     * lesson put there. Only the scripts named by the program are written, and the ones the
+     * program no longer has are taken out.
+     */
+    S.loadProgram = function (program) {
+      if (!ops || !vm) return Promise.resolve(false);
+      var want = program || { sprites: {}, stage: { scripts: {} } };
+      var cur = { sprites: {}, stage: { scripts: {} } };
+      try { cur = ops.snapshot(vm).program; } catch (e) { cur = { sprites: {}, stage: { scripts: {} } }; }
+      var list = [];
+      Object.keys(want.sprites || {}).forEach(function (n) {
+        Object.keys(((want.sprites[n] || {}).scripts) || {}).forEach(function (id) {
+          list.push({ 'do': 'set_script', sprite: n, id: id });
+        });
+      });
+      Object.keys((want.stage || {}).scripts || {}).forEach(function (id) {
+        list.push({ 'do': 'set_script', sprite: STAGE_NAME, id: id });
+      });
+      Object.keys(cur.sprites || {}).forEach(function (n) {
+        var keep = ((want.sprites || {})[n] || {}).scripts || {};
+        Object.keys(((cur.sprites[n] || {}).scripts) || {}).forEach(function (id) {
+          if (!(id in keep)) list.push({ 'do': 'delete_script', sprite: n, id: id });
+        });
+      });
+      var keepStage = (want.stage || {}).scripts || {};
+      Object.keys((cur.stage || {}).scripts || {}).forEach(function (id) {
+        if (!(id in keepStage)) list.push({ 'do': 'delete_script', sprite: STAGE_NAME, id: id });
+      });
+      if (!list.length) return Promise.resolve(true);
+      applying = true;
+      return Promise.resolve().then(function () { return ops.apply(vm, { program: want, ops: list }, placeFor); })
+        .then(function (res) {
+          applying = false;
+          try { vm.emitWorkspaceUpdate(); vm.emitTargetsUpdate(false); } catch (e) {}
+          return true;
+        }, function (e) {
+          applying = false;
+          if (root.console) root.console.warn('[studio] loadProgram failed:', e && e.message);
+          return false;
+        });
+    };
     /* 上一步 restores the version the assistant changed away from. Returning that version without
        loading it - which is what this used to do - is why the button never did anything. */
     S.undo = function () {
@@ -840,7 +1079,7 @@
       cfg.animate = !!on;
       if (root.WLAnim && root.WLAnim.setEnabled) { try { root.WLAnim.setEnabled(!!on); } catch (e) {} }
       if (assist) assist.setAnimate(on ? (root.WLAnim || null) : null);
-      return !!on;
+      return S.anim();
     };
     S.skip = function () { if (root.WLAnim && root.WLAnim.skip) { try { root.WLAnim.skip(); } catch (e) {} } };
 

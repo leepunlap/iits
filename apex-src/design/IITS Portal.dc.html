@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FAFAFC; }
+  a { color: #46599C; text-decoration: none; }
+  a:hover { color: #2F3F78; }
+  input { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="background:#FAFAFC;min-height:100vh;color:#161A22;font-family:'Noto Sans TC',system-ui,sans-serif;font-weight:300;-webkit-font-smoothing:antialiased">
+
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
+    <div style="min-height:100vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+      <div style="background:#F1F3F9;border-bottom:1px solid rgba(28,34,41,0.1);padding:clamp(32px,5vw,56px);display:flex;flex-direction:column;gap:48px;justify-content:space-between">
+        <img src="assets/iits-logo.png" alt="工信學堂（香港）· IITS" style="width:min(290px,72%);height:auto;display:block" />
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;color:#46599C;margin-bottom:18px">FILE MANAGER · 班級檔案管理</div>
+          <h1 style="font-family:'Noto Serif TC',serif;font-weight:900;font-size:clamp(30px,4vw,42px);line-height:1.28;margin:0 0 18px;color:#161A22;text-wrap:pretty">教學資源<br />按班級管理</h1>
+          <p style="font-size:15px;line-height:1.9;color:#525A66;max-width:400px;margin:0;font-weight:300;text-wrap:pretty">教師可上傳、重命名與刪除課程檔案；學生登入後依所屬班級下載教材與軟件。</p>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:#7A828E;line-height:2">L1 · L2 · L3 · L4 · YAI<br />IITS HONG KONG</div>
+      </div>
+
+      <div style="padding:clamp(32px,5vw,56px);display:flex;flex-direction:column;justify-content:center;background:#FFFFFF">
+        <div style="max-width:380px;width:100%">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.18em;color:#46599C;margin-bottom:14px">SIGN IN</div>
+          <h2 style="font-family:'Noto Serif TC',serif;font-weight:700;font-size:28px;margin:0 0 10px;color:#161A22">專區登入</h2>
+          <p style="font-size:14px;line-height:1.8;color:#525A66;margin:0 0 30px;font-weight:300">請輸入帳號密碼以進入教學資源。</p>
+
+          <div style="display:flex;border:1px solid rgba(28,34,41,0.16);margin-bottom:26px">
+            <button type="button" onClick="{{ pickTeacher }}" style="flex:1;min-height:46px;padding:12px;font-size:13.5px;font-family:inherit;border:none;cursor:pointer;background:{{ teacherTabBg }};color:{{ teacherTabFg }}">教師專區</button>
+            <button type="button" onClick="{{ pickStudent }}" style="flex:1;min-height:46px;padding:12px;font-size:13.5px;font-family:inherit;border:none;border-left:1px solid rgba(28,34,41,0.16);cursor:pointer;background:{{ studentTabBg }};color:{{ studentTabFg }}">學生專區</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:24px">
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:12.5px;letter-spacing:0.06em;color:#525A66">帳號</span>
+              <input type="text" placeholder="account" style="min-height:46px;padding:12px 14px;border:1px solid rgba(28,34,41,0.18);background:#FFFFFF;font-size:14px;color:#161A22;outline:none;width:100%" />
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:12.5px;letter-spacing:0.06em;color:#525A66">密碼</span>
+              <input type="password" placeholder="••••••••" style="min-height:46px;padding:12px 14px;border:1px solid rgba(28,34,41,0.18);background:#FFFFFF;font-size:14px;color:#161A22;outline:none;width:100%" />
+            </label>
+          </div>
+
+          <label style="display:flex;align-items:center;gap:9px;font-size:13px;color:#525A66;margin-bottom:26px;cursor:pointer;min-height:44px">
+            <input type="checkbox" style="accent-color:#46599C;width:17px;height:17px" />
+            <span>記住我（30 天免再登入）</span>
+          </label>
+
+          <button type="button" onClick="{{ doLogin }}" style="width:100%;min-height:50px;background:#46599C;color:#FFFFFF;border:none;font-family:inherit;font-size:15px;font-weight:500;letter-spacing:0.06em;padding:15px;cursor:pointer" style-hover="background:#2F3F78">登入</button>
+
+          <div style="margin-top:24px;font-size:12.5px;color:#7A828E">
+            <a href="#">忘記密碼？</a>
+            <span style="margin:0 10px;color:rgba(28,34,41,0.2)">|</span>
+            <a href="#">回首頁</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showManager }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <header style="background:#FFFFFF;border-bottom:1px solid rgba(28,34,41,0.12);position:sticky;top:0;z-index:20">
+        <div style="max-width:1600px;margin:0 auto;padding:12px clamp(16px,3vw,32px);min-height:66px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+          <div style="display:flex;align-items:center;gap:14px;min-width:0;flex-wrap:wrap">
+            <img src="assets/iits-logo.png" alt="工信學堂（香港）· IITS" style="height:28px;width:auto;display:block;flex-shrink:0" />
+            <span style="width:1px;height:24px;background:rgba(28,34,41,0.14);flex-shrink:0"></span>
+            <span style="font-family:'Noto Serif TC',serif;font-weight:700;font-size:16.5px;color:#161A22;white-space:nowrap">班級檔案管理</span>
+            <span style="padding:4px 10px;background:#EEF1F9;border:1px solid rgba(70,89,156,0.28);font-size:11.5px;letter-spacing:0.08em;color:#46599C;white-space:nowrap">{{ roleLabel }}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            <a href="#" style="min-height:44px;display:flex;align-items:center;padding:0 16px;border:1px solid rgba(28,34,41,0.16);font-size:13px;color:#454C56" style-hover="border-color:#46599C;color:#46599C">← 主頁</a>
+            <button type="button" onClick="{{ doLogout }}" style="min-height:44px;padding:0 16px;border:1px solid rgba(28,34,41,0.16);background:#FFFFFF;font-family:inherit;font-size:13px;color:#454C56;cursor:pointer" style-hover="border-color:#46599C;color:#46599C">登出</button>
+          </div>
+        </div>
+      </header>
+
+      <div style="max-width:1600px;margin:0 auto;padding:24px clamp(16px,3vw,32px) 64px">
+
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.18em;color:#46599C">FILTER BY CLASS · 依班級篩選</div>
+          <div style="font-size:12.5px;color:#6C7480">目前顯示：<span style="color:#161A22">{{ activeClassLabel }}</span> · 共 {{ visibleCount }} 個檔案</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:22px">
+          <button type="button" onClick="{{ pickL1 }}" style="text-align:left;padding:16px 18px;min-height:76px;font-family:inherit;cursor:pointer;border:1px solid {{ l1Bd }};background:{{ l1Bg }};color:{{ l1Fg }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;margin-bottom:5px">L1</div>
+            <div style="font-size:12px;opacity:0.78">一級 · 動力工程＋創意製造</div>
+          </button>
+          <button type="button" onClick="{{ pickL2 }}" style="text-align:left;padding:16px 18px;min-height:76px;font-family:inherit;cursor:pointer;border:1px solid {{ l2Bd }};background:{{ l2Bg }};color:{{ l2Fg }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;margin-bottom:5px">L2</div>
+            <div style="font-size:12px;opacity:0.78">二級 · 程序交互＋傳感控制</div>
+          </button>
+          <button type="button" onClick="{{ pickL3 }}" style="text-align:left;padding:16px 18px;min-height:76px;font-family:inherit;cursor:pointer;border:1px solid {{ l3Bd }};background:{{ l3Bg }};color:{{ l3Fg }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;margin-bottom:5px">L3</div>
+            <div style="font-size:12px;opacity:0.78">三級 · 智能控制＋智能創造</div>
+          </button>
+          <button type="button" onClick="{{ pickL4 }}" style="text-align:left;padding:16px 18px;min-height:76px;font-family:inherit;cursor:pointer;border:1px solid {{ l4Bd }};background:{{ l4Bg }};color:{{ l4Fg }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;margin-bottom:5px">L4</div>
+            <div style="font-size:12px;opacity:0.78">四級 · 創造大師＋程序應用</div>
+          </button>
+          <button type="button" onClick="{{ pickYAI }}" style="text-align:left;padding:16px 18px;min-height:76px;font-family:inherit;cursor:pointer;border:1px solid {{ yaiBd }};background:{{ yaiBg }};color:{{ yaiFg }}">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:500;margin-bottom:5px">YAI</div>
+            <div style="font-size:12px;opacity:0.78">YAI · 無廢城市競賽</div>
+          </button>
+        </div>
+
+        <div style="background:#28325A;padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px">
+          <div style="display:flex;align-items:center;gap:14px;min-width:0;flex-wrap:wrap">
+            <span style="width:26px;height:26px;border:1px solid rgba(255,255,255,0.45);display:flex;align-items:center;justify-content:center;font-size:11px;color:#FFFFFF;flex-shrink:0">◈</span>
+            <span style="font-family:'Noto Serif TC',serif;font-weight:700;font-size:16px;color:#FFFFFF">IITS 大師班 · 終章 — Grand Finale Masterclass</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#B7BDD0">Fog · Mirror · Ocean · Voyage · Return</span>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#" style="min-height:44px;display:flex;align-items:center;padding:0 16px;border:1px solid rgba(255,255,255,0.3);font-size:12.5px;color:#EDEFF6;white-space:nowrap" style-hover="background:rgba(255,255,255,0.1)">進入 EN / 中文 ▶</a>
+            <a href="#" style="min-height:44px;display:flex;align-items:center;padding:0 16px;background:#FFFFFF;font-size:12.5px;color:#28325A;white-space:nowrap" style-hover="background:#E4E8F4">Entry→Podium ▶</a>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+          <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="3">
+            <div style="flex:1 1 320px;min-width:min(100%,300px);background:#FFFFFF;border:1px solid rgba(28,34,41,0.12);display:flex;flex-direction:column">
+              <div style="padding:16px 20px;border-bottom:1px solid rgba(28,34,41,0.1);display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="display:flex;align-items:baseline;gap:9px;min-width:0;flex-wrap:wrap">
+                  <span style="width:8px;height:8px;background:#46599C;flex-shrink:0"></span>
+                  <span style="font-family:'Noto Serif TC',serif;font-weight:700;font-size:15.5px;color:#161A22">{{ sec.title }}</span>
+                  <span style="font-size:11.5px;color:#7A828E">{{ sec.scope }}</span>
+                </div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7A828E;white-space:nowrap">{{ sec.count }}</span>
+              </div>
+
+              <sc-if value="{{ canUpload }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:14px 20px;border-bottom:1px solid rgba(28,34,41,0.1);background:#F8F9FC;display:flex;flex-wrap:wrap;align-items:center;gap:12px">
+                  <label style="flex:1 1 160px;display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border:1px dashed rgba(28,34,41,0.26);font-size:12.5px;color:#525A66;cursor:pointer;min-width:0" style-hover="border-color:#46599C;color:#46599C">
+                    <span style="color:#46599C">＋</span>
+                    <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">選擇檔案（未選擇任何檔案）</span>
+                  </label>
+                  <button type="button" style="flex-shrink:0;min-height:44px;padding:0 18px;background:#46599C;border:none;font-family:inherit;font-size:12.5px;color:#FFFFFF;cursor:pointer;white-space:nowrap" style-hover="background:#2F3F78">↑ 上傳</button>
+                </div>
+              </sc-if>
+
+              <div style="padding:4px 0;max-height:520px;overflow-y:auto">
+                <sc-for list="{{ sec.files }}" as="f" hint-placeholder-count="6">
+                  <div style="padding:11px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(28,34,41,0.06);min-height:46px" style-hover="background:#F6F8FC">
+                    <span style="flex:1;font-size:13.5px;color:#2B3239;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ f.name }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A9098;flex-shrink:0">{{ f.size }}</span>
+                    <a href="#" style="font-size:12.5px;flex-shrink:0">下載</a>
+                    <sc-if value="{{ canUpload }}" hint-placeholder-val="{{ false }}">
+                      <span style="display:flex;gap:10px;flex-shrink:0">
+                        <a href="#" style="font-size:12px;color:#8A9098" style-hover="color:#46599C">重命名</a>
+                        <a href="#" style="font-size:12px;color:#8A9098" style-hover="color:#B4443A">刪除</a>
+                      </span>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ sec.empty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px 20px;text-align:center;font-size:13px;color:#8A9098">此班級尚無檔案</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const CLASSES = { L1: "L1 一級", L2: "L2 二級", L3: "L3 三級", L4: "L4 四級", YAI: "YAI 無廢城市競賽" };
+
+const FILES = [
+  { sec: "ai", cls: "L1", name: "AI延伸課程_L1.pdf", size: "41.5 MB" },
+  { sec: "ai", cls: "L2", name: "AI延伸課程_L2.pdf", size: "38.2 MB" },
+  { sec: "ai", cls: "L3", name: "AI延伸課程_L3.pdf", size: "40.7 MB" },
+  { sec: "ai", cls: "L4", name: "AI延伸課程_四級總覽.pdf", size: "493 KB" },
+  { sec: "ai", cls: "YAI", name: "AI延伸課程_掃碼指引.pdf", size: "507 KB" },
+
+  { sec: "sw", cls: "L1", name: "UCMake–Desktop–INT_v4.2.9_mac_arm64.dmg", size: "412.8 MB" },
+  { sec: "sw", cls: "L1", name: "UCMake–Desktop–INT_v4.2.9_mac_x64.dmg", size: "417.1 MB" },
+  { sec: "sw", cls: "L1", name: "UCMake–Desktop_v4.2.8_win_x64.exe", size: "344.4 MB" },
+  { sec: "sw", cls: "L1", name: "【使用說明】L系列產品使用說明書（繁體）V1.2.pdf", size: "31.0 MB" },
+  { sec: "sw", cls: "L2", name: "UCMake–Desktop_v4.2.8_win_x64.exe", size: "344.4 MB" },
+  { sec: "sw", cls: "L3", name: "UCMake–Desktop–INT_v4.2.9_mac_arm64.dmg", size: "412.8 MB" },
+  { sec: "sw", cls: "L4", name: "UCMake–Desktop_v4.2.8_win_x64.exe", size: "344.4 MB" },
+  { sec: "sw", cls: "YAI", name: "YAI 競賽平台安裝指引.pdf", size: "12.4 MB" },
+
+  { sec: "teacher", cls: "L1", name: "創意製造 · 01_三角龍_演示課件.pptx", size: "18.7 MB" },
+  { sec: "teacher", cls: "L1", name: "創意製造 · 01_三角龍_課程教案.pdf", size: "391 KB" },
+  { sec: "teacher", cls: "L1", name: "創意製造 · 02_翼龍_演示課件.pptx", size: "23.4 MB" },
+  { sec: "teacher", cls: "L1", name: "創意製造 · 02_翼龍_課程教案.docx", size: "83 KB" },
+  { sec: "teacher", cls: "L1", name: "創意製造 · 03_腕龍_演示課件.pptx", size: "23.2 MB" },
+  { sec: "teacher", cls: "L1", name: "創意製造 · 03_腕龍_課程教案.pdf", size: "342 KB" },
+  { sec: "teacher", cls: "L2", name: "程序交互 · 04_蛇頸龍_演示課件.pptx", size: "17.0 MB" },
+  { sec: "teacher", cls: "L2", name: "程序交互 · 04_蛇頸龍_課程教案.pdf", size: "383 KB" },
+  { sec: "teacher", cls: "L2", name: "程序交互 · 05_劍龍_演示課件.pptx", size: "42.0 MB" },
+  { sec: "teacher", cls: "L2", name: "程序交互 · 05_劍龍_課程教案.pdf", size: "403 KB" },
+  { sec: "teacher", cls: "L3", name: "智能控制 · 06_副櫛龍_演示課件.pptx", size: "25.4 MB" },
+  { sec: "teacher", cls: "L3", name: "智能控制 · 06_副櫛龍_課程教案.pdf", size: "355 KB" },
+  { sec: "teacher", cls: "L4", name: "創造大師 · 07_霸王龍_演示課件.pptx", size: "28.9 MB" },
+  { sec: "teacher", cls: "L4", name: "創造大師 · 07_霸王龍_課程教案.pdf", size: "412 KB" },
+  { sec: "teacher", cls: "YAI", name: "YAI · 無廢城市_教師指引.pdf", size: "1.2 MB" },
+
+  { sec: "student", cls: "L1", name: "創意製造 · 01_三角龍_搭建步驟.pdf", size: "11.1 MB" },
+  { sec: "student", cls: "L1", name: "創意製造 · 02_翼龍_搭建步驟.pdf", size: "19.6 MB" },
+  { sec: "student", cls: "L1", name: "創意製造 · 03_腕龍_搭建步驟.pdf", size: "14.1 MB" },
+  { sec: "student", cls: "L2", name: "創意製造 · 04_蛇頸龍_搭建步驟.pdf", size: "19.8 MB" },
+  { sec: "student", cls: "L2", name: "創意製造 · 05_劍龍_搭建步驟.pdf", size: "16.5 MB" },
+  { sec: "student", cls: "L2", name: "創意製造 · 06_副櫛龍_搭建步驟.pdf", size: "17.0 MB" },
+  { sec: "student", cls: "L3", name: "創意製造 · 07_霸王龍_搭建步驟.pdf", size: "28.0 MB" },
+  { sec: "student", cls: "L3", name: "創意製造 · 08_弩_搭建步驟.pdf", size: "15.9 MB" },
+  { sec: "student", cls: "L3", name: "創意製造 · 09_連發手槍_搭建步驟.pdf", size: "15.6 MB" },
+  { sec: "student", cls: "L4", name: "創意製造 · 10_加特林_搭建步驟.pdf", size: "19.8 MB" },
+  { sec: "student", cls: "L4", name: "創意製造 · 11_迫擊炮_搭建步驟.pdf", size: "20.3 MB" },
+  { sec: "student", cls: "L4", name: "創意製造 · 12_防空導彈_搭建步驟.pdf", size: "16.0 MB" },
+  { sec: "student", cls: "YAI", name: "創意製造 · 13_雷達巡邏車_搭建步驟.pdf", size: "22.3 MB" }
+];
+
+const META = {
+  ai: { title: "AI 延伸課程", scope: "（師生皆可下載）" },
+  sw: { title: "軟件下載", scope: "（學生可下載）" },
+  teacher: { title: "教師專區", scope: "（僅教師可見）" },
+  student: { title: "學生專區", scope: "（學生可見）" }
+};
+
+class Component extends DCLogic {
+  state = { loggedIn: false, role: "teacher", cls: "L1" };
+
+  tab(on) { return on ? { bg: "#46599C", fg: "#FFFFFF" } : { bg: "#FFFFFF", fg: "#454C56" }; }
+
+  classTab(key) {
+    return this.state.cls === key
+      ? { bg: "#46599C", fg: "#FFFFFF", bd: "#46599C" }
+      : { bg: "#FFFFFF", fg: "#454C56", bd: "rgba(28,34,41,0.14)" };
+  }
+
+  renderVals() {
+    const { loggedIn, role, cls } = this.state;
+    const keys = role === "teacher" ? ["ai", "sw", "teacher", "student"] : ["ai", "sw", "student"];
+    const sections = keys.map(k => {
+      const files = FILES.filter(f => f.sec === k && f.cls === cls);
+      return { key: k, title: META[k].title, scope: META[k].scope, files, count: files.length + " 個檔案", empty: files.length === 0 };
+    });
+    const t = this.tab(role === "teacher"), s = this.tab(role === "student");
+    const c = { L1: this.classTab("L1"), L2: this.classTab("L2"), L3: this.classTab("L3"), L4: this.classTab("L4"), YAI: this.classTab("YAI") };
+    const set = o => this.setState(o);
+
+    return {
+      showLogin: !loggedIn,
+      showManager: loggedIn,
+      canUpload: role === "teacher",
+      roleLabel: role === "teacher" ? "教師 TEACHER" : "學生 STUDENT",
+      activeClassLabel: CLASSES[cls],
+      visibleCount: sections.reduce((n, x) => n + x.files.length, 0),
+      sections,
+      teacherTabBg: t.bg, teacherTabFg: t.fg,
+      studentTabBg: s.bg, studentTabFg: s.fg,
+      l1Bg: c.L1.bg, l1Fg: c.L1.fg, l1Bd: c.L1.bd,
+      l2Bg: c.L2.bg, l2Fg: c.L2.fg, l2Bd: c.L2.bd,
+      l3Bg: c.L3.bg, l3Fg: c.L3.fg, l3Bd: c.L3.bd,
+      l4Bg: c.L4.bg, l4Fg: c.L4.fg, l4Bd: c.L4.bd,
+      yaiBg: c.YAI.bg, yaiFg: c.YAI.fg, yaiBd: c.YAI.bd,
+      pickTeacher: () => set({ role: "teacher" }),
+      pickStudent: () => set({ role: "student" }),
+      doLogin: () => set({ loggedIn: true }),
+      doLogout: () => set({ loggedIn: false }),
+      pickL1: () => set({ cls: "L1" }),
+      pickL2: () => set({ cls: "L2" }),
+      pickL3: () => set({ cls: "L3" }),
+      pickL4: () => set({ cls: "L4" }),
+      pickYAI: () => set({ cls: "YAI" })
+    };
+  }
+}
+</script>
+</body>
+</html>

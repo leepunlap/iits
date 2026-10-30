@@ -1,0 +1,62 @@
+@page "/s/{legacyId:int}"
+@using IitsNews.Data
+@model IitsNews.Pages.SectionModel
+@{ var L = Model.CurrentLang; }
+
+<section class="sec">
+
+  <div class="sechead">
+    <div>
+      <h2 class="h2">@Ui.Section(L, Model.Current.Name)</h2>
+    </div>
+    <p class="lede">@Model.Items.Count @Ui.T(L,"items")@(Model.Children.Count > 0 ? $" · {Model.Children.Count} {Ui.T(L,"subcats")}" : "")</p>
+  </div>
+
+  @if (Model.Children.Count > 0)
+  {
+    <div style="display:flex;flex-wrap:wrap;gap:8px;background:transparent;border:0;margin-bottom:48px">
+      @foreach (var c in Model.Children)
+      {
+        <a class="cell" href="/s/@c.LegacyId?lang=@L"
+           style="padding:13px 20px;font-size:14px;color:var(--muted);flex:1 1 auto;text-align:center">@Ui.Section(L, c.Name)</a>
+      }
+    </div>
+  }
+
+  @if (Model.Items.Count == 0)
+  {
+    <div class="empty">@Ui.T(L,"noContent")</div>
+  }
+  else
+  {
+    <div class="grid cols-b">
+      @foreach (var a in Model.Items)
+      {
+        var t = a.For(L); var img = t.FirstImage();
+        <a class="cell" href="/news/item/@a.Id?lang=@L" style="display:flex;flex-direction:column;color:inherit">
+          <span class="@(img is null ? "hatch" : "")" style="height:180px;border-bottom:1px solid var(--line);display:block;position:relative;
+                @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")">
+            @if (t.HasVideo())
+            {
+              <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                <span style="width:46px;height:46px;border-radius:50%;background:rgba(18,23,29,.62);
+                             display:flex;align-items:center;justify-content:center">
+                  <span style="border-left:13px solid #fff;border-top:8px solid transparent;
+                               border-bottom:8px solid transparent;margin-left:4px"></span>
+                </span>
+              </span>
+            }
+          </span>
+          @* Image and headline only. The excerpt was a third thing to read before deciding
+             to read anything — and articles that carry no lead text made short cards next to
+             tall ones, which is why the rows sat ragged. *@
+          <span style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1">
+            <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")@(string.IsNullOrEmpty(a.Section) ? "" : "  ·  " + Ui.Section(L, a.Section))</span>
+            <h3 style="font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.6;color:var(--ink2)">
+              @(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</h3>
+          </span>
+        </a>
+      }
+    </div>
+  }
+</section>

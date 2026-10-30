@@ -1,0 +1,45 @@
+@page "/news/item/{id:int}"
+@using IitsNews.Data
+@model IitsNews.Pages.News.ItemModel
+@{ var L = Model.CurrentLang; }
+
+@if (Model.Item is null || Model.Text is null)
+{
+  <section class="sec"><div class="empty">@Ui.T(L,"notFound")</div></section>
+}
+else
+{
+  <section class="sec">
+
+    <div class="eyebrow">@(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</div>
+    <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.6vw,42px);
+               line-height:1.35;color:var(--ink);margin-bottom:26px;text-wrap:pretty;
+               max-width:24ch">@Model.Text.Title</h1>
+
+    @* No per-article language picker. The switch in the header is the one global control;
+       a second set of pills 60px below it offered the same three choices in a different
+       shape, and on an article with only some translations it also disagreed with the
+       header about which languages exist. *@
+
+    @if (Model.Text.Lang != L)
+    {
+      <div style="margin:18px 0;padding:14px 18px;background:var(--panel);border-left:2px solid var(--brand);
+                  font-size:14px;color:var(--muted2)">
+        @IitsNews.Data.Lang.Label(L) — @IitsNews.Data.Lang.Label(Model.Text.Lang)
+      </div>
+    }
+    @* The machine-translation banner was removed at the owner's instruction. Provenance is
+       still recorded on every translation row and still shown in admin, so which rows are
+       unreviewed remains answerable — it is simply no longer announced to readers. *@
+    <div class="prose">@Html.Raw(Model.Text.BodyHtml)</div>
+    <script>
+      // Promote data-poster onto a CSS custom property; the value comes from our own DB,
+      // and is written via style.setProperty rather than interpolated into markup.
+      document.querySelectorAll('.video[data-poster]').forEach(function(v){
+        var u = v.getAttribute('data-poster');
+        if (u && /^\/media\//.test(u)) v.style.setProperty('--poster', "url('" + u + "')");
+      });
+    </script>
+  </section>
+
+}

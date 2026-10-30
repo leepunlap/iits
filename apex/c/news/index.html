@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&#x6D88;&#x606F; · &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</title>
+<meta name="description" content="&#x7531;&#x555F;&#x8499;&#x63A2;&#x7D22;&#x5230;&#x5275;&#x65B0;&#x5BE6;&#x8E10;&#xFF0C;&#x929C;&#x63A5;&#x570B;&#x5BB6;&#x7D1A;&#x8A8D;&#x8B49;&#x8207;&#x5927;&#x7063;&#x5340;&#x7AF6;&#x8CFD;&#x5E73;&#x53F0;&#x3002;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    /* Palette taken verbatim from iits.roadlogica.com so the two sites are one brand.
+       Replaces the design-artboard values (#46599C / #FAFAFC / Noto Serif) at the owner's
+       instruction to follow the live site's CSS. */
+    --bg:#f7f6f2; --panel:#f0eeea; --panel2:#faf9f6; --foot:#0d1b3a; --card:#ffffff;
+    --ink:#10161d; --ink2:#10161d; --body:#10161d;
+    --muted:#4c5765; --muted2:#5b6673; --muted3:#4c5765; --faint:#6b7686; --faint2:#5f7186;
+    --brand:#3d5699; --brand-d:#2f4275;
+    --line:rgba(16,22,29,0.07); --line2:rgba(16,22,29,0.10); --line3:rgba(16,22,29,0.14);
+    --brandline:rgba(16,22,29,0.08);
+    --navy:#0d1b3a; --navy-t:#b9c4d8;
+    --hatch:linear-gradient(#f4f3ef,#eceae4);
+    --serif:'Space Grotesk','Noto Sans TC',sans-serif; --sans:'Noto Sans TC',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  html{-webkit-text-size-adjust:100%}
+  html,body{min-height:100%}
+  body{margin:0;display:flex;flex-direction:column;min-height:100vh;background:var(--bg);color:var(--body);font-family:var(--sans);
+       font-weight:400;-webkit-font-smoothing:antialiased;line-height:1.7;
+       -webkit-text-size-adjust:100%}
+  html{scroll-behavior:smooth}
+  ::selection{background:var(--brand);color:#fff}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{color:var(--brand-d)}
+  h1,h2,h3{font-family:var(--serif);margin:0;color:var(--ink);font-weight:900;letter-spacing:-.5px}
+  img{max-width:100%}
+
+  .shell{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+  /* ---- hero, lifted from the live iits.roadlogica.com ---- */
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 9px;background:#fff;
+              border:1px solid rgba(16,22,29,.1);border-radius:999px;font-family:var(--mono);
+              font-size:11.5px;letter-spacing:.5px;color:#3A4657;margin-bottom:30px}
+  .pill-cta{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;
+            padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta:hover{background:var(--brand-d);color:#fff}
+  .pill-cta2{display:inline-flex;align-items:center;padding:16px 28px;border-radius:999px;
+             border:1px solid rgba(16,22,29,.18);color:var(--ink);font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta2:hover{border-color:var(--ink)}
+  .hero-art{position:relative;height:520px}
+  .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Crossfading stacks. Every frame is absolutely positioned so the box never reflows as
+     photos swap, and only the active one is opaque. */
+  .slides img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+  .slides img.on{opacity:1}
+  @media(prefers-reduced-motion:reduce){.slides img{transition:none}}
+
+  /* News lead: the headline sits on the picture, over a scrim dark enough to carry white
+     text at AA whatever the photo underneath happens to be. */
+  .newshero{position:relative;height:clamp(260px,27vw,392px);border-radius:22px;overflow:hidden;
+            border:1px solid var(--line);margin-bottom:22px;background:var(--panel)}
+  .newshero>a{position:absolute;inset:0;display:block;opacity:0;transition:opacity 1s ease;
+              background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff}
+  .newshero>a.on{opacity:1}
+  .newshero>a::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(8,12,20,.90) 0%,rgba(8,12,20,.62) 26%,rgba(8,12,20,.12) 58%,rgba(8,12,20,0) 78%)}
+  .newshero .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;
+                 padding:clamp(20px,3vw,34px) clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:10px}
+  .newshero .cap .meta{color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+  .newshero .cap .ttl{font-family:var(--serif);font-weight:700;color:#fff;
+                      font-size:clamp(19px,2.1vw,26px);line-height:1.45;text-wrap:pretty;
+                      text-shadow:0 1px 22px rgba(8,12,20,.5)}
+  .newshero>a:hover .cap .ttl{text-decoration:underline;text-underline-offset:4px}
+  .newshero .dots{position:absolute;right:clamp(18px,2.4vw,28px);top:clamp(18px,2.4vw,26px);
+                  z-index:3;display:flex;gap:7px}
+  .newshero .dots span{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.42);
+                       transition:background .3s,width .3s}
+  .newshero .dots span.on{background:#fff;width:20px}
+  @media(prefers-reduced-motion:reduce){.newshero>a{transition:none}}
+  .hero-a{position:absolute;top:20px;right:0;width:78%;height:340px;border-radius:24px;overflow:hidden;
+          box-shadow:0 40px 80px -30px rgba(16,22,29,.35)}
+  .hero-b{position:absolute;bottom:30px;left:0;width:50%;height:230px;border-radius:20px;overflow:hidden;
+          box-shadow:0 30px 60px -24px rgba(16,22,29,.35);border:5px solid var(--bg);
+          animation:floaty 6s ease-in-out infinite}
+  .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
+             border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
+             animation:floaty 5s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:34px}
+    .hero-art{height:330px}
+  }
+  @media(prefers-reduced-motion:reduce){ .hero-b,.hero-stat{animation:none} }
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
+  .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
+  .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
+  .lede{font-size:15px;line-height:1.9;color:var(--muted2);max-width:420px;margin:0;font-weight:300}
+  .more{font-size:13.5px;letter-spacing:.05em;white-space:nowrap}
+  /* Flat placeholder for cards with no image. Was a diagonal hatch carried over from
+     the design artboard, where it marked 'image goes here'; on a real page that reads as a
+     broken texture, so it is now a quiet flat panel. */
+  .hatch{background-image:var(--hatch);position:relative}
+  .hatch::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;
+                transform:translate(-50%,-50%);border:1.5px solid rgba(28,34,41,.13);border-radius:3px}
+
+  /* the design's signature: a hairline GRID, cells separated by 1px of the border colour */
+  .grid{display:grid;gap:20px;background:transparent;border:0}
+  .grid.cols-a{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .grid.cols-b{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+
+  /* On a phone a five-card column is five screens of scrolling to see five things that are
+     meant to be compared. Swipe sideways instead: the next card peeks in at the edge, which
+     is the affordance, and each one snaps to centre. */
+  @media(max-width:820px){
+    .grid.swipe{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;
+                scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+                scrollbar-width:none;padding-bottom:4px;
+                margin-inline:calc(-1 * clamp(16px,3vw,40px));
+                padding-inline:clamp(16px,3vw,40px)}
+    .grid.swipe::-webkit-scrollbar{display:none}
+    .grid.swipe>*{flex:0 0 74%;scroll-snap-align:center}
+    .swipehint{display:block}
+  }
+  .swipehint{display:none;margin-top:14px;font-family:var(--mono);font-size:11px;
+             letter-spacing:.12em;color:var(--faint2)}
+
+  /* Lift ONLY on cells that are actually links. A hover affordance on something that does
+     not go anywhere promises a click that never happens. */
+  a.cell{transition:transform .3s,box-shadow .3s;display:block}
+  a.cell:hover{transform:translateY(-8px);box-shadow:0 30px 60px -28px rgba(16,22,29,.3)}
+
+  .utility{background:var(--panel);border-bottom:1px solid var(--brandline)}
+  .utility .shell{min-height:38px;display:flex;flex-wrap:wrap;align-items:center;
+                  justify-content:space-between;gap:10px;font-size:12px;letter-spacing:.06em;color:var(--muted2)}
+  .utility .org{font-family:var(--mono)}
+  .util-right{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .langsel{display:flex;align-items:center;border:1px solid var(--line3);font-family:var(--mono);letter-spacing:.06em}
+  .langsel a{padding:3px 9px;font-size:11.5px;color:var(--muted2)}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  .langsel a:hover{color:var(--brand)}
+  .langsel a.on{background:var(--brand);color:#fff}
+  .langsel a.on:hover{color:#fff}
+  .vr{width:1px;height:14px;background:var(--line3)}
+
+  header.site{position:sticky;top:0;z-index:40;background:rgba(247,246,242,.94);
+              backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+              border-bottom:1px solid var(--line)}
+  header.site .shell{position:relative;padding-top:12px;padding-bottom:12px;min-height:82px;
+                     display:flex;align-items:center;justify-content:space-between;gap:24px}
+  header.site .brand img{height:clamp(34px,3.2vw,46px);width:auto;display:block;flex-shrink:0}
+
+  nav.main{display:flex;align-items:center;flex-wrap:nowrap;gap:clamp(2px,.5vw,8px);
+           font-size:clamp(13px,1vw,14.5px);color:var(--muted3);font-weight:500}
+  nav.main a{color:var(--muted3);white-space:nowrap} nav.main a:hover{color:var(--brand)}
+  /* A filled block, not a hairline underline — at 14px with a 2px rule under it, the
+     current section was easy to miss entirely. Every top-level link carries the same
+     padding and radius so the active one does not shift its neighbours. */
+  nav.main a.on{color:#fff;background:var(--brand)}
+  nav.main a.on:hover{color:#fff}
+  nav.main>a{padding:7px 13px;border-radius:10px}
+  .navsep{width:1px;height:18px;background:var(--line3);flex-shrink:0;margin:0 10px}
+
+  .langsel{display:inline-flex;align-items:center;border:1px solid var(--line3);border-radius:999px;
+           overflow:hidden;flex-shrink:0}
+  nav.main .langsel a,.navpanel .langsel a{padding:5px 10px;font-size:11.5px;font-family:var(--mono);
+           color:var(--muted2);border:0}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  nav.main .langsel a.on,.navpanel .langsel a.on{background:var(--brand);color:#fff}
+  nav.main .langsel a.on:hover{color:#fff}
+  /* These three need the `nav.main` prefix: without it `nav.main a{color:var(--muted3)}`
+     outranked them, so the solid navy button drew its label in muted navy — legible in the
+     stylesheet, invisible on the page. */
+  nav.main a.area{padding:7px 14px;border:1px solid rgba(16,22,29,.18);border-radius:999px;
+        font-size:13px;white-space:nowrap;flex-shrink:0;color:var(--ink2)}
+  nav.main a.area:hover{border-color:var(--ink);color:var(--ink)}
+  nav.main a.area-cta{background:var(--navy);color:#fff;border-color:var(--navy)}
+  nav.main a.area-cta:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+
+  .navtoggle{display:none;background:none;border:0;cursor:pointer;padding:9px;width:44px;height:44px;
+             flex-direction:column;justify-content:center;gap:5px}
+  .navtoggle span{display:block;height:2px;width:22px;background:var(--ink);border-radius:2px;transition:.25s}
+  .navtoggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .navtoggle.open span:nth-child(2){opacity:0}
+  .navtoggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .navpanel{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(247,246,242,.98);
+            backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:10px 22px 20px}
+  .navpanel a{display:block;padding:11px 2px;font-size:15.5px;color:var(--muted3);border-bottom:1px solid var(--line)}
+  /* Collapses when the single row runs out of width — one bar or a hamburger, never two bars. */
+  @media(max-width:1180px){
+    nav.main{display:none}
+    .navtoggle{display:flex}
+    .navpanel.open{display:block}
+  }
+
+
+  /* Assessment fact sheet — the detail a parent actually needs, laid out to be scanned. */
+  /* One card, two columns of "label：value". The marker sits in the margin and wrapped
+     lines align with the text — a hanging indent, like every other list on the site now. */
+  .factlist{list-style:none;margin:0;padding:26px 30px 28px;background:#fff;
+            border:1px solid var(--line);border-radius:16px;
+            columns:2;column-gap:44px}
+  .factlist li{break-inside:avoid;margin:0 0 13px;padding-left:17px;position:relative;
+               font-size:15px;line-height:1.7;color:var(--ink2)}
+  .factlist li:last-child{margin-bottom:0}
+  .factlist li::before{content:'';position:absolute;left:0;top:.66em;width:6px;height:6px;
+                       border-radius:1px;background:var(--brand);opacity:.75}
+  .factlist li span{font-weight:700;color:var(--ink)}
+  .factlist li span::after{content:'：';font-weight:400;color:var(--muted2)}
+  @media(max-width:820px){.factlist{columns:1;padding:22px 24px}}
+
+  /* Figures rebuilt from diagrams that used to be pictures of text. */
+  .fig{margin:26px 0;padding:0}
+  .fig table{margin:0}
+  .fig tr.grp td{background:var(--panel);font-weight:700;color:var(--ink);
+                 font-size:13.5px;letter-spacing:.02em}
+  .fig .fignote{margin-top:10px;font-size:12.5px;line-height:1.7;color:var(--faint2)}
+  /* the curriculum matrix: dense, so it sets tighter than ordinary prose tables */
+  .fig table.matrix td,.fig table.matrix th{font-size:12.5px;padding:8px 11px;vertical-align:top}
+  .fig table.matrix .agecell{background:var(--panel);font-weight:700;white-space:nowrap}
+  /* the five strands */
+  .fig .pil-intro{margin:0 0 16px;font-size:15px;color:var(--muted2);max-width:70ch}
+  .fig .pilgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .fig .pil{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px 18px}
+  .fig .pil h4{margin:0 0 12px;font-family:var(--serif);font-size:14.5px;font-weight:700;color:var(--ink2);
+               display:flex;align-items:baseline;gap:8px}
+  .fig .pil h4 b{font-size:22px;color:var(--brand);font-weight:800;line-height:1}
+  .fig .pil-g{margin-top:12px}
+  .fig .pil-g h5{margin:0 0 5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;
+                 text-transform:uppercase;color:var(--brand)}
+  .fig .pil-g ul{list-style:none;margin:0;padding:0}
+  .fig .pil-g li{font-size:12.5px;line-height:1.65;color:var(--muted2);padding-left:11px;position:relative}
+  .fig .pil-g li::before{content:'';position:absolute;left:0;top:.66em;width:4px;height:4px;
+                         border-radius:50%;background:var(--brand);opacity:.5}
+  @media(max-width:1080px){.fig .pilgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.fig .pilgrid{grid-template-columns:1fr}}
+  .fig .chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}
+  .fig .chips li{background:var(--panel);border:1px solid var(--line2);border-radius:999px;
+                 padding:6px 14px;font-size:13px;color:var(--ink2)}
+  .fig .featgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .fig .fc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .fig .fc h4{margin:0;padding:11px 16px;background:var(--brand);color:#fff;
+              font-family:var(--sans);font-size:13.5px;font-weight:700;line-height:1.4}
+  .fig .fc ul{list-style:none;margin:0;padding:14px 16px 16px}
+  .fig .fc li{font-size:13.5px;line-height:1.7;color:var(--ink2);padding-left:14px;position:relative}
+  .fig .fc li::before{content:'';position:absolute;left:0;top:.72em;width:5px;height:5px;
+                      border-radius:50%;background:var(--brand);opacity:.6}
+  .fig figcaption h4{margin:18px 0 10px;font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink2)}
+  .fig .packlist{list-style:none;margin:0;padding:0;display:grid;
+                 grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 20px}
+  .fig .packlist li{font-size:13.5px;color:var(--muted2);display:flex;justify-content:space-between;
+                    gap:10px;border-bottom:1px solid var(--line);padding:6px 0}
+  .fig .packlist li span{color:var(--ink2);font-weight:500}
+  @media(max-width:820px){
+    .fig .featgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .fig .packlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  /* Figures span the full measure inside two-column prose. */
+  .footnote{margin-top:14px;font-size:12.5px;color:var(--faint2);line-height:1.7;max-width:78ch}
+
+  .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:38px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 30px 34px}
+  .panel h3{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink2);margin:6px 0 14px}
+  .panel p{font-size:14.5px;line-height:1.9;color:var(--muted2)}
+  .panel p b{color:var(--ink2);font-weight:600}
+
+  /* Partners are a list of logos, in their own colours, and nothing hovers. */
+  /* Fixed column counts, not auto-fit: with eight partners, auto-fit packed seven across
+     and left the eighth stranded on its own row. 4 and 2 both divide 8 into full rows. */
+  .logogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+            background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:34px}
+  @media(max-width:820px){.logogrid{grid-template-columns:repeat(2,1fr)}}
+  /* Two up, like the sister club site's card grids — a fixed count, not auto-fit, so the
+     last row is never an orphan. */
+  .expertgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:32px}
+  @media(max-width:820px){.expertgrid{grid-template-columns:1fr}}
+  .expertcard{display:grid;grid-template-columns:128px minmax(0,1fr);gap:20px;
+              background:var(--card);border:1px solid var(--line);border-radius:20px;
+              padding:20px;color:inherit;align-items:stretch;
+              transition:box-shadow .3s,transform .3s}
+  .expertcard:hover{transform:translateY(-4px);box-shadow:0 24px 48px -30px rgba(16,22,29,.3)}
+  .ec-photo{display:block;aspect-ratio:3/4;border-radius:14px;background-size:cover;
+            background-position:50% 16%;background-repeat:no-repeat;border:1px solid var(--line)}
+  .ec-body{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-width:0}
+  .ec-name{display:block;font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);
+           line-height:1.3}
+  .ec-org{display:block;margin-top:7px;font-size:13.5px;line-height:1.55;color:var(--muted2)}
+  .ec-role{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+           text-transform:uppercase;color:var(--brand)}
+  .ec-cred{display:block;font-size:13px;line-height:1.75;color:var(--muted2);
+           display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  @media(max-width:480px){.expertcard{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px}}
+
+  .logo{background:#fff;height:120px;display:flex;align-items:center;justify-content:center;padding:22px}
+  .logo img{max-width:100%;max-height:74px;object-fit:contain}
+  .logo span{font-size:13.5px;color:var(--muted2);text-align:center}
+
+
+  /* ---- prose: ONE definition for pages, articles and inline standing text ----
+     Imported bodies used to carry their own margins, widths, white backgrounds and arial
+     font stacks; those were stripped at import, so everything below is now the only thing
+     styling them and body text finally shares the page's column. */
+  /* The measure belongs to the TEXT, not to the column. Capping the whole .prose block put
+     figures on the same 78ch leash as paragraphs, so pages that are mostly diagrams used
+     barely half the shell — /c/courses, /p/16 and the article pages each ran to 688px of
+     1320. Sentences stay at a readable measure; pictures, tables and video get the width. */
+  .prose{font-size:16.5px;line-height:1.95;color:var(--ink2);font-weight:300;overflow-wrap:anywhere;
+         max-width:none;background:transparent}
+  .prose>p,.prose>ul,.prose>ol,.prose>blockquote,
+  .prose>h1,.prose>h2,.prose>h3,.prose>h4{max-width:78ch}
+  /* …except a paragraph that is only wrapping a picture, which the old CMS did constantly. */
+  .prose>p:has(>img){max-width:none}
+  .prose table,.prose .video{max-width:min(1080px,100%)}
+
+  /* Two columns once the page is wide enough to justify them — newspaper practice, and the
+     reason the right half of these pages was empty. Headings and figures span the full
+     measure so they still separate the flow; orphans/widows stop a column ending on a
+     single stranded line. Below 1080px it stays a single column, where two would be
+     unreadable. */
+  @media(min-width:1080px){
+    .prose{columns:2;column-gap:clamp(34px,3.2vw,58px);column-rule:1px solid var(--line)}
+    .prose>p,.prose>ul,.prose>ol,.prose>blockquote{max-width:none;orphans:2;widows:2}
+    .prose>h1,.prose>h2,.prose>h3,.prose>h4{column-span:all;max-width:none}
+    /* Pictures run WITH the text, in the column, the way a newspaper sets them — sized to
+       the column edges and never split across a break. Tables and video still span the full
+       measure: a table squeezed into half a column stops being readable. */
+    .prose>figure.fig{column-span:all}
+    .prose>p:has(>img),.prose>img,.prose>figure{column-span:none;break-inside:avoid;
+                                                page-break-inside:avoid;max-width:none}
+    .prose>p:has(>img){margin:0 0 1.15em}
+    .prose img{width:100%;max-width:100%;max-height:none;margin:0 0 .5em}
+    .prose>table,.prose>.video{column-span:all}
+    .prose>*:first-child{margin-top:0}
+  }
+  .prose>*:first-child{margin-top:0}
+  .prose p{margin:0 0 1.15em;background:transparent}
+  .prose strong,.prose b{font-weight:700;color:var(--ink)}
+  /* Capped in BOTH directions: wide enough to read a diagram, bounded so the twenty-odd
+     legacy photos on the About page cannot run the page past 20,000px again. */
+  /* 820px is chosen so a 4:3 landscape figure reaches the full 1080px column before the
+     height cap bites; only genuinely tall portrait posters are held back, which is the case
+     the cap exists for. */
+  .prose img{max-width:min(1080px,100%);max-height:820px;width:auto;height:auto;display:block;
+             margin:26px 0;border-radius:14px;border:1px solid var(--line);
+             background:var(--panel)}
+  .prose a{color:var(--brand);text-decoration:underline}
+  .prose h1,.prose h2,.prose h3,.prose h4{font-family:var(--serif);margin:1.7em 0 .55em;
+             color:var(--ink2);font-weight:700;line-height:1.5}
+  .prose h1,.prose h2{font-size:19.5px}
+  .prose h3,.prose h4{font-size:17px}
+  .prose ul,.prose ol{margin:0 0 1.15em;padding-left:1.5em}
+  .prose li{margin:.35em 0;padding-left:.2em}
+  /* Hanging indent for the imported "1、…" paragraphs: the marker sits in the margin and
+     every wrapped line aligns with the text, not back under the number. */
+  .prose p.num{padding-left:2.15em;text-indent:-2.15em}
+  .prose p.num + p.num{margin-top:-.35em}
+  .prose table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:1.4em 0;
+               font-size:14.5px}
+  .prose td,.prose th{border:1px solid var(--line2);padding:9px 12px;text-align:left}
+  .prose th{background:var(--panel);font-weight:600}
+  .prose iframe,.prose video{max-width:100%}
+  .prose .video{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;
+                background:#000 center/cover no-repeat;border:1px solid var(--line);overflow:hidden}
+  .prose .video[data-poster]{background-image:var(--poster)}
+  .prose .video iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
+
+  .guide{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--card);
+         overflow:hidden}
+  .guide>summary{cursor:pointer;list-style:none;padding:16px 22px;font-family:var(--serif);
+                 font-size:15.5px;font-weight:600;color:var(--ink2);display:flex;
+                 align-items:center;gap:12px;transition:background .2s}
+  .guide>summary::-webkit-details-marker{display:none}
+  .guide>summary::before{content:'+';font-family:var(--mono);font-size:17px;color:var(--brand);
+                         flex-shrink:0;width:14px}
+  .guide[open]>summary::before{content:'–'}
+  .guide>summary:hover{background:rgba(61,86,153,.05)}
+  .guide[open]>summary{border-bottom:1px solid var(--line)}
+  .guide>.prose{padding:22px 22px 26px}
+  .guide+.standing{margin-top:44px}
+
+  .standing{margin-top:34px}
+  .standing+.standing{margin-top:52px;padding-top:44px;border-top:1px solid var(--line)}
+  .standing-h{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);margin-bottom:16px}
+  /* Section headings carry the whole structure of a page that now runs to many screens, so
+     they get a rule the full width of the section, a brand marker, and enough size to be
+     found while scrolling past. */
+  /* ONE rule, with a brand-coloured lead-in — not a dark border plus a floating blue dash.
+     The dash was positioned at a fixed -28px, so it only landed on the border at some
+     widths and dropped below it at others, reading as two separate lines. */
+  .sec.anchor>.sechead{position:relative;padding-top:26px;align-items:flex-end}
+  .sec.anchor>.sechead::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--brand) 0 72px,var(--ink) 72px)}
+  /* The heading takes the row, the cube sits at its right-hand end, and "view all" tucks in
+     between them. The stage stays 124px because a rotating 62px cube reaches ~107px across
+     its diagonal and more again under perspective — anything tighter clips a near corner. */
+  .sechead.has-cube{align-items:center;flex-wrap:nowrap}
+  .sechead.has-cube .h3sec{flex:1;min-width:0}
+  .sechead.has-cube .more{flex-shrink:0;order:2}
+  .sechead.has-cube .cube-stage{order:3;flex-shrink:0;margin:-18px -8px -18px 0;cursor:grab}
+  @media(max-width:640px){
+    .sechead.has-cube{flex-wrap:wrap;gap:14px}
+    .sechead.has-cube .cube-stage{width:92px;height:92px;margin:-14px 0}
+  }
+  .h3sec{font-family:var(--serif);font-size:clamp(26px,3vw,40px);font-weight:800;
+         color:var(--ink);letter-spacing:-.02em;line-height:1.15;position:relative}
+  .sec.anchor{padding-top:clamp(46px,5vw,72px)}
+  /* The hero was padded to sit under a breadcrumb and an eyebrow. With five pages and an
+     active nav item, both were the page's own name repeated, so the title starts higher. */
+  /* Present to assistive technology and to search, absent from the layout. */
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .hero-h1{font-size:clamp(40px,6vw,82px)}
+  html[lang="en"] .hero-h1{font-size:clamp(34px,4.3vw,58px);max-width:15ch;letter-spacing:-.5px}
+
+  .hero-sec{padding-top:clamp(30px,3.4vw,46px);padding-bottom:10px}
+  /* A full-width band that reads as a quotation rather than as a stray centred paragraph.
+     The 34ch cap it used to carry forced the last two characters onto a line of their own. */
+  .quoteband{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .quoteband .sec{padding-top:clamp(52px,6vw,86px);padding-bottom:clamp(52px,6vw,86px)}
+  .quoteband blockquote{position:relative;margin:0;padding-left:clamp(22px,3vw,46px);
+                        border-left:3px solid var(--brand);
+                        font-family:var(--serif);font-weight:700;
+                        font-size:clamp(21px,3.1vw,38px);line-height:1.5;color:var(--ink);
+                        max-width:none;text-wrap:balance}
+  .quoteband blockquote em{font-style:normal;color:var(--brand)}
+  @media(max-width:700px){.quoteband blockquote{max-width:none}}
+
+  /* ---- one long page per category: a sticky tag bar, and anchors that clear the header ---- */
+  html{scroll-behavior:smooth}
+  .anchor{scroll-margin-top:146px}
+  .sec.anchor{padding-top:clamp(34px,4vw,52px)}
+  .sectabs{position:sticky;top:83px;margin-top:0;z-index:30;background:rgba(247,246,242,.94);
+           backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+           border-bottom:1px solid var(--line)}
+  .sectabs-in{max-width:1320px;margin:0 auto;padding:11px clamp(16px,3vw,40px);
+              display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .sectabs-in::-webkit-scrollbar{display:none}
+  .sectabs a{padding:7px 15px;border-radius:999px;font-size:13.5px;white-space:nowrap;
+             color:var(--muted2);border:1px solid transparent;transition:.2s}
+  .sectabs a:hover{background:rgba(61,86,153,.07);color:var(--ink2)}
+  /* Both states named explicitly: `.sectabs a:hover` and `.sectabs a.on` carry the same
+     specificity, so hovering the active pill was one source-order edit away from painting
+     dark text on the solid blue. */
+  .sectabs a.on,.sectabs a.on:hover{background:var(--brand);color:#fff}
+  @media(max-width:1180px){.anchor{scroll-margin-top:140px}}
+
+  /* Sections rise into place as they arrive — the live site's 0.3s transform language,
+     not a new one. Anything that cannot observe just shows, and reduced-motion opts out. */
+  /* Hidden ONLY once script has confirmed it can reveal it again (html.jsr). Hiding content
+     in the stylesheet and relying on JS to bring it back means a script error blanks the
+     page; this way the worst case is no animation. */
+  html.jsr .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+  html.jsr .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){html.jsr .reveal{opacity:1;transform:none;transition:none}}
+
+  .btn{background:var(--brand);color:#fff;font-size:14.5px;font-weight:500;padding:14px 28px;
+       letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn:hover{background:var(--brand-d);color:#fff}
+  .btn2{border:1px solid rgba(28,34,41,.22);color:var(--body);font-size:14.5px;padding:14px 28px;
+        letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn2:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* ---- tumbling assessment cube, liquid glass, JS physics -------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection.
+
+     ORIENTATION IS SIMULATED, NOT KEYFRAMED. cube.js integrates a quaternion from an
+     angular-velocity vector each frame, so the motion has real state: it can be nudged,
+     it carries momentum, and it never repeats. Keyframes cannot express any of that.
+
+     THE LABEL LIVES AT THE CUBE'S CENTRE, at translateZ(0) INSIDE the preserve-3d
+     hierarchy, and is counter-rotated by the inverse quaternion so it always faces the
+     viewer. Being a real plane at z=0 rather than an overlay is what lets the near faces
+     pass IN FRONT of it — the letters are inside the glass, not painted on top.
+
+     Letters are potrace vectors of the source art's own condensed gothic, so they stay
+     crisp at any size instead of being an upscaled 23px bitmap.
+
+     CSS 3D + a small rAF loop rather than three.js: ~600 KB and five WebGL contexts is not
+     a price worth paying to tumble five logos. ------------------------------------------ */
+  /* Twelve advisers on two rows of six. Fixed at 6 rather than auto-fill because the
+     roster is a known, fixed set — an auto grid reflows it to 5+5+2, which reads as a
+     ragged list instead of a panel. Steps down in even divisors so it never leaves an
+     orphan on the last row. */
+  .experts-grid{grid-template-columns:repeat(6,1fr)}
+  @media(max-width:1240px){ .experts-grid{grid-template-columns:repeat(4,1fr)} }
+  @media(max-width:820px) { .experts-grid{grid-template-columns:repeat(3,1fr)} }
+  @media(max-width:560px) { .experts-grid{grid-template-columns:repeat(2,1fr)} }
+  .experts-grid h3{font-size:16px!important}
+  .experts-grid .cell span:last-child{padding:16px 16px 20px!important}
+
+  .cube-stage{position:relative;width:124px;height:124px;perspective:230px;
+              perspective-origin:50% 44%;
+              display:flex;align-items:center;justify-content:center;isolation:isolate;
+              cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}
+  .cube-stage:active{cursor:grabbing}
+  .cube{position:relative;z-index:1;width:62px;height:62px;transform-style:preserve-3d;
+        will-change:transform}
+  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
+          --d:1;
+          background:linear-gradient(135deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.05) 42%,
+                     rgba(150,182,250,.15) 66%,rgba(255,255,255,.26) 100%);
+          border:1.5px solid rgba(70,118,224,calc(.20 + .58 * var(--d)));
+          opacity:calc(.42 + .58 * var(--d));
+          box-shadow:inset 0 1px 0 rgba(255,255,255,calc(.25 + .60 * var(--d))),
+                     inset 0 -8px 14px -12px rgba(46,109,240,calc(.15 + .35 * var(--d)))}
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,.20) 100%);
+            /* Blur has to stay LOW. The label sits at the cube's centre, so every near
+               face blurs it — physically right, but at 4px the letters stopped being
+               legible. 1.2px keeps the refraction reading as glass while the code stays
+               sharp through it. */
+            -webkit-backdrop-filter:blur(0.6px) saturate(135%);
+            backdrop-filter:blur(0.6px) saturate(135%);
+            /* the far half of the glass loses its highlight, which is what tells you it is
+               the far half */
+            background-image:linear-gradient(135deg,
+                       rgba(255,255,255,calc(.10 + .26 * var(--d))) 0%,
+                       rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,calc(.06 + .18 * var(--d))) 100%)}
+  }
+  .cube .f{transform:translateZ(31px)}
+  .cube .b{transform:rotateY(180deg) translateZ(31px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(31px)}
+  .cube .l{transform:rotateY(-90deg) translateZ(31px)}
+  .cube .u{transform:rotateX(90deg)  translateZ(31px)}
+  .cube .d{transform:rotateX(-90deg) translateZ(31px)}
+
+  /* the plane at the centre of the cube, counter-rotated by JS */
+  .cube .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+             pointer-events:none;will-change:transform}
+  /* Sizes are in label space, which the transform scales by 0.5 — so 80px draws as 40px
+     and 9px of blur as 4.5px. Kept inside the cube in every orientation. */
+  .cube .lbl::before{content:'';position:absolute;left:50%;top:50%;
+             width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;
+             background:radial-gradient(circle at 44% 38%,
+                        rgba(126,170,252,.16) 0%, rgba(130,174,252,.26) 24%,
+                        rgba(146,188,254,.21) 44%, rgba(180,208,255,.09) 68%,
+                        rgba(214,229,255,0) 86%);
+             filter:blur(9px)}
+  /* LIVE TEXT, not a traced bitmap. The source art is 23px tall, so potrace outlines of it
+     came out lumpy at display size — there simply is not enough information in the original
+     to vectorise cleanly. Anton is a heavy condensed grotesque and the closest widely
+     available match to the face the badge used; as real text it is crisp at any size and
+     costs nothing to render.
+     The depth is stacked text-shadows stepping down-right, which reads as an extruded solid
+     rather than a flat sticker. Genuine extrusion would be invisible here: the label is
+     counter-rotated to face the viewer, so its sides never turn toward the camera. */
+  /* Rendered at 2x and scaled down by the transform. Anything inside a 3D-transformed
+     parent is rasterised ONCE at its layout size and then transformed, so 20px text drawn
+     at 20px and pushed through a matrix comes out soft. Drawing it at 40px and scaling to
+     0.5 doubles the raster resolution and it stays sharp. */
+  .cube .lbl b{font-family:'Anton','Arial Narrow',Impact,sans-serif;font-weight:400;
+               font-size:44px;letter-spacing:.04em;color:#12171D;line-height:1;
+               white-space:nowrap;-webkit-font-smoothing:antialiased;
+               /* Black face, WHITE extrusion. Against a busy illustration a coloured glyph
+                  competes with the artwork; black reads as type at any backdrop, and the
+                  white depth doubles as the separation that would otherwise need a halo.
+                  Drawn at 2x with the font, so these offsets are 2x too. */
+               text-shadow:2px 2px 0 #FFFFFF, 3px 3px 0 #FFFFFF, 4px 4px 0 #F6F8FC,
+                           5px 5px 0 #EDF0F6, 6px 8px 10px rgba(70,80,100,.30),
+                           -1px -1px 0 rgba(255,255,255,.85)}
+
+  @media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
+
+  .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .pagelist{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+            border-radius:18px;overflow:hidden;margin-top:34px}
+  .pagelink{display:flex;align-items:center;justify-content:space-between;gap:20px;
+            padding:20px 26px;background:var(--card);font-size:16px;color:var(--ink);
+            transition:background .15s}
+  .pagelink:hover{background:var(--panel2);color:var(--brand)}
+  .pagelink .arr{color:var(--faint);font-family:var(--mono)}
+  .pagelink:hover .arr{color:var(--brand)}
+  .empty{padding:70px 0;text-align:center;color:var(--faint2)}
+
+  footer.site{background:var(--navy);color:var(--navy-t);border-top:0;margin-top:0}
+  footer.site .cols{max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,3vw,40px) 0;
+                    display:block}
+  footer.site .ftitle{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:#aebde3;margin-bottom:20px}
+  footer.site .stack{display:flex;flex-direction:column;gap:12px;font-size:14px}
+  footer.site .stack a{color:var(--navy-t)} footer.site .stack a:hover{color:#fff}
+  footer.site .addr{display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.8;
+                    color:var(--navy-t);font-weight:300}
+  footer.site .base a{color:var(--navy-t)} footer.site .base a:hover{color:#fff}
+  footer.site .base{max-width:1320px;margin:0 auto;padding:36px clamp(16px,3vw,40px);
+                    border-top:1px solid var(--line);margin-top:56px;display:flex;justify-content:space-between;
+                    gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+
+
+</style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="工信學堂（香港）">
+<meta property="og:title" content="消息">
+<meta property="og:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta property="og:url" content="https://ycltesthk.com/c/news/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="zh_HK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="消息">
+<meta name="twitter:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
+</head>
+<body>
+
+<header class="site">
+  <div class="shell">
+    <a href="/" class="brand" aria-label="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+    </a>
+
+    <nav class="main">
+      <a href="/" class="">&#x9996;&#x9801;</a>
+        <a href="/c/tests/" class="">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/" class="">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/" class="on">&#x6D88;&#x606F;</a>
+        <a href="/c/about/" class="">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <span class="navsep"></span>
+      <span class="langsel">
+          <a href="/c/news/" class="on" hreflang="zh-Hant">&#x7E41;</a>
+          <a href="/zh-Hans/c/news/" class="" hreflang="zh-Hans">&#x7B80;</a>
+          <a href="/en/c/news/" class="" hreflang="en">EN</a>
+      </span>
+      <a class="area" href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </nav>
+
+    <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="navpanel" id="navPanel">
+      <a href="/">&#x9996;&#x9801;</a>
+        <a href="/c/tests/">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/">&#x6D88;&#x606F;</a>
+        <a href="/c/about/">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <div class="langsel" style="margin:14px 0 6px">
+          <a href="/c/news/" class="on">&#x7E41;</a>
+          <a href="/zh-Hans/c/news/" class="">&#x7B80;</a>
+          <a href="/en/c/news/" class="">EN</a>
+      </div>
+      <a href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<h1 class="vh">&#x6D88;&#x606F;</h1>
+
+  <nav class="sectabs" id="sectabs" aria-label="&#x6D88;&#x606F;">
+    <div class="sectabs-in">
+        <a href="#news" data-tab="news">&#x6700;&#x65B0;&#x6D88;&#x606F;</a>
+        <a href="#policy" data-tab="policy">&#x570B;&#x5BB6;&#x653F;&#x7B56;</a>
+    </div>
+  </nav>
+
+  <section class="sec anchor reveal" id="news">
+    <div class="sechead " style="margin-bottom:26px">
+      <h2 class="h3sec">&#x6700;&#x65B0;&#x6D88;&#x606F;</h2>
+        <a class="more" href="/c/news/news/">&#x67E5;&#x770B;&#x5168;&#x90E8; 18 →</a>
+    </div>
+
+
+
+      <div class="grid cols-b" style="margin-top:34px">
+                    <a class="cell" href="/news/item/198/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url('/media/poster/yai-zhuhai-final/cover.jpg') center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-09-30</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                YAI 機器人工程挑戰賽 · 珠海總決賽官方海報</h3>
+            </span>
+          </a>
+<a class="cell" href="/news/item/197/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/media/poster/2026-autumn/cover.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-09-25</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#xB7;&#x5DE5;&#x4FE1;&#x5B78;&#x5802;AI&#x6559;&#x80B2;&#x79D1;&#x5275;&#x4E2D;&#x5FC3;&#x300C;AI&#x5947;&#x601D;&#xB7;&#x5DE5;&#x623F;&#x300D;2026/27&#x5E74;&#x5EA6;&#x79CB;&#x5B63;&#x62DB;&#x751F;&#x7C21;&#x7AE0;</h3>
+            </span>
+          </a>
+          <a class="cell" href="/news/item/126/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/upload/image/20260813/6392221615412455632010849.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-08-13</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x7B2C;&#x4E8C;&#x5C46;&#x300C;AI &#x7121;&#x754C;&#x300D;&#x5927;&#x7063;&#x5340;&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x5275;&#x65B0;&#x5927;&#x8CFD;&#x5713;&#x6EFF;&#x843D;&#x5E55;!</h3>
+            </span>
+          </a>
+          <a class="cell" href="/news/item/125/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/media/wx/12336735777041738b30.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-06-11</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#xB7;&#x5DE5;&#x4FE1;&#x5B78;&#x5802;AI &#x6559;&#x80B2;&#x79D1;&#x5275;&#x4E2D;&#x5FC3;&#x6691;&#x671F;&#x62DB;&#x751F;&#x7C21;&#x7AE0;</h3>
+            </span>
+          </a>
+          <a class="cell" href="/news/item/103/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/upload/image/20260413/6391169283022826593606332.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-04-13</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#x4EAE;&#x76F8;&#x9999;&#x6E2F;AI&#x6559;&#x80B2;&#x7814;&#x8A0E;&#x6703;&#xFF0C;&#x5171;&#x8A71;&#x884C;&#x696D;&#x767C;&#x5C55;</h3>
+            </span>
+          </a>
+          <a class="cell" href="/news/item/92/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/media/video/70d6315877ff57a179ff.jpg&#x27;) center/cover no-repeat">
+                <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                  <span style="width:44px;height:44px;border-radius:50%;background:rgba(18,23,29,.62);display:flex;align-items:center;justify-content:center">
+                    <span style="border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span>
+                  </span></span>
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-02-28</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x7B2C;&#x56DB;&#x5C46;&#x5168;&#x570B;&#x9752;&#x79D1;&#x8CFD;&#x7E3D;&#x6C7A;&#x8CFD;</h3>
+            </span>
+          </a>
+          <a class="cell" href="/news/item/91/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/upload/image/20260227/6390780156508285819192875.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-02-27</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                &#x4E2D;&#x570B;&#x9999;&#x6E2F;&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7CFB;&#x5217;&#x8AB2;&#x7A0B;</h3>
+            </span>
+          </a>
+      </div>
+  </section>
+  <section class="sec anchor reveal" id="policy">
+    <div class="sechead " style="margin-bottom:26px">
+      <h2 class="h3sec">&#x570B;&#x5BB6;&#x653F;&#x7B56;</h2>
+    </div>
+
+
+        <article class="standing">
+            <h3 class="standing-h">&#x6559;&#x80B2;&#x90E8;&#x7B49;&#x5341;&#x516B;&#x90E8;&#x9580;&#x95DC;&#x65BC;&#x52A0;&#x5F37;&#x65B0;&#x6642;&#x4EE3;&#x4E2D;&#x5C0F;&#x5B78;&#x79D1;&#x5B78;&#x6559;&#x80B2;&#x5DE5;&#x4F5C;&#x7684;&#x610F;&#x898B;</h3>
+          <div class="prose"><p>教育部等十八部門關於加強新時代中小學<br/>科學教育工作的意見</p><p>教監管〔2023〕2號</p><p>各省、自治區、直轄市教育廳（教委）、黨委宣傳部、網信辦、文明辦、發展改革委、科技廳（委、局）、工業和信息化主管部門、通信管理局、財政廳（局）、自然資源主管部門、生態環境廳（局）、農業農村（農牧）廳（局、委）、團委、婦聯、科協、少工委，新疆生產建設兵團教育局、黨委宣傳部、網信辦、文明辦、發展改革委、科技局、工業和信息化局、財政局、自然資源局、生態環境局、農業農村局、團委、婦聯、科協、少工委，中國科學院院屬各單位，有關部門（單位）教育司（局），部屬各高等學校、部省合建各高等學校：</p><p>為深入貫徹習近平總書記在二十屆中共中央政治局第三次集體學習時的重要講話精神，全面落實黨中央、國務院《關於進一步減輕義務教育階段學生作業負擔和校外培訓負擔的意見》《關於新時代進一步加強科學技術普及工作的意見》《全民科學素質行動規劃綱要（2021—2035年）》部署要求，着力在教育“雙減”中做好科學教育加法，一體化推進教育、科技、人才高質素發展，現提出以下意見。</p><p><strong>一、總體要求</strong></p><p class="num">1.指導思想</p><p>以習近平新時代中國特色社會主義思想為指導，全面貫徹落實黨的二十大精神，按照中央“雙減”工作部署，聚焦立德樹人根本任務，完善課程體系，修訂科學教材，改進教學方法，加強師資隊伍建設，用好實踐場所，推出優質資源，做強品牌活動，推進學科建設，開展科學研究，調動社會力量，推動中小學科學教育學校主陣地與社會大課堂有機銜接，提高學生科學素質，培育具備科學家潛質、願意獻身科學研究事業的青少年羣體，培養社會主義建設者和接班人，為加快建設教育強國、科技強國、人才強國，全面建設社會主義現代化國家夯實基礎。</p><p class="num">2.工作原則</p><p>重在實踐，激發興趣。以學生為本，因材施教，推進基於探究實踐的科學教育，激發中小學生好奇心、想象力和探求欲，培養學生科學興趣，引導學生廣泛參與探究實踐，做到學思結合、寓教於樂，自覺獲取科學知識、培養科學精神、提升科學素質、增強科技自信自立、厚植家國情懷，努力在孩子心中種下科學的種子，引導孩子編織當科學家的夢想。</p><p>重在集成，盤活資源。在現有科學教育資源和工作機制基礎上，集成增效，整合校內外資源，精準對接學生需求，依託國家智慧教育公共服務平台，以菜單自選方式供全國中小學校和學生自主選擇，塑造科學教育新動能、新優勢。</p><p>重在融合，內外聯動。注重將知識學習與實踐相結合，強化做中學、用中學、創中學，統籌普及與提高、選拔與培養，重視年級學段有機銜接、相關學科橫向配合，鼓勵高校和科研院所主動對接引領中小學科學教育，推動“請進來”“走出去”有效聯動。</p><p>重在全納，幫扶指導。強化宏觀調控，將科學教育項目和有形資源重點向中西部地區、農村地區、革命老區、民族地區、邊疆地區及國家鄉村振興重點幫扶縣傾斜，對薄弱學校及特殊兒童羣體進行關心幫扶指導。</p><p>重在協同，系統設計。推動健全地方黨委和政府統一領導，各部門齊抓共管、有效聯動、密切配合的科學教育協作機制，並不斷完善大中小學及家校社協同育人機制。系統做好科學教育頂層設計，全面強化工作部署、推進、監測、指導，實現全鏈條閉環管理，提升科學教育實施效能。</p><p class="num">3.主要目標</p><p>通過3至5年努力，在教育“雙減”中做好科學教育加法的各項措施全面落地，中小學科學教育體系更加完善，社會各方資源有機整合，實踐活動豐富多彩，科學教育教師規模持續擴大、素質和能力明顯增強，大中小學及家校社協同育人機制明顯健全，科學教育質素明顯提高，中小學生科學素質明顯提升，科學教育在促進學生健康成長、全面發展和推進社會主義現代化教育強國建設中發揮重大作用。</p><p><strong>二、改進學校教學與服務</strong></p><p class="num">4.健全課程教材體系，完善科學教育標準。適應科技發展和產業變革需要，加強中小學科學及相關學科（物理、化學、生物、地理、資訊科技/資訊技術、通用技術等）課程標準及教材修訂完善工作，凸顯學生核心素養培養，強化年級學段有機銜接，統籌規劃科學教育與工程教育，體現實踐性、綜合性。在科學教育教材中加強國產軟件應用引導。將教輔書納入監管體系，確保教輔書的思想性、科學性。落實課程方案和課程標準，組織研製適配課程資源並向學校免費提供。將學校課程、課後服務和課外實踐活動進行一體化設計。</p><p class="num">5.深化學校教學改革，提升科學教育質素。各地要加強教學管理，按照課程方案開齊開足開好科學類課程。不斷優化教案、學案，加強對學生有針對性的科學教育指導。實施啓發式、探究式教學，提升作業設計水平，培養學生深度思維。探索項目式、跨學科學習，提升學生解決問題能力。落實科學及相關學科教學裝備配置標準，加強實驗室建設。探索利用人工智能、虛擬現實等技術手段改進和強化實驗教學，並注重利用先進教育技術彌補薄弱地區、薄弱學校及特殊兒童羣體擁有優質教育教學資源不足的狀況。組織遴選實驗教學精品課程。發揮各級教研部門和教學指導委員會作用，甄別、培育、推廣先進教學方法和模式。</p><p class="num">6.創造條件豐富內容，拓展科學實踐活動。各地要按照課程標準，開展實驗和探究實踐活動，落實跨學科主題學習原則上應不少於10%的教學要求。各校要由校領導或聘任專家學者擔任科學副校長，原則上至少設立1名科技輔導員、至少結對1所具有一定科普功能的機構（館所、基地、園區、企業等）。要“請進來”“走出去”雙向互動開展實踐活動。在“請進來”方面，開展“科學家（精神）進校園”、少年科學院、流動科技館、流動青少年宮、科普大篷車、科技節、科學調查體驗等活動。在“走出去”方面，組織中小學生前往科學教育場所，進行場景式、體驗式科學實踐活動。</p><p class="num">7.納入課後服務項目，吸引學生主動參與。各地要將科學教育作為課後服務最基本的、必備的項目，開展科普講座、科學實驗、科技創作、創客活動、觀測研究等，不斷提升課後服務的吸引力。加強對學生科技社團和興趣小組指導，引導支持有興趣的學生長期、深入、系統地開展科學探究與實驗。健全第三方機構進校園機制，統籌利用社會優質科學教育資源。</p><p class="num">8.加強師資隊伍建設，發揮教師主導作用。增加並建強一批培養中小學科學類課程教師的師範類專業，強化實驗教學能力。探索選拔和培養一批高水平、複合型的高中階段理科專業教師。在公費師範生、“優師計劃”等項目中提高科學類課程教師培養比例。鼓勵高水平綜合性大學參與教師培養，從源頭上加強高素質專業化科學類課程教師供給。在“國培計劃”示範項目中專門設置中小學科學類課程教師培訓項目。升級實施中小學教師科學素養提升行動計劃，增強科學教育意識與能力，探索開展科學教育專業水平認證工作。落實小學科學教師崗位編制，加強中小學實驗員、各級教研部門科學教研員配備，逐步推動實現每所小學至少有1名具有理工類碩士學位的科學教師。各地要切實激發廣大教師參與科學教育的積極性、創造性，探索建立科學類課程教師多元評價機制。</p><p><strong>三、用好社會大課堂</strong></p><p class="num">9.全面動員相關單位，服務科學實踐教育。強化部門協作，統籌動員高校、科研院所、科技館、青少年宮、兒童活動中心、博物館、文化館、圖書館、規劃展覽館和工農企業等單位，向學生開放所屬的場館、基地、營地、園區、生產線等陣地、平台、載體和資源，為廣泛實施科學實踐教育提供物質基礎。鼓勵各有關部門、單位建立“科學教育社會課堂”專家團隊，開發適合中小學生的科學教育課程和項目。結合兒童友好城市建設，推動各地建設具備科普、體驗等多功能的教育基地。深化環保設施開放，豐富環境科普內容形式，打造生態文明教育基地。利用家長學校、兒童之家、少年科學院、青少年科學工作室等服務形式和模式，面向廣大家庭和青少年進行科學教育。</p><p class="num">10.引導企業援建基地，改善實踐教學條件。各地要積極動員各類企業，尤其是與高精尖技術密切相關的企業，以企業捐資、掛牌、冠名等形式，為薄弱地區、薄弱學校援建科學教育場所，提供設備、器材、圖書、軟件等，培訓專業講解人員。引導高科技工農企業開展“自信自立技術產品體驗”活動，鼓勵中小學生勤於探索、勇於實踐。引導中小學生在現實生產生活環境中學習科學知識，體悟勞動精神、鑽研精神、創新精神、工匠精神。</p><p class="num">11.鼓勵高校和科研院所主動對接中小學，引領科學教育發展。鼓勵和支持高校、科研院所建立激勵機制，引導科學家（科技工作者）研究和參與中小學科學教育，安排實驗室等科技資源向中小學生適當開放，協同組織科學夏（冬）令營等，為科學實踐活動提供有力保障。各地要搭建平台，支持中小學與高校、科研院所聯繫，用好相關實踐資源。推動大學與中學聯合教研，實現教學內容、教學方法等更好銜接；倡導聯合共建創新實驗室、科普站、人才培育班，探索大學、中學雙導師制，進行因材施教。</p><p class="num">12.推動全媒體傳播，營造科學教育氛圍。大力弘揚科學精神和科學家精神，推動中央主要媒體所屬新媒體平台開設科學教育專欄，加大對科學教育的宣傳引導力度，激勵中小學生樹立科技報國遠大志向。將科學教育納入“雙減”宣傳工作矩陣重點任務，鼓勵中央和各地主要媒體與各級各類科學教育機構、科技類社會組織合作，加強原創科普作品創作，積極推進科學教育傳播創新，營造重視支持科學教育濃厚氛圍。</p><p class="num">13.優化數字智慧平台，豐富科學教育資源。在國家智慧教育公共服務平台等鏈接科學教育資源，鼓勵社會各界製作上線“科學公開課”“家庭科學教育指導課”等，不斷豐富平台資源。建立科學家（科技工作者）、科學課、科學教育場所資源庫，強化資源徵集、對接、調度機制，高效有序安排地方及學校選擇使用。</p><p><strong>四、做好相關改革銜接</strong></p><p class="num">14.規範科技類校外培訓，形成學校教育有益補充。各地要合理規劃科技類非學科校外培訓機構總體規模、設置標準、審批程序，引導機構合法經營、規範發展，有效滿足學生個性化需求。將科技類非學科校外培訓機構全部納入全國校外教育培訓監管與服務綜合平台，實施全流程監管。可根據實際需要通過政府購買服務等方式，適當引進合規的科技類非學科培訓課程。</p><p class="num">15.嚴格競賽活動管理，培養學生“獻身科學”精神。各地要加強正向宣傳引導，指導中小學生理性選擇參加“白名單”競賽，搭建中小學生成長平台，發現有潛質的學生，引導其積極投身科學研究。指導各競賽組織方在競賽活動中融入愛國主義教育，培養參賽學生家國情懷；突出集體主義教育，為參賽學生未來從事有組織科研打牢思想基礎。</p><p class="num">16.統籌拔尖創新人才項目，探索選拔培養長效機制。各地、各有關高校要積極探索拔尖創新人才選拔培養有效模式，建立統籌協調機制，明確“中學生英才計劃”“強基計劃”“基礎學科拔尖學生培養計劃”“高校科學營”等項目在選拔、培育、使用上的各自側重點，細化支持措施，推進有序實施，提高培養效率。推動各類學校強化跟蹤研究和總結，實現在有潛質學生的發現方式、培養路徑上取得實效。試點建設科技高中，加強大學與高中教育在人才培養方面的銜接。</p><p class="num">17.推進中高考內容改革，完善學業水平考試命題。各地要完善試題形式，堅持素養立意，增強試題的基礎性、應用性、綜合性、創新性，減少機械刷題，引導課堂教學提質增效，培養學生科學精神。加強實驗考查，提高學生動手操作和實驗能力。建立由學科命（審）題人員、學科秘書、教育測量專家、命題組織管理人員等組成的高水平命（審）題隊伍，優化隊伍結構。強化中學生職業發展規劃教育，引導學生明確自己的興趣特長和職業目標。</p><p class="num">18.重視體系化設計安排，助力不同階段有機銜接。各地要根據各學段側重點，推動中小學科學教育向各級各類教育有機發展延伸。注重普通高中、職業教育階段科學類相關課程的聯繫與融合。鼓勵本科階段開設《科學技術史》選修課。強化研究生階段科技創新能力培養，引導學生掌握科學研究方法和創新思維。</p><p class="num">19.實施家庭科學教育，促進家校社協同育人。各地要突出科普價值引領，聚合科普專家力量，推出家庭科普公開課，開展形式多樣的家庭科普活動，打造“家門口”科學教育陣地，推動科學教育走進千家萬户，提升家長科普意識和學生科學素質。</p><p class="num">20.強化學科專業建設，開展科學教育研究。強化科學教育學科專業建設，打造高素質人才隊伍。加強國家科技計劃對科學教育相關領域研究的支持。推進科學教育交叉學科研究平台建設。鼓勵高校、教科院、科研院所建立科學教育研究中心，開展理論研究與實踐。加強教師國際交流，掌握國際科學教育動態，吸納優秀研究成果。</p><p><strong>五、加強組織領導</strong></p><p class="num">21.全面系統部署。切實提高政治站位，充分發揮“雙減”工作專門協調機制作用，建立教育部門牽頭、有關部門齊抓共管的科學教育工作機制。細化完善措施，確保科學教育落地見效。充分調動社會力量，成立由科學家、各領域科技人才、科技館所及科普教育基地科技輔導員組成的專家團隊，加強謀劃指導和推動落實。搭建中小學科學教育研討交流平台，推廣典型工作案例，總結優化改革發展路徑。</p><p class="num">22.落實經費保障。統籌各方資金和項目，廣泛爭取社會資助，加大對科學教育的支持力度。各資源單位要堅持公益定位，免費或優惠向中小學生提供科學教育服務。用好現有彩票公益金項目，切實做好教育助學、中小學生校外研學工作。積極爭取中國教育發展基金會等社會組織支持，加大對薄弱地區、薄弱學校、特殊兒童羣體支持力度。</p><p class="num">23.強化項目引領。實施“校內科學教育提質計劃”“科學家（精神）進校園行動”“‘千家萬館’科學教育總動員行動”“科普進萬家行動”“少年科學院”“中西部地區科學教育場所援建工程”“全媒體科普行動”等重點項目，適時發佈重點項目方案。設立實驗（示範）區、實驗（示範）校和示範性基地，引領全國中小學科學教育改革發展。</p><p class="num">24.實施監測指導。加強科學教育調研指導，層層壓實責任。強化動態監測，定期對青少年科學素質進行分析研判，公佈相關結果。按時完成科普資源統計調查工作，強化對資源薄弱地區建設引導。及時宣傳工作進展和成果，提高人民羣眾感知度、認可度，營造良好改革氛圍。</p><p>教育部 中央宣傳部 中央網信辦</p><p>中央精神文明建設辦公室 國家發展改革委 科技部</p><p>工業和信息化部 財政部 自然資源部</p><p>生態環境部 農業農村部 中國科學院</p><p>中國工程院 自然科學基金委 共青團中央</p><p>全國婦聯 中國科協 全國少工委</p><p>2023年5月17日</p></div>
+        </article>
+        <details class="guide">
+          <summary>&#x56DB;&#x90E8;&#x9580;&#x806F;&#x5408;&#x5370;&#x767C;&#x300A;2024&#x5E74;&#x63D0;&#x5347;&#x5168;&#x6C11;&#x6578;&#x5B57;&#x7D20;&#x990A;&#x8207;&#x6280;&#x80FD;&#x5DE5;&#x4F5C;&#x8981;&#x9EDE;&#x300B;</summary>
+          <div class="prose"><p>（來源：《人民日報》）</p><p>本報北京2月22日電 （記者金歆）中央網信辦、教育部、工業和信息化部、人力資源社會保障部近日聯合印發《2024年提升全民數字素養與技能工作要點》（以下簡稱《工作要點》），明確到2024年底，我國全民數字素養與技能發展水平邁上新台階，數字素養與技能培育體系更加健全，數字無障礙環境建設全面推進，羣體間數字鴻溝進一步縮小，智慧便捷的數字生活更有質素，網絡空間更加規範有序。</p><p>《工作要點》部署了6個方面17項重點任務：培育高水平複合型數字人才，包括全面提升師生數字素養與技能、提高領導幹部和公務員數字化履職能力、培育高水平數字工匠、培育鄉村數字人才、壯大行業數字人才隊伍；加快彌合數字鴻溝，包括建設數字無障礙環境、提供普惠包容的公益服務；支撐做強做優做大數字經濟，包括加快企業數字化轉型升級、擴展數字消費需求空間；拓展智慧便捷的數字生活場景，包括推動數字公共服務普惠高效、提升重點生活領域數字化水平；打造積極健康有序的網絡空間，包括營造共建共享社會氛圍、構建數字法治道德規範、維護安全有序數字環境；強化支撐保障和協調聯動，包括完善協同支撐體系、加大優質數字資源供給、積極參與國際交流合作。</p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x6559;&#x80B2;&#x90E8;&#x526F;&#x90E8;&#x9577;&#x738B;&#x5609;&#x6BC5;&#xFF1A;&#x958B;&#x95E2;&#x65B0;&#x6642;&#x4EE3;&#x4E2D;&#x5C0F;&#x5B78;&#x79D1;&#x5B78;&#x6559;&#x80B2;&#x65B0;&#x8CFD;&#x9053;</summary>
+          <div class="prose"><p><strong>開闢新時代中小學科學教育新賽道</strong></p><p><strong>王嘉毅</strong></p><p>（教育部黨組成員、副部長、總督學）</p><p>加強科學教育是貫徹黨的教育方針的必然要求，是落實立德樹人根本任務的重要途徑，是培育國家戰略科技力量的基礎支撐。黨的十八大以來，習近平總書記在一系列重要場合論述了科學教育的意義、內涵和方法，在中共中央政治局兩次集體學習時的重要講話中反覆強調，要在教育“雙減”中做好科學教育加法，激發青少年好奇心、想象力、探求欲，培育具備科學家潛質、願意獻身科學研究事業的青少年羣體，為新時代加強中小學科學教育提供了根本遵循。系統學習研究、全面貫徹落實習近平總書記關於科學教育的重要指示精神，深化對科學教育政治屬性、戰略屬性和民生屬性的認識，對開闢新時代中小學科學教育新賽道具有重要意義。</p><p><strong>一、深刻認識新時代加強中小學科學教育的重大意義</strong></p><p>加強新時代中小學科學教育，是以習近平同志為核心的黨中央統籌國內國際兩個大局，站在黨和國家事業興旺發達、後繼有人的戰略高度作出的重大決策部署，對提升全民科學素質、推動創新人才自主培養、實現高水平科技自立自強具有關鍵支撐作用。</p><p><strong>（一）重視科學教育是我們黨歷久彌新的優良傳統</strong></p><p>我們黨歷來高度重視科學教育。在新民主主義革命時期，我們黨就宣揚科學思想，向民眾傳播科學知識，並支持開展科學研究。新中國成立之初，黨中央向全社會發出了“向科學進軍”的號召，強調要把世界科學的先進成就迅速介紹到我國科學、生產和教育部門，應對複雜嚴峻的國際形勢，保衞國家安全。1963年，毛澤東同志提出，“不搞科學技術，生產力無法提高”，“科學技術這一仗，一定要打，而且必須打好”。1977年，鄧小平同志指出，“我們要實現現代化，關鍵是科學技術要能上去。發展科學技術，不抓教育不行”。1978年，全國科學大會召開，確立了“尊重知識、尊重人才”的重大方針，迎來了“科學教育的春天”。從此，我國的科學事業及其教育工作就邁上了制度化建設和普及化發展的康莊大道。</p><p><strong>（二）加強科學教育是新時代強國建設的奠基工程</strong></p><p>進入新時代，習近平總書記十分關心中小學科學教育，作出了重要指示、提出了明確要求。2016年，在給北京市八一學校學生回信中，鼓勵他們保持對知識的渴望，保持對探索的興趣，帶動更多青少年講科學、愛科學、學科學、用科學。2020年，在科學家座談會上，指出對科學興趣的引導和培養要從娃娃抓起。2023年4月，在參加植樹活動時，特意關心孩子們學校生物課安排情況，詢問孩子們對植物瞭解多少，叮囑孩子們要從小熱愛科學；5月，在中共中央政治局第五次集體學習時，強調基礎教育既要夯實學生的知識基礎，也要培養學生探索性、創新性思維品質；在北京育英學校考察時，勉勵同學們從小樹立“科技創新、強國有我”的志向；7月，在給“科學與中國”院士專家代表的回信中，勉勵科技工作者以優質豐富的內容和喜聞樂見的形式，激發青少年崇尚科學、探索未知的興趣。可以看出，加強中小學科學教育是習近平總書記念茲在茲的大事，飽含着對青少年全面發展、成長成才的殷切關懷，寄予着為強國建設、民族復興奠基的深切期待。</p><p><strong>（三）創新科學教育是世界大國制勝未來的關鍵舉措</strong></p><p>當前，世界百年未有之大變局加速演進，國際力量對比深刻變化，搶佔科技創新制高點的競爭空前激烈，西方對我國科技發展的遏制隨時可能升級，未來科技進步將更多依靠原始自主創新、創新人才將更多依靠自主培養，我們必須加快構建自主知識體系，提高人才供給自主可控能力。近年來，世界主要發達國家都極為重視中小學科學教育，將其作為在培養大批拔尖創新人才、增強國家戰略科技力量方面贏得先機的重大抉擇。美國頒佈《美國競爭力法》等系列法案，強化科學教育戰略引領作用，發佈科學教育標準，強調科學工程實踐、跨學科概念與學科核心知識三項重點，倡導為所有學生提供公平而有質素的STEM（科學、技術、工程、數學）教育。德國實施MINT（數學、資訊科學、自然科學、技術）教育行動計劃2.0，要求從多元合作、確保質素、家庭參與、加強研究、早期培養等方面深化落實。日本、韓國、新加坡、澳大利亞等國家也都實施了類似的舉措，大力支持中小學加強科學教育。可以説，加強新時代中小學科學教育，培養具備科學家潛質、願意獻身科學研究事業的青少年羣體，是我們在國際競爭中掌握戰略主動的關鍵一招，必須主動超前佈局、切實抓緊抓好。</p><p><strong>二、當前中小學科學教育存在的突出問題</strong></p><p>2023年5月，教育部等十八部門文件印發後，各地各校積極響應，聚焦改進學校教學與服務、用好社會大課堂、做好改革銜接等重點，採取有效措施，解決突出問題，推動任務落實，實現了良好開局。同時，也要清醒地認識到，科學教育工作涉及面廣、系統性強、挑戰性大，總體基礎薄弱，儘管開局初見成效，但距離黨中央要求和人民羣眾期待還有差距。</p><p><strong>（一）思想認識有待提高</strong></p><p>中小學科學教育是一項戰略工程，既需要從政治和全局上來提高站位，又需要從履職和盡責上來推進工作。當前，各方面育人主體還存在對科學教育重視程度不夠的現象。有的地區尚未精準施策，缺乏落實舉措，社會參與不足，沒有形成合力，教育部門單兵作戰，工作整體成效不甚理想；部分學校長期存在科學課程開不齊、被擠佔等問題；不少家長把科學課程當成“副科”，不予重視。</p><p><strong>（二）育人體系有待健全</strong></p><p>中小學科學教育是一項培元工程，既需要遵循教學規律，又需要補齊弱項短板。當前，中小學科學課程設置多樣性不足，內容體現科技前沿、融合人文學科不夠，課內課後需要整體設計；科學教材的探究性、趣味性、前沿性有待提高；教學觀念還比較陳舊，簡單地將科學教育等同於科普教育，科學實驗開設不足、實驗條件簡陋、器材利用率較低，教學中重灌輸輕體驗、重結論輕過程、重驗證輕探究等問題仍較為突出。</p><p><strong>（三）協同聯動有待增強</strong></p><p>中小學科學教育是一項系統工程，既需要發揮學校主陣地作用，又需要依靠全社會聯動支持。當前，我國中小學科學教育還需要整體性謀劃、系統性落實，多主體協同育人責任需要壓緊壓實，社會化資源引入機制尚未建立，科技界力量參與缺乏激勵，科技類校外培訓發展滯後，校園內課後服務科技含量不高，對科學教育、科技創新、人才培養的融合性、跨學科研究也較為薄弱。</p><p><strong>（四）基礎保障有待夯實</strong></p><p>中小學科學教育是一項築基工程，既需要建強高素質專業化教師隊伍，又需要建立區域經費投入穩定增長機制。當前，我國中小學科學教師培養不足、師資力量總體薄弱，專任教師中理科背景的偏少、兼任教師總體佔比偏大，開展培訓研修較少、職稱晉升通道不暢，教學勝任能力亟待提高。科學教育投入區域差異明顯，在探索通過財政投入、社會募集、企業贊助等多渠道籌集資金方面，還需拓寬思路、狠下功夫。</p><p><strong>三、全面加強新時代中小學科學教育的實施路徑</strong></p><p>立足新時代新徵程，深入貫徹落實習近平總書記關於中小學科學教育工作的重要指示精神，是開闢科學教育新賽道、構建科學教育新生態、打造科學教育大格局的動力源泉。優化頂層設計，突出協同育人，堅持守正創新，是全面加強新時代中小學科學教育的着力點和總路徑。</p><p><strong>（一）優化頂層設計，構建高質素科學教育體系</strong></p><p>構建高質素中小學科學教育體系，必須聚焦重點領域和關鍵環節，全面培養學生的科學素質和創新能力。<strong>一是研發精品課程教材。</strong>課程教材是在教育“雙減”中做好科學教育加法的關鍵載體。要完善課程體系建設，開足開齊開好科學類課程，注重學段縱向銜接、學科橫向融通、課內課後協同配合；提升科學教材的編研出版質素，將科學教育的系統性、綜合性和實踐性落到實處，增強對科學教育高質素發展的支撐力、貢獻力。<strong>二是創新教學方式方法。</strong>基於科學教育的獨特屬性，深化教學改革，實施啓發式、探究式教學，探索項目式、跨學科學習，重視科學實驗、改善實驗條件，保障實驗教學時間、提高實驗教學質素；積極利用校外科學教育資源，組織學生前往科學教育場所，進行場景式、體驗式科學實踐活動，拓展知識技能，體悟科學精神。<strong>三是強化師資隊伍建設。</strong>鼓勵師範院校增設科學教育專業、高水平綜合性大學參與科學教師培養，落實中小學科學教師配備標準，增配科學副校長、科技輔導員、專職實驗員，搭建科學教師研修培訓平台，暢通科學教師職稱晉升渠道，切實提升科學教師的專業素養與施教水平。<strong>四是提升學生科學素質。</strong>加強科學教育和工程教育實踐，充分展現科學的魅力，激發學生的好奇心、想象力、探求欲；幫助學生養成科學思維，學會用科學的眼光觀察世界，用科學的方法處理個人生活與公共事務；引導學生涵育科學精神，增強自信自立，厚植家國情懷，編織當科學家的夢想。</p><p><strong>（二）突出協同育人，打造全方位科學教育格局</strong></p><p>習近平總書記強調，辦好教育事業，家庭、學校、政府、社會都有責任。加強中小學科學教育，必須打造全要素、全鏈條、全過程育人格局。<strong>一是提升多方協同效能。</strong>充分調動政府、學校、家庭和社會等育人主體的力量，在目標協同、資源協同、保障協同、評價協同上狠下功夫，建立健全多主體參與科學教育的對接和激勵機制，推動構建校內外聯動開展科學教育的協調和保障機制。<strong>二是豐富課後服務項目。</strong>將科學教育作為最基本的、必備的項目，開展科普講座、科學實驗、科技創作、創客活動、研究觀測等，吸引學生主動參與；加強對學生科技社團和興趣小組的指導，引導支持有興趣、有潛力的學生長期開展科學探究和實驗，砥礪科學品格、立志科技報國。<strong>三是加強家庭科學教育。</strong>通過組織家庭科普實踐活動、倡導親子科普閲讀、培育家庭科普文明風尚等，充分發揮家庭科學教育在兒童科學啓蒙、科學實踐能力培養等方面的重要作用，促進科學教育學在日常、融入生活。<strong>四是強化科學研究支撐。</strong>加強基礎研究，探尋科學教育教學規律；開展專題研究，破解科學教育面臨的重大現實問題；推進前瞻研究，探尋拔尖創新人才教育成長規律，深化跨學科育人育才研究，支撐中小學科學教育高質素發展。</p><p><strong>（三）堅持守正創新，做好相關改革措施的銜接</strong></p><p>當前，中小學科學教育處於開新局的關鍵階段，各項改革必須堅持守正創新、銜接適配。<strong>一是規範科技類校外培訓。</strong>合理規劃、有效監管科技類非學科校外培訓機構的總體規模、設置標準、審批程序、發展路徑，鼓勵通過多種合理方式開設科技類非學科課程，滿足學生個性化發展需求。<strong>二是理性選擇競賽活動。</strong>引導學生量力參加“白名單”競賽，支持有潛質的學生投身科學研究；在競賽活動中融入愛國主義、集體主義教育因素，錘鍊學生為強國建設、民族復興而矢志創新的堅毅品質，為他們將來從事有組織科研築牢思想根基。<strong>三是完善長鏈條育人機制。</strong>推動打造“大中小學科學教育共同體”，統籌實施“中學生英才計劃”“強基計劃”“基礎學科拔尖學生培養計劃”“高校科學營”等項目，積極探索拔尖創新人才早期發現、貫通培養的有效模式。</p><p>文章來源｜本文選自《中小學科學教育》2024年第1期第5-9頁，參考文獻略。轉自中小學科學教育微信公眾號</p><p>文章作者｜王嘉毅</p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x7D71;&#x7C4C;&#x63A8;&#x9032;&#x6559;&#x80B2;&#x79D1;&#x6280;&#x4EBA;&#x624D;&#x9AD4;&#x5236;&#x6A5F;&#x5236;&#x4E00;&#x9AD4;&#x6539;&#x9769; &#x2014;&#x2014;&#x8A2A;&#x6559;&#x80B2;&#x90E8;&#x9EE8;&#x7D44;&#x66F8;&#x8A18;&#x3001;&#x90E8;&#x9577;&#x61F7;&#x9032;&#x9D6C;</summary>
+          <div class="prose"><p>（來源：人民日報）</p><p>黨的二十屆三中全會審議通過的《中共中央關於進一步全面深化改革、推進中國式現代化的決定》（以下簡稱《決定》）提出：“教育、科技、人才是中國式現代化的基礎性、戰略性支撐。必須深入實施科教興國戰略、人才強國戰略、創新驅動發展戰略，統籌推進教育科技人才體制機制一體改革，健全新型舉國體制，提升國家創新體系整體效能。”為了深入學習領會黨的二十屆三中全會精神，本報記者採訪了教育部黨組書記、部長懷進鵬。</p><p><strong>圍繞成為科技創新策源地和人才培養主陣地，推動教育理念、體系、制度、評價、治理等變革</strong></p><p>記者：如何暢通教育、科技、人才良性循環，為提升國家創新體系整體效能作出教育的貢獻？</p><p>懷進鵬：黨的二十大報告首次將教育、科技、人才作為專章闡述並一體部署，明確到2035年建成教育強國、科技強國、人才強國。黨的二十屆三中全會進一步提出，“構建支持全面創新體制機制”“統籌推進教育科技人才體制機制一體改革，健全新型舉國體制，提升國家創新體系整體效能”。這一系列新部署新要求，充分體現了以習近平同志為核心的黨中央對現代化進程和強國建設規律的準確把握、對創新本質和規律的深刻洞察，為進一步深化科技體制改革、充分激發全社會創新創造活力指明瞭前進方向。</p><p>當今時代，科技是第一生產力、人才是第一資源、創新是第一動力，圍繞高素質人才和科技制高點的國際競爭空前激烈，迫切要求我們有更多高水平科研成果和高層次人才作支撐。要圍繞成為科技創新策源地和人才培養主陣地，推動教育理念、體系、制度、評價、治理等變革。要充分發揮高校基礎研究主力軍、重大科技突破策源地作用，暢通教育、科技、人才的良性循環，為提升國家創新體系整體效能作出教育的貢獻。重點聚焦三大類改革。</p><p>一是聚焦提高人才自主培養水平和質素，優化高等教育佈局，建立科技發展、國家戰略需求牽引的學科設置調整機制和人才培養模式，超常佈局急需學科專業，實施“強基計劃”和基礎學科拔尖人才培養計劃，持續推進卓越工程師教育培養改革，強化科技教育和人文教育協同，有的放矢培養國家戰略人才和急需緊缺人才。</p><p>二是聚焦支撐高水平科技自立自強，加強青年科技人才培養，提倡在政策資源配置上長期支持，建立以創新能力、質素、實效、貢獻為導向的人才評價體系，完善青年創新人才發現、選拔、培養機制，鼓勵青年科技人員開展高水平自由探索，挑戰科學“無人區”。</p><p>三是聚焦提升服務經濟社會發展能力，完善高校科技創新機制，提高高校科技成果轉化效能，打造高校區域技術轉移轉化中心，加快佈局建設高等研究院，推動高校和企業“雙向奔赴”，促進高校科研成果高水平創造、高效率轉化。</p><p><strong>“量”“質”齊升，努力辦好人民滿意的教育</strong></p><p>記者：《決定》提出，在發展中保障和改善民生是中國式現代化的重大任務。下一步，教育在加強普惠性、基礎性、兜底性民生建設上有哪些目標和舉措？</p><p>懷進鵬：黨的十八大以來，以習近平同志為核心的黨中央把教育擺在優先發展的戰略位置，對深化教育綜合改革作出一系列重大部署，中國特色社會主義教育制度體系主體框架基本確立，教育現代化發展總體水平跨入世界中上國家行列，新時代教育事業取得了舉世矚目的輝煌成就。</p><p>經過堅持不懈的接續奮鬥，我國已經建成世界上規模最大且有質素的教育體系，教育普及水平實現歷史性跨越，教育“量”的短板已不是矛盾的主要方面，“質”的提升成為緊迫的要求。下一步，我們將按照黨的二十屆三中全會提出的“聚焦提高人民生活品質”，全力以赴辦好人民滿意的教育，持續增強人民羣眾對教育改革發展的獲得感、幸福感。</p><p>一是努力滿足人民羣眾“上好學”的期盼。從總量上看，2023年，我國有各級各類學校49.83萬所，有2.91億學歷教育在校生，有專任教師1892萬人。“有學上”的問題已經基本解決，“上好學”、接受更好教育和更加多樣化個性化教育的期盼更加強烈。“擴優”方面，將完善義務教育優質均衡推進機制，探索逐步擴大免費教育範圍，促進學前教育普及普惠發展，辦好寄宿制學校、鄉村小規模學校等。“提質”方面，將堅持系統觀念，統籌推進育人方式、辦學模式、管理體制、保障機制改革，堅決破除一切制約教育高質素發展的思想觀念束縛和體制機制弊端，全面提高教育治理體系和治理能力現代化水平。</p><p>二是努力拓寬學生成長成才通道。堅持把促進教育公平融入深化教育領域綜合改革的各方面各環節，適應社會發展多元化、培養方式多樣化、人才結構多層次的時代要求，為具有不同稟賦和潛能的學生創造發展條件，讓每個孩子都有人生出彩機會。深化職普融通、產教融合，加快構建現代職業教育體系，大力提升中等職業教育辦學質素，推進高等職業教育提質培優，穩步發展職業本科教育，鼓勵應用型本科學校開展職業本科教育，讓更多青年憑藉一技之長實現人生價值。</p><p>三是努力豐富終身學習資源。教育數字化是我國開闢教育發展新賽道和塑造教育發展新優勢的重要突破口。要按照人人皆學、處處能學、時時可學的要求，加強教育資源共享和公共服務平台建設，要充分利用互聯網、大數據、人工智能等新興技術，為人民羣眾提供更多學習的機會、更加便捷的學習資源、更高質素的教育服務。同時，完善國家開放大學體系，建好老年大學，更好推進國家數字大學建設，推動建設學習型社會、學習型大國。</p><p><strong>抓好改革落實，推動重大決策部署在教育系統落地見效</strong></p><p>記者：如何以更高站位、更大力度、更實舉措進一步深化教育綜合改革？</p><p>懷進鵬：《決定》對深化教育綜合改革作出的重要部署，瞄準的是我國教育發展的重大戰略問題、社會廣泛關注的教育民生問題，以及影響教育強國建設的深層次問題，我們將堅持目標導向、問題導向、效果導向相統一，發揚釘釘子精神，紮實推進各項改革，加快建設高質素教育體系。具體將在五個方面着力。</p><p>一是着力完善立德樹人機制。近年來，我們堅持抓穩抓牢思想政治工作，教育引導學生愛黨愛國愛社會主義，廣大學生聽黨話、跟黨走的決心更加堅定。下一步，我們將堅持不懈用習近平新時代中國特色社會主義思想鑄魂育人，推進大中小學思政課一體化改革創新，健全德智體美勞全面培養體系。</p><p>二是着力優化區域教育資源配置。到2035年建成教育強國，必須深入研判人口規模結構變化對教育提出的新挑戰新要求，不斷優化區域教育資源配置，建立同人口變化相協調的基本公共教育服務供給機制，推進高起點新建一批、優質學校擴招一批、集團化辦學提升一批、城鄉結對幫扶一批，做大優質教育資源“蛋糕”。</p><p>三是着力發揮高等教育龍頭引領作用。我們將深入部署和加強兩個“先行先試”：在全面提高人才自主培養質素、培養拔尖創新人才方面先行先試；在服務國家和區域經濟社會發展、提高“適配度”上先行先試。鼓勵各地各高校結合自身特點和發展目標，進一步創新體制機制，大膽探索、不斷突破，以改革啟用力、增動力。</p><p>四是着力培養更多高素質技術技能人才、能工巧匠、大國工匠。我們將聚焦科教融匯、產教融合，深化省域現代職業教育體系建設改革，推進市域產教聯合體、行業產教融合共同體試點、示範和標準建設，重塑職業教育發展生態。</p><p>五是着力推進高水平教育開放。開放是中國式現代化的鮮明標識，我們將找準教育對外開放突破點，統籌做好“引進來”和“走出去”，有效利用世界一流教育資源和創新要素，加強國際教育科研合作，擴大中外青少年交流，使我國成為具有強大影響力的世界重要教育中心。（本報記者 吳 丹）</p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x6559;&#x80B2;&#x90E8;&#x7B49;&#x5341;&#x4E03;&#x90E8;&#x9580;&#x806F;&#x5408;&#x5370;&#x767C;&#x300A;&#x5BB6;&#x6821;&#x793E;&#x5354;&#x540C;&#x80B2;&#x4EBA;&#x201C;&#x6559;&#x806F;&#x9AD4;&#x201D;&#x5DE5;&#x4F5C;&#x65B9;&#x6848;&#x300B;</summary>
+          <div class="prose"><p>（來源：教育部）</p><p>近日，教育部、中央宣傳部、中央網信辦、科學技術部、公安部、民政部、住房和城鄉建設部、文化和旅遊部、國家衞生健康委員會、市場監管總局、國家文物局、國家消防救援局、國務院婦兒工委、共青團中央、全國婦聯、中國關工委、中國科協等十七部門聯合印發《家校社協同育人“教聯體”工作方案》（以下簡稱《方案》）。</p><p>《方案》提出，“教聯體”是以中小學生健康快樂成長為目標、以學校為圓心、以區域為主體、以資源為紐帶，促進家校社有效協同的一種工作方式。要推動各地全面建立家校社協同育人“教聯體”，確保政府統籌、部門協作、學校主導、家庭盡責、社會參與的協同育人工作機制更加完善，促進學生全面發展健康成長的良好氛圍更加濃厚。力爭到2025年，50%的縣建立“教聯體”，到2027年所有縣全面建立“教聯體”。</p><p>《方案》明確了“教聯體”各主體的職責任務。政府部門加強對家校社協同育人工作統籌領導，指導各部門協同配合，建立家庭教育指導機構，調動各類社會育人資源。教育部門在政府支持下與有關部門、社會資源單位協調聯動，引導學校發揮主導作用和專業指導優勢，強化與家庭、社會溝通協作。學校因地制宜建立“教聯體”，通過聯責任、聯資源、聯空間，會同家長和社會各方共同研究、推動破解學生成長中面臨的新情況、新問題。各相關部門、街道社區、社會資源單位在各自職能範圍內落實育人責任，與學校建立工作對接機制，有針對性地推動解決學生成長中的突出問題，為學生參與文化學習、體育鍛煉、藝術活動、勞動教育、科學教育、社會實踐、課後服務等提供全方位條件保障。</p><p>《方案》要求，地方教育行政部門要提高政治站位，會同相關部門將“教聯體”建設列入部門重要議事日程，謀劃推動協同育人工作，與相關部門建立常態化溝通協調機制，完善經費、人員、場地等方面政策保障，凝聚“人人、事事、時時、處處”育人合力，推動家校社協同育人工作落實落地。</p></div>
+        </details>
+
+  </section>
+
+
+
+
+</main>
+
+<footer class="site">
+  <div class="cols">
+    <div>
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
+      <div class="addr">
+        <span>&#x5B98;&#x65B9;&#x7DB2;&#x7AD9;&#xFF1A;www.ycltesthk.com</span>
+        <span>&#x696D;&#x52D9;&#x5408;&#x4F5C;&#xFF1A;&#x2B;852 2524 8248</span>
+        <span>&#x6295;&#x8A34;&#x90F5;&#x7BB1;&#xFF1A;youth.itt@gmail.com</span>
+        <span>&#x670D;&#x52D9;&#x6642;&#x9593;&#xFF1A;&#x5DE5;&#x4F5C;&#x65E5; &#x4E0A;&#x5348;9:00~11:30&#xFF0C;&#x4E0B;&#x5348;14:00~17:30</span>
+        <span>&#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#x3000;&#x6C99;&#x7530;&#x77F3;&#x9580;&#x5B89;&#x7766;&#x91CC;6&#x865F;&#x4E2D;&#x5B78;&#x90E8;1&#x6A13;S107A&#x5BA4;</span>
+        <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+<span>&#x9999;&#x6E2F;&#x79D1;&#x5B78;&#x5712;2W&#x5927;&#x6A13;3&#x6A13;24&#x5BA4;</span>
+<span style="color:var(--faint2)">Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
+<span>&#x9999;&#x6E2F;&#x7063;&#x4ED4;&#x8ED2;&#x5C3C;&#x8A69;&#x9053;338&#x865F;&#x5317;&#x6D77;&#x4E2D;&#x5FC3;21&#x6A13;F&#x5BA4;</span>
+<span style="color:var(--faint2)">Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
+
+        <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">&#x5DE5;&#x696D;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x8207;&#x8003;&#x8A66;&#x4E2D;&#x5FC3; &#xB7; &#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x8853;&#x57F9;&#x990A;&#x5DE5;&#x7A0B;&#x9999;&#x6E2F;&#x5206;&#x7AD9;</span>
+      </div>
+    </div>
+  </div>
+  <div class="base">
+    <span>© 2026 &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</span>
+  </div>
+</footer>
+
+<script>
+  // Hero slideshows: each frame advances on its own timer, offset so the two do not flip
+  // together. Paused while the tab is hidden — a background timer swapping images nobody
+  // is looking at just burns battery — and left on the first frame under reduced-motion.
+  (function(){
+    var frames = document.querySelectorAll('.slides');
+    if(!frames.length) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    frames.forEach(function(f){
+      // Direct children, not <img> — the hero frames stack images, the news lead stacks
+      // links, and both are driven by the same loop.
+      var imgs = f.querySelectorAll(':scope > img, :scope > a');
+      var dots = f.querySelectorAll('.dots span');
+      if(imgs.length < 2) return;
+      var i = 0, every = +f.dataset.interval || 10000, offset = +f.dataset.offset || 0, timer;
+      var step = function(){
+        imgs[i].classList.remove('on');
+        if(dots[i]) dots[i].classList.remove('on');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('on');
+        if(dots[i]) dots[i].classList.add('on');
+        // Only the visible slide should be reachable by keyboard or a screen reader.
+        imgs.forEach(function(el,n){ if(el.tagName==='A'){
+          el.setAttribute('aria-hidden', n===i ? 'false' : 'true');
+          el.tabIndex = n===i ? 0 : -1; } });
+      };
+      var start = function(){ timer = setInterval(step, every); };
+      setTimeout(start, offset);
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden){ clearInterval(timer); }
+        else if(!timer || true){ clearInterval(timer); start(); }
+      });
+    });
+  })();
+
+  // Landing on /c/about#experts jumps before the twenty-odd images above it have loaded;
+  // as they arrive they push the target down and you end up somewhere else on the page.
+  // Re-aim once everything has settled, but only if the reader has not scrolled since.
+  (function(){
+    if(!location.hash) return;
+    var moved=false, mark=function(){moved=true};
+    addEventListener('wheel',mark,{passive:true,once:true});
+    addEventListener('touchstart',mark,{passive:true,once:true});
+    addEventListener('keydown',mark,{once:true});
+    var go=function(){ if(moved) return;
+      var el=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if(el) el.scrollIntoView({behavior:'auto',block:'start'});
+    };
+    addEventListener('load',function(){go();setTimeout(go,120);});
+  })();
+
+  // Reveal on arrival, and light the section tab you are actually reading.
+  (function(){
+    var rev=document.querySelectorAll('.reveal');
+    if(!rev.length) { /* still wire the tabs below */ }
+    else if(!('IntersectionObserver' in window)){rev.forEach(function(e){e.classList.add('in')});}
+    else{
+      document.documentElement.classList.add('jsr');
+      var ro=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},
+        {rootMargin:'0px 0px -10% 0px',threshold:0});
+      rev.forEach(function(e){
+        // Anything already on screen at load reveals at once rather than waiting for a
+        // scroll that may never come on a short page.
+        if(e.getBoundingClientRect().top < innerHeight) e.classList.add('in');
+        ro.observe(e);
+      });
+      // Backstop: if anything is still hidden after a moment, show it. Content must not
+      // depend on an observer firing.
+      setTimeout(function(){rev.forEach(function(e){e.classList.add('in')})},1600);
+    }
+
+    var tabs=document.querySelectorAll('.sectabs a[data-tab]');
+    if(!tabs.length)return;
+    var secs=[].map.call(tabs,function(a){return document.getElementById(a.dataset.tab)}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(!e.isIntersecting) return;
+        tabs.forEach(function(a){a.classList.toggle('on',a.dataset.tab===e.target.id)});});},
+      {rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){so.observe(s)});
+    // At the very top of the page the observer's band contains no section, which left every
+    // tab unlit. The first one is where the reader is.
+    if(![].some.call(tabs,function(a){return a.classList.contains('on')})) tabs[0].classList.add('on');
+  })();
+
+  var t=document.getElementById('navToggle'), p=document.getElementById('navPanel');
+  if(t){t.addEventListener('click',function(){var o=p.classList.toggle('open');
+    t.classList.toggle('open',o); t.setAttribute('aria-expanded',o);});
+    // Tapping an anchor in the hamburger must close it, or the panel covers what you jumped to.
+    p.addEventListener('click',function(e){if(e.target.closest('a')){
+      p.classList.remove('open'); t.classList.remove('open'); t.setAttribute('aria-expanded','false');}});}
+</script>
+</body>
+</html>

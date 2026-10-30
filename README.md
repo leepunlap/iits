@@ -5,6 +5,7 @@ Source for the IITS web properties.
 | path | what | status |
 |---|---|---|
 | [`portals/`](portals/) | **teachers.ycltesthk.com** + **students.ycltesthk.com** — the live portals (pages, backends, nginx, tests) | **live** |
+| [`apex/`](apex/) | **ycltesthk.com** — the static site on the Windows/IIS box, refreshed with [`tools/sync-apex.sh`](tools/sync-apex.sh) | **live** |
 | [`docs/`](docs/) | **how the system works** — architecture, backend reference, Lesson AI / Wonder Lab | **read this** |
 | `auth/` | `checker.py` + `manage_users.py` — the original login service for the combined portal | superseded by [`portals/backend/`](portals/backend/) |
 | `www/` | the original combined `/teacher/` + `/student/` pages on iits.giftedintl.com | **retired 2026-09-26** |

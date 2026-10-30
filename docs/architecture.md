@@ -8,6 +8,10 @@ Everything runs on **BernardNUC** (`192.168.48.24`) — nginx 1.28.3 on Ubuntu, 
 sites from `/var/www/`. Only the `*.ycltesthk.com` DNS wildcard actually points at this machine;
 `ycltesthk.com` and `www` are a separate Windows/IIS server, and the mail names are at AdvanHost.
 
+The apex (`ycltesthk.com`) is that Windows/IIS server, and it is the one property in this repo
+whose tree lives off the NUC: it is versioned in [`apex/`](../apex/) and refreshed with
+[`tools/sync-apex.sh`](../tools/sync-apex.sh). The team edits it directly on the box.
+
 The two portals are the subject of this repo:
 
 | host | docroot | realm |

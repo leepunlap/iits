@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About us · &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</title>
+<meta name="description" content="&#x7531;&#x555F;&#x8499;&#x63A2;&#x7D22;&#x5230;&#x5275;&#x65B0;&#x5BE6;&#x8E10;&#xFF0C;&#x929C;&#x63A5;&#x570B;&#x5BB6;&#x7D1A;&#x8A8D;&#x8B49;&#x8207;&#x5927;&#x7063;&#x5340;&#x7AF6;&#x8CFD;&#x5E73;&#x53F0;&#x3002;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    /* Palette taken verbatim from iits.roadlogica.com so the two sites are one brand.
+       Replaces the design-artboard values (#46599C / #FAFAFC / Noto Serif) at the owner's
+       instruction to follow the live site's CSS. */
+    --bg:#f7f6f2; --panel:#f0eeea; --panel2:#faf9f6; --foot:#0d1b3a; --card:#ffffff;
+    --ink:#10161d; --ink2:#10161d; --body:#10161d;
+    --muted:#4c5765; --muted2:#5b6673; --muted3:#4c5765; --faint:#6b7686; --faint2:#5f7186;
+    --brand:#3d5699; --brand-d:#2f4275;
+    --line:rgba(16,22,29,0.07); --line2:rgba(16,22,29,0.10); --line3:rgba(16,22,29,0.14);
+    --brandline:rgba(16,22,29,0.08);
+    --navy:#0d1b3a; --navy-t:#b9c4d8;
+    --hatch:linear-gradient(#f4f3ef,#eceae4);
+    --serif:'Space Grotesk','Noto Sans TC',sans-serif; --sans:'Noto Sans TC',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  html{-webkit-text-size-adjust:100%}
+  html,body{min-height:100%}
+  body{margin:0;display:flex;flex-direction:column;min-height:100vh;background:var(--bg);color:var(--body);font-family:var(--sans);
+       font-weight:400;-webkit-font-smoothing:antialiased;line-height:1.7;
+       -webkit-text-size-adjust:100%}
+  html{scroll-behavior:smooth}
+  ::selection{background:var(--brand);color:#fff}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{color:var(--brand-d)}
+  h1,h2,h3{font-family:var(--serif);margin:0;color:var(--ink);font-weight:900;letter-spacing:-.5px}
+  img{max-width:100%}
+
+  .shell{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+  /* ---- hero, lifted from the live iits.roadlogica.com ---- */
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 9px;background:#fff;
+              border:1px solid rgba(16,22,29,.1);border-radius:999px;font-family:var(--mono);
+              font-size:11.5px;letter-spacing:.5px;color:#3A4657;margin-bottom:30px}
+  .pill-cta{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;
+            padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta:hover{background:var(--brand-d);color:#fff}
+  .pill-cta2{display:inline-flex;align-items:center;padding:16px 28px;border-radius:999px;
+             border:1px solid rgba(16,22,29,.18);color:var(--ink);font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta2:hover{border-color:var(--ink)}
+  .hero-art{position:relative;height:520px}
+  .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Crossfading stacks. Every frame is absolutely positioned so the box never reflows as
+     photos swap, and only the active one is opaque. */
+  .slides img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+  .slides img.on{opacity:1}
+  @media(prefers-reduced-motion:reduce){.slides img{transition:none}}
+
+  /* News lead: the headline sits on the picture, over a scrim dark enough to carry white
+     text at AA whatever the photo underneath happens to be. */
+  .newshero{position:relative;height:clamp(260px,27vw,392px);border-radius:22px;overflow:hidden;
+            border:1px solid var(--line);margin-bottom:22px;background:var(--panel)}
+  .newshero>a{position:absolute;inset:0;display:block;opacity:0;transition:opacity 1s ease;
+              background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff}
+  .newshero>a.on{opacity:1}
+  .newshero>a::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(8,12,20,.90) 0%,rgba(8,12,20,.62) 26%,rgba(8,12,20,.12) 58%,rgba(8,12,20,0) 78%)}
+  .newshero .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;
+                 padding:clamp(20px,3vw,34px) clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:10px}
+  .newshero .cap .meta{color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+  .newshero .cap .ttl{font-family:var(--serif);font-weight:700;color:#fff;
+                      font-size:clamp(19px,2.1vw,26px);line-height:1.45;text-wrap:pretty;
+                      text-shadow:0 1px 22px rgba(8,12,20,.5)}
+  .newshero>a:hover .cap .ttl{text-decoration:underline;text-underline-offset:4px}
+  .newshero .dots{position:absolute;right:clamp(18px,2.4vw,28px);top:clamp(18px,2.4vw,26px);
+                  z-index:3;display:flex;gap:7px}
+  .newshero .dots span{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.42);
+                       transition:background .3s,width .3s}
+  .newshero .dots span.on{background:#fff;width:20px}
+  @media(prefers-reduced-motion:reduce){.newshero>a{transition:none}}
+  .hero-a{position:absolute;top:20px;right:0;width:78%;height:340px;border-radius:24px;overflow:hidden;
+          box-shadow:0 40px 80px -30px rgba(16,22,29,.35)}
+  .hero-b{position:absolute;bottom:30px;left:0;width:50%;height:230px;border-radius:20px;overflow:hidden;
+          box-shadow:0 30px 60px -24px rgba(16,22,29,.35);border:5px solid var(--bg);
+          animation:floaty 6s ease-in-out infinite}
+  .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
+             border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
+             animation:floaty 5s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:34px}
+    .hero-art{height:330px}
+  }
+  @media(prefers-reduced-motion:reduce){ .hero-b,.hero-stat{animation:none} }
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
+  .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
+  .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
+  .lede{font-size:15px;line-height:1.9;color:var(--muted2);max-width:420px;margin:0;font-weight:300}
+  .more{font-size:13.5px;letter-spacing:.05em;white-space:nowrap}
+  /* Flat placeholder for cards with no image. Was a diagonal hatch carried over from
+     the design artboard, where it marked 'image goes here'; on a real page that reads as a
+     broken texture, so it is now a quiet flat panel. */
+  .hatch{background-image:var(--hatch);position:relative}
+  .hatch::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;
+                transform:translate(-50%,-50%);border:1.5px solid rgba(28,34,41,.13);border-radius:3px}
+
+  /* the design's signature: a hairline GRID, cells separated by 1px of the border colour */
+  .grid{display:grid;gap:20px;background:transparent;border:0}
+  .grid.cols-a{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .grid.cols-b{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+
+  /* On a phone a five-card column is five screens of scrolling to see five things that are
+     meant to be compared. Swipe sideways instead: the next card peeks in at the edge, which
+     is the affordance, and each one snaps to centre. */
+  @media(max-width:820px){
+    .grid.swipe{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;
+                scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+                scrollbar-width:none;padding-bottom:4px;
+                margin-inline:calc(-1 * clamp(16px,3vw,40px));
+                padding-inline:clamp(16px,3vw,40px)}
+    .grid.swipe::-webkit-scrollbar{display:none}
+    .grid.swipe>*{flex:0 0 74%;scroll-snap-align:center}
+    .swipehint{display:block}
+  }
+  .swipehint{display:none;margin-top:14px;font-family:var(--mono);font-size:11px;
+             letter-spacing:.12em;color:var(--faint2)}
+
+  /* Lift ONLY on cells that are actually links. A hover affordance on something that does
+     not go anywhere promises a click that never happens. */
+  a.cell{transition:transform .3s,box-shadow .3s;display:block}
+  a.cell:hover{transform:translateY(-8px);box-shadow:0 30px 60px -28px rgba(16,22,29,.3)}
+
+  .utility{background:var(--panel);border-bottom:1px solid var(--brandline)}
+  .utility .shell{min-height:38px;display:flex;flex-wrap:wrap;align-items:center;
+                  justify-content:space-between;gap:10px;font-size:12px;letter-spacing:.06em;color:var(--muted2)}
+  .utility .org{font-family:var(--mono)}
+  .util-right{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .langsel{display:flex;align-items:center;border:1px solid var(--line3);font-family:var(--mono);letter-spacing:.06em}
+  .langsel a{padding:3px 9px;font-size:11.5px;color:var(--muted2)}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  .langsel a:hover{color:var(--brand)}
+  .langsel a.on{background:var(--brand);color:#fff}
+  .langsel a.on:hover{color:#fff}
+  .vr{width:1px;height:14px;background:var(--line3)}
+
+  header.site{position:sticky;top:0;z-index:40;background:rgba(247,246,242,.94);
+              backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+              border-bottom:1px solid var(--line)}
+  header.site .shell{position:relative;padding-top:12px;padding-bottom:12px;min-height:82px;
+                     display:flex;align-items:center;justify-content:space-between;gap:24px}
+  header.site .brand img{height:clamp(34px,3.2vw,46px);width:auto;display:block;flex-shrink:0}
+
+  nav.main{display:flex;align-items:center;flex-wrap:nowrap;gap:clamp(2px,.5vw,8px);
+           font-size:clamp(13px,1vw,14.5px);color:var(--muted3);font-weight:500}
+  nav.main a{color:var(--muted3);white-space:nowrap} nav.main a:hover{color:var(--brand)}
+  /* A filled block, not a hairline underline — at 14px with a 2px rule under it, the
+     current section was easy to miss entirely. Every top-level link carries the same
+     padding and radius so the active one does not shift its neighbours. */
+  nav.main a.on{color:#fff;background:var(--brand)}
+  nav.main a.on:hover{color:#fff}
+  nav.main>a{padding:7px 13px;border-radius:10px}
+  .navsep{width:1px;height:18px;background:var(--line3);flex-shrink:0;margin:0 10px}
+
+  .langsel{display:inline-flex;align-items:center;border:1px solid var(--line3);border-radius:999px;
+           overflow:hidden;flex-shrink:0}
+  nav.main .langsel a,.navpanel .langsel a{padding:5px 10px;font-size:11.5px;font-family:var(--mono);
+           color:var(--muted2);border:0}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  nav.main .langsel a.on,.navpanel .langsel a.on{background:var(--brand);color:#fff}
+  nav.main .langsel a.on:hover{color:#fff}
+  /* These three need the `nav.main` prefix: without it `nav.main a{color:var(--muted3)}`
+     outranked them, so the solid navy button drew its label in muted navy — legible in the
+     stylesheet, invisible on the page. */
+  nav.main a.area{padding:7px 14px;border:1px solid rgba(16,22,29,.18);border-radius:999px;
+        font-size:13px;white-space:nowrap;flex-shrink:0;color:var(--ink2)}
+  nav.main a.area:hover{border-color:var(--ink);color:var(--ink)}
+  nav.main a.area-cta{background:var(--navy);color:#fff;border-color:var(--navy)}
+  nav.main a.area-cta:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+
+  .navtoggle{display:none;background:none;border:0;cursor:pointer;padding:9px;width:44px;height:44px;
+             flex-direction:column;justify-content:center;gap:5px}
+  .navtoggle span{display:block;height:2px;width:22px;background:var(--ink);border-radius:2px;transition:.25s}
+  .navtoggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .navtoggle.open span:nth-child(2){opacity:0}
+  .navtoggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .navpanel{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(247,246,242,.98);
+            backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:10px 22px 20px}
+  .navpanel a{display:block;padding:11px 2px;font-size:15.5px;color:var(--muted3);border-bottom:1px solid var(--line)}
+  /* Collapses when the single row runs out of width — one bar or a hamburger, never two bars. */
+  @media(max-width:1180px){
+    nav.main{display:none}
+    .navtoggle{display:flex}
+    .navpanel.open{display:block}
+  }
+
+
+  /* Assessment fact sheet — the detail a parent actually needs, laid out to be scanned. */
+  /* One card, two columns of "label：value". The marker sits in the margin and wrapped
+     lines align with the text — a hanging indent, like every other list on the site now. */
+  .factlist{list-style:none;margin:0;padding:26px 30px 28px;background:#fff;
+            border:1px solid var(--line);border-radius:16px;
+            columns:2;column-gap:44px}
+  .factlist li{break-inside:avoid;margin:0 0 13px;padding-left:17px;position:relative;
+               font-size:15px;line-height:1.7;color:var(--ink2)}
+  .factlist li:last-child{margin-bottom:0}
+  .factlist li::before{content:'';position:absolute;left:0;top:.66em;width:6px;height:6px;
+                       border-radius:1px;background:var(--brand);opacity:.75}
+  .factlist li span{font-weight:700;color:var(--ink)}
+  .factlist li span::after{content:'：';font-weight:400;color:var(--muted2)}
+  @media(max-width:820px){.factlist{columns:1;padding:22px 24px}}
+
+  /* Figures rebuilt from diagrams that used to be pictures of text. */
+  .fig{margin:26px 0;padding:0}
+  .fig table{margin:0}
+  .fig tr.grp td{background:var(--panel);font-weight:700;color:var(--ink);
+                 font-size:13.5px;letter-spacing:.02em}
+  .fig .fignote{margin-top:10px;font-size:12.5px;line-height:1.7;color:var(--faint2)}
+  /* the curriculum matrix: dense, so it sets tighter than ordinary prose tables */
+  .fig table.matrix td,.fig table.matrix th{font-size:12.5px;padding:8px 11px;vertical-align:top}
+  .fig table.matrix .agecell{background:var(--panel);font-weight:700;white-space:nowrap}
+  /* the five strands */
+  .fig .pil-intro{margin:0 0 16px;font-size:15px;color:var(--muted2);max-width:70ch}
+  .fig .pilgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .fig .pil{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px 18px}
+  .fig .pil h4{margin:0 0 12px;font-family:var(--serif);font-size:14.5px;font-weight:700;color:var(--ink2);
+               display:flex;align-items:baseline;gap:8px}
+  .fig .pil h4 b{font-size:22px;color:var(--brand);font-weight:800;line-height:1}
+  .fig .pil-g{margin-top:12px}
+  .fig .pil-g h5{margin:0 0 5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;
+                 text-transform:uppercase;color:var(--brand)}
+  .fig .pil-g ul{list-style:none;margin:0;padding:0}
+  .fig .pil-g li{font-size:12.5px;line-height:1.65;color:var(--muted2);padding-left:11px;position:relative}
+  .fig .pil-g li::before{content:'';position:absolute;left:0;top:.66em;width:4px;height:4px;
+                         border-radius:50%;background:var(--brand);opacity:.5}
+  @media(max-width:1080px){.fig .pilgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.fig .pilgrid{grid-template-columns:1fr}}
+  .fig .chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}
+  .fig .chips li{background:var(--panel);border:1px solid var(--line2);border-radius:999px;
+                 padding:6px 14px;font-size:13px;color:var(--ink2)}
+  .fig .featgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .fig .fc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .fig .fc h4{margin:0;padding:11px 16px;background:var(--brand);color:#fff;
+              font-family:var(--sans);font-size:13.5px;font-weight:700;line-height:1.4}
+  .fig .fc ul{list-style:none;margin:0;padding:14px 16px 16px}
+  .fig .fc li{font-size:13.5px;line-height:1.7;color:var(--ink2);padding-left:14px;position:relative}
+  .fig .fc li::before{content:'';position:absolute;left:0;top:.72em;width:5px;height:5px;
+                      border-radius:50%;background:var(--brand);opacity:.6}
+  .fig figcaption h4{margin:18px 0 10px;font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink2)}
+  .fig .packlist{list-style:none;margin:0;padding:0;display:grid;
+                 grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 20px}
+  .fig .packlist li{font-size:13.5px;color:var(--muted2);display:flex;justify-content:space-between;
+                    gap:10px;border-bottom:1px solid var(--line);padding:6px 0}
+  .fig .packlist li span{color:var(--ink2);font-weight:500}
+  @media(max-width:820px){
+    .fig .featgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .fig .packlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  /* Figures span the full measure inside two-column prose. */
+  .footnote{margin-top:14px;font-size:12.5px;color:var(--faint2);line-height:1.7;max-width:78ch}
+
+  .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:38px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 30px 34px}
+  .panel h3{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink2);margin:6px 0 14px}
+  .panel p{font-size:14.5px;line-height:1.9;color:var(--muted2)}
+  .panel p b{color:var(--ink2);font-weight:600}
+
+  /* Partners are a list of logos, in their own colours, and nothing hovers. */
+  /* Fixed column counts, not auto-fit: with eight partners, auto-fit packed seven across
+     and left the eighth stranded on its own row. 4 and 2 both divide 8 into full rows. */
+  .logogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+            background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:34px}
+  @media(max-width:820px){.logogrid{grid-template-columns:repeat(2,1fr)}}
+  /* Two up, like the sister club site's card grids — a fixed count, not auto-fit, so the
+     last row is never an orphan. */
+  .expertgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:32px}
+  @media(max-width:820px){.expertgrid{grid-template-columns:1fr}}
+  .expertcard{display:grid;grid-template-columns:128px minmax(0,1fr);gap:20px;
+              background:var(--card);border:1px solid var(--line);border-radius:20px;
+              padding:20px;color:inherit;align-items:stretch;
+              transition:box-shadow .3s,transform .3s}
+  .expertcard:hover{transform:translateY(-4px);box-shadow:0 24px 48px -30px rgba(16,22,29,.3)}
+  .ec-photo{display:block;aspect-ratio:3/4;border-radius:14px;background-size:cover;
+            background-position:50% 16%;background-repeat:no-repeat;border:1px solid var(--line)}
+  .ec-body{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-width:0}
+  .ec-name{display:block;font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);
+           line-height:1.3}
+  .ec-org{display:block;margin-top:7px;font-size:13.5px;line-height:1.55;color:var(--muted2)}
+  .ec-role{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+           text-transform:uppercase;color:var(--brand)}
+  .ec-cred{display:block;font-size:13px;line-height:1.75;color:var(--muted2);
+           display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  @media(max-width:480px){.expertcard{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px}}
+
+  .logo{background:#fff;height:120px;display:flex;align-items:center;justify-content:center;padding:22px}
+  .logo img{max-width:100%;max-height:74px;object-fit:contain}
+  .logo span{font-size:13.5px;color:var(--muted2);text-align:center}
+
+
+  /* ---- prose: ONE definition for pages, articles and inline standing text ----
+     Imported bodies used to carry their own margins, widths, white backgrounds and arial
+     font stacks; those were stripped at import, so everything below is now the only thing
+     styling them and body text finally shares the page's column. */
+  /* The measure belongs to the TEXT, not to the column. Capping the whole .prose block put
+     figures on the same 78ch leash as paragraphs, so pages that are mostly diagrams used
+     barely half the shell — /c/courses, /p/16 and the article pages each ran to 688px of
+     1320. Sentences stay at a readable measure; pictures, tables and video get the width. */
+  .prose{font-size:16.5px;line-height:1.95;color:var(--ink2);font-weight:300;overflow-wrap:anywhere;
+         max-width:none;background:transparent}
+  .prose>p,.prose>ul,.prose>ol,.prose>blockquote,
+  .prose>h1,.prose>h2,.prose>h3,.prose>h4{max-width:78ch}
+  /* …except a paragraph that is only wrapping a picture, which the old CMS did constantly. */
+  .prose>p:has(>img){max-width:none}
+  .prose table,.prose .video{max-width:min(1080px,100%)}
+
+  /* Two columns once the page is wide enough to justify them — newspaper practice, and the
+     reason the right half of these pages was empty. Headings and figures span the full
+     measure so they still separate the flow; orphans/widows stop a column ending on a
+     single stranded line. Below 1080px it stays a single column, where two would be
+     unreadable. */
+  @media(min-width:1080px){
+    .prose{columns:2;column-gap:clamp(34px,3.2vw,58px);column-rule:1px solid var(--line)}
+    .prose>p,.prose>ul,.prose>ol,.prose>blockquote{max-width:none;orphans:2;widows:2}
+    .prose>h1,.prose>h2,.prose>h3,.prose>h4{column-span:all;max-width:none}
+    /* Pictures run WITH the text, in the column, the way a newspaper sets them — sized to
+       the column edges and never split across a break. Tables and video still span the full
+       measure: a table squeezed into half a column stops being readable. */
+    .prose>figure.fig{column-span:all}
+    .prose>p:has(>img),.prose>img,.prose>figure{column-span:none;break-inside:avoid;
+                                                page-break-inside:avoid;max-width:none}
+    .prose>p:has(>img){margin:0 0 1.15em}
+    .prose img{width:100%;max-width:100%;max-height:none;margin:0 0 .5em}
+    .prose>table,.prose>.video{column-span:all}
+    .prose>*:first-child{margin-top:0}
+  }
+  .prose>*:first-child{margin-top:0}
+  .prose p{margin:0 0 1.15em;background:transparent}
+  .prose strong,.prose b{font-weight:700;color:var(--ink)}
+  /* Capped in BOTH directions: wide enough to read a diagram, bounded so the twenty-odd
+     legacy photos on the About page cannot run the page past 20,000px again. */
+  /* 820px is chosen so a 4:3 landscape figure reaches the full 1080px column before the
+     height cap bites; only genuinely tall portrait posters are held back, which is the case
+     the cap exists for. */
+  .prose img{max-width:min(1080px,100%);max-height:820px;width:auto;height:auto;display:block;
+             margin:26px 0;border-radius:14px;border:1px solid var(--line);
+             background:var(--panel)}
+  .prose a{color:var(--brand);text-decoration:underline}
+  .prose h1,.prose h2,.prose h3,.prose h4{font-family:var(--serif);margin:1.7em 0 .55em;
+             color:var(--ink2);font-weight:700;line-height:1.5}
+  .prose h1,.prose h2{font-size:19.5px}
+  .prose h3,.prose h4{font-size:17px}
+  .prose ul,.prose ol{margin:0 0 1.15em;padding-left:1.5em}
+  .prose li{margin:.35em 0;padding-left:.2em}
+  /* Hanging indent for the imported "1、…" paragraphs: the marker sits in the margin and
+     every wrapped line aligns with the text, not back under the number. */
+  .prose p.num{padding-left:2.15em;text-indent:-2.15em}
+  .prose p.num + p.num{margin-top:-.35em}
+  .prose table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:1.4em 0;
+               font-size:14.5px}
+  .prose td,.prose th{border:1px solid var(--line2);padding:9px 12px;text-align:left}
+  .prose th{background:var(--panel);font-weight:600}
+  .prose iframe,.prose video{max-width:100%}
+  .prose .video{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;
+                background:#000 center/cover no-repeat;border:1px solid var(--line);overflow:hidden}
+  .prose .video[data-poster]{background-image:var(--poster)}
+  .prose .video iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
+
+  .guide{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--card);
+         overflow:hidden}
+  .guide>summary{cursor:pointer;list-style:none;padding:16px 22px;font-family:var(--serif);
+                 font-size:15.5px;font-weight:600;color:var(--ink2);display:flex;
+                 align-items:center;gap:12px;transition:background .2s}
+  .guide>summary::-webkit-details-marker{display:none}
+  .guide>summary::before{content:'+';font-family:var(--mono);font-size:17px;color:var(--brand);
+                         flex-shrink:0;width:14px}
+  .guide[open]>summary::before{content:'–'}
+  .guide>summary:hover{background:rgba(61,86,153,.05)}
+  .guide[open]>summary{border-bottom:1px solid var(--line)}
+  .guide>.prose{padding:22px 22px 26px}
+  .guide+.standing{margin-top:44px}
+
+  .standing{margin-top:34px}
+  .standing+.standing{margin-top:52px;padding-top:44px;border-top:1px solid var(--line)}
+  .standing-h{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);margin-bottom:16px}
+  /* Section headings carry the whole structure of a page that now runs to many screens, so
+     they get a rule the full width of the section, a brand marker, and enough size to be
+     found while scrolling past. */
+  /* ONE rule, with a brand-coloured lead-in — not a dark border plus a floating blue dash.
+     The dash was positioned at a fixed -28px, so it only landed on the border at some
+     widths and dropped below it at others, reading as two separate lines. */
+  .sec.anchor>.sechead{position:relative;padding-top:26px;align-items:flex-end}
+  .sec.anchor>.sechead::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--brand) 0 72px,var(--ink) 72px)}
+  /* The heading takes the row, the cube sits at its right-hand end, and "view all" tucks in
+     between them. The stage stays 124px because a rotating 62px cube reaches ~107px across
+     its diagonal and more again under perspective — anything tighter clips a near corner. */
+  .sechead.has-cube{align-items:center;flex-wrap:nowrap}
+  .sechead.has-cube .h3sec{flex:1;min-width:0}
+  .sechead.has-cube .more{flex-shrink:0;order:2}
+  .sechead.has-cube .cube-stage{order:3;flex-shrink:0;margin:-18px -8px -18px 0;cursor:grab}
+  @media(max-width:640px){
+    .sechead.has-cube{flex-wrap:wrap;gap:14px}
+    .sechead.has-cube .cube-stage{width:92px;height:92px;margin:-14px 0}
+  }
+  .h3sec{font-family:var(--serif);font-size:clamp(26px,3vw,40px);font-weight:800;
+         color:var(--ink);letter-spacing:-.02em;line-height:1.15;position:relative}
+  .sec.anchor{padding-top:clamp(46px,5vw,72px)}
+  /* The hero was padded to sit under a breadcrumb and an eyebrow. With five pages and an
+     active nav item, both were the page's own name repeated, so the title starts higher. */
+  /* Present to assistive technology and to search, absent from the layout. */
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .hero-h1{font-size:clamp(40px,6vw,82px)}
+  html[lang="en"] .hero-h1{font-size:clamp(34px,4.3vw,58px);max-width:15ch;letter-spacing:-.5px}
+
+  .hero-sec{padding-top:clamp(30px,3.4vw,46px);padding-bottom:10px}
+  /* A full-width band that reads as a quotation rather than as a stray centred paragraph.
+     The 34ch cap it used to carry forced the last two characters onto a line of their own. */
+  .quoteband{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .quoteband .sec{padding-top:clamp(52px,6vw,86px);padding-bottom:clamp(52px,6vw,86px)}
+  .quoteband blockquote{position:relative;margin:0;padding-left:clamp(22px,3vw,46px);
+                        border-left:3px solid var(--brand);
+                        font-family:var(--serif);font-weight:700;
+                        font-size:clamp(21px,3.1vw,38px);line-height:1.5;color:var(--ink);
+                        max-width:none;text-wrap:balance}
+  .quoteband blockquote em{font-style:normal;color:var(--brand)}
+  @media(max-width:700px){.quoteband blockquote{max-width:none}}
+
+  /* ---- one long page per category: a sticky tag bar, and anchors that clear the header ---- */
+  html{scroll-behavior:smooth}
+  .anchor{scroll-margin-top:146px}
+  .sec.anchor{padding-top:clamp(34px,4vw,52px)}
+  .sectabs{position:sticky;top:83px;margin-top:0;z-index:30;background:rgba(247,246,242,.94);
+           backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+           border-bottom:1px solid var(--line)}
+  .sectabs-in{max-width:1320px;margin:0 auto;padding:11px clamp(16px,3vw,40px);
+              display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .sectabs-in::-webkit-scrollbar{display:none}
+  .sectabs a{padding:7px 15px;border-radius:999px;font-size:13.5px;white-space:nowrap;
+             color:var(--muted2);border:1px solid transparent;transition:.2s}
+  .sectabs a:hover{background:rgba(61,86,153,.07);color:var(--ink2)}
+  /* Both states named explicitly: `.sectabs a:hover` and `.sectabs a.on` carry the same
+     specificity, so hovering the active pill was one source-order edit away from painting
+     dark text on the solid blue. */
+  .sectabs a.on,.sectabs a.on:hover{background:var(--brand);color:#fff}
+  @media(max-width:1180px){.anchor{scroll-margin-top:140px}}
+
+  /* Sections rise into place as they arrive — the live site's 0.3s transform language,
+     not a new one. Anything that cannot observe just shows, and reduced-motion opts out. */
+  /* Hidden ONLY once script has confirmed it can reveal it again (html.jsr). Hiding content
+     in the stylesheet and relying on JS to bring it back means a script error blanks the
+     page; this way the worst case is no animation. */
+  html.jsr .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+  html.jsr .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){html.jsr .reveal{opacity:1;transform:none;transition:none}}
+
+  .btn{background:var(--brand);color:#fff;font-size:14.5px;font-weight:500;padding:14px 28px;
+       letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn:hover{background:var(--brand-d);color:#fff}
+  .btn2{border:1px solid rgba(28,34,41,.22);color:var(--body);font-size:14.5px;padding:14px 28px;
+        letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn2:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* ---- tumbling assessment cube, liquid glass, JS physics -------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection.
+
+     ORIENTATION IS SIMULATED, NOT KEYFRAMED. cube.js integrates a quaternion from an
+     angular-velocity vector each frame, so the motion has real state: it can be nudged,
+     it carries momentum, and it never repeats. Keyframes cannot express any of that.
+
+     THE LABEL LIVES AT THE CUBE'S CENTRE, at translateZ(0) INSIDE the preserve-3d
+     hierarchy, and is counter-rotated by the inverse quaternion so it always faces the
+     viewer. Being a real plane at z=0 rather than an overlay is what lets the near faces
+     pass IN FRONT of it — the letters are inside the glass, not painted on top.
+
+     Letters are potrace vectors of the source art's own condensed gothic, so they stay
+     crisp at any size instead of being an upscaled 23px bitmap.
+
+     CSS 3D + a small rAF loop rather than three.js: ~600 KB and five WebGL contexts is not
+     a price worth paying to tumble five logos. ------------------------------------------ */
+  /* Twelve advisers on two rows of six. Fixed at 6 rather than auto-fill because the
+     roster is a known, fixed set — an auto grid reflows it to 5+5+2, which reads as a
+     ragged list instead of a panel. Steps down in even divisors so it never leaves an
+     orphan on the last row. */
+  .experts-grid{grid-template-columns:repeat(6,1fr)}
+  @media(max-width:1240px){ .experts-grid{grid-template-columns:repeat(4,1fr)} }
+  @media(max-width:820px) { .experts-grid{grid-template-columns:repeat(3,1fr)} }
+  @media(max-width:560px) { .experts-grid{grid-template-columns:repeat(2,1fr)} }
+  .experts-grid h3{font-size:16px!important}
+  .experts-grid .cell span:last-child{padding:16px 16px 20px!important}
+
+  .cube-stage{position:relative;width:124px;height:124px;perspective:230px;
+              perspective-origin:50% 44%;
+              display:flex;align-items:center;justify-content:center;isolation:isolate;
+              cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}
+  .cube-stage:active{cursor:grabbing}
+  .cube{position:relative;z-index:1;width:62px;height:62px;transform-style:preserve-3d;
+        will-change:transform}
+  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
+          --d:1;
+          background:linear-gradient(135deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.05) 42%,
+                     rgba(150,182,250,.15) 66%,rgba(255,255,255,.26) 100%);
+          border:1.5px solid rgba(70,118,224,calc(.20 + .58 * var(--d)));
+          opacity:calc(.42 + .58 * var(--d));
+          box-shadow:inset 0 1px 0 rgba(255,255,255,calc(.25 + .60 * var(--d))),
+                     inset 0 -8px 14px -12px rgba(46,109,240,calc(.15 + .35 * var(--d)))}
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,.20) 100%);
+            /* Blur has to stay LOW. The label sits at the cube's centre, so every near
+               face blurs it — physically right, but at 4px the letters stopped being
+               legible. 1.2px keeps the refraction reading as glass while the code stays
+               sharp through it. */
+            -webkit-backdrop-filter:blur(0.6px) saturate(135%);
+            backdrop-filter:blur(0.6px) saturate(135%);
+            /* the far half of the glass loses its highlight, which is what tells you it is
+               the far half */
+            background-image:linear-gradient(135deg,
+                       rgba(255,255,255,calc(.10 + .26 * var(--d))) 0%,
+                       rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,calc(.06 + .18 * var(--d))) 100%)}
+  }
+  .cube .f{transform:translateZ(31px)}
+  .cube .b{transform:rotateY(180deg) translateZ(31px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(31px)}
+  .cube .l{transform:rotateY(-90deg) translateZ(31px)}
+  .cube .u{transform:rotateX(90deg)  translateZ(31px)}
+  .cube .d{transform:rotateX(-90deg) translateZ(31px)}
+
+  /* the plane at the centre of the cube, counter-rotated by JS */
+  .cube .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+             pointer-events:none;will-change:transform}
+  /* Sizes are in label space, which the transform scales by 0.5 — so 80px draws as 40px
+     and 9px of blur as 4.5px. Kept inside the cube in every orientation. */
+  .cube .lbl::before{content:'';position:absolute;left:50%;top:50%;
+             width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;
+             background:radial-gradient(circle at 44% 38%,
+                        rgba(126,170,252,.16) 0%, rgba(130,174,252,.26) 24%,
+                        rgba(146,188,254,.21) 44%, rgba(180,208,255,.09) 68%,
+                        rgba(214,229,255,0) 86%);
+             filter:blur(9px)}
+  /* LIVE TEXT, not a traced bitmap. The source art is 23px tall, so potrace outlines of it
+     came out lumpy at display size — there simply is not enough information in the original
+     to vectorise cleanly. Anton is a heavy condensed grotesque and the closest widely
+     available match to the face the badge used; as real text it is crisp at any size and
+     costs nothing to render.
+     The depth is stacked text-shadows stepping down-right, which reads as an extruded solid
+     rather than a flat sticker. Genuine extrusion would be invisible here: the label is
+     counter-rotated to face the viewer, so its sides never turn toward the camera. */
+  /* Rendered at 2x and scaled down by the transform. Anything inside a 3D-transformed
+     parent is rasterised ONCE at its layout size and then transformed, so 20px text drawn
+     at 20px and pushed through a matrix comes out soft. Drawing it at 40px and scaling to
+     0.5 doubles the raster resolution and it stays sharp. */
+  .cube .lbl b{font-family:'Anton','Arial Narrow',Impact,sans-serif;font-weight:400;
+               font-size:44px;letter-spacing:.04em;color:#12171D;line-height:1;
+               white-space:nowrap;-webkit-font-smoothing:antialiased;
+               /* Black face, WHITE extrusion. Against a busy illustration a coloured glyph
+                  competes with the artwork; black reads as type at any backdrop, and the
+                  white depth doubles as the separation that would otherwise need a halo.
+                  Drawn at 2x with the font, so these offsets are 2x too. */
+               text-shadow:2px 2px 0 #FFFFFF, 3px 3px 0 #FFFFFF, 4px 4px 0 #F6F8FC,
+                           5px 5px 0 #EDF0F6, 6px 8px 10px rgba(70,80,100,.30),
+                           -1px -1px 0 rgba(255,255,255,.85)}
+
+  @media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
+
+  .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .pagelist{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+            border-radius:18px;overflow:hidden;margin-top:34px}
+  .pagelink{display:flex;align-items:center;justify-content:space-between;gap:20px;
+            padding:20px 26px;background:var(--card);font-size:16px;color:var(--ink);
+            transition:background .15s}
+  .pagelink:hover{background:var(--panel2);color:var(--brand)}
+  .pagelink .arr{color:var(--faint);font-family:var(--mono)}
+  .pagelink:hover .arr{color:var(--brand)}
+  .empty{padding:70px 0;text-align:center;color:var(--faint2)}
+
+  footer.site{background:var(--navy);color:var(--navy-t);border-top:0;margin-top:0}
+  footer.site .cols{max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,3vw,40px) 0;
+                    display:block}
+  footer.site .ftitle{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:#aebde3;margin-bottom:20px}
+  footer.site .stack{display:flex;flex-direction:column;gap:12px;font-size:14px}
+  footer.site .stack a{color:var(--navy-t)} footer.site .stack a:hover{color:#fff}
+  footer.site .addr{display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.8;
+                    color:var(--navy-t);font-weight:300}
+  footer.site .base a{color:var(--navy-t)} footer.site .base a:hover{color:#fff}
+  footer.site .base{max-width:1320px;margin:0 auto;padding:36px clamp(16px,3vw,40px);
+                    border-top:1px solid var(--line);margin-top:56px;display:flex;justify-content:space-between;
+                    gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+
+
+</style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="工信學堂（香港）">
+<meta property="og:title" content="About us">
+<meta property="og:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta property="og:url" content="https://ycltesthk.com/s/150/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="zh_HK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About us">
+<meta name="twitter:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
+</head>
+<body>
+
+<header class="site">
+  <div class="shell">
+    <a href="/" class="brand" aria-label="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+    </a>
+
+    <nav class="main">
+      <a href="/" class="">&#x9996;&#x9801;</a>
+        <a href="/c/tests/" class="">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/" class="">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/" class="">&#x6D88;&#x606F;</a>
+        <a href="/c/about/" class="">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <span class="navsep"></span>
+      <span class="langsel">
+          <a href="/s/150/" class="on" hreflang="zh-Hant">&#x7E41;</a>
+          <a href="/zh-Hans/s/150/" class="" hreflang="zh-Hans">&#x7B80;</a>
+          <a href="/en/s/150/" class="" hreflang="en">EN</a>
+      </span>
+      <a class="area" href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </nav>
+
+    <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="navpanel" id="navPanel">
+      <a href="/">&#x9996;&#x9801;</a>
+        <a href="/c/tests/">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/">&#x6D88;&#x606F;</a>
+        <a href="/c/about/">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <div class="langsel" style="margin:14px 0 6px">
+          <a href="/s/150/" class="on">&#x7E41;</a>
+          <a href="/zh-Hans/s/150/" class="">&#x7B80;</a>
+          <a href="/en/s/150/" class="">EN</a>
+      </div>
+      <a href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<section class="sec">
+
+  <div class="sechead">
+    <div>
+      <h2 class="h2">About us</h2>
+    </div>
+    <p class="lede">0 &#x7BC7;&#x5167;&#x5BB9;</p>
+  </div>
+
+
+    <div class="empty">&#x9019;&#x500B;&#x5206;&#x985E;&#x76EE;&#x524D;&#x6C92;&#x6709;&#x5DF2;&#x767C;&#x5E03;&#x7684;&#x5167;&#x5BB9;&#x3002;</div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="cols">
+    <div>
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
+      <div class="addr">
+        <span>&#x5B98;&#x65B9;&#x7DB2;&#x7AD9;&#xFF1A;www.ycltesthk.com</span>
+        <span>&#x696D;&#x52D9;&#x5408;&#x4F5C;&#xFF1A;&#x2B;852 2524 8248</span>
+        <span>&#x6295;&#x8A34;&#x90F5;&#x7BB1;&#xFF1A;youth.itt@gmail.com</span>
+        <span>&#x670D;&#x52D9;&#x6642;&#x9593;&#xFF1A;&#x5DE5;&#x4F5C;&#x65E5; &#x4E0A;&#x5348;9:00~11:30&#xFF0C;&#x4E0B;&#x5348;14:00~17:30</span>
+        <span>&#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#x3000;&#x6C99;&#x7530;&#x77F3;&#x9580;&#x5B89;&#x7766;&#x91CC;6&#x865F;&#x4E2D;&#x5B78;&#x90E8;1&#x6A13;S107A&#x5BA4;</span>
+        <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+        <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">&#x5DE5;&#x696D;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x8207;&#x8003;&#x8A66;&#x4E2D;&#x5FC3; &#xB7; &#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x8853;&#x57F9;&#x990A;&#x5DE5;&#x7A0B;&#x9999;&#x6E2F;&#x5206;&#x7AD9;</span>
+      </div>
+    </div>
+  </div>
+  <div class="base">
+    <span>© 2026 &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</span>
+  </div>
+</footer>
+
+<script>
+  // Hero slideshows: each frame advances on its own timer, offset so the two do not flip
+  // together. Paused while the tab is hidden — a background timer swapping images nobody
+  // is looking at just burns battery — and left on the first frame under reduced-motion.
+  (function(){
+    var frames = document.querySelectorAll('.slides');
+    if(!frames.length) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    frames.forEach(function(f){
+      // Direct children, not <img> — the hero frames stack images, the news lead stacks
+      // links, and both are driven by the same loop.
+      var imgs = f.querySelectorAll(':scope > img, :scope > a');
+      var dots = f.querySelectorAll('.dots span');
+      if(imgs.length < 2) return;
+      var i = 0, every = +f.dataset.interval || 10000, offset = +f.dataset.offset || 0, timer;
+      var step = function(){
+        imgs[i].classList.remove('on');
+        if(dots[i]) dots[i].classList.remove('on');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('on');
+        if(dots[i]) dots[i].classList.add('on');
+        // Only the visible slide should be reachable by keyboard or a screen reader.
+        imgs.forEach(function(el,n){ if(el.tagName==='A'){
+          el.setAttribute('aria-hidden', n===i ? 'false' : 'true');
+          el.tabIndex = n===i ? 0 : -1; } });
+      };
+      var start = function(){ timer = setInterval(step, every); };
+      setTimeout(start, offset);
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden){ clearInterval(timer); }
+        else if(!timer || true){ clearInterval(timer); start(); }
+      });
+    });
+  })();
+
+  // Landing on /c/about#experts jumps before the twenty-odd images above it have loaded;
+  // as they arrive they push the target down and you end up somewhere else on the page.
+  // Re-aim once everything has settled, but only if the reader has not scrolled since.
+  (function(){
+    if(!location.hash) return;
+    var moved=false, mark=function(){moved=true};
+    addEventListener('wheel',mark,{passive:true,once:true});
+    addEventListener('touchstart',mark,{passive:true,once:true});
+    addEventListener('keydown',mark,{once:true});
+    var go=function(){ if(moved) return;
+      var el=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if(el) el.scrollIntoView({behavior:'auto',block:'start'});
+    };
+    addEventListener('load',function(){go();setTimeout(go,120);});
+  })();
+
+  // Reveal on arrival, and light the section tab you are actually reading.
+  (function(){
+    var rev=document.querySelectorAll('.reveal');
+    if(!rev.length) { /* still wire the tabs below */ }
+    else if(!('IntersectionObserver' in window)){rev.forEach(function(e){e.classList.add('in')});}
+    else{
+      document.documentElement.classList.add('jsr');
+      var ro=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},
+        {rootMargin:'0px 0px -10% 0px',threshold:0});
+      rev.forEach(function(e){
+        // Anything already on screen at load reveals at once rather than waiting for a
+        // scroll that may never come on a short page.
+        if(e.getBoundingClientRect().top < innerHeight) e.classList.add('in');
+        ro.observe(e);
+      });
+      // Backstop: if anything is still hidden after a moment, show it. Content must not
+      // depend on an observer firing.
+      setTimeout(function(){rev.forEach(function(e){e.classList.add('in')})},1600);
+    }
+
+    var tabs=document.querySelectorAll('.sectabs a[data-tab]');
+    if(!tabs.length)return;
+    var secs=[].map.call(tabs,function(a){return document.getElementById(a.dataset.tab)}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(!e.isIntersecting) return;
+        tabs.forEach(function(a){a.classList.toggle('on',a.dataset.tab===e.target.id)});});},
+      {rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){so.observe(s)});
+    // At the very top of the page the observer's band contains no section, which left every
+    // tab unlit. The first one is where the reader is.
+    if(![].some.call(tabs,function(a){return a.classList.contains('on')})) tabs[0].classList.add('on');
+  })();
+
+  var t=document.getElementById('navToggle'), p=document.getElementById('navPanel');
+  if(t){t.addEventListener('click',function(){var o=p.classList.toggle('open');
+    t.classList.toggle('open',o); t.setAttribute('aria-expanded',o);});
+    // Tapping an anchor in the hamburger must close it, or the panel covers what you jumped to.
+    p.addEventListener('click',function(e){if(e.target.closest('a')){
+      p.classList.remove('open'); t.classList.remove('open'); t.setAttribute('aria-expanded','false');}});}
+</script>
+</body>
+</html>

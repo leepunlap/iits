@@ -25,3 +25,9 @@ certs/
 # Proprietary: 105 code-generation functions extracted verbatim from the UCMake app bundle.
 # Present on disk for the sketch path; must never be published.
 lab-device/codegen.json
+
+# --- apex/ (ycltesthk.com, the IIS box) ---
+# media/ is 461 MB of CMS-uploaded news images: bulk content, not source, and it changes on every
+# upload, so committing it would make every clone half a gigabyte. The file list is tracked
+# instead (apex/media.manifest), so a change there is never silent.
+apex/media/

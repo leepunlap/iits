@@ -1,0 +1,1075 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&#x6E2C;&#x8A55; · &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</title>
+<meta name="description" content="&#x7531;&#x555F;&#x8499;&#x63A2;&#x7D22;&#x5230;&#x5275;&#x65B0;&#x5BE6;&#x8E10;&#xFF0C;&#x929C;&#x63A5;&#x570B;&#x5BB6;&#x7D1A;&#x8A8D;&#x8B49;&#x8207;&#x5927;&#x7063;&#x5340;&#x7AF6;&#x8CFD;&#x5E73;&#x53F0;&#x3002;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    /* Palette taken verbatim from iits.roadlogica.com so the two sites are one brand.
+       Replaces the design-artboard values (#46599C / #FAFAFC / Noto Serif) at the owner's
+       instruction to follow the live site's CSS. */
+    --bg:#f7f6f2; --panel:#f0eeea; --panel2:#faf9f6; --foot:#0d1b3a; --card:#ffffff;
+    --ink:#10161d; --ink2:#10161d; --body:#10161d;
+    --muted:#4c5765; --muted2:#5b6673; --muted3:#4c5765; --faint:#6b7686; --faint2:#5f7186;
+    --brand:#3d5699; --brand-d:#2f4275;
+    --line:rgba(16,22,29,0.07); --line2:rgba(16,22,29,0.10); --line3:rgba(16,22,29,0.14);
+    --brandline:rgba(16,22,29,0.08);
+    --navy:#0d1b3a; --navy-t:#b9c4d8;
+    --hatch:linear-gradient(#f4f3ef,#eceae4);
+    --serif:'Space Grotesk','Noto Sans TC',sans-serif; --sans:'Noto Sans TC',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  html{-webkit-text-size-adjust:100%}
+  html,body{min-height:100%}
+  body{margin:0;display:flex;flex-direction:column;min-height:100vh;background:var(--bg);color:var(--body);font-family:var(--sans);
+       font-weight:400;-webkit-font-smoothing:antialiased;line-height:1.7;
+       -webkit-text-size-adjust:100%}
+  html{scroll-behavior:smooth}
+  ::selection{background:var(--brand);color:#fff}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{color:var(--brand-d)}
+  h1,h2,h3{font-family:var(--serif);margin:0;color:var(--ink);font-weight:900;letter-spacing:-.5px}
+  img{max-width:100%}
+
+  .shell{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+  /* ---- hero, lifted from the live iits.roadlogica.com ---- */
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  .hero-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 9px;background:#fff;
+              border:1px solid rgba(16,22,29,.1);border-radius:999px;font-family:var(--mono);
+              font-size:11.5px;letter-spacing:.5px;color:#3A4657;margin-bottom:30px}
+  .pill-cta{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;
+            padding:16px 30px;border-radius:999px;font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta:hover{background:var(--brand-d);color:#fff}
+  .pill-cta2{display:inline-flex;align-items:center;padding:16px 28px;border-radius:999px;
+             border:1px solid rgba(16,22,29,.18);color:var(--ink);font-size:15.5px;font-weight:500;white-space:nowrap}
+  .pill-cta2:hover{border-color:var(--ink)}
+  .hero-art{position:relative;height:520px}
+  .hero-art img{width:100%;height:100%;object-fit:cover;display:block}
+  /* Crossfading stacks. Every frame is absolutely positioned so the box never reflows as
+     photos swap, and only the active one is opaque. */
+  .slides img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+  .slides img.on{opacity:1}
+  @media(prefers-reduced-motion:reduce){.slides img{transition:none}}
+
+  /* News lead: the headline sits on the picture, over a scrim dark enough to carry white
+     text at AA whatever the photo underneath happens to be. */
+  .newshero{position:relative;height:clamp(260px,27vw,392px);border-radius:22px;overflow:hidden;
+            border:1px solid var(--line);margin-bottom:22px;background:var(--panel)}
+  .newshero>a{position:absolute;inset:0;display:block;opacity:0;transition:opacity 1s ease;
+              background-position:center;background-size:cover;background-repeat:no-repeat;color:#fff}
+  .newshero>a.on{opacity:1}
+  .newshero>a::after{content:'';position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(8,12,20,.90) 0%,rgba(8,12,20,.62) 26%,rgba(8,12,20,.12) 58%,rgba(8,12,20,0) 78%)}
+  .newshero .cap{position:absolute;left:0;right:0;bottom:0;z-index:2;
+                 padding:clamp(20px,3vw,34px) clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:10px}
+  .newshero .cap .meta{color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.08em}
+  .newshero .cap .ttl{font-family:var(--serif);font-weight:700;color:#fff;
+                      font-size:clamp(19px,2.1vw,26px);line-height:1.45;text-wrap:pretty;
+                      text-shadow:0 1px 22px rgba(8,12,20,.5)}
+  .newshero>a:hover .cap .ttl{text-decoration:underline;text-underline-offset:4px}
+  .newshero .dots{position:absolute;right:clamp(18px,2.4vw,28px);top:clamp(18px,2.4vw,26px);
+                  z-index:3;display:flex;gap:7px}
+  .newshero .dots span{width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.42);
+                       transition:background .3s,width .3s}
+  .newshero .dots span.on{background:#fff;width:20px}
+  @media(prefers-reduced-motion:reduce){.newshero>a{transition:none}}
+  .hero-a{position:absolute;top:20px;right:0;width:78%;height:340px;border-radius:24px;overflow:hidden;
+          box-shadow:0 40px 80px -30px rgba(16,22,29,.35)}
+  .hero-b{position:absolute;bottom:30px;left:0;width:50%;height:230px;border-radius:20px;overflow:hidden;
+          box-shadow:0 30px 60px -24px rgba(16,22,29,.35);border:5px solid var(--bg);
+          animation:floaty 6s ease-in-out infinite}
+  .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
+             border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
+             animation:floaty 5s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:34px}
+    .hero-art{height:330px}
+  }
+  @media(prefers-reduced-motion:reduce){ .hero-b,.hero-stat{animation:none} }
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
+  .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
+  .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
+  .lede{font-size:15px;line-height:1.9;color:var(--muted2);max-width:420px;margin:0;font-weight:300}
+  .more{font-size:13.5px;letter-spacing:.05em;white-space:nowrap}
+  /* Flat placeholder for cards with no image. Was a diagonal hatch carried over from
+     the design artboard, where it marked 'image goes here'; on a real page that reads as a
+     broken texture, so it is now a quiet flat panel. */
+  .hatch{background-image:var(--hatch);position:relative}
+  .hatch::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;
+                transform:translate(-50%,-50%);border:1.5px solid rgba(28,34,41,.13);border-radius:3px}
+
+  /* the design's signature: a hairline GRID, cells separated by 1px of the border colour */
+  .grid{display:grid;gap:20px;background:transparent;border:0}
+  .grid.cols-a{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+  .grid.cols-b{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+
+  /* On a phone a five-card column is five screens of scrolling to see five things that are
+     meant to be compared. Swipe sideways instead: the next card peeks in at the edge, which
+     is the affordance, and each one snaps to centre. */
+  @media(max-width:820px){
+    .grid.swipe{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;
+                scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+                scrollbar-width:none;padding-bottom:4px;
+                margin-inline:calc(-1 * clamp(16px,3vw,40px));
+                padding-inline:clamp(16px,3vw,40px)}
+    .grid.swipe::-webkit-scrollbar{display:none}
+    .grid.swipe>*{flex:0 0 74%;scroll-snap-align:center}
+    .swipehint{display:block}
+  }
+  .swipehint{display:none;margin-top:14px;font-family:var(--mono);font-size:11px;
+             letter-spacing:.12em;color:var(--faint2)}
+
+  /* Lift ONLY on cells that are actually links. A hover affordance on something that does
+     not go anywhere promises a click that never happens. */
+  a.cell{transition:transform .3s,box-shadow .3s;display:block}
+  a.cell:hover{transform:translateY(-8px);box-shadow:0 30px 60px -28px rgba(16,22,29,.3)}
+
+  .utility{background:var(--panel);border-bottom:1px solid var(--brandline)}
+  .utility .shell{min-height:38px;display:flex;flex-wrap:wrap;align-items:center;
+                  justify-content:space-between;gap:10px;font-size:12px;letter-spacing:.06em;color:var(--muted2)}
+  .utility .org{font-family:var(--mono)}
+  .util-right{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .langsel{display:flex;align-items:center;border:1px solid var(--line3);font-family:var(--mono);letter-spacing:.06em}
+  .langsel a{padding:3px 9px;font-size:11.5px;color:var(--muted2)}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  .langsel a:hover{color:var(--brand)}
+  .langsel a.on{background:var(--brand);color:#fff}
+  .langsel a.on:hover{color:#fff}
+  .vr{width:1px;height:14px;background:var(--line3)}
+
+  header.site{position:sticky;top:0;z-index:40;background:rgba(247,246,242,.94);
+              backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+              border-bottom:1px solid var(--line)}
+  header.site .shell{position:relative;padding-top:12px;padding-bottom:12px;min-height:82px;
+                     display:flex;align-items:center;justify-content:space-between;gap:24px}
+  header.site .brand img{height:clamp(34px,3.2vw,46px);width:auto;display:block;flex-shrink:0}
+
+  nav.main{display:flex;align-items:center;flex-wrap:nowrap;gap:clamp(2px,.5vw,8px);
+           font-size:clamp(13px,1vw,14.5px);color:var(--muted3);font-weight:500}
+  nav.main a{color:var(--muted3);white-space:nowrap} nav.main a:hover{color:var(--brand)}
+  /* A filled block, not a hairline underline — at 14px with a 2px rule under it, the
+     current section was easy to miss entirely. Every top-level link carries the same
+     padding and radius so the active one does not shift its neighbours. */
+  nav.main a.on{color:#fff;background:var(--brand)}
+  nav.main a.on:hover{color:#fff}
+  nav.main>a{padding:7px 13px;border-radius:10px}
+  .navsep{width:1px;height:18px;background:var(--line3);flex-shrink:0;margin:0 10px}
+
+  .langsel{display:inline-flex;align-items:center;border:1px solid var(--line3);border-radius:999px;
+           overflow:hidden;flex-shrink:0}
+  nav.main .langsel a,.navpanel .langsel a{padding:5px 10px;font-size:11.5px;font-family:var(--mono);
+           color:var(--muted2);border:0}
+  .langsel a+a{border-left:1px solid var(--line3)}
+  nav.main .langsel a.on,.navpanel .langsel a.on{background:var(--brand);color:#fff}
+  nav.main .langsel a.on:hover{color:#fff}
+  /* These three need the `nav.main` prefix: without it `nav.main a{color:var(--muted3)}`
+     outranked them, so the solid navy button drew its label in muted navy — legible in the
+     stylesheet, invisible on the page. */
+  nav.main a.area{padding:7px 14px;border:1px solid rgba(16,22,29,.18);border-radius:999px;
+        font-size:13px;white-space:nowrap;flex-shrink:0;color:var(--ink2)}
+  nav.main a.area:hover{border-color:var(--ink);color:var(--ink)}
+  nav.main a.area-cta{background:var(--navy);color:#fff;border-color:var(--navy)}
+  nav.main a.area-cta:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+
+  .navtoggle{display:none;background:none;border:0;cursor:pointer;padding:9px;width:44px;height:44px;
+             flex-direction:column;justify-content:center;gap:5px}
+  .navtoggle span{display:block;height:2px;width:22px;background:var(--ink);border-radius:2px;transition:.25s}
+  .navtoggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .navtoggle.open span:nth-child(2){opacity:0}
+  .navtoggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .navpanel{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(247,246,242,.98);
+            backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:10px 22px 20px}
+  .navpanel a{display:block;padding:11px 2px;font-size:15.5px;color:var(--muted3);border-bottom:1px solid var(--line)}
+  /* Collapses when the single row runs out of width — one bar or a hamburger, never two bars. */
+  @media(max-width:1180px){
+    nav.main{display:none}
+    .navtoggle{display:flex}
+    .navpanel.open{display:block}
+  }
+
+
+  /* Assessment fact sheet — the detail a parent actually needs, laid out to be scanned. */
+  /* One card, two columns of "label：value". The marker sits in the margin and wrapped
+     lines align with the text — a hanging indent, like every other list on the site now. */
+  .factlist{list-style:none;margin:0;padding:26px 30px 28px;background:#fff;
+            border:1px solid var(--line);border-radius:16px;
+            columns:2;column-gap:44px}
+  .factlist li{break-inside:avoid;margin:0 0 13px;padding-left:17px;position:relative;
+               font-size:15px;line-height:1.7;color:var(--ink2)}
+  .factlist li:last-child{margin-bottom:0}
+  .factlist li::before{content:'';position:absolute;left:0;top:.66em;width:6px;height:6px;
+                       border-radius:1px;background:var(--brand);opacity:.75}
+  .factlist li span{font-weight:700;color:var(--ink)}
+  .factlist li span::after{content:'：';font-weight:400;color:var(--muted2)}
+  @media(max-width:820px){.factlist{columns:1;padding:22px 24px}}
+
+  /* Figures rebuilt from diagrams that used to be pictures of text. */
+  .fig{margin:26px 0;padding:0}
+  .fig table{margin:0}
+  .fig tr.grp td{background:var(--panel);font-weight:700;color:var(--ink);
+                 font-size:13.5px;letter-spacing:.02em}
+  .fig .fignote{margin-top:10px;font-size:12.5px;line-height:1.7;color:var(--faint2)}
+  /* the curriculum matrix: dense, so it sets tighter than ordinary prose tables */
+  .fig table.matrix td,.fig table.matrix th{font-size:12.5px;padding:8px 11px;vertical-align:top}
+  .fig table.matrix .agecell{background:var(--panel);font-weight:700;white-space:nowrap}
+  /* the five strands */
+  .fig .pil-intro{margin:0 0 16px;font-size:15px;color:var(--muted2);max-width:70ch}
+  .fig .pilgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .fig .pil{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px 18px}
+  .fig .pil h4{margin:0 0 12px;font-family:var(--serif);font-size:14.5px;font-weight:700;color:var(--ink2);
+               display:flex;align-items:baseline;gap:8px}
+  .fig .pil h4 b{font-size:22px;color:var(--brand);font-weight:800;line-height:1}
+  .fig .pil-g{margin-top:12px}
+  .fig .pil-g h5{margin:0 0 5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;
+                 text-transform:uppercase;color:var(--brand)}
+  .fig .pil-g ul{list-style:none;margin:0;padding:0}
+  .fig .pil-g li{font-size:12.5px;line-height:1.65;color:var(--muted2);padding-left:11px;position:relative}
+  .fig .pil-g li::before{content:'';position:absolute;left:0;top:.66em;width:4px;height:4px;
+                         border-radius:50%;background:var(--brand);opacity:.5}
+  @media(max-width:1080px){.fig .pilgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.fig .pilgrid{grid-template-columns:1fr}}
+  .fig .chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0}
+  .fig .chips li{background:var(--panel);border:1px solid var(--line2);border-radius:999px;
+                 padding:6px 14px;font-size:13px;color:var(--ink2)}
+  .fig .featgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .fig .fc{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .fig .fc h4{margin:0;padding:11px 16px;background:var(--brand);color:#fff;
+              font-family:var(--sans);font-size:13.5px;font-weight:700;line-height:1.4}
+  .fig .fc ul{list-style:none;margin:0;padding:14px 16px 16px}
+  .fig .fc li{font-size:13.5px;line-height:1.7;color:var(--ink2);padding-left:14px;position:relative}
+  .fig .fc li::before{content:'';position:absolute;left:0;top:.72em;width:5px;height:5px;
+                      border-radius:50%;background:var(--brand);opacity:.6}
+  .fig figcaption h4{margin:18px 0 10px;font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink2)}
+  .fig .packlist{list-style:none;margin:0;padding:0;display:grid;
+                 grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 20px}
+  .fig .packlist li{font-size:13.5px;color:var(--muted2);display:flex;justify-content:space-between;
+                    gap:10px;border-bottom:1px solid var(--line);padding:6px 0}
+  .fig .packlist li span{color:var(--ink2);font-weight:500}
+  @media(max-width:820px){
+    .fig .featgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .fig .packlist{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  /* Figures span the full measure inside two-column prose. */
+  .footnote{margin-top:14px;font-size:12.5px;color:var(--faint2);line-height:1.7;max-width:78ch}
+
+  .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:38px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px 30px 34px}
+  .panel h3{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--ink2);margin:6px 0 14px}
+  .panel p{font-size:14.5px;line-height:1.9;color:var(--muted2)}
+  .panel p b{color:var(--ink2);font-weight:600}
+
+  /* Partners are a list of logos, in their own colours, and nothing hovers. */
+  /* Fixed column counts, not auto-fit: with eight partners, auto-fit packed seven across
+     and left the eighth stranded on its own row. 4 and 2 both divide 8 into full rows. */
+  .logogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+            background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:34px}
+  @media(max-width:820px){.logogrid{grid-template-columns:repeat(2,1fr)}}
+  /* Two up, like the sister club site's card grids — a fixed count, not auto-fit, so the
+     last row is never an orphan. */
+  .expertgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:32px}
+  @media(max-width:820px){.expertgrid{grid-template-columns:1fr}}
+  .expertcard{display:grid;grid-template-columns:128px minmax(0,1fr);gap:20px;
+              background:var(--card);border:1px solid var(--line);border-radius:20px;
+              padding:20px;color:inherit;align-items:stretch;
+              transition:box-shadow .3s,transform .3s}
+  .expertcard:hover{transform:translateY(-4px);box-shadow:0 24px 48px -30px rgba(16,22,29,.3)}
+  .ec-photo{display:block;aspect-ratio:3/4;border-radius:14px;background-size:cover;
+            background-position:50% 16%;background-repeat:no-repeat;border:1px solid var(--line)}
+  .ec-body{display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-width:0}
+  .ec-name{display:block;font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);
+           line-height:1.3}
+  .ec-org{display:block;margin-top:7px;font-size:13.5px;line-height:1.55;color:var(--muted2)}
+  .ec-role{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+           text-transform:uppercase;color:var(--brand)}
+  .ec-cred{display:block;font-size:13px;line-height:1.75;color:var(--muted2);
+           display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  @media(max-width:480px){.expertcard{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px}}
+
+  .logo{background:#fff;height:120px;display:flex;align-items:center;justify-content:center;padding:22px}
+  .logo img{max-width:100%;max-height:74px;object-fit:contain}
+  .logo span{font-size:13.5px;color:var(--muted2);text-align:center}
+
+
+  /* ---- prose: ONE definition for pages, articles and inline standing text ----
+     Imported bodies used to carry their own margins, widths, white backgrounds and arial
+     font stacks; those were stripped at import, so everything below is now the only thing
+     styling them and body text finally shares the page's column. */
+  /* The measure belongs to the TEXT, not to the column. Capping the whole .prose block put
+     figures on the same 78ch leash as paragraphs, so pages that are mostly diagrams used
+     barely half the shell — /c/courses, /p/16 and the article pages each ran to 688px of
+     1320. Sentences stay at a readable measure; pictures, tables and video get the width. */
+  .prose{font-size:16.5px;line-height:1.95;color:var(--ink2);font-weight:300;overflow-wrap:anywhere;
+         max-width:none;background:transparent}
+  .prose>p,.prose>ul,.prose>ol,.prose>blockquote,
+  .prose>h1,.prose>h2,.prose>h3,.prose>h4{max-width:78ch}
+  /* …except a paragraph that is only wrapping a picture, which the old CMS did constantly. */
+  .prose>p:has(>img){max-width:none}
+  .prose table,.prose .video{max-width:min(1080px,100%)}
+
+  /* Two columns once the page is wide enough to justify them — newspaper practice, and the
+     reason the right half of these pages was empty. Headings and figures span the full
+     measure so they still separate the flow; orphans/widows stop a column ending on a
+     single stranded line. Below 1080px it stays a single column, where two would be
+     unreadable. */
+  @media(min-width:1080px){
+    .prose{columns:2;column-gap:clamp(34px,3.2vw,58px);column-rule:1px solid var(--line)}
+    .prose>p,.prose>ul,.prose>ol,.prose>blockquote{max-width:none;orphans:2;widows:2}
+    .prose>h1,.prose>h2,.prose>h3,.prose>h4{column-span:all;max-width:none}
+    /* Pictures run WITH the text, in the column, the way a newspaper sets them — sized to
+       the column edges and never split across a break. Tables and video still span the full
+       measure: a table squeezed into half a column stops being readable. */
+    .prose>figure.fig{column-span:all}
+    .prose>p:has(>img),.prose>img,.prose>figure{column-span:none;break-inside:avoid;
+                                                page-break-inside:avoid;max-width:none}
+    .prose>p:has(>img){margin:0 0 1.15em}
+    .prose img{width:100%;max-width:100%;max-height:none;margin:0 0 .5em}
+    .prose>table,.prose>.video{column-span:all}
+    .prose>*:first-child{margin-top:0}
+  }
+  .prose>*:first-child{margin-top:0}
+  .prose p{margin:0 0 1.15em;background:transparent}
+  .prose strong,.prose b{font-weight:700;color:var(--ink)}
+  /* Capped in BOTH directions: wide enough to read a diagram, bounded so the twenty-odd
+     legacy photos on the About page cannot run the page past 20,000px again. */
+  /* 820px is chosen so a 4:3 landscape figure reaches the full 1080px column before the
+     height cap bites; only genuinely tall portrait posters are held back, which is the case
+     the cap exists for. */
+  .prose img{max-width:min(1080px,100%);max-height:820px;width:auto;height:auto;display:block;
+             margin:26px 0;border-radius:14px;border:1px solid var(--line);
+             background:var(--panel)}
+  .prose a{color:var(--brand);text-decoration:underline}
+  .prose h1,.prose h2,.prose h3,.prose h4{font-family:var(--serif);margin:1.7em 0 .55em;
+             color:var(--ink2);font-weight:700;line-height:1.5}
+  .prose h1,.prose h2{font-size:19.5px}
+  .prose h3,.prose h4{font-size:17px}
+  .prose ul,.prose ol{margin:0 0 1.15em;padding-left:1.5em}
+  .prose li{margin:.35em 0;padding-left:.2em}
+  /* Hanging indent for the imported "1、…" paragraphs: the marker sits in the margin and
+     every wrapped line aligns with the text, not back under the number. */
+  .prose p.num{padding-left:2.15em;text-indent:-2.15em}
+  .prose p.num + p.num{margin-top:-.35em}
+  .prose table{width:100%;border-collapse:collapse;display:block;overflow-x:auto;margin:1.4em 0;
+               font-size:14.5px}
+  .prose td,.prose th{border:1px solid var(--line2);padding:9px 12px;text-align:left}
+  .prose th{background:var(--panel);font-weight:600}
+  .prose iframe,.prose video{max-width:100%}
+  .prose .video{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;
+                background:#000 center/cover no-repeat;border:1px solid var(--line);overflow:hidden}
+  .prose .video[data-poster]{background-image:var(--poster)}
+  .prose .video iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
+
+  .guide{margin-top:12px;border:1px solid var(--line);border-radius:16px;background:var(--card);
+         overflow:hidden}
+  .guide>summary{cursor:pointer;list-style:none;padding:16px 22px;font-family:var(--serif);
+                 font-size:15.5px;font-weight:600;color:var(--ink2);display:flex;
+                 align-items:center;gap:12px;transition:background .2s}
+  .guide>summary::-webkit-details-marker{display:none}
+  .guide>summary::before{content:'+';font-family:var(--mono);font-size:17px;color:var(--brand);
+                         flex-shrink:0;width:14px}
+  .guide[open]>summary::before{content:'–'}
+  .guide>summary:hover{background:rgba(61,86,153,.05)}
+  .guide[open]>summary{border-bottom:1px solid var(--line)}
+  .guide>.prose{padding:22px 22px 26px}
+  .guide+.standing{margin-top:44px}
+
+  .standing{margin-top:34px}
+  .standing+.standing{margin-top:52px;padding-top:44px;border-top:1px solid var(--line)}
+  .standing-h{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink2);margin-bottom:16px}
+  /* Section headings carry the whole structure of a page that now runs to many screens, so
+     they get a rule the full width of the section, a brand marker, and enough size to be
+     found while scrolling past. */
+  /* ONE rule, with a brand-coloured lead-in — not a dark border plus a floating blue dash.
+     The dash was positioned at a fixed -28px, so it only landed on the border at some
+     widths and dropped below it at others, reading as two separate lines. */
+  .sec.anchor>.sechead{position:relative;padding-top:26px;align-items:flex-end}
+  .sec.anchor>.sechead::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--brand) 0 72px,var(--ink) 72px)}
+  /* The heading takes the row, the cube sits at its right-hand end, and "view all" tucks in
+     between them. The stage stays 124px because a rotating 62px cube reaches ~107px across
+     its diagonal and more again under perspective — anything tighter clips a near corner. */
+  .sechead.has-cube{align-items:center;flex-wrap:nowrap}
+  .sechead.has-cube .h3sec{flex:1;min-width:0}
+  .sechead.has-cube .more{flex-shrink:0;order:2}
+  .sechead.has-cube .cube-stage{order:3;flex-shrink:0;margin:-18px -8px -18px 0;cursor:grab}
+  @media(max-width:640px){
+    .sechead.has-cube{flex-wrap:wrap;gap:14px}
+    .sechead.has-cube .cube-stage{width:92px;height:92px;margin:-14px 0}
+  }
+  .h3sec{font-family:var(--serif);font-size:clamp(26px,3vw,40px);font-weight:800;
+         color:var(--ink);letter-spacing:-.02em;line-height:1.15;position:relative}
+  .sec.anchor{padding-top:clamp(46px,5vw,72px)}
+  /* The hero was padded to sit under a breadcrumb and an eyebrow. With five pages and an
+     active nav item, both were the page's own name repeated, so the title starts higher. */
+  /* Present to assistive technology and to search, absent from the layout. */
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .hero-h1{font-size:clamp(40px,6vw,82px)}
+  html[lang="en"] .hero-h1{font-size:clamp(34px,4.3vw,58px);max-width:15ch;letter-spacing:-.5px}
+
+  .hero-sec{padding-top:clamp(30px,3.4vw,46px);padding-bottom:10px}
+  /* A full-width band that reads as a quotation rather than as a stray centred paragraph.
+     The 34ch cap it used to carry forced the last two characters onto a line of their own. */
+  .quoteband{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .quoteband .sec{padding-top:clamp(52px,6vw,86px);padding-bottom:clamp(52px,6vw,86px)}
+  .quoteband blockquote{position:relative;margin:0;padding-left:clamp(22px,3vw,46px);
+                        border-left:3px solid var(--brand);
+                        font-family:var(--serif);font-weight:700;
+                        font-size:clamp(21px,3.1vw,38px);line-height:1.5;color:var(--ink);
+                        max-width:none;text-wrap:balance}
+  .quoteband blockquote em{font-style:normal;color:var(--brand)}
+  @media(max-width:700px){.quoteband blockquote{max-width:none}}
+
+  /* ---- one long page per category: a sticky tag bar, and anchors that clear the header ---- */
+  html{scroll-behavior:smooth}
+  .anchor{scroll-margin-top:146px}
+  .sec.anchor{padding-top:clamp(34px,4vw,52px)}
+  .sectabs{position:sticky;top:83px;margin-top:0;z-index:30;background:rgba(247,246,242,.94);
+           backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+           border-bottom:1px solid var(--line)}
+  .sectabs-in{max-width:1320px;margin:0 auto;padding:11px clamp(16px,3vw,40px);
+              display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .sectabs-in::-webkit-scrollbar{display:none}
+  .sectabs a{padding:7px 15px;border-radius:999px;font-size:13.5px;white-space:nowrap;
+             color:var(--muted2);border:1px solid transparent;transition:.2s}
+  .sectabs a:hover{background:rgba(61,86,153,.07);color:var(--ink2)}
+  /* Both states named explicitly: `.sectabs a:hover` and `.sectabs a.on` carry the same
+     specificity, so hovering the active pill was one source-order edit away from painting
+     dark text on the solid blue. */
+  .sectabs a.on,.sectabs a.on:hover{background:var(--brand);color:#fff}
+  @media(max-width:1180px){.anchor{scroll-margin-top:140px}}
+
+  /* Sections rise into place as they arrive — the live site's 0.3s transform language,
+     not a new one. Anything that cannot observe just shows, and reduced-motion opts out. */
+  /* Hidden ONLY once script has confirmed it can reveal it again (html.jsr). Hiding content
+     in the stylesheet and relying on JS to bring it back means a script error blanks the
+     page; this way the worst case is no animation. */
+  html.jsr .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+  html.jsr .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){html.jsr .reveal{opacity:1;transform:none;transition:none}}
+
+  .btn{background:var(--brand);color:#fff;font-size:14.5px;font-weight:500;padding:14px 28px;
+       letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn:hover{background:var(--brand-d);color:#fff}
+  .btn2{border:1px solid rgba(28,34,41,.22);color:var(--body);font-size:14.5px;padding:14px 28px;
+        letter-spacing:.03em;white-space:nowrap;display:inline-block}
+  .btn2:hover{border-color:var(--brand);color:var(--brand)}
+
+  /* ---- tumbling assessment cube, liquid glass, JS physics -------------------------
+     The badge was never a hexagon: that outline is a cube in isometric projection.
+
+     ORIENTATION IS SIMULATED, NOT KEYFRAMED. cube.js integrates a quaternion from an
+     angular-velocity vector each frame, so the motion has real state: it can be nudged,
+     it carries momentum, and it never repeats. Keyframes cannot express any of that.
+
+     THE LABEL LIVES AT THE CUBE'S CENTRE, at translateZ(0) INSIDE the preserve-3d
+     hierarchy, and is counter-rotated by the inverse quaternion so it always faces the
+     viewer. Being a real plane at z=0 rather than an overlay is what lets the near faces
+     pass IN FRONT of it — the letters are inside the glass, not painted on top.
+
+     Letters are potrace vectors of the source art's own condensed gothic, so they stay
+     crisp at any size instead of being an upscaled 23px bitmap.
+
+     CSS 3D + a small rAF loop rather than three.js: ~600 KB and five WebGL contexts is not
+     a price worth paying to tumble five logos. ------------------------------------------ */
+  /* Twelve advisers on two rows of six. Fixed at 6 rather than auto-fill because the
+     roster is a known, fixed set — an auto grid reflows it to 5+5+2, which reads as a
+     ragged list instead of a panel. Steps down in even divisors so it never leaves an
+     orphan on the last row. */
+  .experts-grid{grid-template-columns:repeat(6,1fr)}
+  @media(max-width:1240px){ .experts-grid{grid-template-columns:repeat(4,1fr)} }
+  @media(max-width:820px) { .experts-grid{grid-template-columns:repeat(3,1fr)} }
+  @media(max-width:560px) { .experts-grid{grid-template-columns:repeat(2,1fr)} }
+  .experts-grid h3{font-size:16px!important}
+  .experts-grid .cell span:last-child{padding:16px 16px 20px!important}
+
+  .cube-stage{position:relative;width:124px;height:124px;perspective:230px;
+              perspective-origin:50% 44%;
+              display:flex;align-items:center;justify-content:center;isolation:isolate;
+              cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}
+  .cube-stage:active{cursor:grabbing}
+  .cube{position:relative;z-index:1;width:62px;height:62px;transform-style:preserve-3d;
+        will-change:transform}
+  .cube i{position:absolute;inset:0;display:block;box-sizing:border-box;border-radius:0;
+          --d:1;
+          background:linear-gradient(135deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.05) 42%,
+                     rgba(150,182,250,.15) 66%,rgba(255,255,255,.26) 100%);
+          border:1.5px solid rgba(70,118,224,calc(.20 + .58 * var(--d)));
+          opacity:calc(.42 + .58 * var(--d));
+          box-shadow:inset 0 1px 0 rgba(255,255,255,calc(.25 + .60 * var(--d))),
+                     inset 0 -8px 14px -12px rgba(46,109,240,calc(.15 + .35 * var(--d)))}
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .cube i{background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,.20) 100%);
+            /* Blur has to stay LOW. The label sits at the cube's centre, so every near
+               face blurs it — physically right, but at 4px the letters stopped being
+               legible. 1.2px keeps the refraction reading as glass while the code stays
+               sharp through it. */
+            -webkit-backdrop-filter:blur(0.6px) saturate(135%);
+            backdrop-filter:blur(0.6px) saturate(135%);
+            /* the far half of the glass loses its highlight, which is what tells you it is
+               the far half */
+            background-image:linear-gradient(135deg,
+                       rgba(255,255,255,calc(.10 + .26 * var(--d))) 0%,
+                       rgba(255,255,255,.03) 44%,
+                       rgba(255,255,255,calc(.06 + .18 * var(--d))) 100%)}
+  }
+  .cube .f{transform:translateZ(31px)}
+  .cube .b{transform:rotateY(180deg) translateZ(31px)}
+  .cube .r{transform:rotateY(90deg)  translateZ(31px)}
+  .cube .l{transform:rotateY(-90deg) translateZ(31px)}
+  .cube .u{transform:rotateX(90deg)  translateZ(31px)}
+  .cube .d{transform:rotateX(-90deg) translateZ(31px)}
+
+  /* the plane at the centre of the cube, counter-rotated by JS */
+  .cube .lbl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+             pointer-events:none;will-change:transform}
+  /* Sizes are in label space, which the transform scales by 0.5 — so 80px draws as 40px
+     and 9px of blur as 4.5px. Kept inside the cube in every orientation. */
+  .cube .lbl::before{content:'';position:absolute;left:50%;top:50%;
+             width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;
+             background:radial-gradient(circle at 44% 38%,
+                        rgba(126,170,252,.16) 0%, rgba(130,174,252,.26) 24%,
+                        rgba(146,188,254,.21) 44%, rgba(180,208,255,.09) 68%,
+                        rgba(214,229,255,0) 86%);
+             filter:blur(9px)}
+  /* LIVE TEXT, not a traced bitmap. The source art is 23px tall, so potrace outlines of it
+     came out lumpy at display size — there simply is not enough information in the original
+     to vectorise cleanly. Anton is a heavy condensed grotesque and the closest widely
+     available match to the face the badge used; as real text it is crisp at any size and
+     costs nothing to render.
+     The depth is stacked text-shadows stepping down-right, which reads as an extruded solid
+     rather than a flat sticker. Genuine extrusion would be invisible here: the label is
+     counter-rotated to face the viewer, so its sides never turn toward the camera. */
+  /* Rendered at 2x and scaled down by the transform. Anything inside a 3D-transformed
+     parent is rasterised ONCE at its layout size and then transformed, so 20px text drawn
+     at 20px and pushed through a matrix comes out soft. Drawing it at 40px and scaling to
+     0.5 doubles the raster resolution and it stays sharp. */
+  .cube .lbl b{font-family:'Anton','Arial Narrow',Impact,sans-serif;font-weight:400;
+               font-size:44px;letter-spacing:.04em;color:#12171D;line-height:1;
+               white-space:nowrap;-webkit-font-smoothing:antialiased;
+               /* Black face, WHITE extrusion. Against a busy illustration a coloured glyph
+                  competes with the artwork; black reads as type at any backdrop, and the
+                  white depth doubles as the separation that would otherwise need a halo.
+                  Drawn at 2x with the font, so these offsets are 2x too. */
+               text-shadow:2px 2px 0 #FFFFFF, 3px 3px 0 #FFFFFF, 4px 4px 0 #F6F8FC,
+                           5px 5px 0 #EDF0F6, 6px 8px 10px rgba(70,80,100,.30),
+                           -1px -1px 0 rgba(255,255,255,.85)}
+
+  @media(prefers-reduced-motion:reduce){ .cube-stage{cursor:default} }
+
+  .meta{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.04em}
+  .pagelist{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+            border-radius:18px;overflow:hidden;margin-top:34px}
+  .pagelink{display:flex;align-items:center;justify-content:space-between;gap:20px;
+            padding:20px 26px;background:var(--card);font-size:16px;color:var(--ink);
+            transition:background .15s}
+  .pagelink:hover{background:var(--panel2);color:var(--brand)}
+  .pagelink .arr{color:var(--faint);font-family:var(--mono)}
+  .pagelink:hover .arr{color:var(--brand)}
+  .empty{padding:70px 0;text-align:center;color:var(--faint2)}
+
+  footer.site{background:var(--navy);color:var(--navy-t);border-top:0;margin-top:0}
+  footer.site .cols{max-width:1320px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,3vw,40px) 0;
+                    display:block}
+  footer.site .ftitle{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:#aebde3;margin-bottom:20px}
+  footer.site .stack{display:flex;flex-direction:column;gap:12px;font-size:14px}
+  footer.site .stack a{color:var(--navy-t)} footer.site .stack a:hover{color:#fff}
+  footer.site .addr{display:flex;flex-direction:column;gap:10px;font-size:13.5px;line-height:1.8;
+                    color:var(--navy-t);font-weight:300}
+  footer.site .base a{color:var(--navy-t)} footer.site .base a:hover{color:#fff}
+  footer.site .base{max-width:1320px;margin:0 auto;padding:36px clamp(16px,3vw,40px);
+                    border-top:1px solid var(--line);margin-top:56px;display:flex;justify-content:space-between;
+                    gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+
+
+</style>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="工信學堂（香港）">
+<meta property="og:title" content="測評">
+<meta property="og:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta property="og:url" content="https://ycltesthk.com/c/tests/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="zh_HK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="測評">
+<meta name="twitter:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
+</head>
+<body>
+
+<header class="site">
+  <div class="shell">
+    <a href="/" class="brand" aria-label="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
+    </a>
+
+    <nav class="main">
+      <a href="/" class="">&#x9996;&#x9801;</a>
+        <a href="/c/tests/" class="on">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/" class="">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/" class="">&#x6D88;&#x606F;</a>
+        <a href="/c/about/" class="">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <span class="navsep"></span>
+      <span class="langsel">
+          <a href="/c/tests/" class="on" hreflang="zh-Hant">&#x7E41;</a>
+          <a href="/zh-Hans/c/tests/" class="" hreflang="zh-Hans">&#x7B80;</a>
+          <a href="/en/c/tests/" class="" hreflang="en">EN</a>
+      </span>
+      <a class="area" href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </nav>
+
+    <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="navpanel" id="navPanel">
+      <a href="/">&#x9996;&#x9801;</a>
+        <a href="/c/tests/">&#x6E2C;&#x8A55;</a>
+        <a href="/c/courses/">&#x8AB2;&#x7A0B;</a>
+        <a href="/c/news/">&#x6D88;&#x606F;</a>
+        <a href="/c/about/">&#x95DC;&#x65BC;&#x6211;&#x5011;</a>
+      <div class="langsel" style="margin:14px 0 6px">
+          <a href="/c/tests/" class="on">&#x7E41;</a>
+          <a href="/zh-Hans/c/tests/" class="">&#x7B80;</a>
+          <a href="/en/c/tests/" class="">EN</a>
+      </div>
+      <a href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1">
+
+<h1 class="vh">&#x6E2C;&#x8A55;</h1>
+
+  <nav class="sectabs" id="sectabs" aria-label="&#x6E2C;&#x8A55;">
+    <div class="sectabs-in">
+        <a href="#YAI" data-tab="YAI">&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;</a>
+        <a href="#YCL" data-tab="YCL">&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;</a>
+        <a href="#ECL" data-tab="ECL">&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;</a>
+        <a href="#SCL" data-tab="SCL">&#x79D1;&#x6280;&#x7D20;&#x990A;</a>
+        <a href="#YUL" data-tab="YUL">&#x7121;&#x4EBA;&#x6A5F;&#x6280;&#x8853;</a>
+        <a href="#overview" data-tab="overview">&#x6E2C;&#x8A55;&#x7E3D;&#x89BD;</a>
+    </div>
+  </nav>
+
+  <section class="sec anchor reveal" id="YAI">
+    <div class="sechead has-cube" style="margin-bottom:26px">
+      <h2 class="h3sec">&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;</h2>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>YAI</b></span>
+          </div>
+        </div>
+    </div>
+
+
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">&#x8003;&#x67E5;&#x5B78;&#x751F;&#x5728;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x95DC;&#x9375;&#x6280;&#x8853;&#x3001;&#x7522;&#x54C1;&#x3001;&#x670D;&#x52D9;&#x53CA;&#x61C9;&#x7528;&#x65B9;&#x9762;&#x7684;&#x80FD;&#x529B;&#x6C34;&#x5E73;&#xFF0C;&#x9069;&#x7528;&#x65BC;&#x5C0F;&#x5B78;&#x3001;&#x521D;&#x4E2D;&#x3001;&#x9AD8;&#x4E2D;&#x7684;&#x9752;&#x5C11;&#x5E74;&#x3002;&#x9AD4;&#x7CFB;&#x5305;&#x62EC;&#x555F;&#x8499;&#x7D1A;&#x8207; 1 &#x81F3; 8 &#x7D1A;&#xFF0C;&#x96E3;&#x5EA6;&#x9010;&#x7D1A;&#x63D0;&#x5347;&#x3002;</p>
+      <ul class="factlist">
+          <li><span>&#x6E2C;&#x8A55;&#x65B9;&#x5F0F;</span>&#x4E0A;&#x6A5F;&#x7406;&#x8AD6; &#xFF0B; &#x5BE6;&#x8E10;&#x64CD;&#x4F5C;&#xFF0C;&#x5169;&#x5834;&#x5206;&#x5225;&#x5408;&#x683C;</li>
+          <li><span>&#x7B49;&#x7D1A;</span>&#x555F;&#x8499;&#x7D1A;&#xFF08;&#x5165;&#x9580;&#xFF09;&#xB7; 1&#x2013;4 &#x9032;&#x968E; &#xB7; 5&#x2013;6 &#x63D0;&#x5347; &#xB7; 7&#x2013;8 &#x62D4;&#x9AD8;</li>
+          <li><span>&#x984C;&#x5EAB;</span>&#x5317;&#x4EAC;&#x5927;&#x5B78;</li>
+          <li><span>&#x5831;&#x8003;&#x898F;&#x5247;</span>&#x4E09;&#x7D1A;&#x5FC5;&#x8003;&#xFF1B;&#x4E09;&#x7D1A;&#x53CA;&#x4EE5;&#x4E0A;&#x9808;&#x9010;&#x7D1A;&#x5831;&#x8003;&#xFF0C;&#x6216;&#x901A;&#x904E;&#x5B9A;&#x7D1A;&#x6E2C;&#x8A66;</li>
+          <li><span>&#x984C;&#x578B;</span>&#x5BA2;&#x89C0;&#x984C;&#xFF08;&#x9078;&#x64C7;&#x3001;&#x5224;&#x65B7;&#xFF09;&#xFF0B; &#x73FE;&#x5834;&#x547D;&#x984C;&#x5BE6;&#x64CD;</li>
+          <li><span>&#x9069;&#x9F61;</span>6&#x2013;16 &#x6B72;</li>
+        <li><span>&#x8003;&#x671F;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+        <li><span>&#x8003;&#x52D9;&#x8CBB;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+      </ul>
+      <p class="footnote"><a href="/c/tests/#overview">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B; &#x2192;</a></p>
+        <article class="standing">
+            <h3 class="standing-h">&#x8003;&#x8A66;&#x9808;&#x77E5;</h3>
+          <div class="prose"><p>注：</p><p class="num">1、線上考試是指考生自行準備考試場地及電腦等設備，在指定時間（以准考證為準）通過網絡登錄考試及監考系統進行考試並接受遠程監考，不受地域限制。</p><p class="num">2、線下考試是指考生需在指定時間到指定地點（以准考證為準）參加考試，接受現場監考，一定程度上受地域限制。</p><p class="num">3、考前3-5天分配准考證，最終考試時間與地點以准考證資訊為主。</p><p>4、考務費：請聯絡本分站查詢。</p><p>香港考生的報考安排見「香港考生報考流程」。</p></div>
+        </article>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x984C;&#x578B;&#x3001;&#x5206;&#x503C;&#x5206;&#x4F48;&#xFF08;&#x542B;&#x7DDA;&#x4E0A;&#x7B54;&#x8FAF;&#x8981;&#x6C42;&#xFF09;</summary>
+          <div class="prose"><p><strong>一、</strong><strong>題型、分值分佈</strong></p><figure class="fig"><table><thead><tr><th>級別</th><th>理論題型／分值</th><th>實操題型／分值</th></tr></thead><tbody><tr><td>啟蒙級</td><td colspan="2">5 個單選題（20 分）、1 個編程思維題（20 分）、1 個搭建題（60 分）</td></tr><tr><td>一級</td><td rowspan="6">20 個單選題（80 分）<br>10 個判斷題（20 分）</td><td>搭建任務（70 分）、設計草圖（20 分）、知識問答（10 分）</td></tr><tr><td>二級</td><td>搭建編程任務（60 分）、設計草圖（20 分）、思維圖（10 分）、知識問答（10 分）</td></tr><tr><td>三級</td><td>搭建編程任務（60 分）、設計草圖（20 分）、思維圖（10 分）、知識問答／記錄運動軌跡（10 分）</td></tr><tr><td>四級</td><td>搭建編程任務（70 分）、設計草圖（10 分）、思維圖（10 分）、知識問答（10 分）</td></tr><tr><td>五級</td><td>編程任務（70 分）、問答題（10 分）、連線題（20 分）</td></tr><tr><td>六級</td><td>編程任務（70 分）、問答題（10 分）、連線題（20 分）</td></tr></tbody></table></figure><p><strong>理論、實操分別合格</strong><strong>表示考試通過，有一門或兩門不合格則不通過。</strong></p><p><strong>二、實踐操作考試線上答辯影片錄製要求（不超過3分鐘）</strong></p><p>一級：</p><p>提交實操試卷後，請錄製一個不超過3分鐘的答辯影片。要求： 1、首先介紹自己的姓名、准考證號和考試級別。2、説出已搭建完成的作品的名稱，並簡述其結構主要有哪些關鍵部分組成。3、結合搭建題目的要求，對自己的作品進行簡單介紹。</p><p>二級、三級、四級：</p><p>提交實操試卷後，請錄製一個不超過3分鐘的答辯影片。要求： 1、首先介紹自己的姓名、准考證號和考試級別。 2、説出已搭建和編程完成的作品的名稱，並簡述這個作品的組成部分及各自的功能。 3、結合第1題和第4題的要求，對作品進行簡單介紹。</p><p>五級、六級：</p><p>提交實操試卷後，請錄製一個不超過3分鐘的答辯影片。要求： 1、首先介紹自己的姓名、准考證號和考試級別。 2、説出智能小車的任務完成情況。 3、結合任務要求，對作品進行簡單介紹。</p></div>
+        </details>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x4E2D;&#x6CE8;&#x610F;&#x4E8B;&#x9805;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539826906507748417396.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x524D;&#x6E96;&#x5099;&#x5DE5;&#x4F5C;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><strong>一、考前準備事項</strong><br/>1、考試空間：一個相對獨立封閉、安靜、不受外界干擾的房間<br/>2、硬件設備：電腦（帶攝像頭、麥克風、電量充足、網絡順暢）<br/>3、智能手機（用來打開攝像頭錄製或拍攝答辯影片和上傳）<br/>4、實操考試器材（零部件全部拆散）<br/>5、身份證（或户口本、護照），如原件不慎丟失，請帶好掃描件<br/>6、准考證1份<br/>7、答題紙（官網自行下載，地址：<a href="http://www.ycltest.com/account/down?type=5" target="_blank">http://www.ycltest.com/account/down?type=5</a>）<br/>8、黑筆中性筆、鉛筆、橡皮、尺子等</p><h2><strong>二、下載軟件，進行考前“在線模擬”</strong><br/>1、線上考試軟件資源下載<br/>谷歌瀏覽器官方下載地址：<a href="https://www.google.cn/chrome/" target="_blank">https://www.google.cn/chrome/</a></h2><p class="num">2、“在線模擬”步驟點擊鏈接查看<a href="http://www.ycltest.com/news/detail?id=1023" target="_blank">http://www.ycltest.com/news/detail?id=1023</a></p><p><strong>三、注意事項</strong></p><p>重點調試電腦等硬件設備，確保鍵盤、鼠標、輸入法、瀏覽器等無問題，上網、語音、影片等功能正常，如因以上問題導致無法完成考試，需由考生自行承擔責任。</p><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250217/6387539841709584619692559.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x5728;&#x7DDA;&#x6A21;&#x64EC;&#x6307;&#x5357;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539859372030334032627.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x5831;&#x540D;&#x3001;&#x7E73;&#x8CBB;&#x6307;&#x5357;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539862367331555881550.jpg"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YAI&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x5553;&#x8499;&#x7D1A;&#x5668;&#x6750;&#x8981;&#x6C42;</summary>
+          <div class="prose"><p><strong>啓蒙級能力要求概述：</strong><br/>1、要求瞭解幾種典型的人工智能應用場景；<br/>2、按照圖片可實現簡單結構的搭建；<br/>3、能夠對生活中的常見物品進行分類、統計和比較；<br/>4、會玩簡單的編程遊戲。<br/><strong>知識點概述</strong><br/>1、初步認識影視中和生活中的人工智能和機器人形象；<br/>2、能夠依照圖片模仿搭建簡單結構；<br/>3、初步瞭解計數、測量、比較和分類的基本概念和簡單方法；<br/>4、認識圖形化編程遊戲中的順序結構、循環結構。<br/><strong>器材要求</strong><br/>1、結構搭建<br/> 應具備梁、板、塊、輪子和輪軸等結構。<br/>2、編程遊戲任務，以下兩種方式均可：<br/> 可以使用紙和筆繪製簡單的程序並闡述其原理；<br/> 可以使用實物化編程工具編制簡單的程序。</p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66;&#xFF08;&#x4E00;&#x3001;&#x4E8C;&#x7D1A;&#xFF09;&#x6559;&#x5B78;&#x3001;&#x8003;&#x8A66;&#x901A;&#x7528;&#x5957;&#x88DD;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387557262713093846272305.jpg"/></p></div>
+        </details>
+
+  </section>
+  <section class="sec anchor reveal" id="YCL">
+    <div class="sechead has-cube" style="margin-bottom:26px">
+      <h2 class="h3sec">&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;</h2>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>YCL</b></span>
+          </div>
+        </div>
+    </div>
+
+
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">&#x8003;&#x67E5;&#x5B78;&#x751F;&#x5728;&#x7A0B;&#x5E8F;&#x601D;&#x7DAD;&#x3001;&#x7DE8;&#x7A0B;&#x8A9E;&#x8A00;&#x3001;&#x6578;&#x64DA;&#x8655;&#x7406;&#x53CA;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7B97;&#x6CD5;&#x65B9;&#x9762;&#x7684;&#x80FD;&#x529B;&#x6C34;&#x5E73;&#x3002;&#x9AD4;&#x7CFB;&#x5206;&#x70BA; 1&#x2013;8 &#x7D1A;&#xFF0C;&#x96E3;&#x5EA6;&#x9010;&#x7D1A;&#x63D0;&#x5347;&#x3002;</p>
+      <ul class="factlist">
+          <li><span>&#x7B49;&#x7D1A;</span>1&#x2013;3 &#x7D1A; Scratch&#xFF0F;&#x4F4E;&#x4EE3;&#x78BC; &#xB7; 4&#x2013;8 &#x7D1A; Python&#xFF0F;C&#x2B;&#x2B;</li>
+          <li><span>&#x984C;&#x5EAB;</span>&#x4E2D;&#x570B;&#x79D1;&#x5B78;&#x9662;&#x8A08;&#x7B97;&#x6280;&#x8853;&#x7814;&#x7A76;&#x6240;</li>
+          <li><span>&#x5408;&#x683C;</span>60 &#x5206;</li>
+          <li><span>&#x8A55;&#x50F9;&#x7DAD;&#x5EA6;</span>&#x8A08;&#x7B97;&#x601D;&#x7DAD;&#x3001;&#x5275;&#x9020;&#x6027;&#x601D;&#x7DAD;&#x3001;&#x7B97;&#x6CD5;&#x8A2D;&#x8A08;&#x8207;&#x5BE6;&#x73FE;</li>
+          <li><span>&#x9069;&#x9F61;</span>8&#x2013;16 &#x6B72;</li>
+        <li><span>&#x8003;&#x671F;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+        <li><span>&#x8003;&#x52D9;&#x8CBB;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+      </ul>
+      <p class="footnote"><a href="/c/tests/#overview">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B; &#x2192;</a></p>
+        <article class="standing">
+            <h3 class="standing-h">&#x8003;&#x8A66;&#x9808;&#x77E5;</h3>
+          <div class="prose"><p>注：</p><p class="num">1、線上考試即考生自行準備場地及電腦等設備通過網絡進行考試，在指定時間（以准考證為準）通過網絡進行在線考試，不受地域限制。不受地域限制。</p><p class="num">2、線下考試地點以准考證為準，考生需到指定地點進行考試。</p><p><img decoding="async" loading="lazy" src="/../../upload/image/20250217/6387540110946228892619414.png"/></p><p>香港考生的報考安排見「香港考生報考流程」。</p></div>
+        </article>
+        <details class="guide">
+          <summary>YCL&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x984C;&#x578B;&#x3001;&#x5206;&#x503C;&#x5206;&#x4F48;</summary>
+          <div class="prose"><figure class="fig"><table><thead><tr><th>等級</th><th>支援語言</th><th>考試時長</th><th>單選題</th><th>多選題</th><th>編碼題</th></tr></thead><tbody><tr><td>一級</td><td>Scratch</td><td>60 分鐘</td><td>15 小題，共 45 分</td><td>—</td><td>2 題，共 55 分</td></tr><tr><td>二級</td><td>Scratch</td><td>60 分鐘</td><td>15 小題，共 30 分</td><td>5 小題，共 15 分</td><td>3 題，共 55 分</td></tr><tr><td>三級</td><td>Scratch</td><td>90 分鐘</td><td>15 小題，共 30 分</td><td>5 小題，共 15 分</td><td>4 題，共 55 分</td></tr><tr><td>四級</td><td>Python／C++</td><td>90 分鐘</td><td>15 小題，共 30 分</td><td>5 小題，共 15 分</td><td>4 題，共 55 分</td></tr><tr><td>五級</td><td>Python／C++</td><td>90 分鐘</td><td>15 小題，共 30 分</td><td>5 小題，共 15 分</td><td>4 題，共 55 分</td></tr><tr><td>六級</td><td>Python／C++</td><td>90 分鐘</td><td>15 小題，共 30 分</td><td>5 小題，共 15 分</td><td>4 題，共 55 分</td></tr></tbody></table></figure><p><strong>考試結果為“已通過”或“未通過”。</strong></p></div>
+        </details>
+        <details class="guide">
+          <summary>YCL&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x4E2D;&#x6CE8;&#x610F;&#x4E8B;&#x9805;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387555656584691103616133.png"/><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387555656773753712772555.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YCL&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x524D;&#x6E96;&#x5099;&#x5DE5;&#x4F5C;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><strong>一、考前準備事項</strong><br/>1、考試空間：一個相對獨立封閉、安靜、不受外界干擾的房間<br/>2、硬件設備：電腦（帶攝像頭、麥克風、電量充足、網絡順暢）<br/>3、身份證（或户口本、護照），如原件不慎丟失，請帶好掃描件<br/>4、准考證1份</p><h2><strong>二、下載軟件，進行考前“在線模擬”</strong><br/>1、線上考試軟件資源下載<br/>谷歌瀏覽器官方下載地址：<a href="https://www.google.cn/chrome/" target="_blank">https://www.google.cn/chrome/</a><br/>2、在線模擬步驟請看：http://www.ycltest.com/news/detail859?id=1061&amp;type=4</h2><p><strong>三、注意事項</strong></p><p>重點調試電腦等硬件設備，確保鍵盤、鼠標、輸入法、瀏覽器等無問題，上網、語音、影片等功能正常，如因以上問題導致無法完成考試，需由考生自行承擔責任。</p></div>
+        </details>
+        <details class="guide">
+          <summary>YCL&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x5728;&#x7DDA;&#x6A21;&#x64EC;&#x6307;&#x5357;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="648eb657ac0aa.jpg" src="/../../upload/image/20250219/6387555714581575967999538.jpg"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>YCL&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x5831;&#x540D;&#x3001;&#x7E73;&#x8CBB;&#x6307;&#x5357;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387555718023764047317023.jpg"/></p></div>
+        </details>
+
+  </section>
+  <section class="sec anchor reveal" id="ECL">
+    <div class="sechead has-cube" style="margin-bottom:26px">
+      <h2 class="h3sec">&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;</h2>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>ECL</b></span>
+          </div>
+        </div>
+    </div>
+
+
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">&#x8003;&#x67E5;&#x5B78;&#x751F;&#x5728;&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;&#x5E73;&#x53F0;&#x7684;&#x61C9;&#x7528;&#x80FD;&#x529B;&#x3001;&#x908F;&#x8F2F;&#x601D;&#x7DAD;&#x3001;&#x7A0B;&#x5E8F;&#x8A2D;&#x8A08;&#x8207;&#x89E3;&#x6C7A;&#x554F;&#x984C;&#x80FD;&#x529B;&#x3002;&#x5171;&#x56DB;&#x500B;&#x7B49;&#x7D1A;&#xFF0C;&#x96E3;&#x5EA6;&#x9010;&#x7D1A;&#x63D0;&#x5347;&#x3002;</p>
+      <ul class="factlist">
+          <li><span>&#x6E2C;&#x8A55;&#x65B9;&#x5F0F;</span>&#x5BE6;&#x8E10;&#x64CD;&#x4F5C;&#xFF0C;&#x73FE;&#x5834;&#x5B8C;&#x6210;&#x6307;&#x5B9A;&#x4EFB;&#x52D9;</li>
+          <li><span>&#x7B49;&#x7D1A;</span>&#x4E00;&#x81F3;&#x56DB;&#x7D1A;</li>
+          <li><span>&#x7279;&#x8272;</span>&#x5C07;&#x5716;&#x5F62;&#x5316;&#x7DE8;&#x7A0B;&#x7684;&#x4EE3;&#x78BC;&#x584A;&#x5BE6;&#x7269;&#x5316;&#xFF0C;&#x812B;&#x96E2;&#x5C4F;&#x5E55;&#x64CD;&#x4F5C;</li>
+          <li><span>&#x9069;&#x9F61;</span>4&#x2013;14 &#x6B72;</li>
+        <li><span>&#x8003;&#x671F;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+        <li><span>&#x8003;&#x52D9;&#x8CBB;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+      </ul>
+      <p class="footnote"><a href="/c/tests/#overview">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B; &#x2192;</a></p>
+        <article class="standing">
+            <h3 class="standing-h">&#x8003;&#x8A66;&#x9808;&#x77E5;</h3>
+          <div class="prose"><p>注：</p><p class="num">1、線上考試是指考生自行準備考試場地及電腦等設備，在指定時間（以准考證為準）通過網絡登錄考試及監考系統進行考試並接受遠程監考，不受地域限制。</p><p class="num">2、線下考試是指考生需在指定時間到指定地點（以准考證為準）參加考試，接受現場監考，一定程度上受地域限制。</p><p class="num">3、考前3-5天分配准考證，最終考試時間與地點以准考證資訊為主。</p><p>4、考務費：請聯絡本分站查詢。</p><p>香港考生的報考安排見「香港考生報考流程」。</p></div>
+        </article>
+        <details class="guide">
+          <summary>&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;</summary>
+          <div class="prose"><p>無屏編程啓蒙機器人產品介紹</p><p>工信學堂 Coding-bot 無屏編程產品基於圖形化編程理念設計，適用於 4-8 週歲兒童
+編程啓蒙。課程以任務為驅動，內容涵蓋天文、地理、民俗、生物等多個主題，採用遊戲化
+學習的方式激發兒童對編程的熱情，啓迪編程思維。通過編程遊戲促進學生邏輯思維能力、
+抗挫折能力、創新能力、動手能力以及團隊協助能力的全方位提升。</p><figure class="fig"><img src="/../../upload/image/20260506/6391366027717274266673502.png" alt="" loading="lazy" decoding="async"><figcaption><h4>套裝內容</h4><ul class="packlist"><li><span>E 仔機器人</span>× 1</li><li><span>編程指令卡</span>× 36</li><li><span>編程地圖</span>× 16</li><li><span>音樂地圖</span>× 1</li><li><span>地圖拼卡</span>× 35</li><li><span>卡片貼紙</span>× 32</li><li><span>USB 數據線</span>× 1</li><li><span>產品說明書</span>× 1</li></ul></figcaption></figure><p>無屏編程啓蒙機器人產品特點</p><figure class="fig"><ul class="chips"><li>OID 技術</li><li>紅外巡跡</li><li>實物編程</li><li>場景語音</li></ul><div class="featgrid"><div class="fc"><h4>豐富的編程功能</h4><ul><li>可編程眼睛燈光</li><li>車型聲音</li><li>雙路巡線傳感器</li></ul></div><div class="fc"><h4>生動的互動形式</h4><ul><li>場景互動語音</li><li>資訊傳遞效率高</li><li>情感更豐富</li></ul></div><div class="fc"><h4>拼接式趣味場景</h4><ul><li>變換性場景</li><li>多元化場景</li><li>進階型場景</li></ul></div><div class="fc"><h4>個性化使用場景</h4><ul><li>自訂場景地圖</li><li>自訂地圖拼卡</li><li>角色造型可愛</li></ul></div></div></figure><p>無屏編程啓蒙機器人產品參數</p><p><img loading="lazy" decoding="async" alt="59fa45b04f439026af396264cee4158f.png" src="/../../upload/image/20260506/6391366043129994224887447.png"/></p><p>點擊下載詳細介紹</p><p><a href="/../../upload/file/20260506/6391365922034519047901425.pdf/">無屏編程啓蒙機器人產品手冊（畫冊）.pdf</a></p></div>
+        </details>
+        <details class="guide">
+          <summary>ECL&#x9752;&#x5C11;&#x5E74;&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x5831;&#x540D;&#x3001;&#x7E73;&#x8CBB;&#x6307;&#x5357;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387555723000326387480696.jpg"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>ECL&#x9752;&#x5C11;&#x5E74;&#x7121;&#x5C4F;&#x7DE8;&#x7A0B;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x4E00;&#x7D1A;&#x5668;&#x6750;&#x8981;&#x6C42;</summary>
+          <div class="prose"><p class="num"><strong>1.結構件包括但不限於以下內容：</strong><br/>可以與樂高大顆粒配合<strong><br/>2.動力模塊包括但不限於以下內容：</strong><br/>直流減速電機或同類電機（能夠進行連續的轉動動力的輸出）<strong><br/>3.程序邏輯中可以支持使用順序，分支，循環等編程結構<br/>4.程序指令包含但不限於以下內容：</strong>前進，後退，左轉，右轉，跳舞，播放聲音（含錄音），音樂演奏等<strong><br/>5.電子模塊包括但不限於以下內容：</strong><br/>可實現3種顏色（建議為紅、黃、綠等顏色）的燈（LED）；<br/>輸入設備（按鍵、超聲波等）；聲音設備（蜂鳴器、揚聲器等）。<strong><br/>6.地圖場景包含但不限於以下內容：</strong><br/>人工智能的應用，機器人的發展歷程，常見的建築，常見的動物，常見的顏色；<br/>常見的形狀，音樂演奏，繪畫，10以內的數字，圖形組合，方位等。<strong><br/>7.工具及耗材包括但不限於以下內容：</strong></p><p>尺子、膠水、水彩筆、紙板等</p><p><strong><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556296426999889229115.png"/></strong></p><p><a href="https://ycltest-file.oss-cn-beijing.aliyuncs.com/upload/%E9%9D%92%E5%B0%91%E5%B9%B4%E6%97%A0%E5%B1%8F%E7%BC%96%E7%A8%8B%E6%B0%B4%E5%B9%B3%E6%B5%8B%E8%AF%95%E5%9C%B0%E5%9B%BE%EF%BC%88%E4%B8%80%E7%BA%A7%EF%BC%89.zip">青少年無屏編程水平測試地圖下載</a></p></div>
+        </details>
+
+  </section>
+  <section class="sec anchor reveal" id="SCL">
+    <div class="sechead has-cube" style="margin-bottom:26px">
+      <h2 class="h3sec">&#x79D1;&#x6280;&#x7D20;&#x990A;</h2>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>SCL</b></span>
+          </div>
+        </div>
+    </div>
+
+
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">&#x8003;&#x67E5;&#x5B78;&#x751F;&#x5728;&#x7269;&#x8CEA;&#x79D1;&#x5B78;&#x3001;&#x751F;&#x547D;&#x79D1;&#x5B78;&#x3001;&#x5730;&#x7403;&#x8207;&#x5B87;&#x5B99;&#x79D1;&#x5B78;&#x3001;&#x6280;&#x8853;&#x8207;&#x5DE5;&#x7A0B;&#x7B49;&#x65B9;&#x9762;&#x7684;&#x5275;&#x65B0;&#x8A2D;&#x8A08;&#x80FD;&#x529B;&#x3002;&#x9AD4;&#x7CFB;&#x5305;&#x62EC; 1&#x2013;6 &#x7D1A;&#x3002;</p>
+      <ul class="factlist">
+          <li><span>&#x6E2C;&#x8A55;&#x65B9;&#x5F0F;</span>&#x5BE6;&#x8E10;&#x64CD;&#x4F5C;&#xFF0C;&#x73FE;&#x5834;&#x5B8C;&#x6210;&#x6307;&#x5B9A;&#x4EFB;&#x52D9;</li>
+          <li><span>&#x7B49;&#x7D1A;</span>&#x4E00;&#x81F3;&#x516D;&#x7D1A;&#xFF1B;&#x4E09;&#x7D1A;&#x5FC5;&#x8003;&#xFF0C;&#x4E09;&#x7D1A;&#x4EE5;&#x4E0A;&#x9010;&#x7D1A;&#x5831;&#x8003;</li>
+          <li><span>&#x5408;&#x683C;</span>&#x6EFF;&#x5206; 100&#xFF0C;60 &#x5206;&#x5408;&#x683C;</li>
+          <li><span>&#x9069;&#x9F61;</span>&#x5C0F;&#x5B78;&#x81F3;&#x9AD8;&#x4E2D;</li>
+        <li><span>&#x8003;&#x671F;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+        <li><span>&#x8003;&#x52D9;&#x8CBB;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+      </ul>
+      <p class="footnote"><a href="/c/tests/#overview">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B; &#x2192;</a></p>
+        <article class="standing">
+            <h3 class="standing-h">&#x8003;&#x8A66;&#x9808;&#x77E5;</h3>
+          <div class="prose"><p>注：</p><p class="num">1、線上考試是指考生自行準備考試場地及電腦等設備，在指定時間（以准考證為準）通過網絡登錄考試及監考系統進行考試並接受遠程監考，不受地域限制。</p><p class="num">2、線下考試是指考生需在指定時間到指定地點（以准考證為準）參加考試，接受現場監考，一定程度上受地域限制。</p><p class="num">3、考前3-5天分配准考證，最終考試時間與地點以准考證資訊為主。</p><p>4、考務費：請聯絡本分站查詢。</p><p>香港考生的報考安排見「香港考生報考流程」。</p></div>
+        </article>
+        <details class="guide">
+          <summary>SCL&#x9752;&#x5C11;&#x5E74;&#x79D1;&#x6280;&#x7D20;&#x990A;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x984C;&#x578B;&#x3001;&#x5206;&#x503C;&#x5206;&#x4F48;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539892409424946401204.png"/></p><p><strong>考試結果為“已通過”或“未通過”。</strong></p></div>
+        </details>
+        <details class="guide">
+          <summary>SCL&#x9752;&#x5C11;&#x5E74;&#x79D1;&#x6280;&#x7D20;&#x990A;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x524D;&#x6E96;&#x5099;&#x5DE5;&#x4F5C;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><h2><strong>一、考前準備事項</strong><br/>1、考試空間：一個相對獨立封閉、安靜、不受外界干擾的房間<br/>2、硬件設備：電腦（帶攝像頭、麥克風、電量充足、網絡順暢）<br/>3、智能手機（用來打開攝像頭錄製、拍攝答辯影片和上傳）<br/>4、實操考試器材<br/>5、身份證（或户口本、護照），如原件不慎丟失，請帶好掃描件<br/>6、准考證1份、答題卡1份、黑色簽字筆1支</h2><p class="num">7、答題卡下載網址：http://www.ycltest.com/account/down.html?type=3</p><p>注意一定需要檢查確認為【青少年科技素養水平測試 x級答題卡】</p><h2><strong></strong></h2><h2><strong>二、下載</strong><strong>線上考試軟件</strong></h2><p>谷歌瀏覽器官方下載地址：<a href="https://www.google.cn/chrome/" target="_blank">https://www.google.cn/chrome/</a></p><p><strong>三、注意事項</strong></p><p>重點調試電腦等硬件設備，確保鍵盤、鼠標、輸入法、瀏覽器等無問題，上網、語音、影片等功能正常，如因以上問題導致無法完成考試，需由考生自行承擔責任。</p></div>
+        </details>
+        <details class="guide">
+          <summary>SCL&#x9752;&#x5C11;&#x5E74;&#x79D1;&#x6280;&#x7D20;&#x990A;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x3010;&#x7DDA;&#x4E0A;&#x8003;&#x8A66;&#x3011;&#x8003;&#x4E2D;&#x6CE8;&#x610F;&#x4E8B;&#x9805;&#xFF08;&#x8003;&#x524D;&#x5FC5;&#x8B80;&#xFF09;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539904365637878339939.png"/><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539905510945567075878.png"/><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250217/6387539906218757424613242.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>SCL&#x9752;&#x5C11;&#x5E74;&#x79D1;&#x6280;&#x7D20;&#x990A;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x5831;&#x540D;&#x3001;&#x7E73;&#x8CBB;&#x6307;&#x5357;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250219/6387555726745639172038327.jpg"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>SCL&#x9752;&#x5C11;&#x5E74;&#x79D1;&#x6280;&#x7D20;&#x990A;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x4E00;&#x7D1A;&#x6848;&#x4F8B;&#x7BC4;&#x570D;</summary>
+          <div class="prose"><p><strong>小橋、遮陽棚、吸水杯、菜籃、三角形邊框</strong></p><blockquote><p>一、實驗任務：小橋</p></blockquote><blockquote><blockquote><p>實驗材料：可以滿足實驗任務的相關器材。</p></blockquote><blockquote><p>實驗要求：</p></blockquote><blockquote><p class="num">1. 利用材料製作一款小橋，兩個橋墩之間的距離是一張A4紙的長度</p></blockquote><blockquote><p class="num">2. 測試並記錄小橋能夠承載的硬幣數量</p></blockquote><blockquote><p class="num">3. 改進小橋，讓其能夠承載更多硬幣</p></blockquote><blockquote><p class="num">4. 記錄改進後的小橋能夠承載的硬幣數量</p></blockquote></blockquote><blockquote><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556301298876869579053.png"/></p><p>二、實驗任務：遮陽棚</p></blockquote><blockquote><blockquote><p>實驗材料：可以滿足實驗任務的相關器材。</p></blockquote><blockquote><p>實驗要求：</p></blockquote><blockquote><p class="num">1. 利用材料製作一款遮陽棚</p></blockquote><blockquote><p class="num">2. 遮光效果好，遮陽棚比較穩固</p></blockquote><blockquote><p class="num">3. 測試遮陽棚的遮陽效果，能夠擋住手電筒的光</p></blockquote><blockquote><p class="num">4. 改進遮陽棚，讓其遮光效果更好</p></blockquote></blockquote><blockquote><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556301369189352964016.png"/></p><p>三、實驗任務：吸水杯</p></blockquote><blockquote><blockquote><p>實驗材料：可以滿足實驗任務的相關器材。</p></blockquote><blockquote><p>實驗要求：</p></blockquote><blockquote><p class="num">1. 利用材料製作一款吸水杯</p></blockquote><blockquote><p class="num">2. 記錄吸水杯花盆能把水吸到小花根部的距離</p></blockquote><blockquote><p class="num">3. 改進吸水杯花盆，讓其儘可能多的將水吸到小花根部</p></blockquote><blockquote><p class="num">4. 記錄改進後的吸水距離</p></blockquote></blockquote><blockquote><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556301422314566634592.png"/></p><p>四、實驗任務：菜籃</p></blockquote><blockquote><blockquote><p>實驗材料：可以滿足實驗任務的相關器材。</p></blockquote><blockquote><p>實驗要求：</p></blockquote><blockquote><p class="num">1. 利用材料製作一款菜籃</p></blockquote><blockquote><p class="num">2. 測試並記錄菜籃能裝幾個砝碼</p></blockquote><blockquote><p class="num">3. 改進菜籃，讓其能夠裝更多砝碼</p></blockquote><blockquote><p class="num">4. 記錄菜籃改進後能夠裝的砝碼數量</p></blockquote></blockquote><blockquote><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556301473876722777751.png"/></p><p>五、實驗任務：三角形邊框</p></blockquote><blockquote><blockquote><p>實驗材料：可以滿足實驗任務的相關器材。</p></blockquote><blockquote><p>實驗要求：</p></blockquote><blockquote><p class="num">1. 利用材料製作一個四邊形邊框</p></blockquote><blockquote><p class="num">2. 按壓四邊形邊框，測試其是否具有穩定性</p></blockquote><blockquote><p class="num">3. 改進模型，製作一個三角形邊框</p></blockquote><blockquote><p class="num">4. 測試三角形邊框是否具有穩定性</p></blockquote></blockquote><blockquote><p><img alt="" decoding="async" loading="lazy" src="/../../upload/image/20250219/6387556301541064323406051.png"/></p></blockquote></div>
+        </details>
+
+  </section>
+  <section class="sec anchor reveal" id="YUL">
+    <div class="sechead has-cube" style="margin-bottom:26px">
+      <h2 class="h3sec">&#x7121;&#x4EBA;&#x6A5F;&#x6280;&#x8853;</h2>
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>YUL</b></span>
+          </div>
+        </div>
+    </div>
+
+
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">&#x8003;&#x67E5;&#x5B78;&#x751F;&#x7684;&#x7121;&#x4EBA;&#x6A5F;&#x57FA;&#x672C;&#x77E5;&#x8B58;&#x3001;&#x7A0B;&#x5E8F;&#x601D;&#x7DAD;&#x3001;&#x7DE8;&#x7A0B;&#x8A9E;&#x8A00;&#x8207;&#x7121;&#x4EBA;&#x6A5F;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x3002;&#x5206;&#x4E94;&#x7D1A;&#xFF0C;&#x4E00;&#x7D1A;&#x53EF;&#x8DF3;&#x7D1A;&#xFF0C;&#x4E8C;&#x7D1A;&#x53CA;&#x4EE5;&#x4E0A;&#x9808;&#x9010;&#x7D1A;&#x5831;&#x8003;&#x3002;</p>
+      <ul class="factlist">
+          <li><span>&#x7B49;&#x7D1A;</span>&#x4E00;&#x81F3;&#x4E94;&#x7D1A;</li>
+          <li><span>&#x984C;&#x5EAB;</span>&#x4E2D;&#x570B;&#x96FB;&#x5B50;&#x6559;&#x80B2;&#x5B78;&#x6703;&#x9752;&#x5C11;&#x5E74;&#x6559;&#x80B2;&#x5206;&#x6703;</li>
+          <li><span>&#x80FD;&#x529B;&#x5C64;&#x6B21;</span>&#x4E86;&#x89E3; &#xB7; &#x7406;&#x89E3; &#xB7; &#x638C;&#x63E1;</li>
+          <li><span>&#x5167;&#x5BB9;</span>&#x7121;&#x4EBA;&#x6A5F;&#x77E5;&#x8B58;&#x3001;&#x9059;&#x63A7;&#x8207;&#x7DE8;&#x7A0B;&#x98DB;&#x884C;&#x3001;&#x50B3;&#x611F;&#x5668;&#x3001;&#x5716;&#x5F62;&#x5316;&#x7DE8;&#x7A0B;</li>
+        <li><span>&#x8003;&#x671F;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+        <li><span>&#x8003;&#x52D9;&#x8CBB;</span>&#x8ACB;&#x806F;&#x7D61;&#x6211;&#x5011;&#x67E5;&#x8A62;</li>
+      </ul>
+      <p class="footnote"><a href="/c/tests/#overview">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B; &#x2192;</a></p>
+        <article class="standing">
+            <h3 class="standing-h">&#x9752;&#x5C11;&#x5E74;&#x7121;&#x4EBA;&#x6A5F;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66;</h3>
+          <div class="prose"><p>青少年無人機技術水平測試用於考查應試人員的無人機基本知識、程序思維、編程語言、無人機基本操作等，主要人羣為青少年（包括但不限於中小學生、大學生及從業人員)。</p><p>青少年無人機技術水平測試分三等(初等、中等和高等)五級(一至五級)，一級可進行跳級，二級及以上級別需逐級進行測試。為廣大應試人員的升學、實習、進修等提供在無人機方面能力水平的證明。</p><p><strong>一、證書發放單位</strong></p><p><strong>（一）工業和信息化部教育與考試中心</strong></p><p>工業和信息化部教育與考試中心是經中央機構編制委員會辦公室批准設置的事業單位，在工業和信息化部領導下，承擔工業、通信業和信息化系統專業人才培訓及相關資格考試的有關工作。</p><p><strong>（二）中國電子教育學會</strong></p><p>中國電子教育學會（以下簡稱學會）成立於1994年10月，是教育部主管，由民政部核准、登記註冊的全國性社團組織。由全國電子教育單位和電子行業企事業單位、團體自願參加組成的跨地區、跨部門的從事電子教育研究的全國性、學術性、非盈利性社會組織，學會秘書處常年設在西安電子科技大學。</p><p><strong>二、題庫開發單位：中國電子教育學會青少年教育分會</strong></p><p>為了保證測試題目的專業性、權威性和公正性，青少年無人機技術水平測試題庫開發團隊，匯聚了無人機、機器人、電腦等相關專業院士、教授、學科帶頭人、中小學一線特級高級教師、各類賽事裁判長等行業知名專家，共同對測試題庫進行全面開發。</p><p><strong>三、考評等級介紹</strong></p><p>共分為5個級別，一級可進行跳級，二級及以上級別需逐級進行報考。</p><p><strong>四、測試時間</strong>全國統一測試時間：3月22、23日 6月14、15日 9月13、14日 12月6、7日</p><h3></h3><p>寒暑假測試月：1月、2月、7月、8月（具體測試時間、地區於考前1月公佈）</p><p>同時，各地分站也將視實際情況組織安排區域性考試。</p><p><strong>五、項目特色</strong></p><p class="num">1、青少年無人機技術水平測試涵蓋無人機所需要的知識和技能，以理論加實踐應用能力為主。所有考核內容分了解、理解和掌握三個層次，瞭解指對該項內容有初步的認知，理解指具備基本的知識結構，可以在實操中運用該項內容的知識，掌握指具備系統的知識和應用能力。在具體的項目實施過程中，通過學生的動手操作，對學生對技術的掌握和運用能力做出評價。</p><p>具體如下：</p><p>知識層面</p><p class="num">（1）對無人機的基本知識掌握程度；</p><p class="num">（2）以遙控、編程為主的無人機飛行控制知識掌握程度；</p><p class="num">（3）以無人機搭載設備為主的傳感器知識掌握程度；</p><p class="num">（4）以無人機飛行模塊和基本邏輯、數學、變量為主的圖形化編程類知識掌握程度；</p><p class="num">（5）以數據抽象和算法設計為主的代碼編程類知識掌握程度；</p><p class="num">（6）對跨學科知識的綜合應用知識層面；</p><p>思維及表達層面</p><p class="num">（1）在學習過程中具有敏捷的思維組織能力；</p><p class="num">（2）在算法設計中流程圖的運用能力；</p><p class="num">（3）計算思維在不同學科中應用的能力；</p><p class="num">（4）分析有效資訊及其是否全面的能力；</p><p class="num">（5）建立跨學科知識和視野的能力；</p><p class="num">（6）在飛行控制過程中，具有清晰準確的語言表達能力能力；</p><p class="num">（7）在飛行控制過程中，可以根據複雜環境具有臨場應變能力；</p><p>技術層面</p><p class="num">（1）掌握無人機飛控系統、動力系統原理；</p><p class="num">（2）掌握無人機各部分組件功能應用，具有無人機的保養與維修能力；</p><p class="num">（3）掌握空氣動力學基礎與無人機的飛行原理；</p><p class="num">（4）熟練掌握無人機操控技術，能夠根據現場要求完成複雜的無人機飛行控制；</p><p class="num">（5）根據飛行任務，使用軟件中的命令進行程序編輯，控制驅動無人機完成指定飛行操作；</p><p class="num">（6）能夠繪製流程圖並根據流程圖編程控制無人機完成綜合飛行任務；</p><p class="num">2、以編程所必備的工程思維和計算思維為基礎，側重學生全方位的綜合能力評價。</p><p class="num">3、工業和信息化部教育與考試中心、中國電子教育學會共同頒發證書。</p></div>
+        </article>
+        <details class="guide">
+          <summary>YUL&#x9752;&#x5C11;&#x5E74;&#x7121;&#x4EBA;&#x6A5F;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66; &#x4E00;&#x7D1A;&#x5668;&#x6750;&#x8981;&#x6C42;</summary>
+          <div class="prose"><p><strong>一級能力要求概述：</strong></p><p class="num">①瞭解無人機使用的基本注意事項和法律法規</p><p class="num">②瞭解無人機的概念、分類及用途，發展歷程及現狀；</p><p class="num">③瞭解無人機的組成部分，瞭解無人機的發展趨勢；</p><p class="num">④瞭解無人機的遙控模式，能夠遙控無人機完成相應的任務</p><p><strong>器材要求</strong></p><p>能滿足考試要求的遙控四旋翼無人機器材（可根據考級現場要求進行功能查看、固件升級及調試）。</p></div>
+        </details>
+
+  </section>
+  <section class="sec anchor reveal" id="overview">
+    <div class="sechead " style="margin-bottom:26px">
+      <h2 class="h3sec">&#x6E2C;&#x8A55;&#x7E3D;&#x89BD;</h2>
+    </div>
+
+
+        <article class="standing">
+            <h3 class="standing-h">&#x9999;&#x6E2F;&#x8003;&#x751F;&#x5831;&#x8003;&#x6D41;&#x7A0B;</h3>
+          <div class="prose"><p>香港考生經本分站報考，於香港本地應考，毋須前往內地。</p>
+<p><strong>一、應考地點</strong></p>
+<p>青少年人工智能技術水平測試 — 香港考評點<br/>香港浸會大學附屬學校王錦輝中小學（2025年8月設立）<br/>沙田石門安睦里 6 號 中學部 1 樓 S107A 室</p>
+<p><strong>二、報考步驟</strong></p>
+<p class="num">1. 選定測評軌道與級別。五大軌道為 YAI 人工智能技術、YCL 人工智能編程、ECL 無屏編程、SCL 科技素養、YUL 無人機技術。</p>
+<p class="num">2. 確認報考規則。部分軌道須逐級報考，或先通過定級測試；各軌道的規則見該軌道頁面的資料表。</p>
+<p class="num">3. 聯絡本分站報名：電話 +852 2524 8248，電郵 youth.itt@gmail.com，服務時間為工作日上午 9:00–11:30、下午 14:00–17:30。</p>
+<p class="num">4. 考前 3 至 5 天發放准考證，最終考試時間與地點以准考證為準。</p>
+<p><strong>三、考務費</strong></p><p>香港考生的考務費與繳費方式由本分站公布，請來電或電郵查詢。</p><p><strong>四、考試日期</strong></p><p>香港考評點的場次由本分站安排並公布，請聯絡我們查詢最近的考期。</p><p><strong>五、證書</strong></p>
+<p>合格者由工業和信息化部教育與考試中心與中國電子教育學會共同頒發證書，可於 miiteec.org.cn 查驗。</p></div>
+        </article>
+        <details class="guide">
+          <summary>&#x95DC;&#x65BC;&#x7D44;&#x7E54;2024&#x5E74;&#x5EA6;YCL&#x3001;YAI&#x516B;&#x7D1A;&#x8003;&#x8A55;&#x7684;&#x901A;&#x77E5;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521665634465472041845.png"/></p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521665815715093455696.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>2024&#x5E74;&#x5EA6;&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x6280;&#x8853;&#x6C34;&#x5E73;&#x6E2C;&#x8A66;(YAI)&#x4E03;&#x7D1A;&#x3001;&#x516B;&#x7D1A;&#x5668;&#x6750;&#x898F;&#x7BC4;&#x6027;&#x8981;&#x6C42;&#x8AAC;&#x660E;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521739981190532275079.png"/><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521740015566078703851.png"/><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521740042128658390053.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x91CD;&#x8981;&#x901A;&#x77E5; | &#x5DE5;&#x696D;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x8207;&#x8003;&#x8A66;&#x4E2D;&#x5FC3;&#x767C;&#x4F48;&#x95DC;&#x65BC;&#x5553;&#x7528;&#x65B0;&#x7248;&#x57F9;&#x8A13;&#x8A55;&#x50F9;&#x8B49;&#x66F8;&#x7684;&#x901A;&#x544A;</summary>
+          <div class="prose"><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521747949925522531012.jpg"/></p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521747971800571529479.jpg"/></p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521747987425051716448.jpg"/></p><hr/><p>來源：工業和信息化部教育與考試中心</p><p>附：新版青少年資訊技術培養證書票樣</p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521748003050266201589.jpg"/></p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250215/6387521748028050192658546.png"/></p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x8003;&#x8A55;&#x8A08;&#x5283; | 2025&#x5E74;&#x5168;&#x570B;&#x7D71;&#x8003;&#x6642;&#x9593;&#x901F;&#x89BD;&#xFF01;</summary>
+          <div class="prose"><p>青少年資訊技術培養工作站</p><p>於近日公佈了2025年全國統一考評計劃</p><p>具體安排如下</p><p>青少年人工智能技術水平測試（YAI）</p><p>全國統一考評時間</p><p>3月22日、23日</p><p>6月14日、15日</p><p>9月13日、14日</p><p>12月6日、7日</p><p>青少年人工智能編程水平測試（YCL）</p><p>全國統一考評時間</p><p>3月15日、16日</p><p>6月21日、22日</p><p>9月20日、21日</p><p>12月6日、7日</p><p>青少年無屏編程水平測試（ECL）</p><p>全國統一考評時間</p><p>3月15日、16日</p><p>6月21日、22日</p><p>9月20日、21日</p><p>12月6日、7日</p><p>青少年科技素養水平測試（SCL）</p><p>全國統一考評時間</p><p>3月22日、23日</p><p>6月14日、15日</p><p>9月13日、14日</p><p>12月6日、7日</p><p>青少年無人機技術水平測試（YUL）</p><p>全國統一考評時間</p><p>3月22日、23日</p><p>6月14日、15日</p><p>9月13日、14日</p><p>12月6日、7日</p><p>寒假考評月：1月、2月；</p><p>暑假考評月：7月、8月；</p><p>同時，各地分站也將視實際情況安排和組織區域性考評。</p><p>師資培訓計劃</p><p>第一季度：3月19日~21日</p><p>第二季度：6月18日~20日</p><p>第三季度：9月17日~19日</p><p>第四季度：12月3日~5日</p><p>（具體安排請以官網或公眾號公佈為準。）</p></div>
+        </details>
+        <details class="guide">
+          <summary>&#x6E2C;&#x8A55;&#x9AD4;&#x7CFB;</summary>
+          <div class="prose"><p><strong>測評體系</strong></p><p><strong>測評介紹</strong></p><p>青少年信息技術培養工程主要面向小學、初中、高中階段的青少年，立足於青少年信息技術能力培養，通過對考生人工智能、科技素養、人機協作等方面能力的考查，為青少年在相關領域提供能力證明。</p><p>證書發放單位：中國電子教育學會、工業和信息化部教育與考試中心</p><img loading="lazy" decoding="async" alt="3fa9275a8ad0bdd9f8e2642449eae401.png" src="/../../upload/image/20260319/6390954153046871323838902.png"/><img loading="lazy" decoding="async" alt="1(网站).png" src="/../../upload/image/20260319/6390954167551764185859826.png"/><img loading="lazy" decoding="async" alt="2.png" src="/../../upload/image/20260319/6390954168981472536892279.png"/><img loading="lazy" decoding="async" alt="3.png" src="/../../upload/image/20260319/6390954170365868061996726.png"/><img loading="lazy" decoding="async" alt="4.png" src="/../../upload/image/20260319/6390954171640885121301529.png"/><img loading="lazy" decoding="async" alt="5.png" src="/../../upload/image/20260319/6390954173589352039714924.png"/><strong>測評分析</strong><br/><img loading="lazy" decoding="async" alt="图片7.png" src="/../../upload/image/20260319/6390954175165934915732455.png"/><p>給予學生更多的測評回饋信息，針對性分析測試的薄弱點，綜合性回饋學習建議，進一步體現測評結果的正向回饋。</p><p><strong>測評證書</strong></p><img loading="lazy" decoding="async" alt="图片8(网站).png" src="/../../upload/image/20260319/6390954193172444745254767.png"/></div>
+        </details>
+        <details class="guide">
+          <summary>&#x95DC;&#x65BC;&#x8B49;&#x66F8;</summary>
+          <div class="prose"><p><strong>正規單位頒證，落款雙章，雙重認可！</strong></p><p>工業和信息化部教育與考試中心、中國電子教育學會共同為測試合格的學生頒發證書。</p><p>獲取證書的學生可同時在青少年信息技術培養工程官網（http://www.ycltest.com）以及工業和信息化部教育與考試中心官網（www.miiteec.org.cn）進行查詢。</p><p>查詢地址：https://www.miiteec.org.cn/plus/list.php?tid=66。</p><p><img loading="lazy" decoding="async" alt="" src="/../../upload/image/20250210/6387480546227933401795174.png"/></p></div>
+        </details>
+
+  </section>
+
+
+
+  <script src="/assets/js/cube.js?v=8df06a999d39ac8" defer></script>
+
+</main>
+
+<footer class="site">
+  <div class="cols">
+    <div>
+      <img src="/assets/iits-logo.png?v=8df063435c1f199" alt="" style="height:52px;width:auto;display:block;margin-bottom:24px">
+      <div class="addr">
+        <span>&#x5B98;&#x65B9;&#x7DB2;&#x7AD9;&#xFF1A;www.ycltesthk.com</span>
+        <span>&#x696D;&#x52D9;&#x5408;&#x4F5C;&#xFF1A;&#x2B;852 2524 8248</span>
+        <span>&#x6295;&#x8A34;&#x90F5;&#x7BB1;&#xFF1A;youth.itt@gmail.com</span>
+        <span>&#x670D;&#x52D9;&#x6642;&#x9593;&#xFF1A;&#x5DE5;&#x4F5C;&#x65E5; &#x4E0A;&#x5348;9:00~11:30&#xFF0C;&#x4E0B;&#x5348;14:00~17:30</span>
+        <span>&#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#x3000;&#x6C99;&#x7530;&#x77F3;&#x9580;&#x5B89;&#x7766;&#x91CC;6&#x865F;&#x4E2D;&#x5B78;&#x90E8;1&#x6A13;S107A&#x5BA4;</span>
+        <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+<span>&#x9999;&#x6E2F;&#x79D1;&#x5B78;&#x5712;2W&#x5927;&#x6A13;3&#x6A13;24&#x5BA4;</span>
+<span style="color:var(--faint2)">Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
+<span>&#x9999;&#x6E2F;&#x7063;&#x4ED4;&#x8ED2;&#x5C3C;&#x8A69;&#x9053;338&#x865F;&#x5317;&#x6D77;&#x4E2D;&#x5FC3;21&#x6A13;F&#x5BA4;</span>
+<span style="color:var(--faint2)">Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
+
+        <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">&#x5DE5;&#x696D;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x8207;&#x8003;&#x8A66;&#x4E2D;&#x5FC3; &#xB7; &#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x8853;&#x57F9;&#x990A;&#x5DE5;&#x7A0B;&#x9999;&#x6E2F;&#x5206;&#x7AD9;</span>
+      </div>
+    </div>
+  </div>
+  <div class="base">
+    <span>© 2026 &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</span>
+  </div>
+</footer>
+
+<script>
+  // Hero slideshows: each frame advances on its own timer, offset so the two do not flip
+  // together. Paused while the tab is hidden — a background timer swapping images nobody
+  // is looking at just burns battery — and left on the first frame under reduced-motion.
+  (function(){
+    var frames = document.querySelectorAll('.slides');
+    if(!frames.length) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    frames.forEach(function(f){
+      // Direct children, not <img> — the hero frames stack images, the news lead stacks
+      // links, and both are driven by the same loop.
+      var imgs = f.querySelectorAll(':scope > img, :scope > a');
+      var dots = f.querySelectorAll('.dots span');
+      if(imgs.length < 2) return;
+      var i = 0, every = +f.dataset.interval || 10000, offset = +f.dataset.offset || 0, timer;
+      var step = function(){
+        imgs[i].classList.remove('on');
+        if(dots[i]) dots[i].classList.remove('on');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('on');
+        if(dots[i]) dots[i].classList.add('on');
+        // Only the visible slide should be reachable by keyboard or a screen reader.
+        imgs.forEach(function(el,n){ if(el.tagName==='A'){
+          el.setAttribute('aria-hidden', n===i ? 'false' : 'true');
+          el.tabIndex = n===i ? 0 : -1; } });
+      };
+      var start = function(){ timer = setInterval(step, every); };
+      setTimeout(start, offset);
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden){ clearInterval(timer); }
+        else if(!timer || true){ clearInterval(timer); start(); }
+      });
+    });
+  })();
+
+  // Landing on /c/about#experts jumps before the twenty-odd images above it have loaded;
+  // as they arrive they push the target down and you end up somewhere else on the page.
+  // Re-aim once everything has settled, but only if the reader has not scrolled since.
+  (function(){
+    if(!location.hash) return;
+    var moved=false, mark=function(){moved=true};
+    addEventListener('wheel',mark,{passive:true,once:true});
+    addEventListener('touchstart',mark,{passive:true,once:true});
+    addEventListener('keydown',mark,{once:true});
+    var go=function(){ if(moved) return;
+      var el=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if(el) el.scrollIntoView({behavior:'auto',block:'start'});
+    };
+    addEventListener('load',function(){go();setTimeout(go,120);});
+  })();
+
+  // Reveal on arrival, and light the section tab you are actually reading.
+  (function(){
+    var rev=document.querySelectorAll('.reveal');
+    if(!rev.length) { /* still wire the tabs below */ }
+    else if(!('IntersectionObserver' in window)){rev.forEach(function(e){e.classList.add('in')});}
+    else{
+      document.documentElement.classList.add('jsr');
+      var ro=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},
+        {rootMargin:'0px 0px -10% 0px',threshold:0});
+      rev.forEach(function(e){
+        // Anything already on screen at load reveals at once rather than waiting for a
+        // scroll that may never come on a short page.
+        if(e.getBoundingClientRect().top < innerHeight) e.classList.add('in');
+        ro.observe(e);
+      });
+      // Backstop: if anything is still hidden after a moment, show it. Content must not
+      // depend on an observer firing.
+      setTimeout(function(){rev.forEach(function(e){e.classList.add('in')})},1600);
+    }
+
+    var tabs=document.querySelectorAll('.sectabs a[data-tab]');
+    if(!tabs.length)return;
+    var secs=[].map.call(tabs,function(a){return document.getElementById(a.dataset.tab)}).filter(Boolean);
+    var so=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(!e.isIntersecting) return;
+        tabs.forEach(function(a){a.classList.toggle('on',a.dataset.tab===e.target.id)});});},
+      {rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){so.observe(s)});
+    // At the very top of the page the observer's band contains no section, which left every
+    // tab unlit. The first one is where the reader is.
+    if(![].some.call(tabs,function(a){return a.classList.contains('on')})) tabs[0].classList.add('on');
+  })();
+
+  var t=document.getElementById('navToggle'), p=document.getElementById('navPanel');
+  if(t){t.addEventListener('click',function(){var o=p.classList.toggle('open');
+    t.classList.toggle('open',o); t.setAttribute('aria-expanded',o);});
+    // Tapping an anchor in the hamburger must close it, or the panel covers what you jumped to.
+    p.addEventListener('click',function(e){if(e.target.closest('a')){
+      p.classList.remove('open'); t.classList.remove('open'); t.setAttribute('aria-expanded','false');}});}
+</script>
+</body>
+</html>

@@ -56,11 +56,18 @@ rm -f /tmp/.apex-src-remote.$$ /tmp/.apex-src-dirty.$$
 
 if [ "$CHECK_ONLY" = 1 ]; then
   say "--- rsync dry run (what a pull would change) ---"
-  rsync -a --delete --itemize-changes \
+  # --checksum, not the default: a fresh clone has different mtimes from the NUC, so the default
+  # comparison calls every file changed and re-transfers the lot. The tree is small (5 MB), so
+  # comparing content is cheap and makes the report mean something.
+  # Only real changes are shown: ">f" a file whose CONTENT differs, "*deleting" a file the NUC
+  # no longer has. A line with only a timestamp flag is not a change.
+  rsync -a --delete --itemize-changes --checksum \
         --exclude='/.git/' --exclude='/app/bin/' --exclude='/app/obj/' --exclude='/export/' \
         --exclude='*.user' --exclude='*.db' --exclude='*.db-wal' --exclude='*.db-shm' \
         --dry-run \
-        "$APEX_SRC_USER@$APEX_SRC_HOST:$APEX_SRC_PATH/" "$DEST/" 2>&1 | sed 's/^/  /'
+        "$APEX_SRC_USER@$APEX_SRC_HOST:$APEX_SRC_PATH/" "$DEST/" 2>/dev/null \
+    | grep -E '^(>|\*deleting)' | sed 's/^/  /' \
+    || echo "  nothing to change"
   exit 0
 fi
 
@@ -70,7 +77,7 @@ fi
 # the delete and refreshed separately below. /.git/ must never come across: the NUC's own
 # repository would land inside this one, and the outer git would then stop seeing the files.
 say "pulling ..."
-rsync -a --delete \
+rsync -a --delete --checksum \
       --exclude='/.git/' --exclude='/app/bin/' --exclude='/app/obj/' --exclude='/export/' \
       --exclude='*.user' --exclude='*.db' --exclude='*.db-wal' --exclude='*.db-shm' \
       "$APEX_SRC_USER@$APEX_SRC_HOST:$APEX_SRC_PATH/" "$DEST/"

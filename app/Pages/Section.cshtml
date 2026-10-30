@@ -4,15 +4,9 @@
 @{ var L = Model.CurrentLang; }
 
 <section class="sec">
-  <div class="crumb">
-    <a href="/?lang=@L">@Ui.T(L,"home")</a>
-    @if (Model.Parent is not null) { <text> / </text><a href="/s/@Model.Parent.LegacyId?lang=@L">@Ui.Section(L, Model.Parent.Name)</a> }
-    <text> / </text>@Ui.Section(L, Model.Current!.Name)
-  </div>
 
   <div class="sechead">
     <div>
-      <div class="eyebrow">@(string.IsNullOrWhiteSpace(Model.Current.Type) ? "SECTION" : Model.Current.Type)</div>
       <h2 class="h2">@Ui.Section(L, Model.Current.Name)</h2>
     </div>
     <p class="lede">@Model.Items.Count @Ui.T(L,"items")@(Model.Children.Count > 0 ? $" · {Model.Children.Count} {Ui.T(L,"subcats")}" : "")</p>
@@ -20,7 +14,7 @@
 
   @if (Model.Children.Count > 0)
   {
-    <div style="display:flex;flex-wrap:wrap;gap:1px;background:var(--line2);border:1px solid var(--line2);margin-bottom:48px">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;background:transparent;border:0;margin-bottom:48px">
       @foreach (var c in Model.Children)
       {
         <a class="cell" href="/s/@c.LegacyId?lang=@L"
@@ -53,11 +47,13 @@
               </span>
             }
           </span>
+          @* Image and headline only. The excerpt was a third thing to read before deciding
+             to read anything — and articles that carry no lead text made short cards next to
+             tall ones, which is why the rows sat ragged. *@
           <span style="padding:24px 26px 28px;display:flex;flex-direction:column;gap:10px;flex:1">
             <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")@(string.IsNullOrEmpty(a.Section) ? "" : "  ·  " + Ui.Section(L, a.Section))</span>
             <h3 style="font-family:var(--serif);font-size:17px;font-weight:700;line-height:1.6;color:var(--ink2)">
               @(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</h3>
-            <span style="font-size:14px;color:var(--muted2);line-height:1.8">@t.Excerpt()</span>
           </span>
         </a>
       }

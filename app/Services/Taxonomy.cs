@@ -34,7 +34,10 @@ public static class Taxonomy
         new("news", "消息", "消息", "News", new SubDef[]
         {
             new("news",   "最新消息", "最新消息", "Latest"),
-            new("policy", "政策法規", "政策法规", "Policy"),
+            // Every item in this strand is a mainland MoE or State Council circular; there
+            // is nothing from the EDB. "政策法規" on a Hong Kong site implies local coverage
+            // that does not exist, so the label says what the strand actually holds.
+            new("policy", "國家政策", "国家政策", "National policy"),
         }),
         // Experts sits UNDER About rather than beside it. Twelve advisers are evidence about
         // who the organisation is, which is what About is for — as a top-level peer of

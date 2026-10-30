@@ -3,7 +3,11 @@ namespace IitsNews.Services;
 public record Pillar(string Img, string Kicker, string Hant, string Hans, string En,
                      string DHant, string DHans, string DEn);
 public record Panel(string Kicker, string Hant, string Hans, string En,
-                    string BHant, string BHans, string BEn);
+                    string BHant, string BHans, string BEn)
+{
+    public string Title(string l) => l == "zh-Hans" ? Hans : l == "en" ? En : Hant;
+    public string Body(string l)  => l == "zh-Hans" ? BHans : l == "en" ? BEn : BHant;
+}
 public record Track(string Code, string Hant, string Hans, string En, string[] Hant2, string[] Hans2, string[] En2);
 
 /// <summary>
@@ -66,11 +70,11 @@ public static class HomeContent
 
     public static readonly Track[] Tracks =
     {
-        new("YAI", "青少年人工智能技術水平測試", "青少年人工智能技术水平测试", "Youth AI Technology Test",
+        new("YAI", "青少年人工智能技術水平測試", "青少年人工智能技术水平测试", "Youth Artificial Intelligence Technology Proficiency Test",
             new[]{"題庫：<b>北京大學</b>","啟蒙級 ＋ 1–10 級","理論 ＋ 實操，兩場合格","適齡 6–16 歲"},
             new[]{"题库：<b>北京大学</b>","启蒙级 ＋ 1–10 级","理论 ＋ 实操，两场合格","适龄 6–16 岁"},
             new[]{"Question bank: <b>Peking University</b>","Foundation + levels 1–10","Theory and practical, both must pass","Ages 6–16"}),
-        new("YCL", "青少年人工智能編程水平測試", "青少年人工智能编程水平测试", "Youth Coding Level Test",
+        new("YCL", "青少年人工智能編程水平測試", "青少年人工智能编程水平测试", "Youth Artificial Intelligence Programming Proficiency Test",
             new[]{"題庫：<b>中國科學院計算技術研究所</b>","1–8 級（1–3 圖形化 Scratch，4–8 Python／C++）","60 分合格","適齡 8–16 歲"},
             new[]{"题库：<b>中国科学院计算技术研究所</b>","1–8 级（1–3 图形化 Scratch，4–8 Python／C++）","60 分合格","适龄 8–16 岁"},
             new[]{"Question bank: <b>Institute of Computing Technology, CAS</b>","Levels 1–8 (1–3 Scratch, 4–8 Python/C++)","Pass mark 60","Ages 8–16"}),
@@ -78,7 +82,7 @@ public static class HomeContent
             new[]{"無屏編程與邏輯思維","共 4 級","適齡 4–8 歲"},
             new[]{"无屏编程与逻辑思维","共 4 级","适龄 4–8 岁"},
             new[]{"Screen-free programming and logical thinking","4 levels","Ages 4–8"}),
-        new("SCL", "科學素養水平測試", "科学素养水平测试", "Science Literacy Test",
+        new("SCL", "科學素養水平測試", "科学素养水平测试", "Youth Science and Technology Literacy Test",
             new[]{"科學素養與工程設計","共 6 級"},
             new[]{"科学素养与工程设计","共 6 级"},
             new[]{"Science literacy and engineering design","6 levels"}),
@@ -94,4 +98,17 @@ public static class HomeContent
     public static string NB(Panel p, string l) => l switch { "zh-Hans" => p.BHans, "en" => p.BEn, _ => p.BHant };
     public static string TN(Track t, string l) => l switch { "zh-Hans" => t.Hans, "en" => t.En, _ => t.Hant };
     public static string[] TB(Track t, string l) => l switch { "zh-Hans" => t.Hans2, "en" => t.En2, _ => t.Hant2 };
+
+    /// <summary>The About lede and closing line from the live site, in three languages.</summary>
+    public static string AboutLede(string l) => l == "zh-Hans"
+        ? "工信学堂（香港）IITS 是国家<b>工业和信息化部</b>「青少年信息技术培养工程」的国际窗口。总部设于香港，服务范围涵盖香港、澳门、东南亚及海外的学校与家庭；把国家级课程体系、权威认证阶梯与大湾区竞赛平台引入香港，并以本地化教学内容落地。"
+        : l == "en"
+        ? "IITS (Industrial and Information Technology School, Hong Kong) is the international window of the <b>Ministry of Industry and Information Technology</b>'s Youth Information Technology Training Project. Based in Hong Kong and serving schools and families across Hong Kong, Macau, Southeast Asia and beyond, it brings the national curriculum, its certification ladder and the Greater Bay Area competition circuit to Hong Kong, taught in locally adapted form."
+        : "工信學堂（香港）IITS 是國家<b>工業和信息化部</b>「青少年信息技術培養工程」的國際窗口。總部設於香港，服務範圍涵蓋香港、澳門、東南亞及海外的學校與家庭；把國家級課程體系、權威認證階梯與大灣區競賽平台引入香港，並以本地化教學內容落地。";
+
+    public static string Closing(string l) => l == "zh-Hans"
+        ? "当 AI 能回答试卷上的每一道题，<br>真正重要的，是那个<em>仍然懂得提出下一个问题</em>的孩子。"
+        : l == "en"
+        ? "When AI can answer every question on the paper,<br>what matters is the child who still knows <em>how to ask the next one</em>."
+        : "當 AI 能回答試卷上的每一道題，<br>真正重要的，是那個<em>仍然懂得提出下一個問題</em>的孩子。";
 }

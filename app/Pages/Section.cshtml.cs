@@ -34,7 +34,7 @@ public class SectionModel : PageModel
         // A parent section shows its whole branch, so a top-level menu entry is never empty.
         var ids = await _menu.BranchIdsAsync(legacyId);
         Items = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-            .Where(a => a.Status == "published" && a.Kind != "expert" && a.Kind != "partner" && a.LegacySectionId != null && ids.Contains(a.LegacySectionId.Value))
+            .Where(a => a.Status == "published" && a.Kind == "article" && a.LegacySectionId != null && ids.Contains(a.LegacySectionId.Value))
             .OrderByDescending(a => a.PublishedAt).ThenByDescending(a => a.Id)
             .Take(120).ToListAsync();
 

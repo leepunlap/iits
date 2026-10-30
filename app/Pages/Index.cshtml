@@ -1,4 +1,5 @@
 @page "/"
+@using System.Linq
 @using IitsNews.Data
 @model IitsNews.Pages.IndexModel
 @{
@@ -18,7 +19,7 @@
         <div class="hero-badge">
           <span style="display:inline-block;width:7px;height:7px;border-radius:999px;background:var(--brand)"></span>@Ui.T(L,"heroBadge")
         </div>
-        <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(40px,6vw,82px);
+        <h1 class="hero-h1" style="font-family:var(--serif);font-weight:900;
                    line-height:1.06;letter-spacing:-1px;margin:0 0 30px;color:var(--ink)">
           @Ui.T(L,"heroA")<br><span style="color:var(--brand)">@Ui.T(L,"heroB")</span>
         </h1>
@@ -30,8 +31,23 @@
         </div>
       </div>
       <div class="hero-art">
-        <div class="hero-a"><img src="/assets/hero1.jpg@(Ui.V("/assets/hero1.jpg"))" alt=""></div>
-        <div class="hero-b"><img src="/assets/hero3.jpg@(Ui.V("/assets/hero3.jpg"))" alt=""></div>
+        @* Two independent slideshows. The frames carry DIFFERENT sets so the big and the
+           small photo are never the same shot, and the small one is offset by half the
+           interval so they do not flip in unison. *@
+        <div class="hero-a slides" data-interval="10000">
+          @foreach (var (f, i) in new[]{"hero1","hero5","hero2"}.Select((f,i)=>(f,i)))
+          {
+            <img src="/assets/@(f).jpg@(Ui.V($"/assets/{f}.jpg"))" alt=""
+                 class="@(i == 0 ? "on" : "")" loading="@(i == 0 ? "eager" : "lazy")" decoding="async">
+          }
+        </div>
+        <div class="hero-b slides" data-interval="10000" data-offset="5000">
+          @foreach (var (f, i) in new[]{"hero3","hero6","hero4"}.Select((f,i)=>(f,i)))
+          {
+            <img src="/assets/@(f).jpg@(Ui.V($"/assets/{f}.jpg"))" alt=""
+                 class="@(i == 0 ? "on" : "")" loading="@(i == 0 ? "eager" : "lazy")" decoding="async">
+          }
+        </div>
         <div class="hero-stat">
           <div style="font-family:var(--serif);font-weight:900;font-size:28px;line-height:1;color:#AEBDE3">5</div>
           <div style="font-size:11.5px;color:#B3BCCB;margin-top:5px;font-family:var(--mono);letter-spacing:.5px">@Ui.T(L,"heroStat")</div>
@@ -49,7 +65,7 @@
     </div>
     <p class="lede">@Ui.T(L,"assessLede")</p>
   </div>
-  <div class="grid cols-a">
+  <div class="grid cols-a swipe">
     @foreach (var t in Model.Tracks)
     {
       <div class="cell">
@@ -75,11 +91,12 @@
                      color:var(--ink2);line-height:1.55">
             @tn.A<br>@tn.B
           </h3>
-          <a href="/c/tests/@t.Code?lang=@L" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>
+          <a href="/c/tests?lang=@L#@t.Code" style="font-size:13.5px;letter-spacing:.05em">@Ui.T(L,"enter")</a>
         </div>
       </div>
     }
   </div>
+  <div class="swipehint">@Ui.T(L,"swipe")</div>
 </section>
 
 <section id="news" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
@@ -89,19 +106,32 @@
         <div class="eyebrow">NEWS</div>
         <h2 class="h2">@Ui.T(L,"news")</h2>
       </div>
-      <a class="more" href="/news/?lang=@L">@Ui.T(L,"more")</a>
+      <a class="more" href="/c/news?lang=@L">@Ui.T(L,"more")</a>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px">
-      @if (Model.Lead is not null)
+      @* The date and headline sit ON the picture behind a scrim, and the frame cycles the
+         latest posts. Previously one fixed photo carried a caption below it, which left the
+         other recent stories with nothing but a one-line row. *@
+      @if (Model.LeadSlides.Count > 0)
       {
-        <a href="/news/item/@Model.Lead.Id?lang=@L" style="display:block;color:inherit">
-          <div style="height:clamp(260px,32vw,420px);border:1px solid var(--line);margin-bottom:22px;
-                      @(leadImg is null ? "background-image:var(--hatch)" : $"background:url('{leadImg}') center/cover no-repeat")"></div>
-          <div class="meta" style="margin-bottom:10px">@(Model.Lead.PublishedAt?.ToString("yyyy-MM-dd"))</div>
-          <h3 style="font-family:var(--serif);font-size:clamp(19px,2vw,23px);font-weight:700;
-                     line-height:1.55;color:var(--ink2)">@leadT?.Title</h3>
-        </a>
+        <div class="newshero slides" data-interval="15000">
+          @foreach (var (a, i) in Model.LeadSlides.Select((a, i) => (a, i)))
+          {
+            var t = a.For(L); var img = t.FirstImage();
+            <a class="@(i == 0 ? "on" : "")" href="/news/item/@a.Id?lang=@L"
+               style="background-image:url('@img')" aria-hidden="@(i == 0 ? "false" : "true")">
+              <span class="cap">
+                <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
+                <span class="ttl">@(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</span>
+              </span>
+            </a>
+          }
+          <div class="dots" aria-hidden="true">
+            @for (var i = 0; i < Model.LeadSlides.Count; i++) { <span class="@(i == 0 ? "on" : "")"></span> }
+          </div>
+        </div>
       }
+
       <div style="display:flex;flex-direction:column">
         @foreach (var a in Model.NewsList)
         {
@@ -118,34 +148,5 @@
 </section>
 <script src="/assets/js/cube.js@(Ui.V("/assets/js/cube.js"))" defer></script>
 
-@if (Model.Partners.Count > 0)
-{
-  <section style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-    <div class="sec" style="padding-top:clamp(38px,5vw,64px);padding-bottom:clamp(38px,5vw,64px)">
-      <div class="eyebrow" style="text-align:center">PARTNERS</div>
-      <h2 class="h2" style="text-align:center;font-size:clamp(21px,2.4vw,28px);margin-bottom:36px">@Ui.T(L,"partners")</h2>
-      @* A logo wall, not article cards. A partner is a name and a mark — giving each one a
-         headline, a date and an excerpt made eight logos look like eight news stories. *@
-      <div style="display:grid;gap:1px;background:var(--line2);border:1px solid var(--line2);
-                  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
-        @foreach (var p in Model.Partners)
-        {
-          var pt = p.For(L); var logo = pt.FirstImage();
-          <span class="cell" style="display:flex;align-items:center;justify-content:center;
-                padding:26px 20px;min-height:104px" title="@pt?.Title">
-            @if (logo is not null)
-            {
-              @* Logos in their own colours. Greyscaling a partner's mark and only restoring
-                 it on hover means anyone scanning the page — or on a touch device, where
-                 there is no hover — sees the brands wrong. A partner wall exists to show
-                 whose marks these are. *@
-              <img src="@logo" alt="@pt?.Title" loading="lazy"
-                   style="max-height:56px;max-width:100%;width:auto;object-fit:contain">
-            }
-            else { <span style="font-size:13.5px;color:var(--muted2)">@pt?.Title</span> }
-          </span>
-        }
-      </div>
-    </div>
-  </section>
-}
+@* The partner logo wall lives on About, under its own anchor. It was on both pages, which
+   is one wall too many — the home page already links to About in the menu. *@

@@ -9,33 +9,17 @@
 }
 else
 {
-  <section class="sec" style="max-width:900px">
-    <div class="crumb">
-      <a href="/?lang=@L">@Ui.T(L,"home")</a> / <a href="/news/?lang=@L">@Ui.T(L,"news")</a>
-      @if (!string.IsNullOrEmpty(Model.Item.Section)) { <text> / </text>@Ui.Section(L, Model.Item.Section) }
-    </div>
+  <section class="sec">
 
     <div class="eyebrow">@(Model.Item.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</div>
     <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.6vw,42px);
-               line-height:1.35;color:var(--ink);margin-bottom:26px;text-wrap:pretty">@Model.Text.Title</h1>
+               line-height:1.35;color:var(--ink);margin-bottom:26px;text-wrap:pretty;
+               max-width:24ch">@Model.Text.Title</h1>
 
-    <div style="display:flex;gap:1px;background:var(--line2);border:1px solid var(--line2);
-                width:fit-content;margin-bottom:8px">
-      @foreach (var l in IitsNews.Data.Lang.All)
-      {
-        var has = Model.Item.Translations.Any(x => x.Lang == l);
-        if (has)
-        {
-          <a class="cell" href="/news/item/@Model.Item.Id?lang=@l"
-             style="padding:7px 15px;font-family:var(--mono);font-size:12px;
-             @(l == Model.Text.Lang ? "background:var(--brand);color:#fff" : "color:var(--muted2)")">@IitsNews.Data.Lang.Short(l)</a>
-        }
-        else
-        {
-          <span class="cell" style="padding:7px 15px;font-family:var(--mono);font-size:12px;color:var(--faint);opacity:.6">@IitsNews.Data.Lang.Short(l)</span>
-        }
-      }
-    </div>
+    @* No per-article language picker. The switch in the header is the one global control;
+       a second set of pills 60px below it offered the same three choices in a different
+       shape, and on an article with only some translations it also disagreed with the
+       header about which languages exist. *@
 
     @if (Model.Text.Lang != L)
     {
@@ -44,14 +28,9 @@ else
         @IitsNews.Data.Lang.Label(L) — @IitsNews.Data.Lang.Label(Model.Text.Lang)
       </div>
     }
-    @* A machine-translation notice only means something when there is prose to translate.
-       A video embed with no text is identical in every language, so the banner is suppressed. *@
-    @if (Model.Text.Provenance == "machine" && Model.Text.Excerpt(40).Length > 12)
-    {
-      <div style="margin:18px 0;padding:14px 18px;background:#FFF8E8;border-left:2px solid #D9A441;
-                  font-size:14px;color:#7A5B17">機器翻譯，未經審閱 · Machine translation, not yet reviewed.</div>
-    }
-
+    @* The machine-translation banner was removed at the owner's instruction. Provenance is
+       still recorded on every translation row and still shown in admin, so which rows are
+       unreviewed remains answerable — it is simply no longer announced to readers. *@
     <div class="prose">@Html.Raw(Model.Text.BodyHtml)</div>
     <script>
       // Promote data-poster onto a CSS custom property; the value comes from our own DB,
@@ -63,23 +42,4 @@ else
     </script>
   </section>
 
-  <style>
-    .prose{margin-top:30px;font-size:16.5px;line-height:1.95;color:#242C35;font-weight:300;overflow-wrap:anywhere}
-    .prose img{max-width:100%!important;height:auto!important;display:block;margin:26px auto;border:1px solid var(--line)}
-    .prose p{margin:0 0 1.15em}
-    .prose section{max-width:100%!important}
-    .prose table{width:100%!important;border-collapse:collapse;display:block;overflow-x:auto}
-    .prose td,.prose th{border:1px solid var(--line2);padding:9px 12px}
-    .prose a{color:var(--brand);text-decoration:underline}
-    .prose h1,.prose h2,.prose h3{font-family:var(--serif);margin:1.6em 0 .55em;color:var(--ink2)}
-    .prose iframe,.prose video{max-width:100%}
-    /* The old CMS hardcoded 340x220 on its embeds. Force a responsive 16:9 frame that fills
-       the article column instead — the fixed size was the whole problem. */
-    .prose .video{position:relative;width:100%;aspect-ratio:16/9;margin:28px 0;
-                  background:#000 center/cover no-repeat;border:1px solid var(--line);overflow:hidden}
-    /* the mirrored cover sits behind the player, so a slow or blocked third-party embed
-       shows the video's own still rather than a black rectangle */
-    .prose .video[data-poster]{background-image:var(--poster)}
-    .prose .video iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
-  </style>
 }

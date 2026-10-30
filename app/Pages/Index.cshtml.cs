@@ -11,9 +11,11 @@ public class IndexModel : PageModel
     public IndexModel(AppDb db, SiteMenu menu) { _db = db; _menu = menu; }
 
     public Article? Lead { get; private set; }
+    /// <summary>The latest posts that actually carry an image — the ones the lead slideshow
+    /// can show. An article with no picture would render as a caption over an empty box.</summary>
+    public List<Article> LeadSlides { get; private set; } = new();
     public List<Article> NewsList { get; private set; } = new();
     public List<(string Code, string Name, int? SectionId)> Tracks { get; private set; } = new();
-    public List<Article> Partners { get; private set; } = new();
     public Dictionary<string,int> CatCounts { get; private set; } = new();
     public string CurrentLang { get; private set; } = Data.Lang.Hant;
 
@@ -36,21 +38,21 @@ public class IndexModel : PageModel
         ViewData["Lang"] = CurrentLang;
 
         var latest = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-            .Where(a => a.Status == "published" && a.Kind != "expert" && a.Kind != "partner")
+            .Where(a => a.Status == "published" && a.Kind == "article")
             .OrderByDescending(a => a.PublishedAt).ThenByDescending(a => a.Id)
-            .Take(9).ToListAsync();
+            // Enough for the five-slide lead AND a full side list — at nine, the slideshow
+            // ate five and the column beside it fell to four rows with a hole underneath.
+            .Take(16).ToListAsync();
 
-        Lead = latest.FirstOrDefault(a => a.For(CurrentLang).FirstImage() != null) ?? latest.FirstOrDefault();
-        NewsList = latest.Where(a => a.Id != Lead?.Id).Take(7).ToList();
+        LeadSlides = latest.Where(a => a.For(CurrentLang).FirstImage() != null).Take(5).ToList();
+        Lead = LeadSlides.FirstOrDefault() ?? latest.FirstOrDefault();
+        var shown = LeadSlides.Select(a => a.Id).ToHashSet();
+        NewsList = latest.Where(a => !shown.Contains(a.Id)).Take(7).ToList();
 
         CatCounts = await _db.Articles.AsNoTracking()
             .Where(a => a.Status == "published" && a.Cat != "" && a.Kind != "partner")
             .GroupBy(a => a.Cat).Select(g => new { g.Key, N = g.Count() })
             .ToDictionaryAsync(x => x.Key, x => x.N);
-
-        Partners = await _db.Articles.AsNoTracking().Include(a => a.Translations)
-            .Where(a => a.Kind == "partner" && a.Status == "published")
-            .OrderBy(a => a.Id).ToListAsync();
 
         var sections = await _db.Sections.AsNoTracking().ToListAsync();
         foreach (var (code, zh) in TrackDefs)

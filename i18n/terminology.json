@@ -1,80 +1,188 @@
 {
-  "_doc": "Machine-readable companion to TRANSLATION.md. Applied AFTER OpenCC s2hk. See that file for the reasoning behind every entry.",
-  "protected": [
-    "工業和信息化部教育與考試中心",
-    "工業和信息化部",
-    "工信部",
-    "香港青少年信息技術培養工程（香港分站）",
-    "青少年信息技術培養工程",
-    "中國工信出版傳媒集團北京信通傳媒有限責任公司",
-    "中國電子教育學會",
-    "香港浸會大學附屬學校王錦輝中小學",
-    "香港浸會大學附屬學校",
-    "工信學堂",
-    "信息技術培養工程",
-    "信息化",
-    "AI 無界",
-    "AI無界",
-    "YAI 等級認證",
-    "初中組",
-    "小學組"
-  ],
-  "hk_terms": {
-    "信息": "資訊",
-    "視頻": "影片",
-    "音頻": "音訊",
-    "質量": "質素",
-    "打印": "列印",
-    "幼兒園": "幼稚園",
-    "激活": "啟用",
-    "默認": "預設",
-    "屏幕": "螢幕",
-    "內存": "記憶體",
-    "硬盤": "硬碟",
-    "服務器": "伺服器",
-    "程序員": "程式員",
-    "計算機": "電腦",
-    "網民": "網民",
-    "視頻號": "影片號"
+ "_doc": "Machine-readable companion to TRANSLATION.md. Applied AFTER OpenCC s2hk. Section 'official_en' is the CANONICAL English for every proper noun — each entry is evidenced from the organisation's own material, not chosen for taste. See TRANSLATION.md §15.",
+ "protected": [
+  "工業和信息化部教育與考試中心",
+  "工業和信息化部",
+  "工信部",
+  "香港青少年信息技術培養工程（香港分站）",
+  "青少年信息技術培養工程",
+  "中國工信出版傳媒集團北京信通傳媒有限責任公司",
+  "中國電子教育學會",
+  "香港浸會大學附屬學校王錦輝中小學",
+  "香港浸會大學附屬學校",
+  "工信學堂",
+  "信息技術培養工程",
+  "信息化",
+  "AI 無界",
+  "AI無界",
+  "YAI 等級認證",
+  "初中組",
+  "小學組"
+ ],
+ "hk_terms": {
+  "信息": "資訊",
+  "視頻": "影片",
+  "音頻": "音訊",
+  "質量": "質素",
+  "打印": "列印",
+  "幼兒園": "幼稚園",
+  "激活": "啟用",
+  "默認": "預設",
+  "屏幕": "螢幕",
+  "內存": "記憶體",
+  "硬盤": "硬碟",
+  "服務器": "伺服器",
+  "程序員": "程式員",
+  "計算機": "電腦",
+  "網民": "網民",
+  "視頻號": "影片號"
+ },
+ "_no_change": {
+  "_doc": "Recorded as CHECKED and correct, so nobody 'fixes' them later. Taiwan forms in particular are WRONG for a Hong Kong audience.",
+  "軟件": "HK uses 軟件, not 軟體 (Taiwan)",
+  "網絡": "HK uses 網絡, not 網路 (Taiwan)",
+  "項目": "HK uses 項目, not 專案 (Taiwan)",
+  "智能": "HK uses 智能 (人工智能), not 智慧 (Taiwan)",
+  "數據": "HK uses 數據 in a technical register",
+  "初中": "kept — appears in the official division name 初中組"
+ },
+ "en_names": {
+  "工信學堂": "Industrial and Information Technology School",
+  "工信學堂（香港）": "IITS Hong Kong",
+  "香港青少年信息技術培養工程（香港分站）": "Youth IT Training Project (Hong Kong Branch)",
+  "工業和信息化部": "Ministry of Industry and Information Technology (MIIT)",
+  "工業和信息化部教育與考試中心": "MIIT Education and Examination Center",
+  "中國電子教育學會": "China Electronics Education Society",
+  "香港浸會大學附屬學校王錦輝中小學": "HKBU Affiliated School Wong Kam Fai Secondary & Primary School",
+  "「AI 無界」": "AI Without Borders",
+  "第二屆「AI 無界」大灣區青少年人工智能創新大賽": "2nd Greater Bay Area Youth AI Innovation Competition",
+  "YAI 等級認證": "YAI Graded Certification",
+  "小初科創實踐系列": "Innovation Practice Series",
+  "初中組": "Junior Division",
+  "小學組": "Primary Division",
+  "研學": "study tour",
+  "師資培訓": "teacher training",
+  "落地案例": "case studies"
+ },
+ "en_forbidden": {
+  "Academy": "工信學堂 is a School (registered name), never an 'Academy'",
+  "Class": "superseded — the registered English name is 'Industrial and Information Technology School'",
+  "AI Unbounded": "the competition is 'AI Without Borders'",
+  "Training Camp": "use 'Boot Camp'",
+  "Secondary Division": "the boot camp's 初中組 is 'Junior Division'",
+  "China Electronics Education Association": "the Society, not the Association",
+  "Youth Information Technology Training Programme": "the organisation says Project"
+ },
+ "repair_bad_s2t": {
+  "_doc": "Errors a NAIVE s2t makes on proper nouns. Found in the ORIGINAL ycltesthk Traditional content — the old site had been run through a plain converter before we ever saw it. Applied as a repair pass over zh-Hant, machine and human alike, because they are simply wrong.",
+  "穀歌": "谷歌",
+  "阿裏雲": "阿里雲",
+  "阿裏巴巴": "阿里巴巴",
+  "阿裏": "阿里"
+ },
+ "official_en": {
+  "_doc": "Canonical English. 'src' records where the form is evidenced.",
+  "青少年信息技術培養工程": {
+   "en": "Youth Information Technology Training Project",
+   "short": "YITT",
+   "src": "English appears verbatim in the organisation's own #119 body. NOT 'Programme'."
   },
-  "_no_change": {
-    "_doc": "Recorded as CHECKED and correct, so nobody 'fixes' them later. Taiwan forms in particular are WRONG for a Hong Kong audience.",
-    "軟件": "HK uses 軟件, not 軟體 (Taiwan)",
-    "網絡": "HK uses 網絡, not 網路 (Taiwan)",
-    "項目": "HK uses 項目, not 專案 (Taiwan)",
-    "智能": "HK uses 智能 (人工智能), not 智慧 (Taiwan)",
-    "數據": "HK uses 數據 in a technical register",
-    "初中": "kept — appears in the official division name 初中組"
+  "工業和信息化部": {
+   "en": "Ministry of Industry and Information Technology",
+   "short": "MIIT",
+   "src": "standard"
   },
-  "en_names": {
-    "工信學堂": "Industry and Information Technology Class",
-    "工信學堂（香港）": "IITS Hong Kong",
-    "香港青少年信息技術培養工程（香港分站）": "Youth IT Training Project (Hong Kong Branch)",
-    "工業和信息化部": "Ministry of Industry and Information Technology (MIIT)",
-    "工業和信息化部教育與考試中心": "MIIT Education and Examination Center",
-    "中國電子教育學會": "China Electronics Education Association",
-    "香港浸會大學附屬學校王錦輝中小學": "HKBU Affiliated School Wong Kam Fai Secondary & Primary School",
-    "「AI 無界」": "AI Without Borders",
-    "第二屆「AI 無界」大灣區青少年人工智能創新大賽": "2nd Greater Bay Area Youth AI Innovation Competition",
-    "YAI 等級認證": "YAI Graded Certification",
-    "小初科創實踐系列": "Innovation Practice Series",
-    "初中組": "Junior Division",
-    "小學組": "Primary Division",
-    "研學": "study tour",
-    "師資培訓": "teacher training",
-    "落地案例": "case studies"
+  "工業和信息化部教育與考試中心": {
+   "en": "MIIT Education and Examination Center",
+   "src": "English appears in source; American spelling of Center is theirs, keep it"
   },
-  "en_forbidden": {
-    "Academy": "工信學堂 is a 'Class', never an 'Academy'",
-    "AI Unbounded": "the competition is 'AI Without Borders'",
-    "Training Camp": "use 'Boot Camp'",
-    "Secondary Division": "the boot camp's 初中組 is 'Junior Division'"
+  "中國電子教育學會": {
+   "en": "China Electronics Education Society",
+   "short": "CEES",
+   "src": "appears in source. Earlier 'Association' here was a guess and was wrong."
   },
-  "repair_bad_s2t": {
-    "_doc": "Errors a NAIVE s2t makes on proper nouns. Found in the ORIGINAL ycltesthk Traditional content — the old site had been run through a plain converter before we ever saw it. Applied as a repair pass over zh-Hant, machine and human alike, because they are simply wrong.",
-    "穀歌": "谷歌",
-    "阿裏雲": "阿里雲",
-    "阿裏巴巴": "阿里巴巴",
-    "阿裏": "阿里"
+  "中國工信出版傳媒集團": {
+   "en": "China MIIT Publishing and Media Group",
+   "src": "source"
+  },
+  "北京信通傳媒有限責任公司": {
+   "en": "Beijing Xintong Media Co., Ltd.",
+   "src": "source"
+  },
+  "工信學堂": {
+   "en": "Industrial and Information Technology School",
+   "short": "IITS",
+   "src": "REGISTERED NAME on the logo: 'INDUSTRIAL AND INFORMATION TECHNOLOGY SCHOOL LIMITED (HONG KONG BRANCH)'. Earlier 'Industry … Class' here was wrong."
+  },
+  "工信學堂（香港）": {
+   "en": "IITS Hong Kong",
+   "src": "logo"
+  },
+  "香港浸會大學附屬學校王錦輝中小學": {
+   "en": "HKBU Affiliated School Wong Kam Fai Secondary and Primary School",
+   "short": "HKBUAS",
+   "src": "school's own English name"
+  },
+  "青少年人工智能技術水平測試": {
+   "en": "Youth Artificial Intelligence Technology Proficiency Test",
+   "short": "YAI",
+   "src": "English in source #119"
+  },
+  "青少年人工智能編程水平測試": {
+   "en": "Youth Artificial Intelligence Programming Proficiency Test",
+   "short": "YCL",
+   "src": "English in source #119"
+  },
+  "青少年無屏編程水平測試": {
+   "en": "Youth Screen-Free Programming Proficiency Test",
+   "short": "ECL",
+   "src": "English in source #119"
+  },
+  "青少年科技素養水平測試": {
+   "en": "Youth Science and Technology Literacy Test",
+   "short": "SCL",
+   "src": "English in source #119 — note: no 'Proficiency', theirs breaks the pattern"
+  },
+  "青少年無人機技術水平測試": {
+   "en": "Youth Drone Technology Proficiency Test",
+   "short": "YUL",
+   "src": "English in source #119"
+  },
+  "青少年算法設計水平測試": {
+   "en": "Youth Algorithm Design Proficiency Test",
+   "src": "pattern-matched to the set"
   }
+ },
+ "technical_en": {
+  "_doc": "Technical vocabulary. HK/international register, not mainland-literal.",
+  "無屏編程": "screen-free programming",
+  "圖形化編程": "block programming",
+  "實物編程": "tangible programming",
+  "科技素養": "science and technology literacy",
+  "計算思維": "computational thinking",
+  "測評": "assessment",
+  "水平測試": "proficiency test",
+  "定級測試": "placement test",
+  "准考證": "admission ticket",
+  "考務費": "examination fee",
+  "統考": "national sitting",
+  "學年": "academic year",
+  "研學": "study tour",
+  "展評活動": "showcase event",
+  "白名單賽事": "nationally approved competition",
+  "巡線": "line-following",
+  "搭建": "build task",
+  "連線題": "matching question",
+  "編碼題": "coding task",
+  "師資培訓": "teacher training",
+  "課後服務": "after-school provision",
+  "生產性失敗": "productive failure"
+ },
+ "hk_locality_rule": {
+  "_doc": "On a Hong Kong site, pricing and locality that are not Hong Kong are REPLACED by 'contact us for information', not footnoted. Applies to RMB fee schedules, national sitting calendars, mainland city allocation rules and mainland venue lists.",
+  "keep": "Mainland places in BIOGRAPHY (an expert's university) and in NEWS reports of past events are factual history and stay.",
+  "en": "Contact us for information",
+  "zh-Hant": "請聯絡我們查詢",
+  "zh-Hans": "请联络我们查询"
+ }
 }

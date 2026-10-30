@@ -1,53 +1,218 @@
 @page "/c/{cat}"
+@using System.Linq
 @using IitsNews.Data
 @using IitsNews.Services
 @model IitsNews.Pages.CategoryModel
-@{ var L = Model.CurrentLang; }
+@{ var L = Model.CurrentLang; var isAbout = Model.Cat.Key == "about"; }
 
-<section class="sec">
-  <div class="crumb"><a href="/?lang=@L">@Ui.T(L,"home")</a> / @Taxonomy.Name(Model.Cat, L)</div>
-  <div class="eyebrow">@Model.Cat.Key.ToUpperInvariant()</div>
-  <h2 class="h2" style="margin-bottom:10px">@Taxonomy.Name(Model.Cat, L)</h2>
+@* No hero band. The title is in the menu, and the ledes were removed at the owner's
+   request, which left the band as pure padding above the tab bar. *@
+<h1 class="vh">@Taxonomy.Name(Model.Cat, L)</h1>
 
-  @if (Model.Blocks.Count == 0)
-  {
-    <div class="empty">@Ui.T(L,"nothingPublished")</div>
-  }
+@* The submenu scrolls, it does not navigate. These are the same subcategories the header
+   used to offer as a dropdown; both now point at anchors on this one page. *@
+@if (Model.Blocks.Count > 1)
+{
+  <nav class="sectabs" id="sectabs" aria-label="@Taxonomy.Name(Model.Cat, L)">
+    <div class="sectabs-in">
+      @foreach (var b in Model.Blocks)
+      {
+        <a href="#@b.Sub.Key" data-tab="@b.Sub.Key">@Taxonomy.Name(b.Sub, L)</a>
+      }
+    </div>
+  </nav>
+}
 
-  @foreach (var b in Model.Blocks)
-  {
-    <div class="sechead" style="margin:56px 0 26px">
-      <h3 style="font-family:var(--serif);font-size:22px;font-weight:700;color:var(--ink2)">
-        @(b.Sub is null ? Taxonomy.Name(Model.Cat, L) : Taxonomy.Name(b.Sub, L))
-      </h3>
-      @if (b.Sub is not null && b.Total > b.Items.Count)
+@foreach (var b in Model.Blocks)
+{
+  <section class="sec anchor reveal" id="@b.Sub.Key">
+    @{ var isTrack = Model.Cat.Key == "tests" && IitsNews.Services.TrackContent.All.ContainsKey(b.Sub.Key); }
+    <div class="sechead @(isTrack ? "has-cube" : "")" style="margin-bottom:26px">
+      <h2 class="h3sec">@Taxonomy.Name(b.Sub, L)</h2>
+      @if (b.Total > b.Items.Count && b.Sub.Key != "experts" && b.Sub.Key != "partners")
       {
         <a class="more" href="/c/@Model.Cat.Key/@b.Sub.Key?lang=@L">@Ui.T(L,"viewAll") @b.Total →</a>
       }
-    </div>
-    <div class="grid cols-b">
-      @foreach (var a in b.Items)
+      @if (isTrack)
       {
-        var t = a.For(L); var img = t.FirstImage();
-        <a class="cell" href="/news/item/@a.Id?lang=@L" style="display:flex;flex-direction:column;color:inherit">
-          <span class="@(img is null ? "hatch" : "")" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
-                @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")">
-            @if (t.HasVideo())
-            {
-              <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-                <span style="width:44px;height:44px;border-radius:50%;background:rgba(18,23,29,.62);display:flex;align-items:center;justify-content:center">
-                  <span style="border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span>
-                </span></span>
-            }
-          </span>
-          <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
-            <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
-            <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
-              @(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</h3>
-            <span style="font-size:13.5px;color:var(--muted2);line-height:1.75">@t.Excerpt(70)</span>
-          </span>
-        </a>
+        @* The same tumbling cube the home page uses, carrying this track's code. Decorative
+           here — the heading beside it already names the track — so it is hidden from
+           assistive technology and takes no tab stop rather than adding five duplicates. *@
+        <div class="cube-stage" aria-hidden="true">
+          <div class="cube">
+            <i class="f"></i><i class="b"></i><i class="r"></i>
+            <i class="l"></i><i class="u"></i><i class="d"></i>
+            <span class="lbl"><b>@b.Sub.Key</b></span>
+          </div>
+        </div>
       }
     </div>
-  }
-</section>
+
+    @if (isAbout && b.Sub.Key == "overview")
+    {
+      <div class="panels">
+        @foreach (var pn in IitsNews.Services.HomeContent.Panels)
+        {
+          <div class="panel">
+            <div class="eyebrow">@pn.Kicker</div>
+            <h3>@pn.Title(L)</h3>
+            <p>@Html.Raw(pn.Body(L))</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (b.Track is not null)
+    {
+      var tr = b.Track;
+      <p class="lede" style="max-width:70ch;margin-bottom:34px">@tr.Blurb(L)</p>
+      @* Two columns, always. Tracks carry 4, 5 or 6 facts; at two columns 4 and 6 fill
+         whole rows and an odd count lets the last cell span the gap, so no arrangement
+         leaves a dead cell — and each value gets room to sit on one line. *@
+      @* The parent site's formatting: one card of inline "label：value" bullets, set in two
+         columns. Eight full-width header bands for eight facts that are mostly four
+         characters long was a great deal of furniture for very little text — this says the
+         same thing in a third of the height and reads faster. *@
+      <ul class="factlist">
+        @foreach (var f in tr.Facts)
+        {
+          <li><span>@f.Label(L)</span>@f.Val(L)</li>
+        }
+        @* Neither the national sitting calendar nor the RMB schedule is a Hong Kong figure,
+           and showing them here read as though they were. Both defer to the branch. *@
+        <li><span>@Ui.T(L,"examDates")</span>@Ui.T(L,"contactInfo")</li>
+        <li><span>@Ui.T(L,"fees")</span>@Ui.T(L,"contactInfo")</li>
+      </ul>
+      @* The registration route hangs off the note every track already carries, so it is one
+         click from any assessment without a banner above the tabs. *@
+      <p class="footnote"><a href="/c/tests?lang=@L#overview">@Ui.T(L,"registerHk")</a></p>
+    }
+
+    @* Standing text inline. The first piece is open; the rest are disclosures, because a
+       track now carries its exam rules AND every registration, equipment and question-type
+       guide, and stacking eight of those open would bury the next section. *@
+    @{ var si = 0; }
+    @foreach (var pg in b.Pages)
+    {
+      var pt = pg.For(L);
+      if (string.IsNullOrWhiteSpace(pt?.BodyHtml)) { continue; }
+      si++;
+      if (si == 1)
+      {
+        <article class="standing">
+          @if (b.Pages.Count > 1 || !string.Equals(pt!.Title, Taxonomy.Name(b.Sub, L), StringComparison.Ordinal))
+          {
+            <h3 class="standing-h">@pt!.Title</h3>
+          }
+          <div class="prose">@Html.Raw(pt!.BodyHtml)</div>
+        </article>
+      }
+      else
+      {
+        <details class="guide">
+          <summary>@pt!.Title</summary>
+          <div class="prose">@Html.Raw(pt!.BodyHtml)</div>
+        </details>
+      }
+    }
+
+    @if (b.Sub.Key == "partners")
+    {
+      <div class="logogrid">
+        @foreach (var a in b.Items)
+        {
+          var t = a.For(L); var img = t.FirstImage();
+          <div class="logo">@if (img is not null) { <img src="@img" alt="@t?.Title" loading="lazy"> } else { <span>@t?.Title</span> }</div>
+        }
+      </div>
+    }
+    else if (b.Sub.Key == "experts")
+    {
+      @* Two columns, each card photo-left / text-right: name and institution at the top,
+         credentials at the foot. The previous 230px-tall banner crop cut the top off half
+         these portraits — they are head-and-shoulders shots of very different framing, so
+         a 3:4 frame with a high focal point keeps the face in. *@
+      <div class="expertgrid">
+        @foreach (var a in b.Items)
+        {
+          var t = a.For(L); var img = t.FirstImage();
+          @* Face-normalised crop where one exists. The originals are thumbnails shot to no
+             common framing — some tight head-and-shoulders, one a wide podium photo — so a
+             single CSS object-position could not frame them all. Each is cropped around its
+             own detected face instead; see scratchpad/portraits.py. *@
+          if (img is not null)
+          {
+            var pf = System.Text.RegularExpressions.Regex.Match(img, @"([^/]+)\.(?:jpg|jpeg|png)$",
+                       System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            if (pf.Success && System.IO.File.Exists($"/var/www/iits-staging/media/image/portraits/{pf.Groups[1].Value}.jpg"))
+            { img = $"/media/image/portraits/{pf.Groups[1].Value}.jpg"; }
+          }
+          var hant = a.For(IitsNews.Data.Lang.Hant)?.Title;
+          var meta = IitsNews.Services.ExpertRoster.For(hant);
+          var bio = t.Excerpt(120) ?? "";
+          if (!string.IsNullOrEmpty(t?.Title) && bio.StartsWith(t!.Title)) { bio = bio.Substring(t.Title.Length).TrimStart('，', ',', ' '); }
+          <a class="expertcard" href="/news/item/@a.Id?lang=@L">
+            <span class="ec-photo @(img is null ? "hatch" : "")"
+                  style="@(img is null ? "" : $"background-image:url('{img}')")"></span>
+            <span class="ec-body">
+              <span class="ec-top">
+                <span class="ec-name">@t?.Title</span>
+                @if (meta is not null)
+                {
+                  <span class="ec-org">@meta.Org(L)</span>
+                  <span class="ec-role">@meta.Role(L)</span>
+                }
+              </span>
+              <span class="ec-cred">@bio</span>
+            </span>
+          </a>
+        }
+      </div>
+    }
+    else if (b.Items.Count > 0)
+    {
+      <div class="grid cols-b" style="margin-top:34px">
+        @foreach (var a in b.Items)
+        {
+          var t = a.For(L); var img = t.FirstImage();
+          <a class="cell" href="/news/item/@a.Id?lang=@L" style="display:flex;flex-direction:column;color:inherit">
+            <span class="@(img is null ? "hatch" : "")" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  @(img is null ? "" : $"background:url('{img}') center/cover no-repeat")">
+              @if (t.HasVideo())
+              {
+                <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                  <span style="width:44px;height:44px;border-radius:50%;background:rgba(18,23,29,.62);display:flex;align-items:center;justify-content:center">
+                    <span style="border-left:12px solid #fff;border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px"></span>
+                  </span></span>
+              }
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">@(a.PublishedAt?.ToString("yyyy-MM-dd") ?? "")</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                @(string.IsNullOrWhiteSpace(t?.Title) ? Ui.T(L,"untitled") : t!.Title)</h3>
+            </span>
+          </a>
+        }
+      </div>
+    }
+  </section>
+}
+
+@if (isAbout)
+{
+  <section class="quoteband reveal">
+    <div class="sec">
+      <blockquote>@Html.Raw(IitsNews.Services.HomeContent.Closing(L))</blockquote>
+    </div>
+  </section>
+}
+
+@if (Model.Blocks.Count == 0)
+{
+  <section class="sec"><div class="empty">@Ui.T(L,"nothingPublished")</div></section>
+}
+
+@if (Model.Cat.Key == "tests")
+{
+  <script src="/assets/js/cube.js@(Ui.V("/assets/js/cube.js"))" defer></script>
+}

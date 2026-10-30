@@ -1,0 +1,30 @@
+@page "/p/{id:int}"
+@using IitsNews.Data
+@using IitsNews.Services
+@model IitsNews.Pages.PageModel_
+@{ var L = Model.CurrentLang; }
+
+@if (Model.Item is null || Model.Text is null)
+{
+  <section class="sec"><div class="empty">@Ui.T(L,"notFound")</div></section>
+}
+else
+{
+  <section class="sec">
+    @* No date line. A page is not published, it simply is. *@
+    <h1 style="font-family:var(--serif);font-weight:900;font-size:clamp(28px,3.8vw,46px);
+               line-height:1.25;letter-spacing:-.5px;color:var(--ink);margin-bottom:28px;
+               max-width:22ch">@Model.Text.Title</h1>
+
+    @* No per-article language picker. The switch in the header is the one global control;
+       a second set of pills 60px below it offered the same three choices in a different
+       shape, and on an article with only some translations it also disagreed with the
+       header about which languages exist. *@
+
+    @* The machine-translation banner was removed at the owner's instruction. Provenance is
+       still recorded on every translation row and still shown in admin, so which rows are
+       unreviewed remains answerable — it is simply no longer announced to readers. *@
+    <div class="prose">@Html.Raw(Model.Text.BodyHtml)</div>
+  </section>
+
+}

@@ -52,8 +52,10 @@ class Validate(unittest.TestCase):
         self.assertEqual(p["sprites"]["史萊姆"]["scripts"]["s1"][1], {"op": "motion_movesteps", "STEPS": 3})
 
     def test_unknown_and_outside_service_opcodes_dropped(self):
+        # sound_play used to be here; sound_* is whitelisted since 2026-10-09 (see SoundBlocks below). music_*
+        # stays out: the music extension plays its own bundled samples, not the lesson's sounds.
         for bad in ("videoSensing_whenMotionGreaterThan", "text2speech_speakAndWait", "translate_getTranslate", "music_playDrumForBeats",
-                    "procedures_call", "sound_play", "control_stop_all_now"):
+                    "procedures_call", "sound_playuntildone_now", "control_stop_all_now"):
             p, a, e = self.apply(ops({"op": "event_whenflagclicked"}, {"op": bad}))
             self.assertEqual(p["sprites"]["史萊姆"]["scripts"]["s1"], [{"op": "event_whenflagclicked"}], bad)
             self.assertTrue(any("不認識" in x for x in e), bad)
@@ -130,6 +132,27 @@ class Validate(unittest.TestCase):
         self.assertEqual(L.parse_turn('```json\n{"say":"a","question":"b","ops":[]}\n```')["say"], "a")
         self.assertEqual(L.parse_turn('好的：{"say":"a","ops":"x"}')["ops"], [])
         for bad in ("", "   ", "no json here", "[1,2]"):
+            with self.assertRaises(Exception):
+                L.parse_turn(bad)
+
+    def test_parse_turn_stray_bracket(self):
+        """2026-10-09: the two real deep-build replies (502-bp03 l3-05, 502-bp06 l6-07) with one stray closer each."""
+        a = ('{"intent":"build","say":"x","question":"q","ops":[{"do":"set_script","sprite":"小樹","id":"s1","blocks":[{"op":"event_whenflagclicked"},'
+             '{"op":"control_repeat","TIMES":{"op":"operator_divide","NUM1":40,"NUM2":2},"SUBSTACK":[{"op":"control_create_clone_of","CLONE_OPTION":"_myself_"},'
+             '{"op":"motion_changexby","DX":20}]}]}},{"do":"set_script","sprite":"小樹","id":"s2","blocks":[{"op":"control_start_as_clone"},{"op":"looks_show"}]}],"focus":"小樹"}')
+        d = L.parse_turn(a)
+        self.assertEqual([len(o["blocks"]) for o in d["ops"]], [2, 2])
+        self.assertEqual(d["ops"][0]["blocks"][1]["SUBSTACK"][1]["DX"], 20)
+        b = ('{"intent":"build","say":"x","question":"q","ops":[{"do":"set_script","sprite":"小男孩","id":"s2","blocks":[{"op":"event_whenflagclicked"},'
+             '{"op":"control_repeat_until","CONDITION":{"op":"operator_equals","OPERAND1":{"var":"i"},"OPERAND2":{"var":"n"}},"SUBSTACK":[{"op":"data_changevariableby","VALUE":1,"VARIABLE":"i"}]},'
+             '{"op":"data_addtolist","ITEM":{"var":"n"},"LIST":"質數"}]}]}],"focus":"小男孩"}')
+        d = L.parse_turn(b)
+        self.assertEqual(len(d["ops"]), 1)
+        self.assertEqual([x["op"] for x in d["ops"][0]["blocks"]], ["event_whenflagclicked", "control_repeat_until", "data_addtolist"])
+        # brackets inside strings are text; a reply that parses is returned unchanged; an unrepairable one still raises
+        self.assertEqual(L.parse_turn('{"say":"a}]b","question":"[c","ops":[]}')["say"], "a}]b")
+        self.assertIsNone(L._balance_brackets('{"say":"ok","ops":[]}'))
+        for bad in ('{"say":"a","ops":[{"op":"x"}', '{"say":"a" "ops":[]}'):
             with self.assertRaises(Exception):
                 L.parse_turn(bad)
 
@@ -1682,6 +1705,75 @@ class BuildIntentLeftover(unittest.TestCase):
         out, calls = self.run_turn("佢撞到牆都唔停", o)
         self.assertEqual(len(calls), 1); self.assertEqual(out["ops"], [])
 
+
+
+# ---------------------------------------------------------------- sound blocks (added 2026-10-09)
+SND_LESSON = {"slug": "501-bp01", "title": "是誰吃了我的蘋果",
+              "stage": {"backdrops": [{"name": "背景1", "assetId": "x", "ext": "jpg", "cx": 480, "cy": 360, "res": 2}]},
+              "sprites": [{"name": "小老鼠", "costumes": [{"name": "走路1"}], "x": 0, "y": 0,
+                           "sounds": [{"name": "吱吱", "assetId": "87a6c2d7f224d8a7ed262d96bf9c17d4", "ext": "wav",
+                                       "md5ext": "87a6c2d7f224d8a7ed262d96bf9c17d4.wav", "dataFormat": "wav",
+                                       "rate": 22050, "sampleCount": 5071}]},
+                          {"name": "大象", "costumes": [{"name": "大象"}]}],
+              "brief": {"goal": "g", "questions": ["q"], "colors": {}, "auto_checks": []}}
+
+
+class SoundBlocks(unittest.TestCase):
+    """The sound_* opcodes: the SOUND_MENU is per sprite, exactly like the costume menu (task: 501-bp01 任務三)."""
+
+    def apply(self, blocks, sprite="小老鼠", lesson=None):
+        return L.apply_ops(EMPTY, [{"do": "set_script", "sprite": sprite, "id": "s1", "blocks": blocks}], lesson or SND_LESSON)
+
+    def test_playuntildone_accepted_for_own_sound(self):
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_playuntildone", "SOUND_MENU": "吱吱"}])
+        self.assertEqual(e, [])
+        self.assertEqual(p["sprites"]["小老鼠"]["scripts"]["s1"][-1], {"op": "sound_playuntildone", "SOUND_MENU": "吱吱"})
+
+    def test_volume_and_stop(self):
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_setvolumeto", "VOLUME": 80},
+                              {"op": "sound_changevolumeby", "VOLUME": -20}, {"op": "sound_stopallsounds"}])
+        self.assertEqual(e, [])
+        self.assertEqual([b["op"] for b in p["sprites"]["小老鼠"]["scripts"]["s1"]][1:],
+                         ["sound_setvolumeto", "sound_changevolumeby", "sound_stopallsounds"])
+
+    def test_volume_reporter_in_a_say(self):
+        p, a, e = self.apply([{"op": "event_whenflagclicked"},
+                              {"op": "looks_say", "MESSAGE": {"op": "sound_volume"}}])
+        self.assertEqual(e, [])
+        self.assertEqual(p["sprites"]["小老鼠"]["scripts"]["s1"][1]["MESSAGE"], {"op": "sound_volume"})
+
+    def test_sound_of_another_sprite_refused(self):
+        # A rejected SOUND_MENU drops the input but keeps the block (the block this label already had, and
+        # exactly what a rejected COSTUME has always done — see test_bad_menu_value_drops_input_only).
+        # Callers must read `errors`, not assume the block vanished.
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_play", "SOUND_MENU": "吱吱"}], sprite="大象")
+        self.assertEqual([b["op"] for b in p["sprites"]["大象"]["scripts"]["s1"]], ["event_whenflagclicked", "sound_play"])
+        self.assertNotIn("SOUND_MENU", p["sprites"]["大象"]["scripts"]["s1"][1])
+        self.assertTrue(any("不可以是" in x for x in e), e)
+
+    def test_bad_menu_value_drops_input_only(self):
+        """The same behaviour for the long-standing costume menu: this is not new to sound."""
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "looks_switchcostumeto", "COSTUME": "nope"}])
+        self.assertEqual([b["op"] for b in p["sprites"]["小老鼠"]["scripts"]["s1"]], ["event_whenflagclicked", "looks_switchcostumeto"])
+        self.assertTrue(any("不可以是" in x for x in e), e)
+
+    def test_unknown_sound_refused(self):
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_play", "SOUND_MENU": "大象叫聲"}])
+        self.assertTrue(any("大象叫聲" in x for x in e), e)
+
+    def test_star_means_any_lesson_sound(self):
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_play", "SOUND_MENU": "*"}])
+        self.assertEqual(e, [])
+
+    def test_soundless_lesson_refuses(self):
+        les = dict(SND_LESSON, sprites=[dict(s, sounds=[]) for s in SND_LESSON["sprites"]])
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_play", "SOUND_MENU": "吱吱"}], lesson=les)
+        self.assertTrue(any("不可以是" in x for x in e), e)
+
+    def test_no_sounds_key_at_all_is_safe(self):
+        les = dict(SND_LESSON, sprites=[{"name": "小老鼠", "costumes": [{"name": "走路1"}]}])
+        p, a, e = self.apply([{"op": "event_whenflagclicked"}, {"op": "sound_play", "SOUND_MENU": "吱吱"}], lesson=les)
+        self.assertTrue(any("不可以是" in x for x in e), e)
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)

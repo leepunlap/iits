@@ -161,7 +161,7 @@ class TestLargeNumberValidation:
 
     def test_num_normal_input(self):
         """Normal numbers should work"""
-        from lab_core import _num, ValidationContext
+        from lab_core import _num
 
         class MockCtx:
             def __init__(self):

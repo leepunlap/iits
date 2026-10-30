@@ -3759,14 +3759,57 @@ def _post(h, la, u, level, slug):
 
 
 # ---------------- AI playground (teachers host): the lesson turn without the lesson ----------------
+PLAYGROUND_GROUNDING = (
+    "遊樂場沒有坐標格。學生第一次用到位置（移到／滑行／x、y）時，先用一句話把坐標系統講清楚："
+    "舞台中心是 (0,0)；x 向右為正、向左為負；y 向上為正、向下為負；舞台邊界 x 是 ±240、y 是 ±180。"
+    "只講這套系統，不要替他決定要去哪一個點。")
+PLAYGROUND_LESSONS_HINT = (
+    "如果學生在同一個概念上明顯卡住（例如不知道坐標、不知道重複是什麼、不知道碰到才動），"
+    "你可以建議他去上某一節相關的課，把這一節課的名字講出來，一次，用一句話，然後回到他現在的問題。"
+    "不要長篇解釋那一課的內容，不要替他做完那一課。可用的課："
+    "「位置與坐標」（x、y、負數、原點）、「穿越迷宮」（偵測、碰到、方向鍵）、"
+    "「瘋狂賽車」（重複與速度）、「美麗的圖形」（角度、畫筆）、「是誰吃了我的蘋果」（跟隨滑鼠、重複、造型）。")
+
+
 PLAYGROUND_LESSON = {
     "title": "遊樂場",
     "brief": {"goal": "依照學生自己的想法砌積木。",
-              "limits": "—",
+              "limits": PLAYGROUND_GROUNDING + PLAYGROUND_LESSONS_HINT,
               "questions": [], "auto_checks": [], "key_ideas": [], "no_fill": []},
     "sprites": [], "stage": {"backdrops": []}, "keys": False,
 }
 
+
+
+
+PG_ROUTE = (
+    (r"坐標|坐标|x\s*和\s*y|x\s*、\s*y|負數|负数|原點|原点", "位置與坐標"),
+    (r"重複|重复|循環|循环|不停|一直", "瘋狂賽車"),
+    (r"碰到|撞到|牆|墙|退後|退后", "穿越迷宮"),
+    (r"造型|動畫|动画|換裝|换装", "是誰吃了我的蘋果"),
+)
+PG_LESSON_HANS = {"位置與坐標": "位置与坐标", "瘋狂賽車": "疯狂赛车",
+                  "穿越迷宮": "穿越迷宫", "是誰吃了我的蘋果": "是谁吃了我的苹果"}
+PG_CONFUSED = re.compile(r"唔明|不懂|不明白|不會|不会|不知道|甚麼意思|什么意思|搞唔清|搞不清|記唔住|记不住")
+
+
+def pg_route(text, locale=None):
+    """One sentence pointing at the lesson that fills the gap, or ''. Deterministic: the prompt
+    alone is ignored by the model (verified 2026-10-29), so routing is appended in code."""
+    t = str(text or "")
+    if not PG_CONFUSED.search(t):
+        return ""
+    for rx, lesson in PG_ROUTE:
+        if re.search(rx, t):
+            LL.enter(locale)
+            _loc = LL.current()
+            _tpl = {
+                "zh-Hant": "想多練這個，可以上「%s」——那裏可以自己動手試。",
+                "zh-Hans": "想多练这个，可以上「%s」——那里可以自己动手试。",
+                "en": "To practise this, the lesson \u201c%s\u201d is the place \u2014 you can try it yourself there.",
+            }.get(_loc, "想多練這個，可以上「%s」——那裏可以自己動手試。")
+            return _tpl % (PG_LESSON_HANS.get(lesson, lesson) if _loc == "zh-Hans" else lesson)
+    return ""
 
 def playground(h, la):
     """The teachers AI playground: lab_turn with a stub lesson.
@@ -3789,6 +3832,11 @@ def playground(h, la):
     hist = [m for m in (body.get("history") or [])[-8:]
             if isinstance(m, dict) and m.get("role") in ("user", "assistant")]
     lesson = dict(PLAYGROUND_LESSON)
+    # The playground has no lesson sprites, so sanitize dropped every real one and the assistant
+    # answered "there is no character" to a child looking at one. Take the names from the request.
+    _prog = body.get("program") if isinstance(body.get("program"), dict) else {}
+    lesson["sprites"] = [{"name": str(n)[:40], "costumes": [{"name": ""}], "x": 0, "y": 0, "visible": True}
+                         for n in list((_prog.get("sprites") or {}).keys())[:40]]
     try:
         program = sanitize_program(body.get("program"), lesson)
     except Exception:
@@ -3800,6 +3848,10 @@ def playground(h, la):
         out = lab_turn(lesson, hist, program, body.get("run"), text, la.API_KEY, model, locale=body.get("locale"))
     except Exception as e:
         return h._j(502, {"ok": False, "reason": "AI 暫時無法回應（%s）。" % type(e).__name__})
+    _route = pg_route(text, body.get("locale"))
+    if _route:
+        out = dict(out)
+        out["question"] = ((out.get("question") or "").rstrip() + " ") + _route
     return h._j(200, {"ok": True, "model": model, "ms": int((time.time() - t0) * 1000),
                       "say": out.get("say", ""), "question": out.get("question", ""),
                       "ops": out.get("ops") or [], "errors": out.get("errors") or [],

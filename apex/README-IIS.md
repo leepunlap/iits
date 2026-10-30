@@ -1,8 +1,8 @@
 # ycltesthk.com — static export for IIS
 
-Exported from the NUC's IITS staging app (127.0.0.1:5099, .NET/Kestrel) on 2026-09-10 22:39.
+Exported from the NUC's IITS staging app (127.0.0.1:5099, .NET/Kestrel) on 2026-10-31 04:17.
 
-* 732 pages in three languages: default (zh-Hant) at the root, `zh-Hans/` and `en/` beside it
+* 114 pages in three languages: default (zh-Hant) at the root, `zh-Hans/` and `en/` beside it
 * `/assets/` and `/media/` copied from /var/www/iits-staging
 * `/upload/...` is not duplicated — `web.config` rewrites it to `/media/...` (same files)
 * every page is a directory with `index.html`, so IIS default documents serve clean URLs

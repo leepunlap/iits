@@ -200,6 +200,21 @@ def main():
           <action type="Rewrite" url="{R:1}/index.html" />
         </rule>
       </rules>
+      <!-- 2026-09-26: pages must show corrections at once (a wrong bank name stayed in browsers for up to 7 days).
+           HTML is revalidated on every visit (unchanged pages cost a 304 via ETag); images, fonts, CSS and JS keep the
+           7-day clientCache above. This rule was added by hand on the IIS box; the export has to
+           write it too, or every export quietly reverts the fix. -->
+      <outboundRules>
+        <rule name="html-revalidate" preCondition="is-html">
+          <match serverVariable="RESPONSE_Cache_Control" pattern=".*" />
+          <action type="Rewrite" value="no-cache" />
+        </rule>
+        <preConditions>
+          <preCondition name="is-html">
+            <add input="{RESPONSE_CONTENT_TYPE}" pattern="^text/html" />
+          </preCondition>
+        </preConditions>
+      </outboundRules>
     </rewrite>
   </system.webServer>
 </configuration>

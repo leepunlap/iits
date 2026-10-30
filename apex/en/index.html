@@ -5,13 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home · Industrial and Information Technology School (Hong Kong)</title>
 <meta name="description" content="From first discovery to applied innovation &#x2014; linked to national certification and the Greater Bay Area competition circuit.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Industrial and Information Technology School (Hong Kong)">
+<meta property="og:title" content="Home">
+<meta property="og:image" content="/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box}
   :root{
-    /* Palette taken verbatim from iits.roadlogica.com so the two sites are one brand.
+    /* Palette taken verbatim from iits.giftedintl.com so the two sites are one brand.
        Replaces the design-artboard values (#46599C / #FAFAFC / Noto Serif) at the owner's
        instruction to follow the live site's CSS. */
     --bg:#f7f6f2; --panel:#f0eeea; --panel2:#faf9f6; --foot:#0d1b3a; --card:#ffffff;
@@ -37,7 +41,7 @@
   img{max-width:100%}
 
   .shell{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
-  /* ---- hero, lifted from the live iits.roadlogica.com ---- */
+  /* ---- hero, lifted from the live iits.giftedintl.com ---- */
   .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
   .hero-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 9px;background:#fff;
               border:1px solid rgba(16,22,29,.1);border-radius:999px;font-family:var(--mono);
@@ -82,10 +86,10 @@
           box-shadow:0 40px 80px -30px rgba(16,22,29,.35)}
   .hero-b{position:absolute;bottom:30px;left:0;width:50%;height:230px;border-radius:20px;overflow:hidden;
           box-shadow:0 30px 60px -24px rgba(16,22,29,.35);border:5px solid var(--bg);
-          }
+          animation:floaty 6s ease-in-out infinite}
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
-             }
+             animation:floaty 5s ease-in-out infinite}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
@@ -593,22 +597,6 @@
 
 
 </style>
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="工信學堂（香港）">
-<meta property="og:title" content="Home">
-<meta property="og:description" content="From first discovery to applied innovation — linked to national certification and the Greater Bay Area competition circuit.">
-<meta property="og:url" content="https://ycltesthk.com/en/">
-<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
-<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="工信學堂（香港）">
-<meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Home">
-<meta name="twitter:description" content="From first discovery to applied innovation — linked to national certification and the Greater Bay Area competition circuit.">
-<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
-<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
 </head>
 <body>
 
@@ -630,8 +618,8 @@
           <a href="/zh-Hans/" class="" hreflang="zh-Hans">&#x7B80;</a>
           <a href="/en/" class="on" hreflang="en">EN</a>
       </span>
-      <a class="area" href="https://students.ycltesthk.com/">Student Area</a>
-      <a class="area area-cta" href="https://teachers.ycltesthk.com/">Teacher Area</a>
+      <a class="area" href="https://iits.giftedintl.com/student/">Student Area</a>
+      <a class="area area-cta" href="https://iits.giftedintl.com/teacher/">Teacher Area</a>
     </nav>
 
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -646,8 +634,8 @@
           <a href="/zh-Hans/" class="">&#x7B80;</a>
           <a href="/en/" class="on">EN</a>
       </div>
-      <a href="https://students.ycltesthk.com/">Student Area</a>
-      <a href="https://teachers.ycltesthk.com/">Teacher Area</a>
+      <a href="https://iits.giftedintl.com/student/">Student Area</a>
+      <a href="https://iits.giftedintl.com/teacher/">Teacher Area</a>
     </div>
   </div>
 </header>
@@ -817,15 +805,8 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px">
         <div class="newshero slides" data-interval="15000">
-            <a class="on" href="/en/news/item/197/"
-               style="background-image:url('/media/poster/2026-autumn/cover.jpg')" aria-hidden="false">
-              <span class="cap">
-                <span class="meta">2026-09-25</span>
-                <span class="ttl">2026/27 Autumn Enrolment: IITS AI Education and Innovation Centre at HKBUAS Wong Kam Fai</span>
-              </span>
-            </a>
-            <a class="" href="/en/news/item/125/"
-               style="background-image:url('/media/wx/12336735777041738b30.jpg')" aria-hidden="true">
+            <a class="on" href="/en/news/item/125/"
+               style="background-image:url('/media/wx/12336735777041738b30.jpg')" aria-hidden="false">
               <span class="cap">
                 <span class="meta">2026-06-11</span>
                 <span class="ttl">Summer Enrolment: IITS AI Education and Innovation Centre at HKBUAS Wong Kam Fai</span>
@@ -852,6 +833,13 @@
                 <span class="ttl">Study Tour: Beijing</span>
               </span>
             </a>
+            <a class="" href="/en/news/item/103/"
+               style="background-image:url('/upload/image/20260413/6391169283022826593606332.jpg')" aria-hidden="true">
+              <span class="cap">
+                <span class="meta">2026-04-13</span>
+                <span class="ttl">IITS Joins Hong Kong AI in Education Symposium</span>
+              </span>
+            </a>
           <div class="dots" aria-hidden="true">
  <span class="on"></span>  <span class=""></span>  <span class=""></span>  <span class=""></span>  <span class=""></span>           </div>
         </div>
@@ -861,11 +849,6 @@
              border-bottom:1px solid var(--line);color:inherit">
             <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2026-08-13</span>
             <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">2nd Greater Bay Area Youth AI Innovation Competition Concludes in Hong Kong</span>
-          </a>
-          <a href="/en/news/item/103/" style="display:flex;gap:18px;padding:16px 0;
-             border-bottom:1px solid var(--line);color:inherit">
-            <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2026-04-13</span>
-            <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">IITS Joins Hong Kong AI in Education Symposium</span>
           </a>
           <a href="/en/news/item/92/" style="display:flex;gap:18px;padding:16px 0;
              border-bottom:1px solid var(--line);color:inherit">
@@ -892,6 +875,11 @@
             <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2025-04-21</span>
             <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">Youth IT Training Project Launches in Hong Kong, with a Mainland&#x2013;Hong Kong Academic Forum on AI and IT Education</span>
           </a>
+          <a href="/en/news/item/89/" style="display:flex;gap:18px;padding:16px 0;
+             border-bottom:1px solid var(--line);color:inherit">
+            <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2024-12-07</span>
+            <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">Expert Forum on Identifying and Developing Exceptional Innovative Talent</span>
+          </a>
       </div>
     </div>
   </div>
@@ -911,8 +899,7 @@
         <span>Email: youth.itt@gmail.com</span>
         <span>Hours: Weekdays 09:00&#x2013;11:30, 14:00&#x2013;17:30</span>
         <span>S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
-        <span>Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
-<span>Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
+        <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
         <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">MIIT Education and Examination Center &#xB7; Hong Kong branch, Youth Information Technology Training Project</span>
       </div>
     </div>
@@ -1013,42 +1000,6 @@
     // Tapping an anchor in the hamburger must close it, or the panel covers what you jumped to.
     p.addEventListener('click',function(e){if(e.target.closest('a')){
       p.classList.remove('open'); t.classList.remove('open'); t.setAttribute('aria-expanded','false');}});}
-</script>
-<!-- promo bubble: 2026/27 autumn prospectus -> newest news article. Added after the static export
-     (source: ~/ycltesthk-deploy/20260925); a re-export drops it. Remove when autumn enrolment closes. -->
-<div id="promo-bubble" class="promo-bubble" hidden>
-  <a class="pb-link" href="/en/news/item/197/">
-    <span class="pb-tag">New</span>
-    <span class="pb-text"><b>Autumn 2026/27 enrolment</b><small>“AI奇思·工房” · classes from 3 Oct</small></span>
-    <span class="pb-arrow" aria-hidden="true">&rarr;</span>
-  </a>
-  <button class="pb-x" type="button" aria-label="Close">&times;</button>
-</div>
-<style>
-.promo-bubble{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;background:#0d1b3a;color:#fff;
-  border-radius:999px;box-shadow:0 10px 30px rgba(13,27,58,.30);font-family:var(--sans);animation:pb-in .5s ease-out .6s both}
-.promo-bubble[hidden]{display:none}
-.promo-bubble .pb-link{display:flex;align-items:center;gap:12px;padding:10px 6px 10px 12px;color:#fff;text-decoration:none}
-.promo-bubble .pb-tag{background:#d9a94a;color:#0d1b3a;font-weight:700;font-size:12px;line-height:1;border-radius:999px;padding:6px 10px;letter-spacing:.06em;flex-shrink:0}
-.promo-bubble .pb-text{display:flex;flex-direction:column;line-height:1.35}
-.promo-bubble .pb-text b{font-size:15px;font-weight:700;letter-spacing:.02em}
-.promo-bubble .pb-text small{font-size:12px;color:#b9c4d8}
-.promo-bubble .pb-arrow{font-size:18px;color:#d9a94a;transition:transform .2s}
-.promo-bubble .pb-link:hover .pb-arrow{transform:translateX(3px)}
-.promo-bubble .pb-x{background:none;border:0;color:#b9c4d8;font-size:22px;line-height:1;padding:10px 16px 12px 8px;cursor:pointer}
-.promo-bubble .pb-x:hover{color:#fff}
-.promo-bubble :focus-visible{outline:2px solid #d9a94a;outline-offset:2px;border-radius:999px}
-@keyframes pb-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@media (max-width:560px){.promo-bubble{left:12px;right:12px;bottom:12px}.promo-bubble .pb-link{flex:1;min-width:0}}
-@media (prefers-reduced-motion:reduce){.promo-bubble{animation:none}}
-@media print{.promo-bubble{display:none!important}}
-</style>
-<script>
-(function(){var b=document.getElementById('promo-bubble'),k='promo-autumn-2026-closed';if(!b)return;
-  try{if(sessionStorage.getItem(k))return;}catch(e){}
-  b.hidden=false;
-  b.querySelector('.pb-x').addEventListener('click',function(){b.hidden=true;try{sessionStorage.setItem(k,'1');}catch(e){}});
-})();
 </script>
 </body>
 </html>

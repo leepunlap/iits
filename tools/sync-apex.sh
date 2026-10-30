@@ -140,19 +140,28 @@ chmod -R u+rwX "$STAGE/x"
 # --- 4. into apex/ -----------------------------------------------------------------------
 hr
 mkdir -p "$DEST"
-# --delete removes files the box no longer has; media/ is excluded so the local media copy and
-# the tracked manifest are never deleted by a pull that did not include media.
-rsync -a --delete \
-      --exclude='/media' \
-      --exclude='/media.manifest' \
-      --exclude='*.bak-*' \
-      "$STAGE/x/" "$DEST/"
+# --delete removes files the box no longer has. Files this repo OWNS must be protected from it:
+# apex/README.md is the repo's own note about this directory, not a file the box has, so a pull
+# would otherwise delete it. Everything the box owns is the rest of the tree.
+REPO_OWNED=(/README.md)
+EXCLUDES=(--exclude='/media' --exclude='/media.manifest' --exclude='*.bak-*')
+for f in "${REPO_OWNED[@]}"; do EXCLUDES+=(--exclude="$f"); done
+
+rsync -a --delete "${EXCLUDES[@]}" "$STAGE/x/" "$DEST/"
+
+cp "$new_media_manifest" "$DEST/media.manifest"
+
+# the repo's own files must still be there
+for f in "${REPO_OWNED[@]}"; do
+  [ -f "$DEST$f" ] || { say "ERROR: the pull removed $DEST$f" >&2; exit 1; }
+done
 
 cp "$new_media_manifest" "$DEST/media.manifest"
 
 src=$(wc -l < "$STAGE/source.tsv")
+# count only what came off the box: not the repo's own files, not the manifest, not the backups
 got=$(find "$DEST" -type f -not -path "$DEST/media/*" -not -name 'media.manifest' \
-      -not -name '*.bak-*' | wc -l)
+      -not -name '*.bak-*' -not -name 'README.md' | wc -l)
 say "  $got of $src source files in apex/"
 
 if [ -n "$old_sum" ] && [ "$old_sum" != "$new_sum" ]; then

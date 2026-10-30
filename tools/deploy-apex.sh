@@ -18,6 +18,14 @@
 #   tools/deploy-apex.sh            export, push, verify
 #   tools/deploy-apex.sh --dry-run  work out what would change; push nothing
 #   tools/deploy-apex.sh --limit N  export only the first N pages (a smoke test)
+#   tools/deploy-apex.sh --allow-loss  push even if the export would drop content
+#
+# IT ALSO REFUSES TO PUSH AN EXPORT THAT WOULD TAKE CONTENT AWAY. The export rebuilds the
+# pages from the app; it cannot know about edits made to the published files by hand, and it
+# has dropped them twice - the 2026-09-26 revalidation rule in web.config, then the autumn
+# enrolment promo bubble, the newer enrolment poster and two news items. So before packing,
+# this runs tools/check-apex-loss.sh, which compares the export against what is on the box and
+# fails the publish if the export has content the live site does not.
 set -euo pipefail
 
 TWIN="${TWIN:-10.48.88.254}"
@@ -28,11 +36,13 @@ IIS_ROOT='C:\wwwroot\ycltesthk\wwwroot-new'
 
 DRY=0
 LIMIT=""
+ALLOW_LOSS=0
 for a in "$@"; do
   case "$a" in
     --dry-run) DRY=1 ;;
     --limit) shift; LIMIT="${1:-}" ;;
-    *) echo "unknown option: $a (use --dry-run or --limit N)" >&2; exit 2 ;;
+    --allow-loss) ALLOW_LOSS=1 ;;
+    *) echo "unknown option: $a (use --dry-run, --limit N or --allow-loss)" >&2; exit 2 ;;
   esac
 done
 
@@ -107,6 +117,22 @@ fi
 
 if [ "${PUSH_N:-0}" = "0" ]; then
   hr; say "nothing to push - IIS already matches the export"; exit 0
+fi
+
+# --- 2b. would this export take content away? ------------------------------------------------
+hr
+say "checking that the export would not drop anything that is on the site ..."
+if ! "$(dirname "$0")/check-apex-loss.sh" --no-export; then
+  if [ "$ALLOW_LOSS" = 1 ]; then
+    hr
+    say "--allow-loss given: pushing even though the export would drop content."
+  else
+    hr
+    say "PUBLISH STOPPED. The export would remove content that is on the site right now."
+    say "Fix the source so the export produces it - do not patch the site by hand - then publish again."
+    say "If dropping it is deliberate, re-run with --allow-loss."
+    exit 1
+  fi
 fi
 
 # --- 3. package and push -----------------------------------------------------------------

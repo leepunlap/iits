@@ -55,7 +55,7 @@ manifest_b64="$(printf '%s' "$manifest_cmd" | iconv -f UTF-8 -t UTF-16LE | base6
 say "reading the manifest from $APEX_USER@$APEX_HOST ..."
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$APEX_USER@$APEX_HOST" \
     "powershell -NoProfile -EncodedCommand $manifest_b64" 2>/dev/null \
-  | tr -d '\r' | grep -vE '^#< CLIXML' | grep -E '\S' | sort > "$STAGE/manifest.tsv"
+  | tr -d '\r' | grep -vE '^#< CLIXML' | grep -E '\S' | sort > "$STAGE/manifest.tsv" || true
 
 files=$(wc -l < "$STAGE/manifest.tsv")
 if [ "$files" -eq 0 ]; then say "no files came back - is the path right?" >&2; exit 1; fi

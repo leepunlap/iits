@@ -9,8 +9,11 @@ sites from `/var/www/`. Only the `*.ycltesthk.com` DNS wildcard actually points 
 `ycltesthk.com` and `www` are a separate Windows/IIS server, and the mail names are at AdvanHost.
 
 The apex (`ycltesthk.com`) is that Windows/IIS server, and it is the one property in this repo
-whose tree lives off the NUC: it is versioned in [`apex/`](../apex/) and refreshed with
-[`tools/sync-apex.sh`](../tools/sync-apex.sh). The team edits it directly on the box.
+whose tree lives off the NUC: the published static tree is versioned in [`apex/`](../apex/) and
+refreshed with [`tools/sync-apex.sh`](../tools/sync-apex.sh); the .NET app that generates it is
+versioned in [`apex-src/`](../apex-src/) and refreshed with
+[`tools/sync-apex-src.sh`](../tools/sync-apex-src.sh). The team edits the published tree directly
+on the box.
 
 The two portals are the subject of this repo:
 

@@ -1,19 +1,23 @@
-# apex — ycltesthk.com (the IIS box)
+# apex — ycltesthk.com
 
-The apex is a **static** site on a Windows/IIS box — `154.37.220.26`, IIS site "ycltesthk",
-root `C:\wwwroot\ycltesthk\wwwroot-new`, bound to `ycltesthk.com` and `www.ycltesthk.com`.
-It is a different machine from the portals: `teachers./students.ycltesthk.com` live on the NUC
+The apex has **two halves**, and this repo now holds both.
+
+| | where it lives | in this repo |
+|---|---|---|
+| the **generator** — a .NET app that makes the site | source on the NUC at `~/iits-news`; built and running on the twin container at `127.0.0.1:5099` | [`apex-src/`](../apex-src/) |
+| the **published tree** — the static site IIS serves | Windows/IIS box `154.37.220.26`, IIS site "ycltesthk", root `C:\wwwroot\ycltesthk\wwwroot-new` | `apex/` (this directory) |
+
+They are not the same machine as the portals: `teachers./students.ycltesthk.com` live on the NUC
 (see [`portals/`](../portals/)), and the apex lives on IIS.
 
-## Why this directory exists
+## The published tree — this directory
 
 The team edits the apex **directly on the IIS box** — `web.config` carries dated comments and
 `index.html` differs from its own backup — so until this directory existed the box was the only
 place the site was. None of it was in git: no history, no review, no way to see what a change
-was, and no way back if the box was replaced. `apex/` is a snapshot of that tree, and
-`tools/sync-apex.sh` refreshes it.
+was, and no way back if the box was replaced.
 
-## Updating it
+### Updating it
 
 ```sh
 tools/sync-apex.sh          # pull the source tree and report what changed
@@ -32,7 +36,7 @@ git add apex/ && git commit -m "..."
 The script **never writes to the box** — it only reads — so it is safe to run at any time, and
 a pull can never break the live site. Nothing is ever deleted on the box by this repo.
 
-## What is here, and what is not
+### What is here, and what is not
 
 | | |
 |---|---|
@@ -44,16 +48,36 @@ a pull can never break the live site. Nothing is ever deleted on the box by this
 uploads a new image, the manifest changes and that change is committed — the binary itself stays
 on the box, and `--all` pulls it into the working tree when you want to see it.
 
-## Where the site comes from
+## The generator — `apex-src/`
 
-The tree is a static export of the IITS news app (`iits-news`, .NET, running on the twin
-container at `127.0.0.1:5099`); see `README-IIS.md` in this directory for the original export
-notes and the IIS setup. That app's own source is **not** in this repo, so what is versioned
-here is the exported tree — which is also what the team edits.
+A .NET Razor Pages app (`app/`), the article sources in markdown (`articles/`), the site's assets
+(`assets/`), the taxonomy and navigation (`data/`) and the translations (`i18n/`). It also has
+`app/README.md`, which explains the design, and `QUEUE.md`, the audit queue the team works
+through.
+
+Its own history came with it — `apex-src/` was imported as a subtree, so
+`git log 2b3e9e8` is the app's 29 commits, from "IitsNews Phase 04" (2026-08-29) to the commit
+that finally recorded the working tree.
+
+```sh
+tools/sync-apex-src.sh          # pull the source from the NUC and report what changed
+tools/sync-apex-src.sh --check  # report what changed on the NUC; change nothing
+```
+
+`apex-src/export/iits-static-export.py` is the script that turns the running app into the static
+tree: it crawls the app in all three languages, rewrites the links to directory-style paths, and
+writes `web.config` and `README-IIS.md`. It runs against the app on `:5099` and writes
+`/assets/` and `/media/` from `/var/www/iits-staging`.
+
+> The published tree in this directory and the app do **not** currently match: the app serves a
+> 65,157-byte home page, the IIS tree has 68,917 bytes. The tree was last exported on 2026-10-07
+> and hand-edited since; the app has moved on. Re-exporting and pushing that up to the IIS box
+> is a separate job, and the export script has to run where `:5099` lives.
 
 ## Serving it locally
 
-It is plain static files with absolute paths, so any static server on the directory works:
+The published tree is plain static files with absolute paths, so any static server on the
+directory works:
 
 ```sh
 python3 -m http.server 8000 --directory apex

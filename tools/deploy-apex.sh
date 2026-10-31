@@ -19,6 +19,7 @@
 #   tools/deploy-apex.sh --dry-run  work out what would change; push nothing
 #   tools/deploy-apex.sh --limit N  export only the first N pages (a smoke test)
 #   tools/deploy-apex.sh --allow-loss  push even if the export would drop content
+#   tools/deploy-apex.sh --no-export  reuse the export already on twin instead of crawling again
 #   tools/deploy-apex.sh --baseline <root>  compare the export against that tree on the IIS
 #       box instead of the live site - use it when the live site is the broken state and the
 #       publish is the repair (the backup holds what the broken publish overwrote; files it
@@ -53,13 +54,15 @@ DRY=0
 LIMIT=""
 ALLOW_LOSS=0
 BASELINE=""
+REUSE=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --dry-run) DRY=1; shift ;;
     --limit) shift; LIMIT="${1:-}"; shift ;;
     --allow-loss) ALLOW_LOSS=1; shift ;;
     --baseline) shift; BASELINE="${1:-}"; shift ;;
-    *) echo "unknown option: $1 (use --dry-run, --limit N, --allow-loss or --baseline <root>)" >&2; exit 2 ;;
+    --no-export) REUSE=1; shift ;;
+    *) echo "unknown option: $1 (use --dry-run, --limit N, --allow-loss, --baseline <root> or --no-export)" >&2; exit 2 ;;
   esac
 done
 
@@ -98,9 +101,14 @@ fi
 
 hr
 say "exporting on twin ..."
-ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
-    "cd ~ && rm -rf /tmp/apex-export && python3 '$EXPORT_SCRIPT' /tmp/apex-export ${LIMIT:+--limit $LIMIT}" 2>&1 \
-  | grep -vE '^Warning: Permanently' | tail -4
+if [ "$REUSE" = 1 ] && ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
+    'test -d /tmp/apex-export && find /tmp/apex-export -type f | head -1 | grep -q .' 2>/dev/null; then
+  say "  reusing the export already on twin (/tmp/apex-export)"
+else
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
+      "cd ~ && rm -rf /tmp/apex-export && python3 '$EXPORT_SCRIPT' /tmp/apex-export ${LIMIT:+--limit $LIMIT}" 2>&1 \
+    | grep -vE '^Warning: Permanently' | tail -4
+fi
 
 say "hashing the export ..."
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
@@ -188,13 +196,14 @@ hr
 say "packaging ..."
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" 'python3 - <<PY
 import os, zipfile, pathlib
+ZIP = "/tmp/apex-push.zip"
 root = pathlib.Path("/tmp/apex-export")
 files = [l.strip() for l in open("/tmp/apex-push-list.txt") if l.strip()]
 total = sum((root/f).stat().st_size for f in files)
-with zipfile.ZipFile("/tmp/apex-push.zip", "w", zipfile.ZIP_DEFLATED, compresslevel=6) as z:
+with zipfile.ZipFile(ZIP, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as z:
     for f in files:
         z.write(root/f, f)
-print(f"  {len(files)} files, {total:,} bytes -> zip {os.path.getsize(\"/tmp/apex-push.zip\"):,}")
+print(f"  {len(files)} files, {total:,} bytes -> zip {os.path.getsize(ZIP):,}")
 PY' 2>&1 | grep -vE '^Warning: Permanently'
 
 say "pushing twin -> IIS ..."

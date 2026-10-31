@@ -30,6 +30,14 @@
     // that on the live site, and a share card that names the operator beats one that
     // names the operator in the reader's own language.
     var ogSiteName = "工信學堂（香港）";
+    // The share-card values are written the way the site has always written them: the Chinese
+    // stays Chinese, not & #x 5 D E 5 ;. Razor's default encoder escapes every non-ASCII
+    // character, and a share card whose title is a row of entities reads badly in anything
+    // that does not decode them. This encoder escapes only the characters that would break
+    // out of the attribute - &, <, >, " and ' - and leaves the rest as it is.
+    var metaEncoder = System.Text.Encodings.Web.HtmlEncoder.Create(
+        System.Text.Unicode.UnicodeRanges.All);
+    string Meta(string s) => metaEncoder.Encode(s);
     string LangHref(string l)
     {
         var q = Context.Request.Query.Where(kv => kv.Key != "lang")
@@ -45,21 +53,21 @@
 <title>@ViewData["Title"] · @Ui.T(lang,"siteName")</title>
 <meta name="description" content="@Ui.T(lang,"tagline")">
 <meta property="og:type" content="@ogType">
-<meta property="og:site_name" content="@ogSiteName">
-<meta property="og:title" content="@ogTitle">
-<meta property="og:description" content="@ogDescription">
-<meta property="og:url" content="@canonicalUrl">
-<meta property="og:image" content="@ogImage">
-<meta property="og:image:secure_url" content="@ogImage">
+<meta property="og:site_name" content="@Html.Raw(Meta(ogSiteName))">
+<meta property="og:title" content="@Html.Raw(Meta(ogTitle))">
+<meta property="og:description" content="@Html.Raw(Meta(ogDescription))">
+<meta property="og:url" content="@Html.Raw(Meta(canonicalUrl))">
+<meta property="og:image" content="@Html.Raw(Meta(ogImage))">
+<meta property="og:image:secure_url" content="@Html.Raw(Meta(ogImage))">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="@ogSiteName">
-<meta property="og:locale" content="@ogLocale">
+<meta property="og:image:alt" content="@Html.Raw(Meta(ogSiteName))">
+<meta property="og:locale" content="@Html.Raw(Meta(ogLocale))">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="@ogTitle">
-<meta name="twitter:description" content="@ogDescription">
-<meta name="twitter:image" content="@ogImage">
-<meta itemprop="image" content="@ogImage">
+<meta name="twitter:title" content="@Html.Raw(Meta(ogTitle))">
+<meta name="twitter:description" content="@Html.Raw(Meta(ogDescription))">
+<meta name="twitter:image" content="@Html.Raw(Meta(ogImage))">
+<meta itemprop="image" content="@Html.Raw(Meta(ogImage))">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="@gf" rel="stylesheet">

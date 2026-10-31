@@ -176,7 +176,7 @@ fi
 # --- 2c. would this publish put the floating boxes back? ---------------------------------
 hr
 say "checking that nothing in the export moves on its own ..."
-if ! "$(dirname "$0")/check-no-floaty.sh"; then
+if ! bash "$(dirname "$0")/check-no-floaty.sh"; then
   hr
   say "PUBLISH STOPPED. The export still carries the floating hero boxes."
   say "Remove them from the source - python3 tools/strip-floaty.py <tree> - and publish again."

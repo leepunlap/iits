@@ -197,6 +197,51 @@ def visible(raw):
             out.append(line)
     return out
 
+def css_selectors(raw):
+    """The selectors a stylesheet styles.
+
+    A stylesheet is not visible text, so comparing it line by line flags every legitimate
+    change - dropping an unused @keyframes rule reads as "content lost" when nothing a reader
+    can see has changed. What matters in a stylesheet is the set of selectors: lose one and
+    the elements it styled lose their look. @keyframes and the other at-rules are not
+    selectors, so they are not part of the set.
+    """
+    try:
+        css = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return None
+    css = re.sub(r"/\*.*?\*/", " ", css, flags=re.S)
+    # take the @keyframes blocks out whole: their inner "0%,100%" / "50%" steps are not
+    # selectors either
+    for name in ("keyframes", "-webkit-keyframes", "-moz-keyframes"):
+        while True:
+            m = re.search(r"@" + name + r"\b", css)
+            if not m:
+                break
+            b = css.find("{", m.end())
+            if b == -1:
+                break
+            depth, i = 0, b
+            while i < len(css):
+                if css[i] == "{":
+                    depth += 1
+                elif css[i] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        break
+                i += 1
+            css = css[:m.start()] + css[i + 1:]
+    sels = set()
+    for m in re.finditer(r"([^{}]+)\{", css):
+        sel = m.group(1).strip()
+        if not sel or sel.startswith("@"):
+            continue
+        for part in sel.split(","):
+            part = part.strip()
+            if part:
+                sels.add(part)
+    return sorted(sels)
+
 files = [l.strip() for l in open("/tmp/apex-push-list.txt") if l.strip()]
 
 # where each compared file came from: the baseline (a backup of the site before the bad publish)
@@ -223,6 +268,18 @@ for f in files:
     else:
         n_live += 1
     re_, rl = read(e), read(l)
+    if f.lower().endswith(".css"):
+        # a stylesheet: what matters is the set of selectors, not the lines
+        se, sl = css_selectors(re_), css_selectors(rl)
+        if se is None or sl is None:
+            continue
+        only_live = [x for x in sl if x not in se]
+        if only_live:
+            losses.append((f, [f"selector {x}" for x in only_live]))
+        only_exp = [x for x in se if x not in sl]
+        if only_exp:
+            adds.append((f, [f"selector {x}" for x in only_exp]))
+        continue
     ve, vl = visible(re_), visible(rl)
     if ve is None or vl is None:
         # binary: the export must not shrink the file

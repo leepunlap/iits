@@ -5,10 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>&#x5927;&#x7063;&#x5340;-&#x9999;&#x6E2F;&#x7814;&#x5B78; · &#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</title>
 <meta name="description" content="&#x7531;&#x555F;&#x8499;&#x63A2;&#x7D22;&#x5230;&#x5275;&#x65B0;&#x5BE6;&#x8E10;&#xFF0C;&#x929C;&#x63A5;&#x570B;&#x5BB6;&#x7D1A;&#x8A8D;&#x8B49;&#x8207;&#x5927;&#x7063;&#x5340;&#x7AF6;&#x8CFD;&#x5E73;&#x53F0;&#x3002;">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="&#x5DE5;&#x4FE1;&#x5B78;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
-<meta property="og:title" content="&#x5927;&#x7063;&#x5340;-&#x9999;&#x6E2F;&#x7814;&#x5B78;">
-<meta property="og:image" content="/assets/og-cover.jpg">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="工信學堂（香港）">
+<meta property="og:title" content="大灣區-香港研學">
+<meta property="og:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta property="og:url" content="https://ycltesthk.com/news/item/123/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="zh_HK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="大灣區-香港研學">
+<meta name="twitter:description" content="由啟蒙探索到創新實踐，銜接國家級認證與大灣區競賽平台。">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -90,11 +102,16 @@
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
              }
+  /* The hero boxes do not move. They used to carry a floating animation, and the keyframes
+     were still here after the declarations went - a hook for it to creep back in.
+     There is no keyframes rule and no animation rule for .hero-b or .hero-stat. Do not add
+     one back: if the hero needs to change, it changes without moving. */
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .hero-art{height:330px}
   }
-.sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
   .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
   .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
@@ -615,8 +632,8 @@
           <a href="/zh-Hans/news/item/123/" class="" hreflang="zh-Hans">&#x7B80;</a>
           <a href="/en/news/item/123/" class="" hreflang="en">EN</a>
       </span>
-      <a class="area" href="https://iits.giftedintl.com/student/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
-      <a class="area area-cta" href="https://iits.giftedintl.com/teacher/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+      <a class="area" href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
     </nav>
 
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -631,8 +648,8 @@
           <a href="/zh-Hans/news/item/123/" class="">&#x7B80;</a>
           <a href="/en/news/item/123/" class="">EN</a>
       </div>
-      <a href="https://iits.giftedintl.com/student/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
-      <a href="https://iits.giftedintl.com/teacher/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
+      <a href="https://students.ycltesthk.com/">&#x5B78;&#x751F;&#x5C08;&#x5340;</a>
+      <a href="https://teachers.ycltesthk.com/">&#x6559;&#x5E2B;&#x5C08;&#x5340;</a>
     </div>
   </div>
 </header>
@@ -671,6 +688,10 @@
         <span>&#x670D;&#x52D9;&#x6642;&#x9593;&#xFF1A;&#x5DE5;&#x4F5C;&#x65E5; &#x4E0A;&#x5348;9:00~11:30&#xFF0C;&#x4E0B;&#x5348;14:00~17:30</span>
         <span>&#x9999;&#x6E2F;&#x6D78;&#x6703;&#x5927;&#x5B78;&#x9644;&#x5C6C;&#x5B78;&#x6821;&#x738B;&#x9326;&#x8F1D;&#x4E2D;&#x5C0F;&#x5B78;&#x3000;&#x6C99;&#x7530;&#x77F3;&#x9580;&#x5B89;&#x7766;&#x91CC;6&#x865F;&#x4E2D;&#x5B78;&#x90E8;1&#x6A13;S107A&#x5BA4;</span>
         <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+        <span>&#x9999;&#x6E2F;&#x79D1;&#x5B78;&#x5712;2W&#x5927;&#x6A13;3&#x6A13;24&#x5BA4;</span>
+        <span style="color:var(--faint2)">Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
+        <span>&#x9999;&#x6E2F;&#x7063;&#x4ED4;&#x8ED2;&#x5C3C;&#x8A69;&#x9053;338&#x865F;&#x5317;&#x6D77;&#x4E2D;&#x5FC3;21&#x6A13;F&#x5BA4;</span>
+        <span style="color:var(--faint2)">Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
         <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">&#x5DE5;&#x696D;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x8207;&#x8003;&#x8A66;&#x4E2D;&#x5FC3; &#xB7; &#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x8853;&#x57F9;&#x990A;&#x5DE5;&#x7A0B;&#x9999;&#x6E2F;&#x5206;&#x7AD9;</span>
       </div>
     </div>

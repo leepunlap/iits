@@ -6,9 +6,21 @@
 <title>News · Industrial and Information Technology School (Hong Kong)</title>
 <meta name="description" content="From first discovery to applied innovation &#x2014; linked to national certification and the Greater Bay Area competition circuit.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Industrial and Information Technology School (Hong Kong)">
+<meta property="og:site_name" content="工信學堂（香港）">
 <meta property="og:title" content="News">
-<meta property="og:image" content="/assets/og-cover.jpg">
+<meta property="og:description" content="From first discovery to applied innovation — linked to national certification and the Greater Bay Area competition circuit.">
+<meta property="og:url" content="https://ycltesthk.com/en/c/news/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="News">
+<meta name="twitter:description" content="From first discovery to applied innovation — linked to national certification and the Greater Bay Area competition circuit.">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;TC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -90,11 +102,16 @@
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
              }
+  /* The hero boxes do not move. They used to carry a floating animation, and the keyframes
+     were still here after the declarations went - a hook for it to creep back in.
+     There is no keyframes rule and no animation rule for .hero-b or .hero-stat. Do not add
+     one back: if the hero needs to change, it changes without moving. */
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .hero-art{height:330px}
   }
-.sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
   .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
   .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
@@ -615,8 +632,8 @@
           <a href="/zh-Hans/c/news/" class="" hreflang="zh-Hans">&#x7B80;</a>
           <a href="/en/c/news/" class="on" hreflang="en">EN</a>
       </span>
-      <a class="area" href="https://iits.giftedintl.com/student/">Student Area</a>
-      <a class="area area-cta" href="https://iits.giftedintl.com/teacher/">Teacher Area</a>
+      <a class="area" href="https://students.ycltesthk.com/">Student Area</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">Teacher Area</a>
     </nav>
 
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -631,8 +648,8 @@
           <a href="/zh-Hans/c/news/" class="">&#x7B80;</a>
           <a href="/en/c/news/" class="on">EN</a>
       </div>
-      <a href="https://iits.giftedintl.com/student/">Student Area</a>
-      <a href="https://iits.giftedintl.com/teacher/">Teacher Area</a>
+      <a href="https://students.ycltesthk.com/">Student Area</a>
+      <a href="https://teachers.ycltesthk.com/">Teacher Area</a>
     </div>
   </div>
 </header>
@@ -651,12 +668,22 @@
   <section class="sec anchor reveal" id="news">
     <div class="sechead " style="margin-bottom:26px">
       <h2 class="h3sec">Latest</h2>
-        <a class="more" href="/en/c/news/news/">View all 17 →</a>
+        <a class="more" href="/en/c/news/news/">View all 18 →</a>
     </div>
 
 
 
       <div class="grid cols-b" style="margin-top:34px">
+          <a class="cell" href="/en/news/item/197/" style="display:flex;flex-direction:column;color:inherit">
+            <span class="" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
+                  background:url(&#x27;/media/poster/2026-autumn/cover.jpg&#x27;) center/cover no-repeat">
+            </span>
+            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
+              <span class="meta">2026-09-25</span>
+              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
+                2026/27 Autumn Enrolment: IITS AI Education and Innovation Centre at HKBUAS Wong Kam Fai</h3>
+            </span>
+          </a>
           <a class="cell" href="/en/news/item/126/" style="display:flex;flex-direction:column;color:inherit">
             <span class="hatch" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
                   ">
@@ -709,16 +736,6 @@
               <span class="meta">2026-02-27</span>
               <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
                 IITS Artificial Intelligence Course Series Launches in Hong Kong</h3>
-            </span>
-          </a>
-          <a class="cell" href="/en/news/item/90/" style="display:flex;flex-direction:column;color:inherit">
-            <span class="hatch" style="height:170px;border-bottom:1px solid var(--line);display:block;position:relative;
-                  ">
-            </span>
-            <span style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:9px;flex:1">
-              <span class="meta">2025-10-20</span>
-              <h3 style="font-family:var(--serif);font-size:16.5px;font-weight:700;line-height:1.6;color:var(--ink2)">
-                Youth Information Technology Teacher Training Session Held in Hong Kong</h3>
             </span>
           </a>
       </div>
@@ -786,6 +803,10 @@
         <span>Hours: Weekdays 09:00&#x2013;11:30, 14:00&#x2013;17:30</span>
         <span>S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
         <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+        <span></span>
+        <span style="color:var(--faint2)">Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
+        <span></span>
+        <span style="color:var(--faint2)">Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
         <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">MIIT Education and Examination Center &#xB7; Hong Kong branch, Youth Information Technology Training Project</span>
       </div>
     </div>

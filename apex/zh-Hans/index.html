@@ -6,9 +6,21 @@
 <title>&#x9996;&#x9875; · &#x5DE5;&#x4FE1;&#x5B66;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;</title>
 <meta name="description" content="&#x7531;&#x542F;&#x8499;&#x63A2;&#x7D22;&#x5230;&#x521B;&#x65B0;&#x5B9E;&#x8DF5;&#xFF0C;&#x8854;&#x63A5;&#x56FD;&#x5BB6;&#x7EA7;&#x8BA4;&#x8BC1;&#x4E0E;&#x5927;&#x6E7E;&#x533A;&#x7ADE;&#x8D5B;&#x5E73;&#x53F0;&#x3002;">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="&#x5DE5;&#x4FE1;&#x5B66;&#x5802;&#xFF08;&#x9999;&#x6E2F;&#xFF09;">
-<meta property="og:title" content="&#x9996;&#x9875;">
-<meta property="og:image" content="/assets/og-cover.jpg">
+<meta property="og:site_name" content="工信學堂（香港）">
+<meta property="og:title" content="首页">
+<meta property="og:description" content="由启蒙探索到创新实践，衔接国家级认证与大湾区竞赛平台。">
+<meta property="og:url" content="https://ycltesthk.com/zh-Hans/">
+<meta property="og:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:secure_url" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="工信學堂（香港）">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="首页">
+<meta name="twitter:description" content="由启蒙探索到创新实践，衔接国家级认证与大湾区竞赛平台。">
+<meta name="twitter:image" content="https://ycltesthk.com/assets/og-cover.jpg">
+<meta itemprop="image" content="https://ycltesthk.com/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Space&#x2B;Grotesk:wght@400;500;600;700&amp;family=Noto&#x2B;Sans&#x2B;SC:wght@300;400;500;700;900&amp;family=IBM&#x2B;Plex&#x2B;Mono:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -90,11 +102,16 @@
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
              }
+  /* The hero boxes do not move. They used to carry a floating animation, and the keyframes
+     were still here after the declarations went - a hook for it to creep back in.
+     There is no keyframes rule and no animation rule for .hero-b or .hero-stat. Do not add
+     one back: if the hero needs to change, it changes without moving. */
   @media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .hero-art{height:330px}
   }
-.sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
+
+  .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}
   .h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4vw,52px);line-height:1.2;letter-spacing:-.5px;color:var(--ink)}
   .sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:48px}
@@ -615,8 +632,8 @@
           <a href="/zh-Hans/" class="on" hreflang="zh-Hans">&#x7B80;</a>
           <a href="/en/" class="" hreflang="en">EN</a>
       </span>
-      <a class="area" href="https://iits.giftedintl.com/student/">&#x5B66;&#x751F;&#x4E13;&#x533A;</a>
-      <a class="area area-cta" href="https://iits.giftedintl.com/teacher/">&#x6559;&#x5E08;&#x4E13;&#x533A;</a>
+      <a class="area" href="https://students.ycltesthk.com/">&#x5B66;&#x751F;&#x4E13;&#x533A;</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">&#x6559;&#x5E08;&#x4E13;&#x533A;</a>
     </nav>
 
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -631,8 +648,8 @@
           <a href="/zh-Hans/" class="on">&#x7B80;</a>
           <a href="/en/" class="">EN</a>
       </div>
-      <a href="https://iits.giftedintl.com/student/">&#x5B66;&#x751F;&#x4E13;&#x533A;</a>
-      <a href="https://iits.giftedintl.com/teacher/">&#x6559;&#x5E08;&#x4E13;&#x533A;</a>
+      <a href="https://students.ycltesthk.com/">&#x5B66;&#x751F;&#x4E13;&#x533A;</a>
+      <a href="https://teachers.ycltesthk.com/">&#x6559;&#x5E08;&#x4E13;&#x533A;</a>
     </div>
   </div>
 </header>
@@ -802,8 +819,15 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:56px">
         <div class="newshero slides" data-interval="15000">
-            <a class="on" href="/zh-Hans/news/item/126/"
-               style="background-image:url('/upload/image/20260813/6392221615412455632010849.jpg')" aria-hidden="false">
+            <a class="on" href="/zh-Hans/news/item/197/"
+               style="background-image:url('/media/poster/2026-autumn/cover.jpg')" aria-hidden="false">
+              <span class="cap">
+                <span class="meta">2026-09-25</span>
+                <span class="ttl">&#x9999;&#x6E2F;&#x6D78;&#x4F1A;&#x5927;&#x5B66;&#x9644;&#x5C5E;&#x5B66;&#x6821;&#x738B;&#x9526;&#x8F89;&#x4E2D;&#x5C0F;&#x5B66;&#xB7;&#x5DE5;&#x4FE1;&#x5B66;&#x5802;AI&#x6559;&#x80B2;&#x79D1;&#x521B;&#x4E2D;&#x5FC3;&#x300C;AI&#x5947;&#x601D;&#xB7;&#x5DE5;&#x623F;&#x300D;2026/27&#x5E74;&#x5EA6;&#x79CB;&#x5B63;&#x62DB;&#x751F;&#x7B80;&#x7AE0;</span>
+              </span>
+            </a>
+            <a class="" href="/zh-Hans/news/item/126/"
+               style="background-image:url('/upload/image/20260813/6392221615412455632010849.jpg')" aria-hidden="true">
               <span class="cap">
                 <span class="meta">2026-08-13</span>
                 <span class="ttl">&#x7B2C;&#x4E8C;&#x5C4A;&#x300C;AI &#x65E0;&#x754C;&#x300D;&#x5927;&#x6E7E;&#x533A;&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x521B;&#x65B0;&#x5927;&#x8D5B;&#x5706;&#x6EE1;&#x843D;&#x5E55;!</span>
@@ -830,18 +854,16 @@
                 <span class="ttl">&#x54C8;&#x5C14;&#x6EE8;&#x7814;&#x5B66;</span>
               </span>
             </a>
-            <a class="" href="/zh-Hans/news/item/120/"
-               style="background-image:url('/upload/image/20260508/6391385531482808525320922.jpg')" aria-hidden="true">
-              <span class="cap">
-                <span class="meta">2026-05-08</span>
-                <span class="ttl">&#x5317;&#x4EAC;&#x7814;&#x5B66;</span>
-              </span>
-            </a>
           <div class="dots" aria-hidden="true">
  <span class="on"></span>  <span class=""></span>  <span class=""></span>  <span class=""></span>  <span class=""></span>           </div>
         </div>
 
       <div style="display:flex;flex-direction:column">
+          <a href="/zh-Hans/news/item/120/" style="display:flex;gap:18px;padding:16px 0;
+             border-bottom:1px solid var(--line);color:inherit">
+            <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2026-05-08</span>
+            <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">&#x5317;&#x4EAC;&#x7814;&#x5B66;</span>
+          </a>
           <a href="/zh-Hans/news/item/103/" style="display:flex;gap:18px;padding:16px 0;
              border-bottom:1px solid var(--line);color:inherit">
             <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2026-04-13</span>
@@ -872,11 +894,6 @@
             <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2025-04-21</span>
             <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">&#x201C;&#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x672F;&#x57F9;&#x517B;&#x201D;&#x9879;&#x76EE;&#x9999;&#x6E2F;&#x542F;&#x52A8;&#x66A8;&#x9752;&#x5C11;&#x5E74;&#x4EBA;&#x5DE5;&#x667A;&#x80FD;&#x53CA;&#x4FE1;&#x606F;&#x79D1;&#x6280;&#x6559;&#x80B2;&#x9999;&#x6E2F;&#x548C;&#x5185;&#x5730;&#x4EA4;&#x6D41;&#x5B66;&#x672F;&#x8BBA;&#x575B;&#x6210;&#x529F;&#x4E3E;&#x529E;</span>
           </a>
-          <a href="/zh-Hans/news/item/89/" style="display:flex;gap:18px;padding:16px 0;
-             border-bottom:1px solid var(--line);color:inherit">
-            <span class="meta" style="flex-shrink:0;padding-top:4px;width:76px">2024-12-07</span>
-            <span style="font-size:14.5px;line-height:1.7;text-wrap:pretty">&#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x672F;&#x57F9;&#x517B;&#x4E13;&#x5BB6;&#x9762;&#x5BF9;&#x9762;&#x4EA4;&#x6D41;&#x6D3B;&#x52A8;&#x2014;&#x2014;&#x201C;&#x62D4;&#x5C16;&#x521B;&#x65B0;&#x4EBA;&#x624D;&#x57F9;&#x517B;&#x201D;&#x4E13;&#x9898;&#x7814;&#x8BA8;&#x4F1A;&#x987A;&#x5229;&#x53EC;&#x5F00;</span>
-          </a>
       </div>
     </div>
   </div>
@@ -897,6 +914,10 @@
         <span>&#x670D;&#x52A1;&#x65F6;&#x95F4;&#xFF1A;&#x5DE5;&#x4F5C;&#x65E5; &#x4E0A;&#x5348;9:00~11:30&#xFF0C;&#x4E0B;&#x5348;14:00~17:30</span>
         <span>&#x9999;&#x6E2F;&#x6D78;&#x4F1A;&#x5927;&#x5B66;&#x9644;&#x5C5E;&#x5B66;&#x6821;&#x738B;&#x9526;&#x8F89;&#x4E2D;&#x5C0F;&#x5B66;&#x3000;&#x6C99;&#x7530;&#x77F3;&#x95E8;&#x5B89;&#x7766;&#x91CC;6&#x53F7;&#x4E2D;&#x5B66;&#x90E8;1&#x697C;S107A&#x5BA4;</span>
         <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+        <span>&#x9999;&#x6E2F;&#x79D1;&#x5B66;&#x56ED;2W&#x5927;&#x697C;3&#x697C;24&#x5BA4;</span>
+        <span style="color:var(--faint2)">Unit 24, 3/F., Building 2W, No. 19 Science Park West Avenue, Hong Kong</span>
+        <span>&#x9999;&#x6E2F;&#x6E7E;&#x4ED4;&#x8F69;&#x5C3C;&#x8BD7;&#x9053;338&#x53F7;&#x5317;&#x6D77;&#x4E2D;&#x5FC3;21&#x697C;F&#x5BA4;</span>
+        <span style="color:var(--faint2)">Unit F, 21/F, CNT Tower, 338 Hennessy Rd, HK</span>
         <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">&#x5DE5;&#x4E1A;&#x548C;&#x4FE1;&#x606F;&#x5316;&#x90E8;&#x6559;&#x80B2;&#x4E0E;&#x8003;&#x8BD5;&#x4E2D;&#x5FC3; &#xB7; &#x9752;&#x5C11;&#x5E74;&#x4FE1;&#x606F;&#x6280;&#x672F;&#x57F9;&#x517B;&#x5DE5;&#x7A0B;&#x9999;&#x6E2F;&#x5206;&#x7AD9;</span>
       </div>
     </div>

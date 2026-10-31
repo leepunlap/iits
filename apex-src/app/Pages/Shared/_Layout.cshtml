@@ -15,6 +15,21 @@
         ? "https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap"
         : "https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap";
     var path = Context.Request.Path.HasValue ? Context.Request.Path.Value! : "/";
+    // The canonical origin is fixed, not taken from the request: the export runs against
+    // 127.0.0.1:5099, so the request host would put the wrong URL in every og:url.
+    var canonicalOrigin = "https://ycltesthk.com";
+    var canonicalPath = path.Trim('/');
+    var canonicalUrl = canonicalOrigin + "/" + (lang == "zh-Hant" ? "" : lang + "/")
+                      + (canonicalPath == "" ? "" : canonicalPath + "/");
+    var ogType = ViewData["OgType"] as string ?? "website";
+    var ogTitle = ViewData["Title"] as string ?? Ui.T(lang, "siteName");
+    var ogDescription = Ui.T(lang, "tagline");
+    var ogImage = canonicalOrigin + "/assets/og-cover.jpg";
+    var ogLocale = lang == "en" ? "en_US" : lang == "zh-Hans" ? "zh_CN" : "zh_HK";
+    // og:site_name is the registered Chinese name in every language. It has always been
+    // that on the live site, and a share card that names the operator beats one that
+    // names the operator in the reader's own language.
+    var ogSiteName = "工信學堂（香港）";
     string LangHref(string l)
     {
         var q = Context.Request.Query.Where(kv => kv.Key != "lang")
@@ -29,10 +44,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@ViewData["Title"] · @Ui.T(lang,"siteName")</title>
 <meta name="description" content="@Ui.T(lang,"tagline")">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="@Ui.T(lang,"siteName")">
-<meta property="og:title" content="@ViewData["Title"]">
-<meta property="og:image" content="/assets/og-cover.jpg">
+<meta property="og:type" content="@ogType">
+<meta property="og:site_name" content="@ogSiteName">
+<meta property="og:title" content="@ogTitle">
+<meta property="og:description" content="@ogDescription">
+<meta property="og:url" content="@canonicalUrl">
+<meta property="og:image" content="@ogImage">
+<meta property="og:image:secure_url" content="@ogImage">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="@ogSiteName">
+<meta property="og:locale" content="@ogLocale">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@ogTitle">
+<meta name="twitter:description" content="@ogDescription">
+<meta name="twitter:image" content="@ogImage">
+<meta itemprop="image" content="@ogImage">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="@gf" rel="stylesheet">
@@ -110,10 +137,10 @@
           box-shadow:0 40px 80px -30px rgba(16,22,29,.35)}
   .hero-b{position:absolute;bottom:30px;left:0;width:50%;height:230px;border-radius:20px;overflow:hidden;
           box-shadow:0 30px 60px -24px rgba(16,22,29,.35);border:5px solid var(--bg);
-          animation:floaty 6s ease-in-out infinite}
+          }
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
-             animation:floaty 5s ease-in-out infinite}
+             }
   @@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   @@media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
@@ -648,8 +675,8 @@
           <a href="@LangHref(l)" class="@(l == lang ? "on" : "")" hreflang="@l">@IitsNews.Data.Lang.Short(l)</a>
         }
       </span>
-      <a class="area" href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
-      <a class="area area-cta" href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
+      <a class="area" href="https://students.ycltesthk.com/">@Ui.T(lang,"student")</a>
+      <a class="area area-cta" href="https://teachers.ycltesthk.com/">@Ui.T(lang,"teacher")</a>
     </nav>
 
     <button class="navtoggle" id="navToggle" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -665,8 +692,8 @@
           <a href="@LangHref(l)" class="@(l == lang ? "on" : "")">@IitsNews.Data.Lang.Short(l)</a>
         }
       </div>
-      <a href="https://iits.giftedintl.com/student/">@Ui.T(lang,"student")</a>
-      <a href="https://iits.giftedintl.com/teacher/">@Ui.T(lang,"teacher")</a>
+      <a href="https://students.ycltesthk.com/">@Ui.T(lang,"student")</a>
+      <a href="https://teachers.ycltesthk.com/">@Ui.T(lang,"teacher")</a>
     </div>
   </div>
 </header>
@@ -685,10 +712,14 @@
         <span>@Ui.T(lang,"ftMail")</span>
         <span>@Ui.T(lang,"ftHours")</span>
         <span>@Ui.T(lang,"ftAddr")</span>
-        @* The Science Park office has been retired; the branch operates from the centre at
-           HKBUAS. Historical references to the 2025 launch held at Science Park stay as
-           they are — that event happened there. *@
         <span style="color:var(--faint2)">S107A, 1/F, Secondary Section, HKBU Affiliated School Wong Kam Fai, 6 On Muk Lane, Shek Mun, Sha Tin</span>
+        @* The other two offices are listed as well. The branch operates from the centre
+           at HKBUAS, but a reader who has to come in for a registration or a paper
+           handover needs the addresses that are actually on the door. *@
+        <span>@Ui.T(lang,"ftAddr2Zh")</span>
+        <span style="color:var(--faint2)">@Ui.T(lang,"ftAddr2En")</span>
+        <span>@Ui.T(lang,"ftAddr3Zh")</span>
+        <span style="color:var(--faint2)">@Ui.T(lang,"ftAddr3En")</span>
         <span style="margin-top:14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:#8f9bb0">@Ui.T(lang,"orgLine")</span>
       </div>
     </div>

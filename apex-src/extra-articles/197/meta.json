@@ -1,0 +1,19 @@
+{
+  "id": 197,
+  "legacyId": null,
+  "legacySectionId": 3,
+  "section": "新聞資訊",
+  "kind": "article",
+  "publishedAt": "2026-09-25 00:00:00",
+  "pinned": 0,
+  "status": "published",
+  "createdAt": "2026-09-25 04:48:16.4518140",
+  "cat": "news",
+  "sub": "news",
+  "translations": {
+    "zh-Hant": { "file": "zh-Hant.html", "title": "香港浸會大學附屬學校王錦輝中小學·工信學堂AI教育科創中心「AI奇思·工房」2026/27年度秋季招生簡章", "provenance": "human" },
+    "zh-Hans": { "file": "zh-Hans.html", "title": "香港浸会大学附属学校王锦辉中小学·工信学堂AI教育科创中心「AI奇思·工房」2026/27年度秋季招生简章", "provenance": "machine" },
+    "en": { "file": "en.html", "title": "2026/27 Autumn Enrolment: IITS AI Education and Innovation Centre at HKBUAS Wong Kam Fai", "provenance": "machine" }
+  },
+  "why": "This article was published on ycltesthk.com from 2026-09-25 and is linked from the home page, the news listing and /s/3/ and /s/42/. It was added to the app's database by hand, so it has no LegacyId and it does not live in articles/ - the extraction of the old CMS cannot produce it. The database the app was published from on 2026-09-25 still had it; the database on twin was rebuilt from articles/ and lost it, which is why a fresh export dropped the article from every listing. The bodies here are the ones production was serving, so the article comes back exactly as it was."
+}

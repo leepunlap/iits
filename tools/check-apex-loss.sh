@@ -166,7 +166,7 @@ def visible(raw):
     return out
 
 files = [l.strip() for l in open("/tmp/apex-push-list.txt") if l.strip()]
-losses, shrinks, checked = [], [], 0
+losses, shrinks, adds, checked = [], [], [], 0
 for f in files:
     if f in OWN_ARTEFACTS:
         continue
@@ -184,9 +184,21 @@ for f in files:
     only_live = [x for x in vl if x not in ve]
     if only_live:
         losses.append((f, only_live))
+    only_exp = [x for x in ve if x not in vl]
+    if only_exp:
+        adds.append((f, only_exp))
 
 print(f"  compared {checked} files the export would overwrite")
 print()
+if adds:
+    print(f"  CONTENT THE EXPORT WOULD ADD - {len(adds)} file(s) (not a failure; it is what the publish brings):")
+    for f, lines in adds:
+        print(f"    {f}")
+        for x in lines[:4]:
+            print(f"        + {x[:120]}")
+        if len(lines) > 4:
+            print(f"        ... and {len(lines)-4} more line(s)")
+    print()
 if losses:
     print(f"  CONTENT THE EXPORT WOULD DROP - {len(losses)} file(s):")
     for f, lines in losses:

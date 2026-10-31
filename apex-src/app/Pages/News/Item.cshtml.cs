@@ -31,6 +31,9 @@ public class ItemModel : PageModel
         Text = Item.For(CurrentLang);
         ViewData["Lang"] = Text?.Lang ?? CurrentLang;
         ViewData["Title"] = Text?.Title ?? "新聞";
+        // A share card for an article has to say it is an article: Facebook and
+        // LinkedIn lay out og:type=article completely differently from website.
+        ViewData["OgType"] = "article";
         return Page();
     }
 }

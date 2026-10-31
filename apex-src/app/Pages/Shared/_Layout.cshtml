@@ -141,12 +141,14 @@
   .hero-stat{position:absolute;top:0;left:8%;background:var(--navy);color:#fff;padding:16px 20px;
              border-radius:16px;box-shadow:0 20px 40px -16px rgba(16,22,29,.4);
              }
-  @@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  /* The hero boxes do not move. They used to carry a floating animation, and the keyframes
+     were still here after the declarations went - a hook for it to creep back in.
+     There is no keyframes rule and no animation rule for .hero-b or .hero-stat. Do not add
+     one back: if the hero needs to change, it changes without moving. */
   @@media(max-width:900px){
     .hero-grid{grid-template-columns:1fr;gap:34px}
     .hero-art{height:330px}
   }
-  @@media(prefers-reduced-motion:reduce){ .hero-b,.hero-stat{animation:none} }
 
   .sec{max-width:1320px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(16px,3vw,40px)}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:2.5px;color:var(--brand);margin-bottom:16px}

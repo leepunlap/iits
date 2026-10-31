@@ -19,8 +19,19 @@
 #   Text that only the live file has IS a loss, and this is what gets reported.
 #   Binary files (images, PDFs) are compared by size - the export must not shrink them.
 #
-#   tools/check-apex-loss.sh          report; exit 1 if the export would drop content
-#   tools/check-apex-loss.sh --quiet  report only the count
+# WHICH SITE IT COMPARES AGAINST
+#   By default: the site as it is on the box right now. That is the right question for every
+#   publish except one - the publish that puts a good site back after a bad one. Then the site
+#   on the box is already the broken state, and measuring against it reports the repairs as
+#   losses and stops the publish that fixes them.
+#   So: --baseline <root> compares against a different tree on the box - a backup taken before
+#   the bad publish. A file is read from the baseline if the baseline has it, and from the live
+#   site if it does not, which is exactly the production state: the backup holds the files the
+#   bad publish overwrote, and the live site holds the ones it never touched.
+#
+#   tools/check-apex-loss.sh                     report; exit 1 if the export would drop content
+#   tools/check-apex-loss.sh --quiet             report only the count
+#   tools/check-apex-loss.sh --baseline <root>   compare against that tree instead
 set -euo pipefail
 
 TWIN="${TWIN:-10.48.88.254}"
@@ -29,14 +40,16 @@ IIS_USER="${IIS_USER:-administrator}"
 EXPORT_SCRIPT="${EXPORT_SCRIPT:-/home/blee/iits-static-export.py}"
 # overridable so the check can be pointed at a backup of the site to prove it catches a loss
 IIS_ROOT="${IIS_ROOT:-C:\\wwwroot\\ycltesthk\\wwwroot-new}"
+BASELINE_ROOT=""
 
 QUIET=0
 REUSE=0
-for a in "$@"; do
-  case "$a" in
-    --quiet) QUIET=1 ;;
-    --no-export) REUSE=1 ;;
-    *) echo "unknown option: $a" >&2; exit 2 ;;
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --quiet) QUIET=1; shift ;;
+    --no-export) REUSE=1; shift ;;
+    --baseline) shift; BASELINE_ROOT="${1:-}"; shift ;;
+    *) echo "unknown option: $1" >&2; exit 2 ;;
   esac
 done
 
@@ -92,33 +105,52 @@ print(f"  already identical : {len(exp)-len(push)}")
 print(f"  would be pushed   : {len(push)}")
 PY' 2>&1 | grep -vE '^Warning: Permanently'
 
-# --- pull the live versions of exactly those files off IIS -----------------------------------
+# --- pull the versions on the box of exactly those files -----------------------------------
 hr
-say "collecting the live versions of the files the export would overwrite ..."
+if [ -n "$BASELINE_ROOT" ]; then
+  say "comparing against the baseline: $BASELINE_ROOT"
+  say "  (files it does not hold are read from the live site - the publish never touched them)"
+else
+  say "collecting the live versions of the files the export would overwrite ..."
+fi
 scp -q -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN:/tmp/apex-push-list.txt" /tmp/apex-push-list.txt 2>/dev/null
 scp -q -o BatchMode=yes -o StrictHostKeyChecking=no /tmp/apex-push-list.txt "$IIS_USER@$IIS:/C:/Windows/Temp/apex-push-list.txt" 2>/dev/null
 
 ps_iis "\$ErrorActionPreference = 'Stop'
 \$r = '$IIS_ROOT'
+\$base = '$BASELINE_ROOT'
 \$list = Get-Content 'C:\Windows\Temp\apex-push-list.txt' | Where-Object { \$_.Trim() -ne '' }
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 if (Test-Path 'C:\Windows\Temp\apex-live.zip') { Remove-Item 'C:\Windows\Temp\apex-live.zip' -Force }
 \$za = [System.IO.Compression.ZipFile]::Open('C:\Windows\Temp\apex-live.zip','Create')
-\$n = 0
+\$n = 0; \$fromBase = 0; \$fromLive = 0
+\$srcs = New-Object System.Collections.ArrayList
 foreach (\$rel in \$list) {
-  \$src = Join-Path \$r (\$rel -replace '/','\')
+  \$rel = \$rel.Replace('/','\')
+  \$src = Join-Path \$r \$rel
+  \$where = 'live'
+  if (\$base -ne '' -and (Test-Path \$base)) {
+    \$b = Join-Path \$base \$rel
+    if (Test-Path \$b) { \$src = \$b; \$where = 'baseline' }
+  }
   if (Test-Path \$src) {
     \$e = \$za.CreateEntry(\$rel.Replace('\','/'))
     \$os = \$e.Open(); \$bytes = [System.IO.File]::ReadAllBytes(\$src)
     \$os.Write(\$bytes,0,\$bytes.Length); \$os.Close(); \$n++
+    if (\$where -eq 'baseline') { \$fromBase++ } else { \$fromLive++ }
+    [void]\$srcs.Add(\$rel.Replace('\','/') + '  ' + \$where)
   }
 }
 \$za.Dispose()
-\"  zipped \$n live files\""
+Set-Content -Path 'C:\Windows\Temp\apex-live-src.txt' -Value \$srcs -Encoding UTF8
+\"  zipped \$n files  (\$fromBase from the baseline, \$fromLive from the live site)\""
 
 say "pulling them to twin ..."
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
   "scp -q -o BatchMode=yes -o StrictHostKeyChecking=no $IIS_USER@$IIS:/C:/Windows/Temp/apex-live.zip /tmp/apex-live.zip" 2>&1 \
+  | grep -vE 'post-quantum|^Warning: Permanently|vulnerable|may need' || true
+ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
+  "scp -q -o BatchMode=yes -o StrictHostKeyChecking=no $IIS_USER@$IIS:/C:/Windows/Temp/apex-live-src.txt /tmp/apex-live-src.txt" 2>&1 \
   | grep -vE 'post-quantum|^Warning: Permanently|vulnerable|may need' || true
 
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" 'rm -rf /tmp/apex-live && python3 -c "
@@ -166,7 +198,19 @@ def visible(raw):
     return out
 
 files = [l.strip() for l in open("/tmp/apex-push-list.txt") if l.strip()]
+
+# where each compared file came from: the baseline (a backup of the site before the bad publish)
+# or the live site (a file the publish never touched)
+src = {}
+if os.path.exists("/tmp/apex-live-src.txt"):
+    for line in open("/tmp/apex-live-src.txt", encoding="utf-8-sig", errors="replace"):
+        line = line.rstrip("\n")
+        if "  " in line:
+            path, where = line.rsplit("  ", 1)
+            src[path.strip()] = where.strip()
+
 losses, shrinks, adds, checked = [], [], [], 0
+n_base = n_live = 0
 for f in files:
     if f in OWN_ARTEFACTS:
         continue
@@ -174,6 +218,10 @@ for f in files:
     if not (os.path.exists(e) and os.path.exists(l)):
         continue
     checked += 1
+    if src.get(f) == "baseline":
+        n_base += 1
+    else:
+        n_live += 1
     re_, rl = read(e), read(l)
     ve, vl = visible(re_), visible(rl)
     if ve is None or vl is None:
@@ -189,6 +237,8 @@ for f in files:
         adds.append((f, only_exp))
 
 print(f"  compared {checked} files the export would overwrite")
+if n_base:
+    print(f"    {n_base} read from the baseline, {n_live} from the live site")
 print()
 if adds:
     print(f"  CONTENT THE EXPORT WOULD ADD - {len(adds)} file(s) (not a failure; it is what the publish brings):")

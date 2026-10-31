@@ -12,6 +12,9 @@ What it does
   * rewrites the site's own links (?lang=… query style) to those static paths
   * copies /assets/ and /media/ off disk; /upload/ is handled by one IIS rewrite rule
     (the article bodies still say /upload/... — same tree, no 366 MB duplicate)
+  * copies /static-pages/ (the pages the app does not serve: the old category mirrors and the
+    articles it no longer carries) into the site root BEFORE the crawl, so the pages the app
+    does serve are the ones that win
   * writes web.config (default document, MIME for webp/json/woff2/svg, the /upload/ rewrite)
     and a README with the IIS steps
 
@@ -23,6 +26,12 @@ from collections import deque
 BASE = "http://127.0.0.1:5099"
 HOST = "staging-iits.giftedintl.com"
 SRC = "/var/www/iits-staging"
+# The pages the app does not serve. The export copies them into the site root before it crawls,
+# so the app's own pages overwrite the ones it serves and the rest are still published. Without
+# this the export only ever produced the pages the crawler reached, and every other page on
+# the box was a file nobody could change by publishing - which is how the floating hero boxes
+# stayed on the site for months after they were taken out of the design.
+STATIC_PAGES = os.path.join(SRC, "static-pages")
 LANGS = [("zh-Hant", ""), ("zh-Hans", "zh-Hans"), ("en", "en")]
 DEFAULT_LANG = "zh-Hant"
 
@@ -97,6 +106,12 @@ def rewrite(html, lang):
 
 def main():
     os.makedirs(PAGES, exist_ok=True)
+
+    # The static pages go in first: whatever the app serves is written over them by the crawl.
+    if os.path.isdir(STATIC_PAGES):
+        print(f"copying static pages … ({STATIC_PAGES})", flush=True)
+        shutil.copytree(STATIC_PAGES, PAGES, dirs_exist_ok=True)
+
     seen = set()
     q = deque()
     if URLS_FILE:
@@ -227,6 +242,8 @@ Exported from the NUC's IITS staging app (127.0.0.1:5099, .NET/Kestrel) on {time
 
 * {n} pages in three languages: default (zh-Hant) at the root, `zh-Hans/` and `en/` beside it
 * `/assets/` and `/media/` copied from /var/www/iits-staging
+* the pages the app does not serve (the old category mirrors) copied from
+  /var/www/iits-staging/static-pages, before the crawl, so the app's own pages win
 * `/upload/...` is not duplicated — `web.config` rewrites it to `/media/...` (same files)
 * every page is a directory with `index.html`, so IIS default documents serve clean URLs
 

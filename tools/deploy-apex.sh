@@ -19,6 +19,10 @@
 #   tools/deploy-apex.sh --dry-run  work out what would change; push nothing
 #   tools/deploy-apex.sh --limit N  export only the first N pages (a smoke test)
 #   tools/deploy-apex.sh --allow-loss  push even if the export would drop content
+#   tools/deploy-apex.sh --baseline <root>  compare the export against that tree on the IIS
+#       box instead of the live site - use it when the live site is the broken state and the
+#       publish is the repair (the backup holds what the broken publish overwrote; files it
+#       does not hold are read from the live site)
 #
 # IT ALSO REFUSES TO PUSH AN EXPORT THAT WOULD TAKE CONTENT AWAY. The export rebuilds the
 # pages from the app; it cannot know about edits made to the published files by hand, and it
@@ -26,6 +30,10 @@
 # enrolment promo bubble, the newer enrolment poster and two news items. So before packing,
 # this runs tools/check-apex-loss.sh, which compares the export against what is on the box and
 # fails the publish if the export has content the live site does not.
+#
+# AND IT REFUSES TO BRING THE FLOATING BOXES BACK. The hero's .hero-b and .hero-stat used to
+# float; they were taken out by hand, crept back in, and were taken out again. tools/check-no-
+# floaty.sh fails the publish if the word 'floaty' is anywhere in the export.
 set -euo pipefail
 
 TWIN="${TWIN:-10.48.88.254}"
@@ -33,16 +41,25 @@ IIS="${IIS:-154.37.220.26}"
 IIS_USER="${IIS_USER:-administrator}"
 EXPORT_SCRIPT="${EXPORT_SCRIPT:-/home/blee/iits-static-export.py}"
 IIS_ROOT='C:\wwwroot\ycltesthk\wwwroot-new'
+HERE="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(dirname "$HERE")"
+# the pages the app does not serve: the old category mirrors. They live in the repo, in apex/,
+# and are seeded onto twin before the export so the export publishes them too.
+STATIC_TREE="$ROOT/apex"
+STATIC_DIRS=(s news en/s en/news zh-Hans/s zh-Hans/news)
+STATIC_TARGET='/var/www/iits-staging/static-pages'
 
 DRY=0
 LIMIT=""
 ALLOW_LOSS=0
-for a in "$@"; do
-  case "$a" in
-    --dry-run) DRY=1 ;;
-    --limit) shift; LIMIT="${1:-}" ;;
-    --allow-loss) ALLOW_LOSS=1 ;;
-    *) echo "unknown option: $a (use --dry-run, --limit N or --allow-loss)" >&2; exit 2 ;;
+BASELINE=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --dry-run) DRY=1; shift ;;
+    --limit) shift; LIMIT="${1:-}"; shift ;;
+    --allow-loss) ALLOW_LOSS=1; shift ;;
+    --baseline) shift; BASELINE="${1:-}"; shift ;;
+    *) echo "unknown option: $1 (use --dry-run, --limit N, --allow-loss or --baseline <root>)" >&2; exit 2 ;;
   esac
 done
 
@@ -58,6 +75,27 @@ ps_iis() {
 }
 
 # --- 1. export on twin ------------------------------------------------------------------
+hr
+say "seeding the static pages on twin (the pages the app does not serve) ..."
+seed_list=""
+for d in "${STATIC_DIRS[@]}"; do
+  [ -d "$STATIC_TREE/$d" ] || continue
+  seed_list="$seed_list $d"
+done
+if [ -z "${seed_list// /}" ]; then
+  say "  no static pages in $STATIC_TREE - nothing to seed"
+else
+  tar -C "$STATIC_TREE" -cf - $seed_list \
+    | ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
+        "sudo rm -rf '$STATIC_TARGET' && sudo mkdir -p '$STATIC_TARGET' \
+         && sudo tar -C '$STATIC_TARGET' -xf - \
+         && sudo chown -R www-data:www-data '$STATIC_TARGET' \
+         && sudo chmod -R a+rX '$STATIC_TARGET' \
+         && sudo find '$STATIC_TARGET' -type f | wc -l" 2>&1 \
+    | grep -vE '^Warning: Permanently' | tail -1
+  say "  seeded $(echo $seed_list | wc -w) tree(s) into $STATIC_TARGET"
+fi
+
 hr
 say "exporting on twin ..."
 ssh -o BatchMode=yes -o StrictHostKeyChecking=no "$TWIN" \
@@ -122,7 +160,7 @@ fi
 # --- 2b. would this export take content away? ------------------------------------------------
 hr
 say "checking that the export would not drop anything that is on the site ..."
-if ! "$(dirname "$0")/check-apex-loss.sh" --no-export; then
+if ! "$(dirname "$0")/check-apex-loss.sh" --no-export ${BASELINE:+--baseline "$BASELINE"}; then
   if [ "$ALLOW_LOSS" = 1 ]; then
     hr
     say "--allow-loss given: pushing even though the export would drop content."
@@ -133,6 +171,16 @@ if ! "$(dirname "$0")/check-apex-loss.sh" --no-export; then
     say "If dropping it is deliberate, re-run with --allow-loss."
     exit 1
   fi
+fi
+
+# --- 2c. would this publish put the floating boxes back? ---------------------------------
+hr
+say "checking that nothing in the export moves on its own ..."
+if ! "$(dirname "$0")/check-no-floaty.sh"; then
+  hr
+  say "PUBLISH STOPPED. The export still carries the floating hero boxes."
+  say "Remove them from the source - python3 tools/strip-floaty.py <tree> - and publish again."
+  exit 1
 fi
 
 # --- 3. package and push -----------------------------------------------------------------

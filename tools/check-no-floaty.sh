@@ -42,16 +42,18 @@ BAD=0
 scan_local() {
   local label="$1" path="$2"
   local n
-  n=$(grep -rIl --exclude-dir=.git --exclude-dir=media --exclude='*.bak-*' -i "floaty" "$path" 2>/dev/null | tee /tmp/apex-floaty-hits.txt | wc -l)
+  n=$( { grep -rIl --exclude-dir=.git --exclude-dir=media --exclude='*.bak-*' -i "floaty" "$path" 2>/dev/null || true; } \
+        | tee /tmp/apex-floaty-hits.txt | wc -l)
   if [ "$n" -gt 0 ]; then
     BAD=1
     say "  $label: $n file(s) still contain 'floaty'"
     head -20 /tmp/apex-floaty-hits.txt | sed 's/^/      /'
     local rest=$((n - 20))
-    [ "$rest" -gt 0 ] && say "      ... and $rest more"
+    if [ "$rest" -gt 0 ]; then say "      ... and $rest more"; fi
   else
     say "  $label: clean"
   fi
+  return 0
 }
 
 scan_export() {
@@ -68,6 +70,7 @@ scan_export() {
   else
     say "  clean"
   fi
+  return 0
 }
 
 scan_live() {
@@ -93,10 +96,11 @@ EOF
     say "  $n file(s) on the box still contain 'floaty':"
     printf '%s\n' "$out" | head -20 | sed 's/^/      /'
     local rest=$((n - 20))
-    [ "$rest" -gt 0 ] && say "      ... and $rest more"
+    if [ "$rest" -gt 0 ]; then say "      ... and $rest more"; fi
   else
     say "  clean"
   fi
+  return 0
 }
 
 hr

@@ -5,7 +5,6 @@
   a { color: #3d5699; text-decoration: none; }
   a:hover { color: #2f4275; }
   ::selection { background: #3d5699; color: #fff; } to { transform: translateX(-50%); } }
-  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
 
   .prog:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -28px rgba(16,22,29,0.3); }
